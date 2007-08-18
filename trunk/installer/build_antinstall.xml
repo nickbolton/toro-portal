@@ -1,0 +1,1266 @@
+<!--
+  Copyright (C) 2007 Unicon, Inc.
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this distribution.  It is also available here:
+  http://www.fsf.org/licensing/licenses/gpl.html
+
+  As a special exception to the terms and conditions of version 
+  2 of the GPL, you may redistribute this Program in connection 
+  with Free/Libre and Open Source Software ("FLOSS") applications 
+  as described in the GPL FLOSS exception.  You should have received
+  a copy of the text describing the FLOSS exception along with this
+  distribution.
+-->
+<project name="toro-deployment" default="deploy-all" basedir="${basedir}"
+    xmlns:artifact="urn:maven-artifact-ant">
+
+    <property file="build.properties"/>
+    <property file="ant.install.properties"/>
+    <property name="tomcat.home" value="[SET IN BUILD.PROPERTIES!]" />
+    <property name="portal.webapp.home" value="[SET IN BUILD.PROPERTIES!]" />
+    <property name="work.dir" value="${basedir}/work"/>
+
+    <property name="webapp.home" value="${tomcat.home}/webapps" />
+    <property name="db.driver.version" value=""/>
+
+    <typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="urn:maven-artifact-ant">
+        <classpath>
+            <pathelement location="${basedir}/lib/maven-artifact-ant-2.0.4-dep.jar" />
+        </classpath>
+    </typedef>
+
+    <artifact:pom id="maven.project" file="${basedir}/pom.xml" />
+
+    <artifact:remoteRepository
+        id="uportal.repository"
+        url="${uportal.remote.repo}" />
+
+    <artifact:remoteRepository
+        id="toro.repository"
+        url="${toro.remote.repo}" />
+
+    <filterset id="tokens">
+        <filtersfile file="${basedir}/build.properties"/>
+        <filtersfile file="${basedir}/ant.install.properties"/>
+    </filterset>
+
+
+    <!--  Driver targets  -->
+    <target name="clean" depends="clean-portlets">
+        <delete dir="${work.dir}"/>
+        <delete dir="${webapp.home}/toro-portlets-common"/>
+        <delete>
+            <fileset dir="${tomcat.home}/shared/lib">
+                <include name="academus-api*.jar"/>
+                <include name="sso-authentication-cache*.jar"/>
+            </fileset>
+        </delete>
+        <available property="uportal.deployment.exists" file="${portal.webapp.home}/WEB-INF/lib"/>
+        <antcall target="clean-uportal-academus-api"/>
+    </target>
+
+    <target name="clean-uportal-academus-api" if="uportal.deployment.exists">
+        <delete>
+            <fileset dir="${portal.webapp.home}/WEB-INF/lib">
+                <include name="uportal-academus-api*.jar"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="initialize-run-targets">
+        <condition property="run.uportal.deploy">
+            <or>
+                <isset property="deploy.all"/>
+                <isset property="uportal.deploy"/>
+            </or>
+        </condition>
+        <condition property="run.deploy.briefcase.portlet">
+            <or>
+                <isset property="deploy.all"/>
+                <isset property="briefcase-portlet.active"/>
+            </or>
+        </condition>
+        <condition property="run.deploy.messaging.portlet">
+            <or>
+                <isset property="deploy.all"/>
+                <isset property="messaging-portlet.active"/>
+            </or>
+        </condition>
+        <condition property="run.deploy.permissions.portlet">
+            <or>
+                <isset property="deploy.all"/>
+                <isset property="permissions-portlet.active"/>
+            </or>
+        </condition>
+        <condition property="run.deploy.gateway.portlet">
+            <or>
+                <isset property="deploy.all"/>
+                <isset property="gateway-portlet.active"/>
+            </or>
+        </condition>
+        <condition property="run.deploy.web.content.portlet">
+            <or>
+                <isset property="deploy.all"/>
+                <isset property="web-content-portlet.active"/>
+            </or>
+        </condition>
+        <condition property="run.deploy.blojsom.portlet">
+            <or>
+                <isset property="deploy.all"/>
+                <isset property="blojsom-portlet.active"/>
+            </or>
+        </condition>
+        <condition property="run.publish.briefcase.portlet">
+            <or>
+                <isset property="initialize.all"/>
+                <isset property="briefcase-portlet.publish"/>
+                <isset property="briefcase-portlet.active"/>
+            </or>
+        </condition>
+        <condition property="run.publish.gateway.portlet">
+            <or>
+                <isset property="initialize.all"/>
+                <isset property="gateway-portlet.publish"/>
+                <isset property="gateway-portlet.active"/>
+            </or>
+        </condition>
+        <condition property="run.publish.messaging.portlet">
+            <or>
+                <isset property="initialize.all"/>
+                <isset property="messaging-portlet.publish"/>
+                <isset property="messaging-portlet.active"/>
+            </or>
+        </condition>
+        <condition property="run.publish.permissions.portlet">
+            <or>
+                <isset property="initialize.all"/>
+                <isset property="permissions-portlet.publish"/>
+                <isset property="permissions-portlet.active"/>
+            </or>
+        </condition>
+        <condition property="run.publish.web.content.portlet">
+            <or>
+                <isset property="initialize.all"/>
+                <isset property="web-content-portlet.publish"/>
+                <isset property="web-content-portlet.active"/>
+            </or>
+        </condition>
+        <condition property="run.uportal.db">
+            <and>
+                <or>
+                    <isset property="initialize.all"/>
+                    <isset property="uportal.db"/>
+                </or>
+            </and>
+        </condition>
+        <condition property="run.uportal.pubchan">
+            <or>
+                <isset property="initialize.all"/>
+                <isset property="uportal.pubchan"/>
+            </or>
+        </condition>
+        <condition property="run.uportal.i18n.db">
+            <or>
+                <isset property="initialize.all"/>
+                <isset property="uportal.i18n.db"/>
+            </or>
+        </condition>
+        <condition property="run.uportal.pubfragments">
+            <or>
+                <isset property="initialize.all"/>
+                <isset property="uportal.pubfragments"/>
+            </or>
+        </condition>
+        <condition property="run.uportal.deploy.portlet.apps">
+            <or>
+                <isset property="initialize.all"/>
+                <isset property="uportal.deploy.portlet.apps"/>
+            </or>
+        </condition>
+        <condition property="hibernate.create.only" value="--create">
+            <equals arg1="${hibernate.create.only.checkbox}" arg2="true"/>
+        </condition>
+        <condition property="uportal.db.droptables.arg" value="-nD">
+            <equals arg1="${hibernate.create.only.checkbox}" arg2="true"/>
+        </condition>
+        <condition property="hibernate.create.only" value=" ">
+            <not><equals arg1="${hibernate.create.only.checkbox}" arg2="true"/></not>
+        </condition>
+        <condition property="uportal.db.droptables.arg" value=" ">
+            <not><equals arg1="${hibernate.create.only.checkbox}" arg2="true"/></not>
+        </condition>
+
+    </target>
+
+    <target name="deploy-all" depends="initialize-run-targets">
+        <echo>
+Executing with properties:
+
+uportal.remote.repo=${uportal.remote.repo}
+toro.remote.repo=${toro.remote.repo}
+
+run.uportal.deploy=${run.uportal.deploy}
+run.deploy.briefcase.portlet=${run.deploy.briefcase.portlet}
+run.deploy.messaging.portlet=${run.deploy.messaging.portlet}
+run.deploy.permissions.portlet=${run.deploy.permissions.portlet}
+run.deploy.gateway.portlet=${run.deploy.gateway.portlet}
+run.deploy.web.content.portlet=${run.deploy.web.content.portlet}
+run.deploy.blojsom.portlet=${run.deploy.blojsom.portlet}
+
+spell.executable.path=${aspell.executable.path}
+backport-util-concurrent.version=${backport-util-concurrent.version}
+blojsom.active=${blojsom.active}
+briefcase-portlet.active=${briefcase-portlet.active}
+briefcase-portlet.publish=${briefcase-portlet.publish}
+common.libraries=${common.libraries}
+common.portlets.webapp=${common.portlets.webapp}
+commons-dbcp.version=${commons-dbcp.version}
+commons-logging.version=${commons-logging.version}
+datasource=${datasource}
+db.platform=${db.platform}
+deploy.all=${deploy.all}
+dom4j.version=${dom4j.version}
+gateway-portlet.active=${gateway-portlet.active}
+gateway-portlet.publish=${gateway-portlet.publish}
+hibernate.alchemist=${hibernate.alchemist}
+hibernate.cdk=${hibernate.cdk}
+hibernate.create.only=${hibernate.create.only}
+hibernate.create.only.checkbox=${hibernate.create.only.checkbox}
+hibernate.demetrius=${hibernate.demetrius}
+hibernate.mercury=${hibernate.mercury}
+hibernate.portlets-common=${hibernate.portlets-common}
+hibernate.version=${hibernate.version}
+hsqldb.version=${hsqldb.version}
+initialize.all=${initialize.all}
+jaxen.version=${jaxen.version}
+jdbc.driver=${jdbc.driver}
+jdbc.password=${jdbc.password}
+jdbc.password.confirm=${jdbc.password.confirm}
+jdbc.poolsize.blojsom=${jdbc.poolsize.blojsom}
+jdbc.poolsize.briefcase=${jdbc.poolsize.briefcase}
+jdbc.poolsize.gateway=${jdbc.poolsize.gateway}
+jdbc.poolsize.messaging=${jdbc.poolsize.messaging}
+jdbc.poolsize.permissions=${jdbc.poolsize.permissions}
+jdbc.poolsize.uportal=${jdbc.poolsize.uportal}
+jdbc.poolsize.web.content=${jdbc.poolsize.web.content}
+jdbc.simplesql=${jdbc.simplesql}
+jdbc.url=${jdbc.url}
+jdbc.user=${jdbc.user}
+jetspeed.version=${jetspeed.version}
+jstl.version=${jstl.version}
+jtds.version=${jtds.version}
+messaging-portlet.active=${messaging-portlet.active}
+messaging-portlet.publish=${messaging-portlet.publish}
+mysql.version=${mysql.version}
+oracle.version=${oracle.version}
+permissions-portlet.active=${permissions-portlet.active}
+permissions-portlet.publish=${permissions-portlet.publish}
+pluto.version=${pluto.version}
+portal.base.url=${portal.base.url}
+portal.server.hostname=${portal.server.hostname}
+portal.server.http.protocol=${portal.server.http.protocol}
+portal.server.port=${portal.server.port}
+portal.webapp.home=${portal.webapp.home}
+portal.webapp.name=${portal.webapp.name}
+portlet-api.version=${portlet-api.version}
+postgresql.version=${postgresql.version}
+project.version=${project.version}
+reddot.content.path=${reddot.content.path}
+reddot.method=${reddot.method}
+reddot.url=${reddot.url}
+serializer.version=${serializer.version}
+server.base.url=${server.base.url}
+servlet-api.version=${servlet-api.version}
+smtp.server.hostname=${smtp.server.hostname}
+smtp.server.password=${smtp.server.password}
+smtp.server.password.confirm=${smtp.server.password.confirm}
+smtp.server.port=${smtp.server.port}
+smtp.server.username=${smtp.server.username}
+springframework.version=${springframework.version}
+standard.version=${standard.version}
+tomcat.home=${tomcat.home}
+tomcat.host.conf=${tomcat.host.conf}
+toro.data.home=${toro.data.home}
+uportal.db=${uportal.db}
+uportal.db.droptables.arg=${uportal.db.droptables.arg}
+uportal.deploy=${uportal.deploy}
+uportal.deploy.portlet.apps=${uportal.deploy.portlet.apps}
+uportal.i18n.db=${uportal.i18n.db}
+uportal.pubchan=${uportal.pubchan}
+uportal.pubfragments=${uportal.pubfragments}
+uportal.version=${uportal.version}
+web-content-portlet.active=${web-content-portlet.active}
+web-content-portlet.publish=${web-content-portlet.publish}
+xalan.version=${xalan.version}
+xercesImpl.version=${xercesImpl.version}
+        </echo>
+        <antcall target="deploy-uportal"/>
+        <available property="portal.webapp.home.exists" file="${portal.webapp.home}"/>
+        <fail message="uPortal deployment does not exist as specified by portal.webapp.home=${portal.webapp.home}" unless="portal.webapp.home.exists"/>
+        <antcall target="merge-configuration">
+            <param name="configfile" value="${basedir}/properties/uPortalConfigurationChanges.xml"/>
+            <param name="targetdir" value="${portal.webapp.home}"/>
+        </antcall>
+        <antcall target="deploy-common"/>
+        <antcall target="deploy-portlets-common-webapp"/>
+        <antcall target="deploy-portlets"/>
+
+        <antcall target="initialize"/>
+    </target>
+
+   <target name="initialize">
+     <condition property="hsql.driver">
+         <contains string="${jdbc.driver}" substring="hsql"/>
+     </condition>
+     <condition property="postgres.driver">
+         <contains string="${jdbc.driver}" substring="postgres"/>
+     </condition>
+     <condition property="oracle.driver">
+         <contains string="${jdbc.driver}" substring="oracle"/>
+     </condition>
+     <condition property="mysql.driver">
+         <contains string="${jdbc.driver}" substring="mysql"/>
+     </condition>
+     <condition property="sqlserver.driver">
+         <or>
+             <contains string="${jdbc.driver}" substring="jtds"/>
+             <contains string="${jdbc.driver}" substring="jnetdirect"/>
+         </or>
+     </condition>
+     <echo>calling execute-initalize-with-hsql</echo>
+     <antcall target="execute-initalize-with-hsql"/>
+     <echo>calling execute-initalize-with-postgres</echo>
+     <antcall target="execute-initalize-with-postgres"/>
+     <echo>calling execute-initalize-with-oracle</echo>
+     <antcall target="execute-initalize-with-oracle"/>
+     <antcall target="execute-initalize-with-mysql"/>
+     <antcall target="execute-initalize-with-sqlserver"/>
+   </target>
+
+   <target name="execute-initalize-with-hsql" if="hsql.driver">
+     <echo>Running execute-initalize-with-hsql</echo>
+     <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+     <antcall target="exec-initalize"/>
+   </target>
+
+   <target name="execute-initalize-with-postgres" if="postgres.driver">
+     <echo>Running execute-initalize-with-postgres</echo>
+     <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+     <antcall target="exec-initalize"/>
+   </target>
+
+   <target name="execute-initalize-with-oracle" if="oracle.driver">
+     <echo>Running execute-initalize-with-oracle</echo>
+     <property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect"/>
+     <antcall target="exec-initalize"/>
+   </target>
+
+   <target name="execute-initalize-with-mysql" if="mysql.driver">
+     <echo>Running execute-initalize-with-mysql</echo>
+     <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+     <antcall target="exec-initalize"/>
+   </target>
+
+   <target name="execute-initalize-with-sqlserver" if="sqlserver.driver">
+     <echo>Running execute-initalize-with-sqlserver</echo>
+     <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
+     <antcall target="exec-initalize"/>
+   </target>
+
+   <target name="exec-initalize">
+      <copy file="${basedir}/properties/hibernate.properties" todir="${work.dir}" filtering="on">
+        <filterset refId="tokens"/>
+        <filterset>
+          <filter token="hibernate.dialect" value="${hibernate.dialect}"/>
+        </filterset>
+      </copy>
+      <antcall target="uportal-initportal"/>
+      <antcall target="initialize-alchemist"/>
+      <antcall target="initialize-demetrius"/>
+      <antcall target="initialize-mercury"/>
+      <antcall target="initialize-portlets-common"/>
+      <antcall target="initialize-cdk"/>
+
+      <property name="uportal.pubchan" value="true"/>
+      <antcall target="publish-briefcase-portlet"/>
+      <antcall target="publish-gateway-portlet"/>
+      <antcall target="publish-messaging-portlet"/>
+      <antcall target="publish-permissions-portlet"/>
+      <antcall target="publish-web-content-portlet"/>
+    </target>
+    <!--  End Driver targets  -->
+
+    <!-- Maven Utilities -->
+    <target name="copy-maven-artifact-to-file">
+        <echo>Copying maven artifact ${groupId}:${artifactId}:${version}:${archive.type} to ${tofile}</echo>
+        <artifact:dependencies filesetId="copy-maven-artifact.filesetId">
+            <dependency groupId="${groupId}" artifactId="${artifactId}"
+                version="${version}" type="${archive.type}"/>
+            <remoteRepository refid="toro.repository" />
+        </artifact:dependencies>
+        <copy tofile="${tofile}">
+            <fileset refId="copy-maven-artifact.filesetId"/>
+        </copy>
+    </target>
+
+    <target name="copy-maven-artifact-to-dir">
+        <echo>Copying maven artifact ${groupId}:${artifactId}:${version}:${archive.type} to ${todir}</echo>
+        <artifact:dependencies filesetId="copy-maven-artifact.filesetId">
+            <dependency groupId="${groupId}" artifactId="${artifactId}"
+                version="${version}" type="${archive.type}"/>
+            <remoteRepository refid="toro.repository" />
+        </artifact:dependencies>
+        <copy flatten="true" todir="${todir}">
+            <fileset refId="copy-maven-artifact.filesetId"/>
+        </copy>
+    </target>
+
+   <target name="extract-artifact">
+       <available property="artifact.exists" file="${artifact.path}"/>
+       <condition property="ok.to.extract.artifact">
+           <or>
+               <contains string="${version}" substring="SNAPSHOT"/>
+               <not><available file="${target.dir}/.artifact_extracted"/></not>
+           </or>
+       </condition>
+       <antcall target="extract-artifact-task">
+           <param name="groupId" value="${groupId}"/>
+           <param name="artifactId" value="${artifactId}"/>
+           <param name="version" value="${version}"/>
+           <param name="target.dir" value="${target.dir}"/>
+           <param name="archive.type" value="${archive.type}"/>
+       </antcall>
+       <touch file="${target.dir}/.artifact_extracted"/>
+   </target>
+
+   <target name="extract-artifact-task" if="ok.to.extract.artifact">
+        <echo>Extracting maven artifact ${groupId}:${artifactId}:${version}:${archive.type} to ${target.dir}</echo>
+       <artifact:dependencies filesetId="extract-artifact-task.filesetId">
+           <dependency groupId="${groupId}" artifactId="${artifactId}"
+               version="${version}" type="${archive.type}"/>
+           <remoteRepository refid="toro.repository" />
+       </artifact:dependencies>
+       <unjar dest="${target.dir}">
+           <fileset refId="extract-artifact-task.filesetId"/>
+       </unjar>
+   </target>
+    <!-- End Maven Utilities -->
+
+    <!-- Common Utilities -->
+    <target name="deploy-filtered">
+        <antcall target="extract-artifact">
+          <param name="groupId" value="${groupId}"/>
+          <param name="artifactId" value="${artifactId}"/>
+          <param name="version" value="${version}"/>
+          <param name="target.dir" value="${tmpdir}"/>
+          <param name="archive.type" value="${archive.type}"/>
+        </antcall>
+        <copy todir="${dest}" filtering="on">
+            <fileset dir="${tmpdir}"/>
+            <filterset refid="tokens"/>
+            <filterset>
+                <filter token="webappName" value="${webappName}"/>
+            </filterset>
+        </copy>
+    </target>
+
+    <target name="deploy-jar">
+        <antcall target="copy-maven-artifact-to-dir">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="${artifactId}"/>
+            <param name="version" value="${project.version}"/>
+            <param name="archive.type" value="jar"/>
+            <param name="todir" value="${todir}"/>
+            <param name="exclusions" value="${exclusions}"/>
+        </antcall>
+    </target>
+
+    <target name="deploy-war">
+        <artifact:dependencies pathId="${artifactId}.war">
+            <dependency groupId="net.unicon.toro" artifactId="${artifactId}"
+                version="${project.version}" type="war"/>
+            <remoteRepository refid="toro.repository" />
+        </artifact:dependencies>
+        <antcall target="deploy-filtered">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="${artifactId}"/>
+            <param name="version" value="${project.version}"/>
+            <param name="archive.type" value="war"/>
+            <param name="dest" value="${webapp.home}/${webappName}"/>
+            <param name="tmpdir" value="${work.dir}/${artifactId}-${project.version}"/>
+            <param name="webappName" value="${webappName}"/>
+        </antcall>
+    </target>
+
+    <target name="merge-configuration">
+        <artifact:dependencies pathId="configuration.classpath">
+            <dependency groupId="net.unicon.toro" artifactId="alchemist"
+                version="${project.version}" type="jar"/>
+            <dependency groupId="jetspeed" artifactId="jetspeed"
+                version="${jetspeed.version}" type="jar"/>
+            <dependency groupId="jaxen" artifactId="jaxen"
+                version="${jaxen.version}" type="jar"/>
+            <dependency groupId="dom4j" artifactId="dom4j"
+                version="${dom4j.version}" type="jar"/>
+            <remoteRepository refid="toro.repository" />
+        </artifact:dependencies>
+        <echo>MergeConfiguration configfile=${configfile} targetdir=${targetdir}</echo>
+        <java failonerror="true" fork="true" dir="${basedir}" classname="net.unicon.alchemist.tools.MergeConfiguration">
+            <classpath refid="configuration.classpath"/>
+            <arg line="${configfile} ${targetdir}"/>    
+        </java>
+    </target>
+
+    <target name="run-hbm2dll">
+        <artifact:dependencies pathId="hibernate.classpath">
+            <dependency groupId="org.hibernate" artifactId="hibernate"
+                version="${hibernate.version}" type="jar"/>
+            <dependency groupId="${groupId}" artifactId="${artifactId}"
+                version="${version}" type="jar"/>
+            <dependency groupId="xerces" artifactId="xercesImpl"
+                version="${xercesImpl.version}" type="jar"/>
+            <dependency groupId="hsqldb" artifactId="hsqldb"
+                version="${hsqldb.version}" type="jar"/>
+            <dependency groupId="net.sourceforge.jtds" artifactId="jtds"
+                version="${jtds.version}" type="jar"/>
+            <dependency groupId="mysql" artifactId="mysql-connector-java"
+                version="${mysql.version}" type="jar"/>
+            <dependency groupId="com.oracle" artifactId="ojdbc14"
+                version="${oracle.version}" type="jar"/>
+            <dependency groupId="postgresql" artifactId="postgresql"
+                version="${postgresql.version}" type="jar"/>
+            <remoteRepository refid="toro.repository" />
+        </artifact:dependencies>
+        <echo>Creating schema for ${groupId}:${artifactId}:${version} with create.only option: #${hibernate.create.only}#</echo>
+        <java classname="org.hibernate.tool.hbm2ddl.SchemaExport" classpathref="hibernate.classpath">
+            <arg line="--config=/hibernate.cfg.xml --properties=${work.dir}/hibernate.properties ${hibernate.create.only}"/>
+        </java>
+    </target>
+    <!-- End Common Utilities -->
+
+    <!-- Portlet Targets -->
+    <target name="deploy-common">
+        <mkdir dir="${toro.data.home}" /> 
+        <antcall target="deploy-jar"> 
+            <param name="artifactId" value="academus-api"/>
+            <param name="todir" value="${tomcat.home}/shared/lib"/>
+        </antcall>
+        <antcall target="deploy-jar">
+            <param name="artifactId" value="sso-authentication-cache"/>
+            <param name="todir" value="${tomcat.home}/shared/lib"/>
+        </antcall>
+        <antcall target="deploy-jar">
+            <param name="artifactId" value="uportal-academus-api"/>
+            <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
+            <param name="exclusions" value="&lt;exclusions>&lt;exclusion>&lt;groupId>uportal&lt;/groupId>&lt;artifactId>uportal&lt;/artifactId>&lt;/exclusion>&lt;/exclusions>"/>
+        </antcall>
+    </target> 
+
+    <target name="deploy-portlet">
+        <echo>Deploying maven artifact net.unicon.toro:${artifactId}:${project.version}:war to ${webapp.home}/${webappName}</echo>
+        <artifact:dependencies pathId="deployPortlet.classpath">
+            <dependency groupId="net.unicon.toro" artifactId="${artifactId}" version="${project.version}" type="war"/>
+            <dependency groupId="net.unicon.toro" artifactId="portlets-common-lib" version="${project.version}" type="jar"/>
+            <dependency groupId="uportal" artifactId="uportal" version="${uportal.version}" type="jar"/>
+            <dependency groupId="org.apache.pluto" artifactId="pluto" version="${pluto.version}" type="jar"/>
+            <dependency groupId="commons-logging" artifactId="commons-logging" version="${commons-logging.version}" type="jar"/>
+            <dependency groupId="portlet-api" artifactId="portlet-api" version="${portlet-api.version}" type="jar"/>
+            <dependency groupId="xerces" artifactId="xercesImpl" version="${xercesImpl.version}" type="jar"/>
+            <remoteRepository refid="toro.repository" />
+        </artifact:dependencies>
+        <delete dir="${webapp.home}/${webappName}"/>
+        <delete dir="${work.dir}/${webappName}.war"/>
+        <antcall target="copy-maven-artifact-to-file">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="${artifactId}"/>
+            <param name="version" value="${project.version}"/>
+            <param name="archive.type" value="war"/>
+            <param name="tofile" value="${work.dir}/${webappName}.war"/>
+        </antcall>
+        <echo message="war: ${work.dir}/${webappName}-${project.version}.war"/>
+        <java fork="true" dir="${basedir}" classname="org.jasig.portal.container.deploy.Deployer">
+            <classpath refid="deployPortlet.classpath" />
+            <arg value="${work.dir}"/>
+            <arg value="${work.dir}/${webappName}.war"/>
+        </java>
+        <artifact:dependencies filesetId="portlets-common-rendering.filesetId">
+            <dependency groupId="net.unicon.toro" artifactId="portlets-common-lib"
+                version="${project.version}" type="jar"/>
+            <remoteRepository refid="toro.repository" />
+        </artifact:dependencies>
+        <unjar dest="${work.dir}/${webappName}">
+            <fileset refId="portlets-common-rendering.filesetId"/>
+            <patternset>
+                <include name="rendering/**"/>
+            </patternset>
+        </unjar>
+        <copy todir="${webapp.home}/${webappName}">
+            <fileset dir="${work.dir}/${webappName}"/>
+            <filterset refid="tokens"/>
+        </copy>
+        <copy tofile="${tomcat.host.conf}/${webappName}.xml" file="properties/${webappName}.xml">
+            <filterset refid="tokens"/>
+            <filterset>
+                <filter token="webappName" value="${webappName}"/>
+            </filterset>
+        </copy>
+    </target>
+
+    <target name="deploy-portlets" depends="
+        deploy-briefcase-portlet,
+        deploy-messaging-portlet,
+        deploy-gateway-portlet,
+        deploy-web-content-portlet,
+        deploy-permissions-portlet,
+        deploy-blojsom
+        "/>
+
+    <target name="clean-portlets" depends="
+        clean-briefcase-portlet,
+        clean-messaging-portlet,
+        clean-gateway-portlet,
+        clean-web-content-portlet,
+        clean-permissions-portlet,
+        clean-blojsom
+        "/>
+
+    <target name="deploy-portlets-common-webapp">
+        <antcall target="deploy-war">
+            <param name="webappName" value="toro-portlets-common"/>
+            <param name="artifactId" value="portlets-common-webapp"/>
+        </antcall>
+    </target>
+
+    <target name="deploy-briefcase-portlet" if="run.deploy.briefcase.portlet">
+        <echo>Deploying Briefcase Portlet</echo>
+        <antcall target="deploy-portlet">
+            <param name="artifactId" value="briefcase-portlet"/>
+            <param name="webappName" value="toro-briefcase-portlet"/>
+        </antcall>
+    </target>
+
+    <target name="clean-briefcase-portlet" if="briefcase-portlet.active">
+        <echo>Cleaning Briefcase Portlet</echo>
+        <delete dir="${webapp.home}/toro-briefcase-portlet"/>
+    </target>
+
+    <target name="deploy-messaging-portlet" if="run.deploy.messaging.portlet">
+        <echo>Deploying Messaging Portlet</echo>
+        <antcall target="deploy-portlet">
+            <param name="artifactId" value="messaging-portlet"/>
+            <param name="webappName" value="toro-messaging-portlet"/>
+        </antcall>
+    </target>
+
+    <target name="clean-messaging-portlet" if="messaging-portlet.active">
+        <echo>Cleaning Messaging Portlet</echo>
+        <delete dir="${webapp.home}/toro-messaging-portlet"/>
+    </target>
+
+    <target name="deploy-permissions-portlet" if="run.deploy.permissions.portlet">
+        <echo>Deploying Permissions Portlet</echo>
+        <antcall target="deploy-portlet">
+            <param name="artifactId" value="permissions-portlet"/>
+            <param name="webappName" value="toro-permissions-portlet"/>
+        </antcall>
+
+        <!-- add the descriptor for each deployed portlet -->
+        <available file="${webapp.home}/toro-briefcase-portlet/WEB-INF/classes/config/permissions-portlet-fragment.xml" property="toro-briefcase-portlet.present"/>
+        <antcall target="merge-permissions-descriptor-for-briefcase"/>
+        <available file="${webapp.home}/toro-messaging-portlet/WEB-INF/classes/config/permissions-portlet-fragment.xml" property="toro-messaging-portlet.present"/>
+        <antcall target="merge-permissions-descriptor-for-messaging"/>
+        <available file="${webapp.home}/toro-blogger-portlet/WEB-INF/classes/config/permissions-portlet-fragment.xml" property="toro-blogger-portlet.present"/>
+        <antcall target="merge-permissions-descriptor-for-blogger"/>
+    </target>
+
+    <target name="deploy-gateway-portlet" if="run.deploy.gateway.portlet">
+        <echo>Deploying Gateway Portlet</echo>
+        <antcall target="deploy-portlet">
+            <param name="artifactId" value="gateway-portlet"/>
+            <param name="webappName" value="toro-gateway-portlet"/>
+        </antcall>
+    </target>
+
+    <target name="clean-gateway-portlet" if="gateway-portlet.active">
+        <echo>Cleaning Gateway Portlet</echo>
+        <delete dir="${webapp.home}/toro-gateway-portlet"/>
+    </target>
+
+    <target name="deploy-web-content-portlet" if="run.deploy.web.content.portlet">
+        <echo>Deploying Web Content Portlet</echo>
+        <antcall target="deploy-portlet">
+            <param name="artifactId" value="web-content-portlet"/>
+            <param name="webappName" value="toro-web-content-portlet"/>
+        </antcall>
+    </target>
+
+    <target name="clean-web-content-portlet" if="web-content-portlet.active">
+        <echo>Cleaning Web Content Portlet</echo>
+        <delete dir="${webapp.home}/toro-web-content-portlet"/>
+    </target>
+
+    <target name="deploy-blojsom" if="run.deploy.blojsom.portlet">
+        <echo>Deploying Blojsom</echo>
+        <antcall target="deploy-war">
+            <param name="webappName" value="toro-blojsom"/>
+            <param name="artifactId" value="blojsom"/>
+        </antcall>
+        <property name="gateway-portlet.active" value="yes"/>
+        <antcall target="deploy-gateway-portlet"/>
+        <copy tofile="${tomcat.host.conf}/toro-blojsom.xml" file="properties/toro-blojsom.xml">
+            <filterset refid="tokens"/>
+            <filterset>
+                <filter token="webappName" value="toro-blojsom"/>
+            </filterset>
+        </copy>
+    </target>
+
+    <target name="clean-blojsom" if="blojsom.active">
+        <echo>Cleaning Blojsom</echo>
+        <delete dir="${webapp.home}/toro-blojsom"/>
+        <property name="gateway-portlet.active" value="yes"/>
+        <antcall target="clean-gateway-portlet"/>
+    </target>
+
+    <target name="merge-permissions-descriptor-for-briefcase" if="toro-briefcase-portlet.present">
+        <echo>Merging permissions descriptor for briefcase</echo>
+        <loadfile property="replaceValue" srcFile="${webapp.home}/toro-briefcase-portlet/WEB-INF/classes/config/permissions-portlet-fragment.xml"/>
+        <replace file="${webapp.home}/toro-permissions-portlet/WEB-INF/classes/config/permissions-portlet.xml" token="briefcase-portlet-section-->" value="${replaceValue}"/>
+    </target>
+
+    <target name="merge-permissions-descriptor-for-messaging" if="toro-messaging-portlet.present">
+        <echo>Merging permissions descriptor for messaging</echo>
+        <loadfile property="replaceValue" srcFile="${webapp.home}/toro-messaging-portlet/WEB-INF/classes/config/permissions-portlet-fragment.xml"/>
+        <replace file="${webapp.home}/toro-permissions-portlet/WEB-INF/classes/config/permissions-portlet.xml" token="messaging-portlet-section-->" value="${replaceValue}"/>
+    </target>
+
+    <target name="merge-permissions-descriptor-for-blogger" if="toro-blogger-portlet.present">
+        <echo>Merging permissions descriptor for blogger</echo>
+        <loadfile property="replaceValue" srcFile="${webapp.home}/toro-blogger-portlet/WEB-INF/classes/config/permissions-portlet-fragment.xml"/>
+        <replace file="${webapp.home}/toro-permissions-portlet/WEB-INF/classes/config/permissions-portlet.xml" token="blogger-portlet-section-->" value="${replaceValue}"/>
+    </target>
+
+    <target name="clean-permissions-portlet" if="permissions-portlet.active">
+        <echo>Cleaning Permissions Portlet</echo>
+        <delete dir="${webapp.home}/toro-permissions-portlet"/>
+    </target>
+
+    <target name="publish-toro-portlet">
+        <echo>Publishing portlet net.unicon.toro:${artifactId}:${project.version}:war</echo>
+        <antcall target="extract-artifact">
+          <param name="groupId" value="net.unicon.toro"/>
+          <param name="artifactId" value="${artifactId}"/>
+          <param name="version" value="${project.version}"/>
+          <param name="target.dir" value="${work.dir}/${artifactId}-${project.version}"/>
+          <param name="archive.type" value="war"/>
+        </antcall>
+        <path id="publish-toro.classpath">
+            <pathelement path="${work.dir}/${artifactId}-${project.version}/WEB-INF/classes"/>
+            <pathelement path="${basedir}"/>
+            <path refId="uportal.classpath"/>
+        </path>
+        <antcall target="create-uportal-rdbm-properties"/>
+        <antcall target="exec-uportal-pubchan">
+            <param name="uportal.pubchan.classpath.id" value="publish-toro.classpath"/>
+            <param name="channel" value="${channel}"/>
+        </antcall>
+    </target>
+
+    <target name="publish-briefcase-portlet" if="run.publish.briefcase.portlet">
+        <antcall target="publish-toro-portlet">
+            <param name="artifactId" value="briefcase-portlet"/>
+            <param name="channel" value="briefcase-channel-publish.xml"/>
+        </antcall>
+    </target>
+
+    <target name="publish-gateway-portlet" if="run.publish.gateway.portlet">
+        <antcall target="publish-toro-portlet">
+            <param name="artifactId" value="gateway-portlet"/>
+            <param name="channel" value="gateway-example-channel-publish.xml"/>
+        </antcall>
+        <antcall target="publish-toro-portlet">
+            <param name="artifactId" value="gateway-portlet"/>
+            <param name="channel" value="gateway-blogger-channel-publish.xml"/>
+        </antcall>
+    </target>
+
+    <target name="publish-messaging-portlet" if="run.publish.messaging.portlet">
+        <antcall target="publish-toro-portlet">
+            <param name="artifactId" value="messaging-portlet"/>
+            <param name="channel" value="messaging-channel-publish.xml"/>
+        </antcall>
+    </target>
+
+    <target name="publish-permissions-portlet" if="run.publish.permissions.portlet">
+        <antcall target="publish-toro-portlet">
+            <param name="artifactId" value="permissions-portlet"/>
+            <param name="channel" value="permissions-channel-publish.xml"/>
+        </antcall>
+    </target>
+
+    <target name="publish-web-content-portlet" if="run.publish.web.content.portlet">
+        <antcall target="publish-toro-portlet">
+            <param name="artifactId" value="web-content-portlet"/>
+            <param name="channel" value="web-content-channel-publish.xml"/>
+        </antcall>
+    </target>
+
+    <target name="initialize-alchemist" if="hibernate.alchemist">
+        <echo>Initializing Alchemist</echo>
+        <antcall target="run-hbm2dll">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="alchemist"/>
+            <param name="version" value="${project.version}"/>
+        </antcall>
+    </target>
+
+    <target name="initialize-demetrius" if="hibernate.demetrius">
+        <echo>Initializing Demetrius</echo>
+        <antcall target="run-hbm2dll">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="demetrius"/>
+            <param name="version" value="${project.version}"/>
+        </antcall>
+    </target>
+
+    <target name="initialize-mercury" if="hibernate.mercury">
+        <echo>Initializing Mercury</echo>
+        <antcall target="run-hbm2dll">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="mercury"/>
+            <param name="version" value="${project.version}"/>
+        </antcall>
+    </target>
+
+    <target name="initialize-portlets-common" if="hibernate.portlets-common">
+        <echo>Initializing Portlets Common</echo>
+        <antcall target="run-hbm2dll">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="portlets-common-lib"/>
+            <param name="version" value="${project.version}"/>
+        </antcall>
+    </target>
+    <!-- End Portlet Targets -->
+
+    <!-- Channel Targets -->
+    <target name="initialize-cdk" if="hibernate.cdk">
+        <echo>Initializing CDK</echo>
+    </target>
+    <!-- End Channel Targets -->
+
+    <!-- uPortal Targets -->
+    <artifact:dependencies pathId="uportal.classpath">
+      <dependency groupId="org.apache.pluto" artifactId="pluto"
+        version="${pluto.version}" type="jar"/>
+      <dependency groupId="hsqldb" artifactId="hsqldb"
+        version="${hsqldb.version}" type="jar"/>
+      <dependency groupId="net.sourceforge.jtds" artifactId="jtds"
+        version="${jtds.version}" type="jar"/>
+      <dependency groupId="mysql" artifactId="mysql-connector-java"
+        version="${mysql.version}" type="jar"/>
+      <dependency groupId="com.oracle" artifactId="ojdbc14"
+        version="${oracle.version}" type="jar"/>
+      <dependency groupId="postgresql" artifactId="postgresql"
+        version="${postgresql.version}" type="jar"/>
+      <dependency groupId="javax.servlet" artifactId="servlet-api"
+        version="${servlet-api.version}" type="jar"/>
+      <remoteRepository refid="toro.repository" />
+    </artifact:dependencies>
+
+    <target name="deploy-uportal" if="run.uportal.deploy">
+        <echo>Deploying uPortal ${uportal.version}</echo>
+        <condition property="hsql.driver">
+            <contains string="${jdbc.driver}" substring="hsql"/>
+        </condition>
+        <condition property="postgres.driver">
+            <contains string="${jdbc.driver}" substring="postgres"/>
+        </condition>
+        <condition property="oracle.driver">
+            <contains string="${jdbc.driver}" substring="oracle"/>
+        </condition>
+        <condition property="mysql.driver">
+            <contains string="${jdbc.driver}" substring="mysql"/>
+        </condition>
+        <condition property="jtds.driver">
+            <contains string="${jdbc.driver}" substring="jtds"/>
+        </condition>
+        <condition property="jnetdirect.driver">
+            <contains string="${jdbc.driver}" substring="jnetdirect"/>
+        </condition>
+        <antcall target="execute-deploy-uportal-with-hsql"/>
+        <antcall target="execute-deploy-uportal-with-postgres"/>
+        <antcall target="execute-deploy-uportal-with-oracle"/>
+        <antcall target="execute-deploy-uportal-with-mysql"/>
+        <antcall target="execute-deploy-uportal-with-jtds"/>
+        <antcall target="execute-deploy-uportal-with-jnetdirect"/>
+    </target>
+
+    <target name="execute-deploy-uportal-with-hsql" if="hsql.driver">
+        <echo message="setting hsql db properties..."/>
+        <antcall target="execute-deploy-uportal">
+            <param name="db.driver.groupId" value="hsqldb"/>
+            <param name="db.driver.artifactId" value="hsqldb"/>
+            <param name="db.driver.version" value="${hsqldb.version}"/>
+        </antcall>
+    </target>
+
+    <target name="execute-deploy-uportal-with-postgres" if="postgres.driver">
+        <echo message="setting postgres db properties..."/>
+        <antcall target="execute-deploy-uportal">
+            <param name="db.driver.groupId" value="postgresql"/>
+            <param name="db.driver.artifactId" value="postgresql"/>
+            <param name="db.driver.version" value="${postgresql.version}"/>
+        </antcall>
+    </target>
+
+    <target name="execute-deploy-uportal-with-oracle" if="oracle.driver">
+        <echo message="setting oracle db properties..."/>
+        <antcall target="execute-deploy-uportal">
+            <param name="db.driver.groupId" value="com.oracle"/>
+            <param name="db.driver.artifactId" value="ojdbc14"/>
+            <param name="db.driver.version" value="${oracle.version}"/>
+        </antcall>
+    </target>
+
+    <target name="execute-deploy-uportal-with-mysql" if="mysql.driver">
+        <echo message="setting mysql db properties..."/>
+        <antcall target="execute-deploy-uportal">
+            <param name="db.driver.groupId" value="mysql"/>
+            <param name="db.driver.artifactId" value="mysql-connector-java"/>
+            <param name="db.driver.version" value="${mysql.version}"/>
+        </antcall>
+    </target>
+
+    <target name="execute-deploy-uportal-with-jtds" if="jtds.driver">
+        <echo message="setting jtds db properties..."/>
+        <antcall target="execute-deploy-uportal">
+            <param name="db.driver.groupId" value="net.sourceforge"/>
+            <param name="db.driver.artifactId" value="jtds"/>
+            <param name="db.driver.version" value="${jtds.version}"/>
+        </antcall>
+    </target>
+
+    <target name="execute-deploy-uportal-with-jnetdirect" if="jnetdirect.driver">
+        <echo message="setting jnetdirect db properties..."/>
+        <antcall target="execute-deploy-uportal">
+            <param name="db.driver.groupId" value="jnetdirect"/>
+            <param name="db.driver.artifactId" value="jnetdirect"/>
+            <param name="db.driver.version" value="${jnetdirect.version}"/>
+        </antcall>
+    </target>
+
+    <target name="extract-uportal">
+        <artifact:dependencies pathId="uportal.war">
+            <dependency groupId="uportal" artifactId="uportal"
+                version="${uportal.version}" type="war"/>
+            <remoteRepository refid="toro.repository" />
+        </artifact:dependencies>
+ 
+        <antcall target="extract-artifact">
+          <param name="groupId" value="uportal"/>
+          <param name="artifactId" value="uportal"/>
+          <param name="version" value="${uportal.version}"/>
+          <param name="target.dir" value="${work.dir}/uportal-${uportal.version}"/>
+          <param name="archive.type" value="war"/>
+        </antcall>
+    </target>
+
+    <target name="execute-deploy-uportal">
+
+        <antcall target="extract-uportal"/>
+ 
+         <!-- Copy the contents of the build directory -->
+         <mkdir     dir="${portal.webapp.home}"/>
+         <copy    todir="${portal.webapp.home}">
+             <fileset dir="${work.dir}/uportal-${uportal.version}" excludes="stylesheets/**"/>
+         </copy>
+ 
+ 
+         <!-- These are Tomcat-specific!  We need to think about a new property
+              that lets us specify the appropriate directory for other servers
+         -->
+         <artifact:dependencies filesetId="lib.container-shared">
+             <dependency groupId="org.apache.pluto" artifactId="pluto"
+                 version="${pluto.version}" type="jar"/>
+             <dependency groupId="taglibs" artifactId="standard"
+                 version="${standard.version}" type="jar"/>
+             <dependency groupId="javax.servlet" artifactId="jstl"
+                 version="${jstl.version}" type="jar"/>
+             <dependency groupId="javax/portlet" artifactId="portlet-api"
+                 version="${portlet-api.version}" type="jar"/>
+             <remoteRepository refid="toro.repository" />
+         </artifact:dependencies>
+         <copy flatten="true" todir="${tomcat.home}/shared/lib">
+             <fileset refId="lib.container-shared"/>
+         </copy>
+           
+         <mkdir dir="${tomcat.home}/shared/classes/org/jasig/portal/container"/>
+         <copy todir="${tomcat.home}/shared/classes/org/jasig/portal/container"
+             file="${work.dir}/uportal-${uportal.version}/WEB-INF/classes/org/jasig/portal/container/PortletServlet.class"/>
+
+         <artifact:dependencies filesetId="lib.container-common-endorsed">
+             <dependency groupId="serializer" artifactId="serializer"
+                 version="${serializer.version}" type="jar"/>
+             <dependency groupId="xalan" artifactId="xalan"
+                 version="${xalan.version}" type="jar"/>
+             <remoteRepository refid="toro.repository" />
+         </artifact:dependencies>
+         <copy flatten="true" todir="${tomcat.home}/common/endorsed">
+             <fileset refId="lib.container-common-endorsed"/>
+         </copy>
+         <delete>
+             <fileset dir="${tomcat.home}/common/endorsed">
+                 <include name="xml-api*"/>
+             </fileset>
+         </delete>
+           
+         <artifact:dependencies filesetId="lib.container-common">
+             <dependency groupId="${db.driver.groupId}" artifactId="${db.driver.artifactId}"
+                 version="${db.driver.version}" type="jar"/>
+             <remoteRepository refid="toro.repository" />
+         </artifact:dependencies>
+         <copy flatten="true" todir="${tomcat.home}/common/lib">
+             <fileset refId="lib.container-common"/>
+         </copy>
+ 
+         <!-- This is Tomcat-specific and server name-specific!
+              We need to find out the best way to ensure cross-context
+              behavior in all servlet containers.
+         -->
+           
+   
+            <!--
+                   Copy context configuration into the Tomcat server configuration directory so that Tomcat will configure the
+                    context properly.
+                    
+                    In the "dist" target, the .war produced includes this context declaration in its /META-INF/.
+               -->
+ 
+         <copy tofile="${tomcat.host.conf}/${portal.webapp.name}.xml"
+             file="${basedir}/properties/uportal-context.xml"
+             overwrite="true">
+         <filterset>
+             <filter token="webappDocBase" value="${portal.webapp.name}"/>
+             <filter token="webappPath" value="/${portal.webapp.name}"/>
+             <filter token="jdbcDriver" value="${jdbc.driver}"/>
+             <filter token="jdbcUrl" value="${jdbc.url}"/>
+             <filter token="jdbcUser" value="${jdbc.user}"/>
+             <filter token="jdbcPassword" value="${jdbc.password}"/>
+             <filter token="poolPreparedStatements" value="true"/>
+         </filterset>
+         <filterset refid="tokens"/>
+           </copy>
+           <copy todir="${tomcat.host.conf}" file="${work.dir}/uportal-${uportal.version}/WEB-INF/classes/properties/proxyportlet.xml"/>
+ 
+             <!-- Deploy classes to support the modified version of WSRP4J's proxyportlet.
+                  Consider making these classes part of the proxyportlet.war distribution.
+             -->
+         <mkdir     dir="${portal.webapp.home}/../proxyportlet/WEB-INF/classes/org/jasig/portal/wsrp/consumer/portlet"/>
+         <copy    todir="${portal.webapp.home}/../proxyportlet/WEB-INF/classes/org/jasig/portal/wsrp/consumer/portlet">
+             <fileset dir="${work.dir}/uportal-${uportal.version}/WEB-INF/classes/org/jasig/portal/wsrp/consumer/portlet"/>
+         </copy>
+ 
+         <copy tofile="${portal.webapp.home}/WEB-INF/classes/log4j.properties"
+             file="${basedir}/properties/uportal-log4j.properties"
+             overwrite="true">
+             <filterset refid="tokens"/>
+         </copy>
+   </target>
+
+   <target name="uportal-initportal">
+       <echo>Initializing uPortal</echo>
+       <available property="uportal.deployment.exists" file="${portal.webapp.home}"/>
+       <antcall target="exec-uportal-initportal"/>
+   </target>
+
+   <target name="create-uportal-rdbm-properties">
+       <copy overwrite="true" filtering="on" tofile="${work.dir}/uportal-${uportal.version}/WEB-INF/classes/properties/rdbm.properties" file="${basedir}/properties/uportal.rdbm.properties">
+       <filterset refid="tokens"/>
+     </copy>
+   </target>
+
+   <target name="exec-uportal-initportal" if="uportal.deployment.exists">
+       <echo>Executing uPortal Initialization</echo>
+     <antcall target="extract-artifact">
+       <param name="groupId" value="uportal"/>
+       <param name="artifactId" value="uportal"/>
+       <param name="version" value="${uportal.version}"/>
+       <param name="target.dir" value="${work.dir}/uportal-${uportal.version}"/>
+       <param name="archive.type" value="war"/>
+     </antcall>
+     <antcall target="create-uportal-rdbm-properties"/>
+     <antcall target="merge-configuration">
+       <param name="configfile" value="${basedir}/properties/uPortalDbLoaderConfigurationChange.xml"/>
+       <param name="targetdir" value="${work.dir}/uportal-${uportal.version}"/>
+     </antcall>
+
+     <antcall target="uportal-db"/>
+     <antcall target="uportal-pubchan"/>
+     <antcall target="uportal-i18n-db"/>
+     <antcall target="uportal-pubfragments">
+       <param name="fragmentFile" value="/properties/al/fragments.xml"/>
+     </antcall>
+     <antcall target="uportal-deploy-portlet-apps">
+       <param name="portletApp" value="all"/>
+     </antcall>
+   </target>
+
+   <target name="uportal-pubchan" if="run.uportal.pubchan">
+     <echo>uPortal Channel Publishing</echo>
+     <antcall target="exec-uportal-pubchan"/>
+   </target>
+
+   <target name="exec-uportal-pubchan">
+     <echo>Executing uPortal Channel Publishing</echo>
+     <property name="channel" value="all"/>
+     <property name="uportal.pubchan.classpath.id" value="uportal.classpath"/>
+
+     <antcall target="extract-uportal"/>
+     <java fork="true" failonerror="true" dir="${basedir}" classname="org.jasig.portal.tools.chanpub.ChannelPublisher">
+       <classpath>
+           <pathelement path="${work.dir}/uportal-${uportal.version}/WEB-INF/classes"/>
+           <fileset dir="${work.dir}/uportal-${uportal.version}/WEB-INF/lib">
+           <include name="**/*.jar"/>
+         </fileset>
+         <path refId="${uportal.pubchan.classpath.id}"/>
+       </classpath>
+       <arg value="-n"/>
+       <arg value="${channel}"/>
+     </java> 
+   </target>
+
+   <target name="uportal-i18n-db" if="run.uportal.i18n.db">
+     <echo>uPortal i18n Initialization</echo>
+     <property name="usetable" value="-t"/>
+     <property name="tablefile" value="/properties/db/tables-i18n.xml"/>
+     <property name="usedata" value="-d"/>
+     <property name="datafile" value="/properties/db/data-i18n.xml"/>
+     <property name="createscript" value=" "/>
+     <property name="droptables" value="${uportal.db.droptables.arg}"/>
+     <property name="createtables" value=" "/>
+     <property name="populatetables" value=" "/>
+     <echo>Running DbLoader with droptables option: #${uportal.db.droptables.arg}#</echo>
+     <java fork="true" failonerror="true" dir="${basedir}" classname="org.jasig.portal.tools.dbloader.DbLoader">
+       <classpath>
+           <pathelement path="${work.dir}/uportal-${uportal.version}/WEB-INF/classes"/>
+           <fileset dir="${work.dir}/uportal-${uportal.version}/WEB-INF/lib">
+           <include name="**/*.jar"/>
+         </fileset>
+         <path refId="uportal.classpath"/>
+       </classpath>
+
+       <arg value="${usetable}"/>
+       <arg value="${tablefile}"/>
+       <arg value="${usedata}"/>
+       <arg value="${datafile}"/>
+       <arg value="${createscript}"/>
+       <arg value="${droptables}"/>
+       <arg value="${createtables}"/>
+       <arg value="${populatetables}"/>
+     </java>
+   </target>
+
+   <target name="uportal-pubfragments" if="run.uportal.pubfragments">
+     <echo>uPortal publish fragments</echo>
+     <property name="tempDataXML" value="/properties/al/fragment.temp.data.xml"/>
+     <property name="fragmentFile" value=" "/>
+     <echo message="Resetting layout fragments configuration."/>    <!-- create data.xml file -->
+     <java fork="true" failonerror="true" dir="${basedir}" classname="org.jasig.portal.layout.alm.tool.FragmentLoader">
+         <arg value="${fragmentFile}"/>
+         <arg value="${work.dir}/uportal-${uportal.version}/WEB-INF/classes${tempDataXML}"/>
+         <classpath>
+             <pathelement path="${work.dir}/uportal-${uportal.version}/WEB-INF/classes"/>
+             <fileset dir="${work.dir}/uportal-${uportal.version}/WEB-INF/lib">
+               <include name="**/*.jar"/>
+             </fileset>
+             <path refId="uportal.classpath"/>
+         </classpath>
+     </java>
+     <available file="${work.dir}/uportal-${uportal.version}/WEB-INF/classes${tempDataXML}"
+         property="temp.fragment.data.file.present"/>
+     <antcall target="uportal-pubfragments-load"/>
+   </target>
+
+   <target name="uportal-pubfragments-load" if="temp.fragment.data.file.present">
+    <echo>Executing uPortal publish fragments</echo>
+    <java fork="true" failonerror="true" dir="${build.home}/WEB-INF/classes"
+          classname="org.jasig.portal.tools.dbloader.DbLoader">
+        <arg value="-d"/>
+        <arg value="${tempDataXML}"/>
+        <arg value="-nC"/>
+        <arg value="-nD"/>
+        <arg value="-P"/>
+        <classpath>
+            <pathelement path="${work.dir}/uportal-${uportal.version}/WEB-INF/classes"/>
+            <fileset dir="${work.dir}/uportal-${uportal.version}/WEB-INF/lib">
+              <include name="**/*.jar"/>
+            </fileset>
+            <path refId="uportal.classpath"/>
+        </classpath>
+    </java>
+    <delete file="${build.home}/WEB-INF/classes/${tempDataXML}"/>
+  </target>
+
+   <target name="uportal-deploy-portlet-apps" if="run.uportal.deploy.portlet.apps">
+     <echo>uPortal deploy portlets</echo>
+     <java fork="true" failonerror="true" dir="${basedir}" classname="org.danann.cernunnos.runtime.Main">
+       <classpath>
+           <pathelement path="${work.dir}/uportal-${uportal.version}/WEB-INF/classes"/>
+           <fileset dir="${work.dir}/uportal-${uportal.version}/WEB-INF/lib">
+           <include name="**/*.jar"/>
+         </fileset>
+         <path refId="uportal.classpath"/>
+       </classpath>
+       <arg value="classpath://org/jasig/portal/container/deploy/deploy-archives.crn"/>
+       <arg value="${portletApp}"/>
+       <arg value="${tomcat.home}/webapps"/>
+     </java>
+   </target>
+
+   <target name="uportal-db" if="run.uportal.db">
+    <echo>uPortal initialize db</echo>
+    <property name="usetable" value=" "/>
+    <property name="tablefile" value=" "/>
+    <property name="usedata" value=" "/>
+    <property name="datafile" value=" "/>
+    <property name="createscript" value=" "/>
+    <property name="droptables" value="${uportal.db.droptables.arg}"/>
+    <property name="createtables" value=" "/>
+    <property name="populatetables" value=" "/>
+    <property name="localeaware" value=" "/>
+    <property name="adminlocale" value=" "/>
+    <echo>Running DbLoader with droptables option: #${uportal.db.droptables.arg}#</echo>
+    <java fork="true" failonerror="true" dir="${basedir}" classname="org.jasig.portal.tools.dbloader.DbLoader">
+      <classpath>
+          <pathelement path="${work.dir}/uportal-${uportal.version}/WEB-INF/classes"/>
+          <fileset dir="${work.dir}/uportal-${uportal.version}/WEB-INF/lib">
+          <include name="**/*.jar"/>
+        </fileset>
+        <path refId="uportal.classpath"/>
+      </classpath>
+
+      <arg value="${usetable}"/>
+      <arg value="${tablefile}"/>
+      <arg value="${usedata}"/>
+      <arg value="${datafile}"/>
+      <arg value="${createscript}"/>
+      <arg value="${droptables}"/>
+      <arg value="${createtables}"/>
+      <arg value="${populatetables}"/>
+      <arg value="${localeaware}"/>
+      <arg value="${adminlocale}"/>
+    </java>
+   </target>
+    <!-- End uPortal Targets -->
+</project>

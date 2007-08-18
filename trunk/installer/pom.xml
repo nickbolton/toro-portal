@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>toro-installer</artifactId>
+  <packaging>jar</packaging>
+
+  <parent>
+    <groupId>net.unicon.toro</groupId>
+    <artifactId>toro-main</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <name>Toro Deployment</name>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <tasks>
+                <copy file="build_antinstall.xml" tofile="target/classes/build.xml" filtering="on"/>
+                <copy file="antinstall-config.xml" todir="target/classes" filtering="on">
+                  <filterset>
+                    <filter token="uportal.remote.repo" value="http://maven2.unicon.net/"/>
+                    <filter token="toro.remote.repo" value="http://maven2.unicon.net/"/>
+                    <filter token="uportal.version" value="${uportal.version}"/>
+                    <filter token="pluto.version" value="${pluto.version}"/>
+                    <filter token="commons-logging.version" value="${commons-logging.version}"/>
+                    <filter token="servlet-api.version" value="${servlet-api.version}"/>
+                    <filter token="portlet-api.version" value="${portlet-api.version}"/>
+                    <filter token="xercesImpl.version" value="${xercesImpl.version}"/>
+                    <filter token="xalan.version" value="${xalan.version}"/>
+                    <filter token="serializer.version" value="${serializer.version}"/>
+                    <filter token="jetspeed.version" value="${jetspeed.version}"/>
+                    <filter token="jaxen.version" value="${jaxen.version}"/>
+                    <filter token="dom4j.version" value="${dom4j.version}"/>
+                    <filter token="springframework.version" value="${springframework.version}"/>
+                    <filter token="backport-util-concurrent.version" value="${backport-util-concurrent.version}"/>
+                    <filter token="commons-dbcp.version" value="${commons-dbcp.version}"/>
+                    <filter token="hsqldb.version" value="${hsqldb.version}"/>
+                    <filter token="jtds.version" value="${jtds.version}"/>
+                    <filter token="mysql.version" value="${mysql.version}"/>
+                    <filter token="oracle.version" value="${oracle.version}"/>
+                    <filter token="postgresql.version" value="${postgresql.version}"/>
+                    <filter token="standard.version" value="${standard.version}"/>
+                    <filter token="jstl.version" value="${jstl.version}"/>
+                    <filter token="hibernate.version" value="${hibernate.version}"/>
+
+                    <!-- default installer options -->
+                    <filter token="deploy.all" value="true"/>
+                    <filter token="initialize.all" value="true"/>
+                    <filter token="uportal.deploy" value="true"/>
+                    <filter token="uportal.version1" value="2.6.0"/>
+                    <filter token="portal.webapp.name" value="portal"/>
+                    <filter token="portal.server.http.protocol" value="http"/>
+                    <filter token="portal.server.hostname" value="localhost"/>
+                    <filter token="portal.server.port" value=":8080"/>
+                    <filter token="uportal.db" value="true"/>
+                    <filter token="uportal.i18n.db" value="true"/>
+                    <filter token="uportal.pubchan" value="true"/>
+                    <filter token="uportal.pubfragments" value="true"/>
+                    <filter token="uportal.deploy.portlet.apps" value="true"/>
+                    <filter token="briefcase-portlet.active" value="true"/>
+                    <filter token="messaging-portlet.active" value="true"/>
+                    <filter token="gateway-portlet.active" value="true"/>
+                    <filter token="web-content-portlet.active" value="true"/>
+                    <filter token="permissions-portlet.active" value="true"/>
+                    <filter token="blojsom.active" value="true"/>
+                    <filter token="project.version1" value="1.0.0-SNAPSHOT"/>
+                    <filter token="tomcat.host.conf.relative" value="conf/Catalina/localhost"/>
+                    <filter token="toro.data.home" value="/Users/deuce/dev/src/unicon/toro/data"/>
+                    <filter token="toro.data.home.win" value="C:\toro\data"/>
+                    <filter token="aspell.executable.path" value="/tmp/aspell"/>
+                    <filter token="smtp.server.hostname" value="smtp.unicon.net"/>
+                    <filter token="smtp.server.port" value="25"/>
+                    <filter token="smtp.server.username" value="smtpuser"/>
+                    <filter token="smtp.server.password" value="smtppa55wd"/>
+                    <filter token="datasource" value="PortalDb"/>
+                    <filter token="jdbc.driver1" value="org.postgresql.Driver"/>
+                    <filter token="jdbc.driver1.text" value="Postgres"/>
+                    <filter token="jdbc.driver2" value="oracle.jdbc.driver.OracleDriver"/>
+                    <filter token="jdbc.driver2.text" value="Oracle"/>
+                    <filter token="jdbc.driver3" value="net.sourceforge.jtds.jdbc.Driver"/>
+                    <filter token="jdbc.driver3.text" value="Sql Server (jtds)"/>
+                    <filter token="jdbc.driver4" value="com.jnetdirect.jsql.JSQLDriver"/>
+                    <filter token="jdbc.driver4.text" value="Sql Server (jnetdirect)"/>
+                    <filter token="jdbc.url" value="jdbc:postgresql://localhost:5432/aos"/>
+                    <filter token="jdbc.user" value="uni"/>
+                    <filter token="jdbc.password" value="uni"/>
+                    <filter token="jdbc.poolsize.uportal" value="100"/>
+                    <filter token="jdbc.poolsize.briefcase" value="25"/>
+                    <filter token="jdbc.poolsize.gateway" value="25"/>
+                    <filter token="jdbc.poolsize.messaging" value="25"/>
+                    <filter token="jdbc.poolsize.permissions" value="25"/>
+                    <filter token="jdbc.poolsize.web.content" value="25"/>
+                    <filter token="jdbc.poolsize.blojsom" value="25"/>
+                    <filter token="reddot.content.path" value="/reddot/tmp"/>
+                    <filter token="reddot.url" value=""/>
+                    <filter token="reddot.method" value="get"/>
+                    <filter token="hibernate.create.only.checkbox" value="true"/>
+                    <filter token="hibernate.alchemist" value="true"/>
+                    <filter token="hibernate.portlets-common" value="true"/>
+                    <filter token="hibernate.demetrius" value="true"/>
+                    <filter token="hibernate.mercury" value="true"/>
+                  </filterset>
+                </copy>
+              </tasks>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>org.tp23.antinstaller.selfextract.SelfExtractor</mainClass>
+              <addClasspath>true</addClasspath>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+

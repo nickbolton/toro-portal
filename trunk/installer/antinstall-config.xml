@@ -1,0 +1,497 @@
+<?xml version="1.0"?>
+<!DOCTYPE installer PUBLIC "-//tp23 //DTD Ant Installer Config//EN" "http://antinstaller.sf.net/dtd/antinstall-config-0.8.dtd">
+<installer
+    ui="swing,text,text-auto,swing-auto"
+			verbose="true"
+            debug="true"
+            validateConfig="true"
+			lookAndFeel="org.tp23.jgoodies.plaf.plastic.PlasticXPLookAndFeel"
+			name="Toro Portal Installer"
+			windowIcon="/resources/AntInstaller.png"
+			defaultImageResource="/resources/antbar.png"
+			minJavaVersion="1.5"
+			finishButtonText="Install"
+			loadDefaults="prompt"
+			version="1.0">
+	<page
+			type="splash"
+			name="splash"
+            displayText="Toro Portal Installer version (1.0)"
+			splashResource="/resources/antinstaller-splash.png"
+			altText="Welcome to the Toro Portal installer"/>
+	<page
+			type="license"
+			name="license"
+			displayText="Combined license conditions"
+            resource="/resources/LICENSE-toro.txt"
+			usePaging="true">
+	</page>
+	<page
+			type="input"
+			name="maven repository"
+			overflow="false"
+			displayText="Maven">
+		<text
+            property="uportal.remote.repo"
+            defaultValue="@uportal.remote.repo@"
+            displayText="uPortal Maven Repository"/>
+		<text
+            property="toro.remote.repo"
+            defaultValue="@toro.remote.repo@"
+            displayText="Toro Maven Repository"/>
+	</page>
+	<page
+			type="input"
+			name="deploy-all"
+			overflow="true"
+			displayText="Deploy All">
+        <hidden property="pluto.version" value="@pluto.version@"/>
+        <hidden property="commons-logging.version" value="@commons-logging.version@"/>
+        <hidden property="servlet-api.version" value="@servlet-api.version@"/>
+        <hidden property="portlet-api.version" value="@portlet-api.version@"/>
+        <hidden property="xercesImpl.version" value="@xercesImpl.version@"/>
+        <hidden property="xalan.version" value="@xalan.version@"/>
+        <hidden property="serializer.version" value="@serializer.version@"/>
+        <hidden property="jetspeed.version" value="@jetspeed.version@"/>
+        <hidden property="jaxen.version" value="@jaxen.version@"/>
+        <hidden property="dom4j.version" value="@dom4j.version@"/>
+        <hidden property="springframework.version" value="@springframework.version@"/>
+        <hidden property="backport-util-concurrent.version" value="@backport-util-concurrent.version@"/>
+        <hidden property="commons-dbcp.version" value="@commons-dbcp.version@"/>
+        <hidden property="hsqldb.version" value="@hsqldb.version@"/>
+        <hidden property="jtds.version" value="@jtds.version@"/>
+        <hidden property="mysql.version" value="@mysql.version@"/>
+        <hidden property="oracle.version" value="@oracle.version@"/>
+        <hidden property="postgresql.version" value="@postgresql.version@"/>
+        <hidden property="standard.version" value="@standard.version@"/>
+        <hidden property="jstl.version" value="@jstl.version@"/>
+        <hidden property="hibernate.version" value="@hibernate.version@"/>
+
+        <comment displayText="    Deploy uPortal"/>
+        <comment displayText="    Common Libraries"/>
+        <comment displayText="    Common Portlets Webapp"/>
+        <comment displayText="    Briefcase Portlet"/>
+        <comment displayText="    Messaging Portlet"/>
+        <comment displayText="    Gateway Portlet"/>
+        <comment displayText="    Web Content Portlet (Reddot)"/>
+        <comment displayText="    Permissions Portlet"/>
+        <comment displayText="    Blojsom Blog Application"/>
+		<checkbox
+            property="deploy.all"
+            displayText="Deploy All"
+            defaultValue="@deploy.all@"
+			force="false"/>
+    </page>
+	<page
+			type="input"
+			name="deploy-all"
+			overflow="true"
+			displayText="Initialize All">
+        <comment displayText="    Init uPortal database"/>
+        <comment displayText="    Init uPortal i18n database"/>
+        <comment displayText="    Publish uPortal Channels"/>
+        <comment displayText="    Publish uPortal ALM Fragments"/>
+        <comment displayText="    Deploy uPortal Portlet Apps"/>
+        <comment displayText="    Toro Alchemist (Sequencer, Access Controller)"/>
+        <comment displayText="    Toro Portlets Common"/>
+        <comment displayText="    Toro Demetrius (Briefcase)"/>
+        <comment displayText="    Toro Mercury (Messaging)"/>
+		<checkbox
+            property="initialize.all"
+            displayText="Initialize All Database targets"
+            defaultValue="@initialize.all@"
+			force="false"/>
+    </page>
+	<page
+            ifProperty="(${deploy.all}!=true)"
+			type="input"
+			name="deploy.uportal"
+			overflow="true"
+			displayText="Deploy uPortal">
+		<checkbox
+            property="uportal.deploy"
+            displayText="Deploy uPortal"
+            defaultValue="@uportal.deploy@"
+			force="false"/>
+    </page>
+	<page
+            ifProperty="(${initialize.all}!=true)"
+			type="input"
+			name="init.uportal"
+			overflow="true"
+            displayText="Initialize uPortal">
+		<checkbox
+            property="uportal.db"
+            displayText="Init database"
+            defaultValue="@uportal.db@"
+			force="false"/>
+		<checkbox
+            property="uportal.i18n.db"
+            displayText="Init i18n database"
+            defaultValue="@uportal.i18n.db@"
+			force="false"/>
+		<checkbox
+            property="uportal.pubchan"
+            displayText="Publish Channels"
+            defaultValue="@uportal.pubchan@"
+			force="false"/>
+		<checkbox
+            property="uportal.pubfragments"
+            displayText="Publish ALM Fragments"
+            defaultValue="@uportal.pubfragments@"
+			force="false"/>
+		<checkbox
+            property="uportal.deploy.portlet.apps"
+            displayText="Deploy Portlet Apps"
+            defaultValue="@uportal.deploy.portlet.apps@"
+			force="false"/>
+	</page>
+    <page
+            ifProperty="((${deploy.all}=true) OR (${uportal.deploy}=true)) AND (${uportal.version}=)"
+			type="input"
+            name="uPortal version"
+                overflow="true"
+			displayText="uPortal Version">
+        <select
+            property="uportal.version"
+            displayText="Select which version to install"
+            defaultValue="@uportal.version1@">
+            <option text="@uportal.version1@" value="@uportal.version1@"/>
+        </select>
+    </page>
+	<page
+			type="input"
+            name="server.properties"
+			overflow="true"
+			displayText="Server Properties">
+		<text
+			property="portal.webapp.name"
+            defaultValue="@portal.webapp.name@"
+            displayText="uPortal webapp name"/>
+		<select
+			property="portal.server.http.protocol"
+            defaultValue="@portal.server.http.protocol@"
+            displayText="Portal http protocol">
+            <option text="http" value="http"/>
+            <option text="https" value="https"/>
+        </select>
+		<text
+			property="portal.server.hostname"
+            defaultValue="@portal.server.hostname@"
+            displayText="Server hostname"/>
+		<validated
+			property="portal.server.port"
+            defaultValue="@portal.server.port@"
+            regex="^:[0-9]+$|^$"
+            displayText="Server port (including the colon)"/>
+    </page>
+	<page
+            ifProperty="(${deploy.all}!=true)"
+			type="input"
+			name="components"
+			overflow="true"
+			displayText="Components">
+		<checkbox
+            property="common.libraries"
+            displayText="Common Libraries"
+			defaultValue="true"
+			force="true"/>
+		<checkbox
+            property="common.portlets.webapp"
+            displayText="Common Portlets Webapp"
+			defaultValue="true"
+			force="true"/>
+		<checkbox
+			displayText="Briefcase Portlet"
+			property="briefcase-portlet.active"
+            defaultValue="@briefcase-portlet.active@"
+			force="false"/>
+		<checkbox
+			displayText="Messaging Portlet"
+			property="messaging-portlet.active"
+            defaultValue="@messaging-portlet.active@"
+			force="false"/>
+		<checkbox
+			displayText="Gateway Portlet"
+			property="gateway-portlet.active"
+            defaultValue="@gateway-portlet.active@"
+			force="false"/>
+		<checkbox
+			displayText="Web Content Portlet (Reddot)"
+			property="web-content-portlet.active"
+            defaultValue="@web-content-portlet.active@"
+			force="false"/>
+		<checkbox
+			displayText="Permissions Portlet"
+			property="permissions-portlet.active"
+            defaultValue="@permissions-portlet.active@"
+			force="false"/>
+		<checkbox
+            displayText="Blojsom Blog Application"
+			property="blojsom.active"
+            defaultValue="@blojsom.active@"
+			force="false"/>
+        <select
+            property="project.version"
+            displayText="Select which version to install"
+            defaultValue="@project.version1@">
+            <option text="@project.version1@" value="@project.version1@"/>
+        </select>
+    </page>
+	<page
+            ifProperty="(${deploy.all}=true) AND (${toro.version}=)"
+			type="input"
+            name="toro version"
+			overflow="true"
+			displayText="Toro Version">
+        <select
+            property="project.version"
+            displayText="Select which version to install"
+            defaultValue="@project.version1@">
+            <option text="@project.version1@" value="@project.version1@"/>
+        </select>
+    </page>
+    <page
+        ifProperty="(${deploy.all}=true) OR (${messaging-portlet.active}=true)"
+        type="input"
+        overflow="true"
+        name="smtp"
+        displayText="Messaging Mail Server">
+		<text
+			property="smtp.server.hostname"
+            defaultValue="@smtp.server.hostname@"
+            displayText="SMTP hostname"/>
+		<validated
+			property="smtp.server.port"
+            defaultValue="@smtp.server.port@"
+            regex="^[0-9]+$"
+            displayText="SMTP port"/>
+		<text
+			property="smtp.server.username"
+            defaultValue="@smtp.server.username@"
+            displayText="SMTP username (if necessary)"/>
+		<validated
+			property="smtp.server.password"
+            defaultValue="@smtp.server.password@"
+            regex="^[a-zA-Z_0-9]+$"
+            displayText="SMTP password (if necessary)"/>
+        <!--password-confirm
+			property="smtp.server.password.confirm"
+            origField="smtp.server.password"
+            displayText="Confirm Password"
+            defaultValue="smtppa55wd"
+            regex="^[a-zA-Z_0-9]+$"
+            textMask="true"/-->
+    </page>
+    <page
+        ifProperty="(${deploy.all}=true) OR (${web-content-portlet.active}=true)"
+        type="input"
+        overflow="true"
+        name="reddot"
+        displayText="Reddot">
+		<directory
+				property="reddot.content.path"
+                defaultValue="@reddot.content.path@"
+                displayText="Reddot home"
+				create="false"
+				checkExists="true"/>
+		<text
+			property="reddot.url"
+            defaultValue="@reddot.url@"
+            displayText="URL to Reddot"/>
+		<select
+			property="reddot.method"
+            defaultValue="@reddot.method@"
+            displayText="Reddot method">
+            <option text="get" value="get"/>
+            <option text="post" value="post"/>
+        </select>
+	</page>
+    <page
+        type="input"
+        name="directories"
+		overflow="true"
+        displayText="File System Paths">
+		<directory
+				property="tomcat.home"
+                defaultValue="${env.TOMCAT_HOME}"
+                displayText="TOMCAT_HOME"
+				create="false"
+				checkExists="true"/>
+		<directory
+				property="tomcat.host.conf"
+                defaultValue="${tomcat.home}/@tomcat.host.conf.relative@"
+                displayText="Tomcat host path"
+				create="false"
+				checkExists="true"/>
+		<directory
+				property="toro.data.home"
+                defaultValue="@toro.data.home@"
+                defaultValueWin="@toro.data.home.win@"
+                displayText="Toro Data Home"
+				create="true"
+				checkExists="true"/>
+		<file
+				property="aspell.executable.path"
+                defaultValue="@aspell.executable.path@"
+                displayText="Aspell executable"
+				checkExists="false"/>
+        <!-- conditional here so they will be processed after the page is processed in runtime -->
+        <conditional ifProperty="(true=true)">
+            <hidden property="portal.webapp.home" value="${tomcat.home}/webapps/${portal.webapp.name}"/>
+            <hidden property="server.base.url" value="${portal.server.http.protocol}://${portal.server.hostname}${portal.server.port}"/>
+            <hidden property="portal.base.url" value="${portal.server.http.protocol}://${portal.server.hostname}${portal.server.port}/${portal.webapp.name}"/>
+        </conditional>
+    </page>
+	<page
+			type="input"
+            overflow="true"
+			name="db"
+			displayText="JDBC options">
+		<text
+			property="datasource"
+            defaultValue="@datasource@"
+            displayText="Datasouce"/>
+        <select
+            property="jdbc.driver"
+            defaultValue="@jdbc.driver1@"
+            displayText="JDBC Driver">
+            <option text="@jdbc.driver1.text@" value="@jdbc.driver1@"/>
+            <option text="@jdbc.driver2.text@" value="@jdbc.driver2@"/>
+            <option text="@jdbc.driver3.text@" value="@jdbc.driver3@"/>
+            <option text="@jdbc.driver4.text@" value="@jdbc.driver4@"/>
+        </select>
+        <text
+            property="jdbc.url"
+            defaultValue="@jdbc.url@"
+            displayText="JDBC Url"/>
+        <text
+            property="jdbc.user"
+            defaultValue="@jdbc.user@"
+            displayText="JDBC User"/>
+        <validated
+            property="jdbc.password"
+            defaultValue="@jdbc.password@"
+            regex="^[a-zA-Z_0-9]+$"
+            displayText="JDBC User"/>
+        <!--password-confirm
+            property="jdbc.password.confirm"
+            origField="jdbc.password"
+            displayText="Confirm Password"
+            defaultValue="uni"
+            regex="^[a-zA-Z_0-9]+$"
+            textMask="true"/-->
+        <validated
+            property="jdbc.poolsize.uportal"
+            defaultValue="@jdbc.poolsize.uportal@"
+            displayText="uPortal jdbc poolsize"
+            regex="^[0-9]+$"/>
+        <validated
+            property="jdbc.poolsize.briefcase"
+            defaultValue="@jdbc.poolsize.briefcase@"
+            displayText="Briefcase jdbc poolsize"
+            regex="^[0-9]+$"/>
+        <validated
+            property="jdbc.poolsize.gateway"
+            defaultValue="@jdbc.poolsize.gateway@"
+            displayText="Gateway jdbc poolsize"
+            regex="^[0-9]+$"/>
+        <validated
+            property="jdbc.poolsize.messaging"
+            defaultValue="@jdbc.poolsize.messaging@"
+            displayText="Messaging jdbc poolsize"
+            regex="^[0-9]+$"/>
+        <validated
+            property="jdbc.poolsize.permissions"
+            defaultValue="@jdbc.poolsize.permissions@"
+            displayText="Permissions jdbc poolsize"
+            regex="^[0-9]+$"/>
+        <validated
+            property="jdbc.poolsize.web.content"
+            defaultValue="@jdbc.poolsize.web.content@"
+            displayText="Web Content jdbc poolsize"
+            regex="^[0-9]+$"/>
+        <validated
+            property="jdbc.poolsize.blojsom"
+            defaultValue="@jdbc.poolsize.blojsom@"
+            displayText="Blojsom jdbc poolsize"
+            regex="^[0-9]+$"/>
+        <conditional ifProperty="(${jdbc.driver}=org.postgresql.Driver)">
+            <hidden property="db.platform" value="postgres"/>
+            <hidden property="jdbc.simplesql" value="select 1"/>
+        </conditional>
+        <conditional ifProperty="(${jdbc.driver}=oracle.jdbc.driver.OracleDriver)">
+            <hidden property="db.platform" value="oracle"/>
+            <hidden property="jdbc.simplesql" value="select 1 from dual"/>
+        </conditional>
+        <conditional ifProperty="(${jdbc.driver}=net.sourceforge.jtds.jdbc.Driver)">
+            <hidden property="db.platform" value="sqlserver"/>
+            <hidden property="jdbc.simplesql" value="select 1"/>
+        </conditional>
+        <conditional ifProperty="(${jdbc.driver}=com.jnetdirect.jsql.JSQLDriver)">
+            <hidden property="db.platform" value="sqlserver"/>
+            <hidden property="jdbc.simplesql" value="select 1"/>
+        </conditional>
+        <conditional ifProperty="(${jdbc.driver}=org.hsqldb.jdbcDriver)">
+            <hidden property="db.platform" value="hsql"/>
+            <hidden property="jdbc.simplesql" value="select 1"/>
+        </conditional>
+        <conditional ifProperty="(${jdbc.driver}=com.mysql.jdbc.Driver)">
+            <hidden property="db.platform" value="mysql"/>
+            <hidden property="jdbc.simplesql" value="select 1"/>
+        </conditional>
+    </page>
+	<page
+            ifProperty="(${initialize.all}!=true)"
+			type="input"
+            overflow="true"
+			name="properties"
+            displayText="Schema Creation">
+		<checkbox
+            displayText="Alchemist (Sequencer, Access Controller)"
+			property="hibernate.alchemist"
+            defaultValue="@hibernate.alchemist@"
+			force="false"/>
+        <!--checkbox
+            displayText="Channels Common"
+			property="hibernate.cdk"
+			defaultValue="false"
+			force="false"/-->
+		<checkbox
+            displayText="Portlets Common"
+			property="hibernate.portlets-common"
+            defaultValue="@hibernate.portlets-common@"
+			force="false"/>
+		<checkbox
+            displayText="Demetrius (Briefcase)"
+			property="hibernate.demetrius"
+            defaultValue="@hibernate.demetrius@"
+			force="false"/>
+		<checkbox
+            displayText="Mercury (Messaging)"
+			property="hibernate.mercury"
+            defaultValue="@hibernate.mercury@"
+			force="false"/>
+    </page>
+	<page
+        ifProperty="(${initialize.all}=true) OR (${hibernate.alchemist}=true) OR (${hibernate.portlets-common}=true) OR (${hibernate.demetrius}=true) OR (${hibernate.mercury}=true) OR (${uportal.db}=true) OR (${uportal.i18n.db}=true)"
+			type="input"
+            overflow="true"
+            name="schema creation mode"
+            displayText="Schema Creation Mode">
+		<checkbox
+            displayText="Create Tables Only"
+			property="hibernate.create.only.checkbox"
+            defaultValue="@hibernate.create.only.checkbox@"
+			force="false"/>
+    </page>
+	<page
+			type="progress"
+			name="progress"
+			showTargets="true"
+			displayText="Installation progress">
+
+    </page>
+</installer>
+
+
