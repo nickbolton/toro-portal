@@ -1,0 +1,100 @@
+<!--
+  Copyright (C) 2007 Unicon, Inc.
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this distribution.  It is also available here:
+  http://www.fsf.org/licensing/licenses/gpl.html
+
+  As a special exception to the terms and conditions of version 
+  2 of the GPL, you may redistribute this Program in connection 
+  with Free/Libre and Open Source Software ("FLOSS") applications 
+  as described in the GPL FLOSS exception.  You should have received
+  a copy of the text describing the FLOSS exception along with this
+  distribution.
+-->
+<project name="alchemist" default="deploy" basedir="."
+    xmlns:artifact="urn:maven-artifact-ant">
+
+    <property file="../../ant.install.properties"/>
+    <property name="tomcat.home" value="[SET IN BUILD.PROPERTIES!]" />
+
+    <typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="urn:maven-artifact-ant">
+        <classpath>
+            <pathelement location="../../dependencies/maven-artifact-ant-2.0.4-dep.jar" />
+        </classpath>
+    </typedef>
+
+    <target name="deploy">
+        <available property="blojsom.exists" file="${tomcat.home}/webapps/toro-blojsom/WEB-INF/lib"/>
+        <available property="briefcase.exists" file="${tomcat.home}/webapps/toro-briefcase-portlet/WEB-INF/lib"/>
+        <available property="gateway.exists" file="${tomcat.home}/webapps/toro-gateway-portlet/WEB-INF/lib"/>
+        <available property="messaging.exists" file="${tomcat.home}/webapps/toro-messaging-portlet/WEB-INF/lib"/>
+        <available property="permissions.exists" file="${tomcat.home}/webapps/toro-permissions-portlet/WEB-INF/lib"/>
+        <available property="web.content.exists" file="${tomcat.home}/webapps/toro-web-content-portlet/WEB-INF/lib"/>
+
+        <antcall target="deploy-to-blojsom"/>
+        <antcall target="deploy-to-briefcase"/>
+        <antcall target="deploy-to-gateway"/>
+        <antcall target="deploy-to-messaging"/>
+        <antcall target="deploy-to-permissions"/>
+        <antcall target="deploy-to-web-content"/>
+    </target>
+
+    <target name="deploy-artifact">
+        <artifact:dependencies filesetId="copy-maven-artifact.filesetId">
+            <dependency groupId="net.unicon.toro" artifactId="alchemist"
+                version="${project.version}" type="jar"/>
+        </artifact:dependencies>
+
+        <copy flatten="true" todir="${todir}">
+            <fileset refId="copy-maven-artifact.filesetId"/>
+        </copy>
+    </target>
+
+    <target name="deploy-to-blojsom" if="blojsom.exists">
+        <antcall target="deploy-artifact">
+            <param name="todir" value="${tomcat.home}/webapps/toro-blojsom/WEB-INF/lib"/>
+        </antcall>
+    </target>
+
+    <target name="deploy-to-briefcase" if="briefcase.exists">
+        <antcall target="deploy-artifact">
+            <param name="todir" value="${tomcat.home}/webapps/toro-briefcase-portlet/WEB-INF/lib"/>
+        </antcall>
+    </target>
+
+    <target name="deploy-to-gateway" if="gateway.exists">
+        <antcall target="deploy-artifact">
+            <param name="todir" value="${tomcat.home}/webapps/toro-gateway-portlet/WEB-INF/lib"/>
+        </antcall>
+    </target>
+
+    <target name="deploy-to-messaging" if="messaging.exists">
+        <antcall target="deploy-artifact">
+            <param name="todir" value="${tomcat.home}/webapps/toro-messaging-portlet/WEB-INF/lib"/>
+        </antcall>
+    </target>
+
+    <target name="deploy-to-permissions" if="permissions.exists">
+        <antcall target="deploy-artifact">
+            <param name="todir" value="${tomcat.home}/webapps/toro-permissions-portlet/WEB-INF/lib"/>
+        </antcall>
+    </target>
+
+    <target name="deploy-to-web-content" if="web.content.exists">
+        <antcall target="deploy-artifact">
+            <param name="todir" value="${tomcat.home}/webapps/toro-web-content-portlet/WEB-INF/lib"/>
+        </antcall>
+    </target>
+
+</project>
