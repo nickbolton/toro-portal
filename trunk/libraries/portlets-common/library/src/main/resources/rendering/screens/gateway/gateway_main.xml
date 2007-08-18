@@ -1,0 +1,540 @@
+<?xml version="1.0" ?>
+<!--
+  Copyright (C) 2007 Unicon, Inc.
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this distribution.  It is also available here:
+  http://www.fsf.org/licensing/licenses/gpl.html
+
+  As a special exception to the terms and conditions of version 
+  2 of the GPL, you may redistribute this Program in connection 
+  with Free/Libre and Open Source Software ("FLOSS") applications 
+  as described in the GPL FLOSS exception.  You should have received
+  a copy of the text describing the FLOSS exception along with this
+  distribution.
+-->
+<!-- <window /> @type = "popup|iframe|self" -->
+<!--
+<?xml version="1.0" ?>
+<state>
+    <title>Blog Portlet</title>
+    <navigation has-back="false">
+        <ajax-callback-url>/something/here.jsp?key=somethinglongandugly123</ajax-callback-url>
+        <entry-point id="123" class="largePersonal" credentials="needed">
+            <label>Read Blogs</label>
+            <description>To read the latest blogs.</description>
+            <window type="popup">
+                <title>Blogger</title>
+                <name>BlogPopUpWindow</name>
+                <properties>width=300,height=300,location=no,toolbar=no,status=no</properties>
+            </window>
+	         <sequence type="login" current="true">
+	            <sequence-start-trigger>
+	               <context type="popup">
+	                  <image src="images/icons/marker_error.gif" class="smallImage" height="16" width="16" border="0" align="middle">
+	                  </image>
+	                  <text class="sakaiSmall">
+	                     <label>Log in again</label>
+	                     <description>ReAuthenticate description</description>
+	                  </text>
+	               </context>
+	               <context type="iframe">
+	                  <image src="images/icons/sakai_icon_large.gif" class="regImage" border="0" align="middle" alt="Restart and reauthenticate Sakai">
+	                  </image>
+	               </context>
+	            </sequence-start-trigger>
+	
+	            <send action="http://shawn.unicon.net:8088/jsp-examples/result.jsp" method="GET" id="abc123">
+	            </send>
+	
+	            <send action="http://shawn.unicon.net:8088/jsp-examples/result.jsp" method="POST" id="abc124">
+	               <parameter name="eid">
+	                  <value>admin</value>
+	               </parameter>
+	
+	               <parameter name="pw">
+	                  <value>admin</value>
+	               </parameter>
+	            </send>
+	         </sequence>
+	
+	         <sequence type="refresh" handle="sakaiMainRefresh">
+	            <send action="http://shawn.unicon.net:8088/jsp-examples/result.jsp" method="GET" id="abc125"></send>
+	         </sequence>
+        </entry-point>
+        <entry-point id="124" class="largePersonal" credentials="stored">
+            <label>Author Blog Entry</label>
+            <description>To create a new blog entry.</description>
+            <window type="iframe">
+                <title>Blogger</title>
+                <name>BlogWindow</name>
+                <style>width:100%;height:200px;border:0px;</style>
+            </window>
+            
+            <sequence type="login">
+	            <send action="http://shawn.unicon.net:8088/jsp-examples/result.jsp" method="post" id="abc126">
+	                <parameter name="username"><value>johndoe</value></parameter>
+	                <parameter name="password"><value>crazy1</value></parameter>
+	                <parameter name="q">
+	                    <value>luke skywalker</value>
+	                </parameter>
+	            </send>
+            </sequence>
+        </entry-point>
+        <entry-point id="125" class="largePersonal" credentials="stored">
+            <label>Administer Blog System</label>
+            <description>To administer or maintain blogs or the blogging software.</description>
+            <window type="popup">
+                <title>Blogger</title>
+                <name>BlogPopUpWindow</name>
+                <properties>width=600,height=600,location=no,toolbar=no,status=no</properties>
+            </window>
+            <sequence type="login">
+	            <send action="http://shawn.unicon.net:8088/jsp-examples/result.jsp" method="post" id="abc127">
+	                <parameter name="username"><value>johndoe</value></parameter>
+	                <parameter name="password"><value>crazy1</value></parameter>
+	                <parameter name="q">
+	                    <value>han solo</value>
+	                    <value>chewbacca</value>
+	                </parameter>
+	            </send>
+            </sequence>
+        </entry-point>
+        <entry-point id="126" class="largePersonal">
+            <label>Blog Comment Entry</label>
+            <description>To create a new blog entry.</description>
+            <window type="iframe">
+                <title>Blogger</title>
+                <name>BlogWindow</name>
+                <style>width:30%;height:200px;</style>
+            </window>
+            
+            <sequence type="login">
+	            <send action="http://shawn.unicon.net:8088/jsp-examples/result.jsp" method="post" id="abc128">
+	                <parameter name="username"><value>johndoe</value></parameter>
+	                <parameter name="password"><value>crazy1</value></parameter>
+	                <parameter name="q">
+	                    <value>anakin skywalker</value>
+	                    <value>darth vader</value>
+	                </parameter>
+	            </send>
+            </sequence>
+        </entry-point>
+    </navigation>
+</state>
+
+-->
+<screen handle="gateway_main">
+   <layout>
+       <layout-context class="GatewayPortlet GatewayPortlet_gateway_main" />
+       <!--form><textarea cols="40" rows="10"><copy-of select="/state"></copy-of></textarea></form-->
+      <section type="header" cols="1">
+         <section type="title">
+            <h2>
+                <value-of select="/state/navigation/entry-point/label[count(/state/navigation/entry-point) = 1 and ((/state/navigation/entry-point/window/@type='iframe') or (/state/navigation/entry-point/@credentials='needed') or (/state/navigation/@changecreds='true'))]|/state/title" />
+            </h2>
+         </section>
+      </section>
+
+      <section type="content">
+         <section type="main" cols="1" class="padding-large">
+            <!-- ERROR MESSAGE -->
+            <call-template handle="errors" select="/state/status/error|/state[count(navigation/entry-point) = 0]"></call-template>
+         
+<!-- Single entry point that needs credentials -->
+            <call-template handle="getCredentials" select="/state[count(navigation/entry-point) = 1 and((navigation/entry-point/@credentials='needed') or (navigation/@changecreds='true'))]" />
+
+<!-- Iframe Single Selection if only one entry point with window defined as being type 'iframe' -->
+            <call-template handle="iframeSingleSelection" select="/state[count(navigation/entry-point) = 1 and (navigation/entry-point/window/@type='iframe') and not((navigation/entry-point/@credentials='needed') or (navigation/@changecreds='true'))]" />
+
+ <!-- 
+ Links with Portlet Nav (i.e. choice-collection):
+ Total number of entry-points with credentials needed or stored or that are iframes, is 1 or more
+ and 
+ (
+    2 or more entry-points 
+    or 1 popup entry-point that does not have needed credentials (needed credentials covered above)
+ )
+ -->
+            <call-template handle="linksWithPortletNav" select="/state[(count(navigation/entry-point) &gt; 1 or (count(navigation/entry-point) = 1 and navigation/entry-point/window/@type='popup' and not(navigation/entry-point/@credentials='needed') and count(navigation[@changecreds='true']) = 0) ) and (count(navigation/entry-point/window[@type='iframe']) + count(navigation/entry-point[@credentials = 'needed']) + count(navigation/entry-point[@credentials = 'stored']) &gt; 0)]" />
+
+<!-- 
+ Links with no Portlet Nav (i.e. choice-collection):
+ Total number of entry-points with credentials needed or stored or that are iframes, is 0
+ and 
+ 1 or more popup entry-points 
+ -->
+            <call-template handle="linksWithNoPortletNav" select="/state[(count(navigation/entry-point) &gt; 0) and (count(navigation/entry-point/window[@type='iframe']) = 0) and (count(navigation/entry-point[@credentials = 'needed']) + count(navigation/entry-point[@credentials = 'stored']) + count(navigation[@changecreds='true']) = 0)]" />
+
+            <!-- <sso-context /> contains <ajax-callback-url /> element if it exists -->
+            
+            <sso-context><copy-of select="/state/navigation/ajax-callback-url"></copy-of></sso-context>
+
+         </section>
+      </section>
+   </layout>
+
+<!-- Get Credentials -->
+   <template handle="getCredentials">
+      <choice-collection handle="enterCredentialsForm">
+<!--<call-template handle="toolbar" select="." /> -->
+         <table even-row-class="portlet-section-body evenrow" odd-row-class="portlet-section-alternate oddrow" cellpadding="0" cellspacing="0" border="0" class="main-content-table" width="100%">
+            <caption class="portlet-section-header">Enter Credentials</caption>
+
+            <tr>
+               <th class="cell-emphasis">
+                  <label for-option="enterCredentialsForm_cUsername_oUsername">Username:</label>
+               </th>
+
+               <td>
+                  <choice handle="cUsername" min-selections="1" max-selections="1">
+                     <option handle="oUsername" complement-type="net.unicon.penelope.complement.TypeText64">
+                        <label>Enter your username for this application.</label>
+                     </option>
+                  </choice>
+               </td>
+            </tr>
+
+            <tr>
+               <th class="cell-emphasis">
+                  <label for-option="enterCredentialsForm_cPassword_oPassword">Password:</label>
+               </th>
+
+               <td>
+                  <choice handle="cPassword" min-selections="1" max-selections="1">
+                     <option handle="oPassword" complement-type="net.unicon.penelope.complement.TypePassword16">
+                        <label>Enter the password for this application.</label>
+                     </option>
+                  </choice>
+               </td>
+            </tr>
+         </table>
+
+         <call-template handle="toolbar" select="." />
+      </choice-collection>
+   </template>
+
+<!-- Get Credentials Toolbar -->
+   <template handle="toolbar">
+      <toolbar>
+         <action handle="gatewaySubmitCredentials" impl="net.unicon.academus.apps.gateway.engine.UpdateCredentialsAction" inpt="enterCredentialsForm" class="form-button-emphasis">
+            <label>Submit</label>
+
+            <description>To submit the changes / new information for this folder.</description>
+         </action>
+
+         <call-template handle="cancelButton" select="navigation[@has-back = 'true']">
+         </call-template>
+      </toolbar>
+   </template>
+
+<!-- Optional Cancel Button -->
+   <template handle="cancelButton">
+      <action handle="gatewayBackToTopButton" impl="net.unicon.academus.apps.gateway.engine.MainViewAction">
+         <label>Cancel</label>
+
+         <description>To cancel and return to the previous view.</description>
+      </action>
+   </template>
+
+<!-- START IFRAME with Single Entry -->
+   <template handle="iframeSingleSelection">
+      <choice-collection handle="entryPoint">
+          <hidden-input>
+              <choice handle="ignoreMe" min-selections="0" max-selections="0">
+                  <option handle="meToo" complement-type="net.unicon.penelope.complement.TypeNone">
+                  </option>
+              </choice>
+          </hidden-input>
+          <choice handle="goToEntryPoint" min-selections="0" max-selections="1">
+              <hbox width="100%">
+                  <call-template handle="createBackLink" select="navigation[@has-back = 'true']">
+                  </call-template>
+
+                  <call-template handle="changeCredentials" select="navigation/entry-point[@credentials = 'stored']">
+                  </call-template>
+              </hbox>
+          </choice>
+      </choice-collection>
+
+      <auto-submit>
+         <label>
+            <value-of select="navigation/entry-point/label">
+            </value-of>
+         </label>
+
+         <description>
+            <value-of select="navigation/entry-point/description">
+            </value-of>
+         </description>
+
+         <call-template handle="iframeOwnWindowProperties" select="navigation/entry-point/window" />
+
+         <copy-of select="navigation/entry-point/sequence[@current = 'true']">
+         </copy-of>
+      </auto-submit>
+      
+      <!-- INSERT functionality to determine if button needed to submit other sequence - aka re-authenticate button  -->
+      <call-template handle="otherSequencesIframe" select="navigation/entry-point/sequence[not(@current = 'true') and boolean(sequence-start-trigger)]" ></call-template>
+      
+   </template>
+   
+   <template handle="otherSequencesIframe" >
+   	  <!-- context is iframe -->
+      <link target="{../window/name}" class="{sequence-start-trigger/context[@type = 'iframe']/text/@class}">
+      	 <copy-of select="sequence-start-trigger/context[@type = 'iframe']/image" ></copy-of>
+      
+         <label>
+            <value-of select="sequence-start-trigger/context[@type = 'iframe']/text/label">
+            </value-of>
+         </label>
+
+         <description>
+            <value-of select="sequence-start-trigger/context[@type = 'iframe']/text/description">
+            </value-of>
+         </description>
+
+         <copy-of select=".">
+         </copy-of>
+      </link>
+
+   </template>
+
+   <template handle="otherSequencesPopup" >
+   	  <!-- context is popup -->
+      <link target="{../window/name}" class="{sequence-start-trigger/context[@type = 'popup']/text/@class}">
+      	 <copy-of select="sequence-start-trigger/context[@type = 'popup']/image" ></copy-of>
+      
+         <label>
+            <value-of select="sequence-start-trigger/context[@type = 'popup']/text/label">
+            </value-of>
+         </label>
+
+         <description>
+            <value-of select="sequence-start-trigger/context[@type = 'popup']/text/description">
+            </value-of>
+         </description>
+
+         <properties>
+            <value-of select="../window/properties">
+            </value-of>
+         </properties>
+
+         <copy-of select=".">
+         </copy-of>
+      </link>
+
+   </template>
+
+   <template handle="createBackLink">
+      <div>
+         <link>
+            <action handle="gatewayBackToTopLink" impl="net.unicon.academus.apps.gateway.engine.MainViewAction">
+               <label>&lt; Back</label>
+               <description>Return to previous screen.</description>
+            </action>
+         </link>
+      </div>
+   </template>
+
+   <template handle="iframeOwnWindowProperties">
+      <iframe handle="{name}" style="{style}">
+      </iframe>
+   </template>
+
+<!-- END IFRAME with Single Entry -->
+<!-- START IFRAME with Multiple Entry Points -->
+   <template handle="linksWithPortletNav">
+      <choice-collection handle="entryPoint">
+         <hidden-input>
+            <choice handle="ignoreMe" min-selections="0" max-selections="0">
+               <option handle="meToo" complement-type="net.unicon.penelope.complement.TypeNone">
+               </option>
+            </choice>
+         </hidden-input>
+         <choice handle="goToEntryPoint" min-selections="1" max-selections="1">
+            <ul class="no-bullet no-pad">
+               <call-template handle="entryPointSelection" select="/state/navigation/entry-point" />
+            </ul>
+         </choice>
+      </choice-collection>
+   </template>
+
+   <template handle="entryPointSelection">
+      <call-template handle="entryPointWithNavLink" select="self::node()[window/@type = 'iframe' or @credentials = 'needed']" />
+
+      <call-template handle="entryPointOther" select="self::node()[not(window/@type = 'iframe' or @credentials = 'needed')]" />
+   </template>
+
+   <template handle="entryPointWithNavLink">
+      <li>
+         <hbox width="100%">
+            <expanded-link class="{@class}">
+               <h4>
+                  <link>
+                     <action handle="gatewayNavigateToEntryPoint" impl="net.unicon.academus.apps.gateway.engine.SingleIframeAction" inpt="entryPoint">
+                        <label>
+                           <value-of select="label" />
+                        </label>
+
+                        <description>
+                           <value-of select="description" />
+                        </description>
+
+                        <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone" />
+                     </action>
+                  </link>
+               </h4>
+
+               <p>
+                  <value-of select="description" />
+               </p>
+            </expanded-link>
+
+            <call-template handle="changeCredentials" select="self::node()[@credentials = 'stored']">
+            </call-template>
+
+            <call-template handle="credentialsNeeded" select="self::node()[@credentials = 'needed']">
+            </call-template>
+         </hbox>
+      </li>
+   </template>
+
+   <template handle="changeCredentials">
+      <div style="text-align:right;">
+         <link class="credentials-change">
+            <action handle="gatewayChangeCredentials" impl="net.unicon.academus.apps.gateway.engine.ChangeCredentialsAction" inpt="entryPoint">
+               <label>[Change Credentials]</label>
+
+               <description>To update your stored username and password for accessing this item.</description>
+
+               <option handle="{concat('upcreds_',@id)}" complement-type="net.unicon.penelope.complement.TypeNone" />
+            </action>
+         </link>
+      </div>
+   </template>
+
+   <template handle="credentialsNeeded">
+      <div style="text-align:right;">
+         <span class="credentials-needed" title="To access this item, you will first be asked for your credentials. These will be stored for easy access in the future.">[Credentials Needed]</span>
+      </div>
+   </template>
+
+   <template handle="entryPointOther">
+      <li>
+         <hbox width="100%">
+            <expanded-link class="{@class}">
+               <h4>
+                  <link target="{window/name}">
+                     <label>
+                        <value-of select="label">
+                        </value-of>
+                     </label>
+
+                     <description>
+                        <value-of select="description">
+                        </value-of>
+                     </description>
+
+                     <properties>
+                        <value-of select="window/properties">
+                        </value-of>
+                     </properties>
+
+                     <copy-of select="sequence[@current='true']">
+                     </copy-of>
+                  </link>
+               </h4>
+
+               <p>
+                  <value-of select="description" />
+               </p>
+            </expanded-link>
+            
+            <!-- INSERT functionality to determine if button needed to submit other sequence - aka re-authenticate button  -->
+            <div style="text-align:right;">
+	            <call-template handle="otherSequencesPopup" select="sequence[not(@current = 'true') and boolean(sequence-start-trigger)]" ></call-template>
+	
+	            <call-template handle="changeCredentials" select="self::node()[@credentials = 'stored']">
+	            </call-template>
+            </div>
+         </hbox>
+      </li>
+   </template>
+
+<!-- END IFRAME with Multiple Entry Points -->
+<!-- START NON-IFRAME -->
+   <template handle="linksWithNoPortletNav">
+      <ul class="no-bullet no-pad">
+         <call-template handle="entryPointOther" select="/state/navigation/entry-point" />
+      </ul>
+   </template>
+
+<!-- END NON-IFRAME -->
+
+   <template handle="errors">
+      <section type="error">
+      	 <call-template handle="genericErrorMessage" select="self::node()[@type = 'other']" ></call-template>
+      	 <call-template handle="noEntryPointErrorMessage" select="self::node()[name() = 'state']" ></call-template>
+      </section>
+   </template>
+
+   <template handle="genericErrorMessage">
+      <section type="error">
+           <section type="portlet-msg-error problem">
+              <h4 class="inline">PROBLEM:</h4>
+
+              <p>
+                 <value-of select="problem" />
+              </p>
+           </section>
+
+           <section type="portlet-msg-info solution">
+              <h4 class="inline">SOLUTION:</h4>
+
+              <p>
+                 <value-of select="solution" />
+              </p>
+           </section>
+      </section>
+   </template>
+
+   <template handle="noEntryPointErrorMessage">
+      <section type="error">
+           <section type="portlet-msg-error problem">
+              <h4 class="inline">PROBLEM:</h4>
+
+              <p>This portlet has not been configured for you to access it.</p>
+           </section>
+
+           <section type="portlet-msg-info solution">
+              <h4 class="inline">SOLUTION:</h4>
+
+              <p>Please notify the Portal Administrator of the problem.</p>
+           </section>
+      </section>
+   </template>
+
+<!--<decisions>
+      <decision-collection choice-collection="enterCredentialsForm">
+         <decision choice="cUsername">
+            <selection option="oUsername">PreviousUsername</selection>
+         </decision>
+         <decision choice="cPassword">
+            <selection option="oPassword">Previous PW</selection>
+         </decision>
+
+      </decision-collection>
+   </decisions> -->
+</screen>
+
