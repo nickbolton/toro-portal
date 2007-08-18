@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<changes>
+  <file path="WEB-INF/classes/properties/db/dbloader.xml">
+    <add-or-replace where="end">
+      <xpath>/properties</xpath>
+      <value>
+        <db-type-mapping>
+          <db-name>PostgreSQL</db-name>
+          <db-version>8.1.3</db-version>
+          <driver-name>PostgreSQL Native Driver</driver-name>
+          <driver-version>PostgreSQL 8.2 JDBC3 with SSL (build 504)</driver-version>
+          <type><generic>LONGVARCHAR</generic><local>TEXT</local></type>
+          <type><generic>VARCHAR</generic><local>VARCHAR</local></type>
+          <type><generic>LONGVARBINARY</generic><local>BYTEA</local></type>
+          <type><generic>VARBINARY</generic><local>BYTEA</local></type>
+          <type><generic>INTEGER</generic><local>integer</local></type>
+        </db-type-mapping>   
+      </value>
+    </add-or-replace>
+  </file>
+</changes>
+

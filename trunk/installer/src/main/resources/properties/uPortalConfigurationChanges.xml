@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+
+<changes>
+  <file path="WEB-INF/classes/properties/services.xml">
+    <!--add-to-node where="end">
+      <xpath>/servicelist/service[name = 'RMIRegistryService']</xpath>
+      <value>
+        <service>
+          <name>RMIRegistryService</name>
+          <class>net.unicon.sdk.j2ee.rmi.RMIRegistryBootstrap</class>
+          <method type="static">bootstrapRMIRegistry</method>
+        </service>
+      </value>
+    </add-to-node-->
+
+    <!--add-to-node where="end">
+      <xpath>/servicelist/service[name = 'Waiting for RMI Registry']</xpath>
+      <value-->
+        <!-- Only way I can think of to introduce an artificial wait -->
+        <!-- uPortal should hook into the ant API -->
+        <!--service>
+          <name>Waiting for RMI Registry</name>
+          <class>java.lang.Thread</class>
+          <method type="static">sleep</method>
+          <arguments-->
+            <!-- Index interval: the indexing process will restart after this period (in seconds)-->
+            <!--argitem>
+              <datatype array="false">long.class</datatype>
+              <value>3000</value>
+            </argitem>
+          </arguments>
+        </service>
+      </value>
+    </add-to-node-->
+
+    <!--add-to-node where="end">
+      <xpath>/servicelist/service[name = 'AcademusImportService']</xpath>
+      <value-->
+        <!-- This must be started after the RMIRegistryService -->
+        <!--service>
+          <name>AcademusImportService</name>
+          <class>net.unicon.academus.service.RFAcademusImportService</class>
+          <method type="static">initRMIImportService</method>
+        </service>
+      </value>
+    </add-to-node-->
+
+    <!--add-to-node where="end">
+      <xpath>/servicelist/service[name = 'CSCR Browser Registry']</xpath>
+      <value>
+        <service>
+          <name>CSCR Browser Registry</name>
+          <class>net.unicon.portal.cscr.CscrBrowserRegistry</class>
+          <method type="static">instance</method>
+        </service>
+      </value>
+    </add-to-node-->
+
+    <add-or-replace where="end">
+      <xpath>/servicelist</xpath>
+      <value>
+        <service>
+          <name>Academus Facade API</name>
+          <class>net.unicon.academus.api.uportal.UPortalAcademusFacade</class>
+          <method type="static">register</method>
+        </service>
+      </value>
+    </add-or-replace>
+
+    <!--add-to-node where="end">
+      <xpath>/servicelist/service[name = 'Academus CMS Facade API']</xpath>
+      <value>
+        <service>
+          <name>Academus CMS Facade API</name>
+          <class>net.unicon.academus.cms.api.impl.AcademusCMSFacadeImpl</class>
+          <method type="static">register</method>
+        </service>
+      </value>
+    </add-to-node-->
+
+    <!--add-to-node where="end">
+      <xpath>/servicelist/service[name = 'Academus Mercury Cache Validator']</xpath>
+      <value>
+        <service>
+          <name>Academus Mercury Cache Validator</name>
+          <class>net.unicon.mercury.cache.impl.MercuryCacheValidatorImpl</class>
+          <method type="static">register</method>
+        </service>
+      </value>
+    </add-to-node-->
+
+    <!--add-to-node where="end">
+      <xpath>/servicelist/service[name = '']</xpath>
+      <value>
+        <@MULTIBOXPARAM_IS_MULTIBOX@service>
+          <name>JMSCacheMessageListener</name>
+          <class>net.unicon.sdk.cache.jms.JMSCacheMessageListener</class>
+          <method>getName</method>
+        </service@MULTIBOXPARAM_IS_MULTIBOX@>
+      </value>
+    </add-to-node-->
+  </file>
+
+    <!--file path="WEB-INF/classes/properties/worker.properties">
+        <add-or-replace>
+            <name>cscr</name>
+            <value>net.unicon.portal.common.ChannelRendererWorker</value>
+        </add-or-replace>
+    </file-->
+</changes>
+
