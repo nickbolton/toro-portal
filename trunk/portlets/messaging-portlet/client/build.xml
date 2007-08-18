@@ -1,0 +1,44 @@
+<target name="SendMercuryMessage.jar" depends="build"
+        description="Generate the client class files for the SendMercuryMessage web service">
+
+        <java
+            classname="org.apache.axis.wsdl.Java2WSDL"
+            fork="yes"
+            classpathref="axis.classpath"
+            dir=".">
+            <arg line="-oSendMercuryMessage.wsdl" />
+            <arg line="-lhttp://localhost/AcademusApps/services/SendMercuryMessage" />
+            <arg line="-nhttp://unicon.net/academus/apps/ws/mercury/" />
+            <arg line="-pnet.unicon.academus.apps.messaging.ws=http://unicon.net/academus/apps/ws/mercury/" />
+            <arg line="net.unicon.academus.apps.messaging.ws.SendMercuryMessage" />        </java>
+  
+        <mkdir dir="${tmp.dir}"/>
+        <java
+            classname="org.apache.axis.wsdl.WSDL2Java"
+            fork="yes"
+            dir="."
+            classpathref="axis.classpath">
+            <arg value="-v" />
+            <arg value="-o${tmp.dir}" />
+            <arg value="-pnet.unicon.academus.apps.messaging.ws" />
+            <arg value="SendMercuryMessage.wsdl" />
+        </java>
+    
+        <javac
+            destdir="${tmp.dir}"
+            source="${compile.source.version}"
+            target="${compile.target.version}"
+            debug="on"
+            deprecation="no"
+            srcdir="${tmp.dir}"
+            classpathref="classpath">
+            <compilerarg compiler="javac1.5" value="-nowarn" />
+        </javac>
+
+        <jar destfile="SendMercuryMessage.jar">
+            <fileset dir="${tmp.dir}">
+                <include name="**/*.class"/>
+            </fileset>
+        </jar>
+        <delete dir="${tmp.dir}"/>
+    </target>
