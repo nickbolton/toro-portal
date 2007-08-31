@@ -30,6 +30,18 @@
         </dependency>
         <dependency>
             <groupId>net.unicon.toro</groupId>
+            <artifactId>gateway-lib</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.unicon.toro</groupId>
+            <artifactId>web-content-lib</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.unicon.toro</groupId>
             <artifactId>briefcase-lib</artifactId>
             <version>${project.version}</version>
             <scope>runtime</scope>
