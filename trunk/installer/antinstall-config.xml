@@ -40,6 +40,18 @@
             defaultValue="@toro.remote.repo@"
             displayText="Toro Maven Repository"/>
 	</page>
+    <page
+        type="input"
+        name="application-root"
+        overflow="true"
+        displayText="Application Root">
+        <app-root
+			property="tomcat.home"
+            defaultValue="${env.TOMCAT_HOME}"
+            displayText="TOMCAT_HOME"
+            checkFile1="conf/server.xml"
+            checkDir1="webapps"/>
+    </page>
 	<page
 			type="input"
 			name="deploy-all"
@@ -147,7 +159,7 @@
 			force="false"/>
 	</page>
     <page
-            ifProperty="((${deploy.all}=true) OR (${uportal.deploy}=true)) AND (${uportal.version}=)"
+            ifProperty="((${deploy.all}=true) OR (${uportal.deploy}=true))"
 			type="input"
             name="uPortal version"
                 overflow="true"
@@ -155,6 +167,19 @@
         <select
             property="uportal.version"
             displayText="Select which version to install"
+            defaultValue="@uportal.version1@">
+            <option text="@uportal.version1@" value="@uportal.version1@"/>
+        </select>
+    </page>
+    <page
+            ifProperty="(${deploy.all}!=true) AND (${uportal.deploy}!=true)"
+			type="input"
+            name="uPortal version"
+                overflow="true"
+			displayText="uPortal Version">
+        <select
+            property="uportal.version"
+            displayText="Select which uPortal version is installed"
             defaultValue="@uportal.version1@">
             <option text="@uportal.version1@" value="@uportal.version1@"/>
         </select>
@@ -190,7 +215,7 @@
 			type="input"
 			name="components"
 			overflow="true"
-			displayText="Components">
+			displayText="Toro Components">
 		<checkbox
             property="common.libraries"
             displayText="Common Libraries"
@@ -312,12 +337,6 @@
         name="directories"
 		overflow="true"
         displayText="File System Paths">
-		<directory
-				property="tomcat.home"
-                defaultValue="${env.TOMCAT_HOME}"
-                displayText="TOMCAT_HOME"
-				create="false"
-				checkExists="true"/>
 		<directory
 				property="tomcat.host.conf"
                 defaultValue="${tomcat.home}/@tomcat.host.conf.relative@"
