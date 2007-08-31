@@ -1,7 +1,9 @@
 # You will need to manually install these dependencies into your local repository. Just execute the following maven commands.
 
 mvn install:install-file -DgroupId=uportal -DartifactId=uportal \
-    -Dversion=2.6rc2 -Dpackaging=jar -Dfile=uPortal-2.6.0rc2.jar
+    -Dversion=2.6.0-GA -Dpackaging=jar -Dfile=uPortal-2.6.0-GA.jar
+mvn install:install-file -DgroupId=uportal -DartifactId=uportal \
+    -Dversion=2.6.0-GA -Dpackaging=war -Dfile=uPortal-2.6.0-GA.war
 mvn install:install-file -DgroupId=xsltc -DartifactId=xsltc \
     -Dversion=2.7.0 -Dpackaging=jar -Dfile=xsltc-2.7.0.jar
 mvn install:install-file -DgroupId=serializer -DartifactId=serializer \
