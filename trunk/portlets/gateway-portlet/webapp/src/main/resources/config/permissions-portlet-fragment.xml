@@ -4,7 +4,7 @@
         <label>Blog: EXAMPLE</label>
         <description>Modify permissions for the blog instance: EXAMPLE</description>
         <portlet-access handle="access-blog-EXAMPLE">
-            <import src="/config/blogs/blog-EXAMPLE.xml" select="//access-broker[@handle='blog-EXAMPLE']"/>
+            <import src="file:@tomcat.home@/webapps/toro-gateway-portlet/WEB-INF/classes/config/blog-EXAMPLE.xml" select="//access-broker[@handle='blog-EXAMPLE']"/>
             <access impl="net.unicon.academus.apps.blogger.BlojsomAccessType"/>
         </portlet-access>
     </portlet>
@@ -15,7 +15,7 @@
         <label>Blog: Default</label>
         <description>Modify permissions for the blog instance: default</description>
         <portlet-access handle="access-blog-default">
-            <import src="/config/blogs/blog-default.xml" select="//access-broker[@handle='blog-default']"/>
+            <import src="file:@tomcat.home@/webapps/toro-gateway-portlet/WEB-INF/classes/config/blog-default.xml" select="//access-broker[@handle='blog-default']"/>
             <access impl="net.unicon.academus.apps.blogger.BlojsomAccessType"/>
         </portlet-access>
     </portlet>
