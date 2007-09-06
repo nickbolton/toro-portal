@@ -13,19 +13,22 @@
     <url>http://www.ja-sig.org/issues/browse/TORO</url>
   </issueManagement>
 
-   <!--distributionManagement> 
-     <repository> 
-       <id>wasabi3.unicon.net</id> 
-       <name>Toro Repository</name> 
-       <url>scp://wasabi3.unicon.net/opt/docs/maven2</url> 
-     </repository> 
-   </distributionManagement--> 
+  <scm>
+    <connection>scm:svn:https://www.ja-sig.org/svn/up3/branches/maven2-simple</connection>
+    <developerConnection>scm:svn:https://www.ja-sig.org/svn/up3/branches/maven2-simple</developerConnection>
+    <url>http://developer.ja-sig.org/source/browse/jasigsvn/up3/branches/maven2-simple</url>
+  </scm>
 
    <distributionManagement> 
-     <repository> 
+     <!--repository> 
        <id>localhost</id> 
-       <name>Toro Repository</name> 
+       <name>Local Toro Repository</name> 
        <url>scp://localhost/Library/WebServer/Documents/maven2</url>
+     </repository--> 
+     <repository> 
+       <id>maven2.unicon.net</id> 
+       <name>Toro Repository</name> 
+       <url>scp://maven2.unicon.net/opt/docs/maven2</url>
      </repository> 
    </distributionManagement> 
 
@@ -76,7 +79,7 @@
       <standard.version>1.1.2</standard.version>
       <springframework.version>2.0.5</springframework.version>
       <tagsoup.version>1.1.3</tagsoup.version>
-      <uportal.version>2.6.0</uportal.version>
+      <uportal.version>2.6.0-GA</uportal.version>
       <xalan.version>2.7.0</xalan.version>
       <xercesImpl.version>2.7.1</xercesImpl.version>
       <xml-apis.version>1.3.04</xml-apis.version>
