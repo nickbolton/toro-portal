@@ -58,9 +58,6 @@ public class JavaVersionTask extends Task {
       throw new BuildException("No minimum version set.");
     }
 
-    System.out.println("ZZZ installedVersion: " + installedVersion);
-    System.out.println("ZZZ minVersion: " + minVersion);
-    System.out.println("ZZZ compare: " + installedVersion.compareTo(minVersion));
     if(installedVersion.compareTo(minVersion) >= 0) {
       getProject().setProperty(propertyName, "true");
     }
