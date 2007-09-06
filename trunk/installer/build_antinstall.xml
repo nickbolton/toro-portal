@@ -528,11 +528,20 @@ xercesImpl.version=${xercesImpl.version}
           <param name="archive.type" value="${archive.type}"/>
         </antcall>
         <copy todir="${dest}" filtering="on">
-            <fileset dir="${tmpdir}"/>
+            <fileset dir="${tmpdir}">
+                <include name="**/*.xml"/>
+                <include name="**/*.properties"/>
+            </fileset>
             <filterset refid="tokens"/>
             <filterset>
                 <filter token="webappName" value="${webappName}"/>
             </filterset>
+        </copy>
+        <copy todir="${dest}">
+            <fileset dir="${tmpdir}">
+                <exclude name="**/*.xml"/>
+                <exclude name="**/*.properties"/>
+            </fileset>
         </copy>
     </target>
 
@@ -666,9 +675,18 @@ xercesImpl.version=${xercesImpl.version}
                 <include name="rendering/**"/>
             </patternset>
         </unjar>
-        <copy todir="${webapp.home}/${webappName}">
-            <fileset dir="${work.dir}/${webappName}"/>
+        <copy todir="${webapp.home}/${webappName}" filtering="on">
+            <fileset dir="${work.dir}/${webappName}">
+                <include name="**/*.xml"/>
+                <include name="**/*.properties"/>
+            </fileset>
             <filterset refid="tokens"/>
+        </copy>
+        <copy todir="${webapp.home}/${webappName}" filtering="off">
+            <fileset dir="${work.dir}/${webappName}">
+                <exclude name="**/*.xml"/>
+                <exclude name="**/*.properties"/>
+            </fileset>
         </copy>
         <copy tofile="${tomcat.host.conf}/${webappName}.xml" file="properties/${webappName}.xml">
             <filterset refid="tokens"/>
