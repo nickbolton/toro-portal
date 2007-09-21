@@ -16,7 +16,6 @@
     <name>UPortal Academus Api</name>
 
     <dependencies>
-        <!-- ===== Compile Time Dependencies ============================== -->
         <dependency>
             <groupId>uportal</groupId>
             <artifactId>uportal</artifactId>

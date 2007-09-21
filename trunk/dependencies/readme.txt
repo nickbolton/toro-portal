@@ -20,3 +20,17 @@ mvn install:install-file -DgroupId=cos -DartifactId=cos \
           -Dversion=05Nov2002 -Dpackaging=jar -Dfile=cos-05Nov2002.jar
 mvn install:install-file -DgroupId=jtds -DartifactId=jtds \
           -Dversion=1.2 -Dpackaging=jar -Dfile=jtds-1.2.jar
+mvn install:install-file -DgroupId=javax.activation -DartifactId=activation \
+          -Dversion=1.0.2 -Dpackaging=jar -Dfile=activation-1.0.2.jar
+mvn install:install-file -DgroupId=javax.xml -DartifactId=jaxrpc \
+          -Dversion=1.1 -Dpackaging=jar -Dfile=jaxrpc-1.1.jar
+mvn install:install-file -DgroupId=javax.xml -DartifactId=saaj-api \
+          -Dversion=1.2 -Dpackaging=jar -Dfile=saaj-api-1.2.jar
+mvn install:install-file -DgroupId=cernunnos -DartifactId=cernunnos \
+          -Dversion=1.0-M1 -Dpackaging=jar -Dfile=cernunnos-1.0-M1.jar
+mvn install:install-file -DgroupId=cernunnos -DartifactId=cernunnos \
+          -Dversion=1.0-M2 -Dpackaging=jar -Dfile=cernunnos-1.0-M2.jar
+
+# not certain about the ejb version
+mvn install:install-file -DgroupId=javax.ejb -DartifactId=ejb \
+          -Dversion=2.0 -Dpackaging=jar -Dfile=ejb-2.0.jar

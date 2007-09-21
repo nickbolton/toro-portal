@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<changes>
+    <file path="WEB-INF/classes/properties/personDirectory.xml">
+        <add where="end">
+            <xpath>/beans</xpath>
+            <value>
+                <bean id="uPortalLdapAttributeSource" class="org.jasig.portal.services.persondir.support.LdapPersonAttributeDaoImpl">
+                    <property name="ldapServer">
+                        <ref bean="defaultLdapServer"/>
+                    </property>
+                    <property name="queryAttributes">
+                        <list>
+                            <value>username</value>
+                        </list>
+                    </property>
+                    <property name="query">
+                        <value>(cn={0})</value>
+                    </property>
+                    <property name="ldapAttributesToPortalAttributes">
+                        <map>
+                            <entry key="eduPersonPrimaryAffiliation">   <value>uPortalTemplateUserName</value></entry>
+                            <entry key="eduPersonAffiliation">          <value>eduPersonAffiliation</value></entry>
+                            <entry key="eduPersonNickname">
+                                                                <set>
+                                                                  <value>eduPersonNickname</value>
+                                                                  <value>user.name.nickName</value>
+                                                                </set>
+                    </entry>
+                            <entry key="eduPersonOrgDN">
+                                                                <set>
+                                                                  <value>eduPersonOrgDN</value>
+                                                                  <value>user.employer</value>
+                                                                </set>
+                    </entry>
+                            <entry key="eduPersonOrgUnitDN">
+                                                                <set>
+                                                                  <value>eduPersonOrgUnitDN</value>
+                                                                  <value>user.department</value>
+                                                                </set>
+                    </entry>
+                            <entry key="eduPersonPrimaryAffiliation">   <value>eduPersonPrimaryAffiliation</value></entry>
+                            <entry key="eduPersonPrincipalName">        <value>eduPersonPrincipalName</value></entry>
+                            <entry key="c">                             <value>c</value></entry>
+                            <entry key="cn">                            <value>cn</value></entry>
+                            <entry key="description">                   <value>description</value></entry>
+                            <entry key="displayName">                   <value>displayName</value></entry>
+                            <entry key="facsimileTelephoneNumber">      <value>facsimileTelephoneNumber</value></entry>
+                            <entry key="givenName">
+                                                                <set>
+                                                                  <value>givenName</value>
+                                                                  <value>user.name.given</value>
+                                                                </set>
+                    </entry>
+                            <entry key="homePhone">                     <value>homePhone</value></entry>
+                            <entry key="homePostalAddress">             <value>homePostalAddress</value></entry>
+                            <entry key="initials">                      <value>initials</value></entry>
+                            <entry key="jpegPhoto">                     <value>jpegPhoto</value></entry>
+                            <entry key="l">                             <value>l</value></entry>
+                            <entry key="labeledURI">                    <value>labeledURI</value></entry>
+                            <entry key="mail">
+                                                                <set>
+                                                                  <value>mail</value>
+                                                                  <value>user.home-info.online.email</value>
+                                                                </set>
+                    </entry>
+                            <entry key="mobile">                        <value>mobile</value></entry>
+                            <entry key="o">                             <value>o</value></entry>
+                            <entry key="ou">                            <value>ou</value></entry>
+                            <entry key="pager">                         <value>pager</value></entry>
+                            <entry key="postalAddress">                 <value>postalAddress</value></entry>
+                            <entry key="postalCode">                    <value>postalCode</value></entry>
+                            <entry key="postOfficeBox">                 <value>postOfficeBox</value></entry>
+                            <entry key="preferredLanguage">             <value>preferredLanguage</value></entry>
+                            <entry key="seeAlso">                       <value>seeAlso</value></entry>
+                            <entry key="sn">
+                                                                <set>
+                                                                  <value>sn</value>
+                                                                  <value>user.name.family</value>
+                                                                </set>
+                    </entry>
+                            <entry key="st">                            <value>st</value></entry>
+                            <entry key="street">                        <value>street</value></entry>
+                            <entry key="telephoneNumber">               <value>telephoneNumber</value></entry>
+                            <entry key="uid">                           <value>uid</value></entry>
+                            <entry key="userCertificate">               <value>userCertificate</value></entry>
+                            <entry key="userSMIMECertificate">          <value>userSMIMECertificate</value></entry>
+                        </map>
+                    </property>
+                </bean>
+            </value>
+        </add>
+    </file>
+</changes>	

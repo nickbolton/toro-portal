@@ -51,9 +51,7 @@ import java.util.StringTokenizer;
 import javax.xml.transform.sax.SAXSource;
 
 import org.apache.jetspeed.util.OverwriteProperties;
-import org.dom4j.Branch;
 import org.dom4j.CDATA;
-import org.dom4j.CharacterData;
 import org.dom4j.Comment;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -61,17 +59,14 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.DocumentType;
 import org.dom4j.Element;
 import org.dom4j.Entity;
-import org.dom4j.Namespace;
 import org.dom4j.Node;
 import org.dom4j.ProcessingInstruction;
-import org.dom4j.Text;
 import org.dom4j.io.DocumentSource;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.SAXWriter;
 import org.dom4j.io.XMLWriter;
 import org.dom4j.tree.NamespaceStack;
-import org.xml.sax.ContentHandler;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -116,12 +111,12 @@ public class MergeConfiguration {
         
         if (absolutePath.endsWith("WEB-INF/web.xml")) {
             mergeWebChanges(targetFileElement, path);
-        } else if (absolutePath.endsWith(".xml")) {
+        } else if (absolutePath.endsWith(".xml") || absolutePath.endsWith(".xsl")) {
             mergeXmlChanges(targetFileElement, path);
         } else if (absolutePath.endsWith(".properties")) {
             mergePropertiesChanges(targetFileElement, path);
         } else {
-            throw new RuntimeException("Unsupported configuration file type: " + path + ". Only '.properties' and '.xml' files are supported.");
+            throw new RuntimeException("Unsupported configuration file type: " + path + ". Only '.properties', '.xsl' and '.xml' files are supported.");
         }
     }
     
@@ -166,12 +161,43 @@ public class MergeConfiguration {
         Document doc = reader.read(new URL("file:"+path.getAbsolutePath()));
         Element source = doc.getRootElement();
         
+        String xmlEncoding = doc.getXMLEncoding();
+        
+        /*
+        System.out.println("ZZZ children root: " + source.getPath());
+        List l = source.elements();
+        Iterator itr = l.iterator();
+        while (itr.hasNext()) {
+            Element ee = (Element)itr.next();
+            System.out.println("\t"+ee.getName() + " - " + ee.getNamespacePrefix());
+        }
+        
+        String xpath = "/xsl:stylesheet/xsl:template/*[name()='html']/*[name()='head']";
+        System.out.println("ZZZ searching for xpath: " + xpath);
+        l = source.selectNodes(xpath);
+        itr = l.iterator();
+        while (itr.hasNext()) {
+            Element ee = (Element)itr.next();
+            System.out.println("ZZZZ "+ee.getName() + " - " + ee.getNamespacePrefix());
+            List l2 = ee.elements();
+            Iterator itr2 = l2.iterator();
+            while (itr2.hasNext()) {
+                Element eee = (Element)itr2.next();
+                System.out.println("\t"+eee.getName() + " - " + eee.getNamespacePrefix() + " - " + eee.getPath());
+            }
+        }
+        */
+        
+        
         processElementValueReplacements(el, source);
         processNodeReplacements(el, source);
         //processAddToNodes(el, source);
         processNodeAddOrReplace(el, source);
         
-        OutputFormat format = OutputFormat.createPrettyPrint();
+        //OutputFormat format = OutputFormat.createPrettyPrint();
+        //format.setEncoding(xmlEncoding);
+        OutputFormat format = new OutputFormat("    ", true, xmlEncoding);
+        format.setTrimText(true);
         XMLWriter writer = new XMLWriter(new FileWriter(path), format);
         writer.write(doc);
         writer.close();
@@ -213,19 +239,30 @@ public class MergeConfiguration {
     }
         
     private void addNode(Element source, Element replace, String xpath) {
+        List list = replace.selectNodes("value");
+        if (list == null) return;
+        
         Element newContent = DocumentHelper.createElement("newContent");
         Comment prefixComment = DocumentHelper.createComment(CHANGE_START_COMMENT);
         Comment suffixComment = DocumentHelper.createComment(CHANGE_END_COMMENT);
         newContent.add(prefixComment);
-        newContent.appendContent((Branch)replace.element("value"));
+        Iterator itr = list.iterator();
+        while (itr.hasNext()) {
+            Element value = (Element)itr.next();
+            newContent.appendContent(value);
+        }
         newContent.add(suffixComment);
         
-        Element sourceEl = (Element)source.selectSingleNode(xpath);
-        if (sourceEl == null) {
+        List sourceList = source.selectNodes(xpath);
+        if (sourceList == null || sourceList.size() == 0) {
             throw new RuntimeException("xpath expression doesn't resolve to a node: " + xpath);
         }
         
-        sourceEl.appendContent(newContent);
+        itr = sourceList.iterator();
+        while (itr.hasNext()) {
+            Element sourceEl = (Element)itr.next();
+            sourceEl.appendContent(newContent);
+        }
     }
 
     private void processNodeAddOrReplace2(Element el, Element source) {

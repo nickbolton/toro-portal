@@ -118,17 +118,6 @@ public final class XmlWarlockFactory extends AbstractWarlockFactory {
             throw new IllegalArgumentException(msg);
         }
         
-/*        try {
-	        Transformer emptyt=TransformerFactory.newInstance().newTransformer();
-            StringWriter sw = new StringWriter();
-            emptyt.transform(transSource, new StreamResult(sw));
-            System.out.println("ZZZ XmlWarlockFactory XSL SOURCE:\n" + sw.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        */
-        
-
         // Instance Members.
         this.transSource = transSource;
         this.engine = new RenderingEngineImpl(this);

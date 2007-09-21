@@ -24,13 +24,6 @@ public class JavaVersionTask extends Task {
     super();
     installedVersion = System.getProperty
                        ("java.version");
-    /*
-    String[] split = installedVersion.split("\\.");
-    System.out.println("ZZZ split.length: " + split.length);
-    if (split.length >= 3) {
-        installedVersion = split[0] + '.' + split[1];
-    }
-    */
   }
 
   /**

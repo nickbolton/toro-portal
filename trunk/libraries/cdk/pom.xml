@@ -13,7 +13,7 @@
     <artifactId>cdk</artifactId>
     <packaging>jar</packaging>
 
-    <name>Channel Development Kit</name>
+    <name>Channel Development Kit Library</name>
 
     <dependencies>
         <!-- ===== Compile Time Dependencies ============================== -->
@@ -32,6 +32,12 @@
         <dependency>
             <groupId>net.unicon.toro</groupId>
             <artifactId>mercury</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.unicon.toro</groupId>
+            <artifactId>penelope</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -57,7 +63,7 @@
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
             <version>${dom4j.version}</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>xml-apis</groupId>
@@ -75,7 +81,7 @@
             <groupId>uportal</groupId>
             <artifactId>uportal</artifactId>
             <version>${uportal.version}</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.activation</groupId>
@@ -113,6 +119,30 @@
             <version>${cos.version}</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>${velocity.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml</groupId>
+            <artifactId>jaxrpc</artifactId>
+            <version>${jaxrpc.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>backport-util-concurrent</groupId>
+            <artifactId>backport-util-concurrent</artifactId>
+            <version>${backport-util-concurrent.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>compile</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -129,7 +159,7 @@
         <artifactId>hibernate3-maven-plugin</artifactId>
         <configuration>
           <componentProperties>
-            <propertyfile>../../hibernate.properties</propertyfile>
+            <propertyfile>../../../hibernate.properties</propertyfile>
             <skip>${hibernate.skip.cdk}</skip>
           </componentProperties>
         </configuration>

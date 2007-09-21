@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<changes>
+    <file path="WEB-INF/classes/properties/ldap.xml">
+        <add-or-replace where="end">
+            <xpath>/ldapConnections</xpath>
+            <value>
+                <connection default="@ldap.default.connection@">
+                    <name>@ldap.name@</name>
+                    <host>@ldap.server.hostname@</host>
+                    <port>@ldap.server.port@</port>
+                    <baseDN>@ldap.server.basedn@</baseDN>
+                    <managerDN>@ldap.server.managerdn@</managerDN>
+                    <managerPW>@ldap.server.manager.password@</managerPW>
+                    <uidAttribute>@ldap.server.uid@</uidAttribute>
+                    <protocol>ssl</protocol>	    
+                </connection>
+            </value>
+        </add-or-replace>
+</changes>

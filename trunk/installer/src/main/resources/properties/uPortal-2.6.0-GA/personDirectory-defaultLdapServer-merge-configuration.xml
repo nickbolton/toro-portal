@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<changes>
+    <file path="WEB-INF/classes/properties/personDirectory.xml">
+        <add where="end">
+            <xpath>/beans</xpath>
+            <value>
+                <bean id="defaultLdapServer" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+                    <property name="staticMethod">
+                        <value>org.jasig.portal.ldap.LdapServices.getDefaultLdapServer</value>
+                    </property>
+                </bean>
+            </value>
+        </add>
+    </file>
+</changes>

@@ -37,9 +37,11 @@
 
     <typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="urn:maven-artifact-ant">
         <classpath>
-            <pathelement location="${basedir}/lib/maven-ant-tasks-2.0.7.jar" />
+            <pathelement path="${basedir}"/>
         </classpath>
     </typedef>
+
+    <!--taskdef name="filtered-dependencies" classname="net.unicon.toro.installer.anttask.FilteredDependenciesTask" classpath="${basedir}"/-->
 
     <artifact:pom id="maven.project" file="${basedir}/pom.xml" />
 
@@ -51,14 +53,31 @@
         id="toro.repository"
         url="${toro.remote.repo}" />
 
+    <artifact:remoteRepository
+        id="central.repository"
+        url="${central.remote.repo}" />
+
+    <artifact:dependencies pathId="db.classpath">
+        <dependency groupId="hsqldb" artifactId="hsqldb"
+            version="${hsqldb.version}" type="jar"/>
+        <dependency groupId="net.sourceforge.jtds" artifactId="jtds"
+            version="${jtds.version}" type="jar"/>
+        <dependency groupId="mysql" artifactId="mysql-connector-java"
+            version="${mysql.version}" type="jar"/>
+        <dependency groupId="com.oracle" artifactId="ojdbc14"
+            version="${oracle.version}" type="jar"/>
+        <dependency groupId="postgresql" artifactId="postgresql"
+            version="${postgresql.version}" type="jar"/>
+        <remoteRepository refid="toro.repository" />
+    </artifact:dependencies>
+
     <filterset id="tokens">
         <filtersfile file="${basedir}/build.properties"/>
         <filtersfile file="${basedir}/ant.install.properties"/>
     </filterset>
 
-
     <!--  Driver targets  -->
-    <target name="clean" depends="clean-portlets">
+    <target name="clean" depends="clean-portlets, clean-channels">
         <delete dir="${work.dir}"/>
         <delete dir="${webapp.home}/toro-portlets-common"/>
         <delete>
@@ -84,6 +103,17 @@
             <or>
                 <equals arg1="${deploy.all}" arg2="true"/>
                 <equals arg1="${uportal.deploy}" arg2="true"/>
+            </or>
+        </condition>
+        <condition property="run.deploy.portlets.common">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${briefcase-portlet.active}" arg2="true"/>
+                <equals arg1="${messaging-portlet.active}" arg2="true"/>
+                <equals arg1="${permissions-portlet.active}" arg2="true"/>
+                <equals arg1="${gateway-portlet.active}" arg2="true"/>
+                <equals arg1="${web-content-portlet.active}" arg2="true"/>
+                <equals arg1="${blojsom-portlet.active}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.deploy.briefcase.portlet">
@@ -122,8 +152,27 @@
                 <equals arg1="${blojsom-portlet.active}" arg2="true"/>
             </or>
         </condition>
+        <condition property="run.deploy.channel.common">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${survey.active}" arg2="true"/>
+            </or>
+        </condition>
+        <condition property="run.deploy.toro.common">
+            <or>
+                <equals arg1="${run.deploy.channel.common}" arg2="true"/>
+                <equals arg1="${run.deploy.portlets.common}" arg2="true"/>
+            </or>
+        </condition>
+        <condition property="run.deploy.survey.channel">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${survey.active}" arg2="true"/>
+            </or>
+        </condition>
         <condition property="run.publish.briefcase.portlet">
             <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
                 <equals arg1="${initialize.all}" arg2="true"/>
                 <equals arg1="${briefcase-portlet.publish}" arg2="true"/>
                 <equals arg1="${briefcase-portlet.active}" arg2="true"/>
@@ -131,6 +180,7 @@
         </condition>
         <condition property="run.publish.gateway.portlet">
             <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
                 <equals arg1="${initialize.all}" arg2="true"/>
                 <equals arg1="${gateway-portlet.publish}" arg2="true"/>
                 <equals arg1="${gateway-portlet.active}" arg2="true"/>
@@ -138,6 +188,7 @@
         </condition>
         <condition property="run.publish.messaging.portlet">
             <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
                 <equals arg1="${initialize.all}" arg2="true"/>
                 <equals arg1="${messaging-portlet.publish}" arg2="true"/>
                 <equals arg1="${messaging-portlet.active}" arg2="true"/>
@@ -145,6 +196,7 @@
         </condition>
         <condition property="run.publish.permissions.portlet">
             <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
                 <equals arg1="${initialize.all}" arg2="true"/>
                 <equals arg1="${permissions-portlet.publish}" arg2="true"/>
                 <equals arg1="${permissions-portlet.active}" arg2="true"/>
@@ -152,9 +204,23 @@
         </condition>
         <condition property="run.publish.web.content.portlet">
             <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
                 <equals arg1="${initialize.all}" arg2="true"/>
                 <equals arg1="${web-content-portlet.publish}" arg2="true"/>
                 <equals arg1="${web-content-portlet.active}" arg2="true"/>
+            </or>
+        </condition>
+        <condition property="run.publish.survey.channel">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${initialize.all}" arg2="true"/>
+                <equals arg1="${survey.publish}" arg2="true"/>
+                <equals arg1="${survey.active}" arg2="true"/>
+            </or>
+        </condition>
+        <condition property="run.publish.addressbook.channel">
+            <or>
+                <equals arg1="${run.publish.survey.channel}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.uportal.db">
@@ -211,10 +277,22 @@
                 <equals arg1="${hibernate.portlets-common}" arg2="true"/>
             </or>
         </condition>
-        <condition property="run.hibernate.cdk">
+        <condition property="run.dbloader.cdk">
             <or>
                 <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${hibernate.cdk}" arg2="true"/>
+                <equals arg1="${dbloader.cdk}" arg2="true"/>
+            </or>
+        </condition>
+        <condition property="run.dbloader.toro.common">
+            <or>
+                <equals arg1="${initialize.all}" arg2="true"/>
+                <equals arg1="${dbloader.toro.common}" arg2="true"/>
+            </or>
+        </condition>
+        <condition property="run.dbloader.survey">
+            <or>
+                <equals arg1="${initialize.all}" arg2="true"/>
+                <equals arg1="${dbloader.survey}" arg2="true"/>
             </or>
         </condition>
         <condition property="hibernate.create.only" value="--create">
@@ -243,11 +321,13 @@ run.deploy.permissions.portlet=${run.deploy.permissions.portlet}
 run.deploy.gateway.portlet=${run.deploy.gateway.portlet}
 run.deploy.web.content.portlet=${run.deploy.web.content.portlet}
 run.deploy.blojsom.portlet=${run.deploy.blojsom.portlet}
+run.deploy.survey.channel=${run.deploy.survey.channel}
 run.publish.briefcase.portlet=${run.publish.briefcase.portlet}
 run.publish.gateway.portlet=${run.publish.gateway.portlet}
 run.publish.messaging.portlet=${run.publish.messaging.portlet}
 run.publish.permissions.portlet=${run.publish.permissions.portlet}
 run.publish.web.content.portlet=${run.publish.web.content.portlet}
+run.publish.survey.channel=${run.publish.survey.channel}
 run.uportal.db=${run.uportal.db}
 run.uportal.pubchan=${run.uportal.pubchan}
 run.uportal.i18n.db=${run.uportal.i18n.db}
@@ -257,9 +337,9 @@ run.hibernate.alchemist=${run.hibernate.alchemist}
 run.hibernate.demetrius=${run.hibernate.demetrius}
 run.hibernate.mercury=${run.hibernate.mercury}
 run.hibernate.portlets-common=${run.hibernate.portlets-common}
-run.hibernate.cdk=${run.hibernate.cdk}
-hibernate.create.only=${hibernate.create.only}
-uportal.db.droptables.arg=${uportal.db.droptables.arg}
+run.dbloader.cdk=${run.dbloader.cdk}
+run.dbloader.toro.common=${run.dbloader.toro.common}
+run.dbloader.survey=${run.dbloader.survey}
 hibernate.create.only=${hibernate.create.only}
 uportal.db.droptables.arg=${uportal.db.droptables.arg}
 
@@ -369,16 +449,17 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="deploy-uportal"/>
         <available property="portal.webapp.home.exists" file="${portal.webapp.home}"/>
         <fail message="uPortal deployment does not exist as specified by portal.webapp.home=${portal.webapp.home}" unless="portal.webapp.home.exists"/>
-        <antcall target="merge-configuration">
-            <param name="configfile" value="${basedir}/properties/uPortalConfigurationChanges.xml"/>
-            <param name="targetdir" value="${portal.webapp.home}"/>
-        </antcall>
-        <antcall target="deploy-common"/>
+        <antcall target="deploy-toro-common"/>
+        <antcall target="deploy-portlets-common"/>
         <antcall target="deploy-portlets-common-webapp"/>
         <antcall target="deploy-portlets"/>
+        <antcall target="portlets-add-uportal-configurations"/>
+        <antcall target="deploy-channels-common"/>
+        <antcall target="deploy-channels"/>
 
         <antcall target="initialize"/>
     </target>
+
 
    <target name="initialize">
      <condition property="hsql.driver">
@@ -447,11 +528,14 @@ xercesImpl.version=${xercesImpl.version}
         </filterset>
       </copy>
       <antcall target="uportal-initportal"/>
+      <antcall target="uportal-add-additional-constraints"/>
       <antcall target="initialize-alchemist"/>
       <antcall target="initialize-demetrius"/>
       <antcall target="initialize-mercury"/>
       <antcall target="initialize-portlets-common"/>
+      <antcall target="initialize-toro-common"/>
       <antcall target="initialize-cdk"/>
+      <antcall target="initialize-survey"/>
 
       <property name="uportal.pubchan" value="true"/>
       <antcall target="publish-briefcase-portlet"/>
@@ -459,6 +543,8 @@ xercesImpl.version=${xercesImpl.version}
       <antcall target="publish-messaging-portlet"/>
       <antcall target="publish-permissions-portlet"/>
       <antcall target="publish-web-content-portlet"/>
+      <antcall target="publish-addressbook"/>
+      <antcall target="publish-survey"/>
     </target>
     <!--  End Driver targets  -->
 
@@ -501,6 +587,7 @@ xercesImpl.version=${xercesImpl.version}
            <param name="version" value="${version}"/>
            <param name="target.dir" value="${target.dir}"/>
            <param name="archive.type" value="${archive.type}"/>
+           <param name="remote.repository" value="${remote.repository}"/>
        </antcall>
        <touch file="${target.dir}/.artifact_extracted"/>
    </target>
@@ -510,7 +597,8 @@ xercesImpl.version=${xercesImpl.version}
        <artifact:dependencies filesetId="extract-artifact-task.filesetId">
            <dependency groupId="${groupId}" artifactId="${artifactId}"
                version="${version}" type="${archive.type}"/>
-           <remoteRepository refid="toro.repository" />
+           <remoteRepository refid="${remote.repository}" />
+           <!--include name="**/${artifactId}-${version}.${archive.type}"/-->
        </artifact:dependencies>
        <unjar dest="${target.dir}">
            <fileset refId="extract-artifact-task.filesetId"/>
@@ -526,6 +614,7 @@ xercesImpl.version=${xercesImpl.version}
           <param name="version" value="${version}"/>
           <param name="target.dir" value="${tmpdir}"/>
           <param name="archive.type" value="${archive.type}"/>
+          <param name="remote.repository" value="${remote.repository}"/>
         </antcall>
         <copy todir="${dest}" filtering="on">
             <fileset dir="${tmpdir}">
@@ -545,31 +634,52 @@ xercesImpl.version=${xercesImpl.version}
         </copy>
     </target>
 
-    <target name="deploy-jar">
-        <antcall target="copy-maven-artifact-to-dir">
+    <target name="deploy-toro-jar">
+        <antcall target="deploy-jar">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="${artifactId}"/>
             <param name="version" value="${project.version}"/>
+            <param name="todir" value="${todir}"/>
+            <param name="exclusions" value="${exclusions}"/>
+        </antcall>
+    </target>
+
+    <target name="deploy-jar">
+        <antcall target="copy-maven-artifact-to-dir">
+            <param name="groupId" value="${groupId}"/>
+            <param name="artifactId" value="${artifactId}"/>
+            <param name="version" value="${version}"/>
             <param name="archive.type" value="jar"/>
             <param name="todir" value="${todir}"/>
             <param name="exclusions" value="${exclusions}"/>
         </antcall>
     </target>
 
+    <target name="deploy-toro-war">
+        <antcall target="deploy-war">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="${artifactId}"/>
+            <param name="version" value="${project.version}"/>
+            <param name="webappName" value="${webappName}"/>
+            <param name="maven.repo" value="toro.repository"/>
+        </antcall>
+    </target>
+
     <target name="deploy-war">
         <artifact:dependencies pathId="${artifactId}.war">
-            <dependency groupId="net.unicon.toro" artifactId="${artifactId}"
+            <dependency groupId="${groupId}" artifactId="${artifactId}"
                 version="${project.version}" type="war"/>
-            <remoteRepository refid="toro.repository" />
+            <remoteRepository refid="${maven.repo}" />
         </artifact:dependencies>
         <antcall target="deploy-filtered">
-            <param name="groupId" value="net.unicon.toro"/>
+            <param name="groupId" value="${groupId}"/>
             <param name="artifactId" value="${artifactId}"/>
             <param name="version" value="${project.version}"/>
             <param name="archive.type" value="war"/>
             <param name="dest" value="${webapp.home}/${webappName}"/>
             <param name="tmpdir" value="${work.dir}/${artifactId}-${project.version}"/>
             <param name="webappName" value="${webappName}"/>
+            <param name="remote.repository" value="toro.repository"/>
         </antcall>
     </target>
 
@@ -593,6 +703,7 @@ xercesImpl.version=${xercesImpl.version}
     </target>
 
     <target name="run-hbm2dll">
+        <echo>Creating schema for ${groupId}:${artifactId}:${version} with create.only option: #${hibernate.create.only}#</echo>
         <artifact:dependencies pathId="hibernate.classpath">
             <dependency groupId="org.hibernate" artifactId="hibernate"
                 version="${hibernate.version}" type="jar"/>
@@ -600,37 +711,43 @@ xercesImpl.version=${xercesImpl.version}
                 version="${version}" type="jar"/>
             <dependency groupId="xerces" artifactId="xercesImpl"
                 version="${xercesImpl.version}" type="jar"/>
-            <dependency groupId="hsqldb" artifactId="hsqldb"
-                version="${hsqldb.version}" type="jar"/>
-            <dependency groupId="net.sourceforge.jtds" artifactId="jtds"
-                version="${jtds.version}" type="jar"/>
-            <dependency groupId="mysql" artifactId="mysql-connector-java"
-                version="${mysql.version}" type="jar"/>
-            <dependency groupId="com.oracle" artifactId="ojdbc14"
-                version="${oracle.version}" type="jar"/>
-            <dependency groupId="postgresql" artifactId="postgresql"
-                version="${postgresql.version}" type="jar"/>
-            <remoteRepository refid="toro.repository" />
         </artifact:dependencies>
-        <echo>Creating schema for ${groupId}:${artifactId}:${version} with create.only option: #${hibernate.create.only}#</echo>
-        <java classname="org.hibernate.tool.hbm2ddl.SchemaExport" classpathref="hibernate.classpath">
+        <java classname="org.hibernate.tool.hbm2ddl.SchemaExport">
             <arg line="--config=/hibernate.cfg.xml --properties=${work.dir}/hibernate.properties ${hibernate.create.only}"/>
+            <classpath>
+                <path refid="db.classpath"/>
+                <path refid="hibernate.classpath"/>
+            </classpath>
         </java>
+    </target>
+
+    <target name="backup-original-file">
     </target>
     <!-- End Common Utilities -->
 
-    <!-- Portlet Targets -->
-    <target name="deploy-common">
+    <target name="deploy-toro-common" if="run.deploy.toro.common">
         <mkdir dir="${toro.data.home}" /> 
-        <antcall target="deploy-jar"> 
+        <antcall target="deploy-toro-resources">
+            <param name="artifactId" value="toro-common"/>
+        </antcall>
+        <copy overwrite="true" file="${basedir}/properties/uPortal-${uportal.version}/xhtml-theme.xsl"
+            todir="${portal.webapp.home}/WEB-INF/classes/org/jasig/portal/layout/tab-column/xhtml-theme"/>
+        <copy overwrite="true" outputencoding="utf-8" file="${basedir}/properties/uPortal-${uportal.version}/ajax-preferences.js"
+            todir="${portal.webapp.home}/WEB-INF/classes/org/jasig/portal/layout/tab-column/xhtml-theme/common"/>
+    </target>
+
+
+    <!-- Portlet Targets -->
+    <target name="deploy-portlets-common" if="run.deploy.portlets.common">
+        <antcall target="deploy-toro-jar"> 
             <param name="artifactId" value="academus-api"/>
             <param name="todir" value="${tomcat.home}/shared/lib"/>
         </antcall>
-        <antcall target="deploy-jar">
+        <antcall target="deploy-toro-jar">
             <param name="artifactId" value="sso-authentication-cache"/>
             <param name="todir" value="${tomcat.home}/shared/lib"/>
         </antcall>
-        <antcall target="deploy-jar">
+        <antcall target="deploy-toro-jar">
             <param name="artifactId" value="uportal-academus-api"/>
             <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
             <param name="exclusions" value="&lt;exclusions>&lt;exclusion>&lt;groupId>uportal&lt;/groupId>&lt;artifactId>uportal&lt;/artifactId>&lt;/exclusion>&lt;/exclusions>"/>
@@ -714,10 +831,17 @@ xercesImpl.version=${xercesImpl.version}
         clean-blojsom
         "/>
 
-    <target name="deploy-portlets-common-webapp">
-        <antcall target="deploy-war">
+    <target name="deploy-portlets-common-webapp" if="run.deploy.portlets.common">
+        <antcall target="deploy-toro-war">
             <param name="webappName" value="toro-portlets-common"/>
             <param name="artifactId" value="portlets-common-webapp"/>
+        </antcall>
+    </target>
+
+    <target name="portlets-add-uportal-configurations" if="run.deploy.portlets.common">
+        <antcall target="merge-configuration">
+            <param name="configfile" value="${basedir}/properties/portlets-uPortalConfigurationChanges.xml"/>
+            <param name="targetdir" value="${portal.webapp.home}"/>
         </antcall>
     </target>
 
@@ -793,7 +917,7 @@ xercesImpl.version=${xercesImpl.version}
 
     <target name="deploy-blojsom" if="run.deploy.blojsom.portlet">
         <echo>Deploying Blojsom</echo>
-        <antcall target="deploy-war">
+        <antcall target="deploy-toro-war">
             <param name="webappName" value="toro-blojsom"/>
             <param name="artifactId" value="blojsom"/>
         </antcall>
@@ -843,62 +967,41 @@ xercesImpl.version=${xercesImpl.version}
         <delete dir="${webapp.home}/toro-permissions-portlet"/>
     </target>
 
-    <target name="publish-toro-portlet">
-        <echo>Publishing portlet net.unicon.toro:${artifactId}:${project.version}:war</echo>
-        <antcall target="extract-artifact">
-          <param name="groupId" value="net.unicon.toro"/>
-          <param name="artifactId" value="${artifactId}"/>
-          <param name="version" value="${project.version}"/>
-          <param name="target.dir" value="${work.dir}/${artifactId}-${project.version}"/>
-          <param name="archive.type" value="war"/>
-        </antcall>
-        <path id="publish-toro.classpath">
-            <pathelement path="${work.dir}/${artifactId}-${project.version}/WEB-INF/classes"/>
-            <pathelement path="${basedir}"/>
-            <path refId="uportal.classpath"/>
-        </path>
-        <antcall target="create-uportal-rdbm-properties"/>
-        <antcall target="exec-uportal-pubchan">
-            <param name="uportal.pubchan.classpath.id" value="publish-toro.classpath"/>
-            <param name="channel" value="${channel}"/>
-        </antcall>
-    </target>
-
     <target name="publish-briefcase-portlet" if="run.publish.briefcase.portlet">
-        <antcall target="publish-toro-portlet">
-            <param name="artifactId" value="briefcase-portlet"/>
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="briefcase-lib"/>
             <param name="channel" value="briefcase-channel-publish.xml"/>
         </antcall>
     </target>
 
     <target name="publish-gateway-portlet" if="run.publish.gateway.portlet">
-        <antcall target="publish-toro-portlet">
-            <param name="artifactId" value="gateway-portlet"/>
-            <param name="channel" value="gateway-example-channel-publish.xml"/>
-        </antcall>
-        <antcall target="publish-toro-portlet">
-            <param name="artifactId" value="gateway-portlet"/>
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="gateway-lib"/>
             <param name="channel" value="gateway-blogger-channel-publish.xml"/>
+        </antcall>
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="gateway-lib"/>
+            <param name="channel" value="gateway-example-channel-publish.xml"/>
         </antcall>
     </target>
 
     <target name="publish-messaging-portlet" if="run.publish.messaging.portlet">
-        <antcall target="publish-toro-portlet">
-            <param name="artifactId" value="messaging-portlet"/>
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="messaging-lib"/>
             <param name="channel" value="messaging-channel-publish.xml"/>
         </antcall>
     </target>
 
     <target name="publish-permissions-portlet" if="run.publish.permissions.portlet">
-        <antcall target="publish-toro-portlet">
-            <param name="artifactId" value="permissions-portlet"/>
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="permissions-lib"/>
             <param name="channel" value="permissions-channel-publish.xml"/>
         </antcall>
     </target>
 
     <target name="publish-web-content-portlet" if="run.publish.web.content.portlet">
-        <antcall target="publish-toro-portlet">
-            <param name="artifactId" value="web-content-portlet"/>
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="web-content-lib"/>
             <param name="channel" value="web-content-channel-publish.xml"/>
         </antcall>
     </target>
@@ -941,9 +1044,221 @@ xercesImpl.version=${xercesImpl.version}
     <!-- End Portlet Targets -->
 
     <!-- Channel Targets -->
-    <target name="initialize-cdk" if="run.hibernate.cdk">
-        <echo>Initializing CDK</echo>
+    <target name="deploy-channels-common" if="run.deploy.channel.common">
+        <artifact:dependencies filesetId="deploy-channels-common.filesetId">
+            <dependency groupId="net.unicon.toro" artifactId="cdk" version="${project.version}" type="jar"/>
+        </artifact:dependencies>
+        <antcall target="deploy-toro-resources">
+            <param name="artifactId" value="cdk"/>
+        </antcall>
+
+        <antcall target="deploy-toro-jar">
+            <param name="artifactId" value="toro-addressbook-channel"/>
+            <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
+        </antcall>
+        <antcall target="deploy-toro-resources">
+            <param name="artifactId" value="toro-addressbook-channel"/>
+        </antcall>
+        <antcall target="merge-uportal-configurations">
+            <param name="artifactId" value="cdk"/>
+        </antcall>
     </target>
+
+    <target name="merge-uportal-configurations">
+        <artifact:dependencies filesetId="merge-uportal-configurations.filesetId">
+            <dependency groupId="net.unicon.toro" artifactId="${artifactId}" version="${project.version}" type="jar"/>
+        </artifact:dependencies>
+        <unjar dest="${work.dir}/${artifactId}-uportal-configurations">
+            <fileset refId="merge-uportal-configurations.filesetId"/>
+            <patternset>
+                <include name="uportal-configuration-merges/**"/>
+            </patternset>
+        </unjar>
+        <antcall target="merge-configuration">
+            <param name="configfile" value="${work.dir}/${artifactId}-uportal-configurations/uportal-configuration-merges/uportal-configuration-merges.xml"/>
+            <param name="targetdir" value="${portal.webapp.home}"/>
+        </antcall>
+    </target>
+
+    <target name="extract-resources">
+        <available property="resources.exists" file="${artifact.path}"/>
+        <condition property="ok.to.extract.resources">
+            <or>
+                <contains string="${version}" substring="SNAPSHOT"/>
+                <not><available file="${target.dir}/.artifact_extracted"/></not>
+            </or>
+        </condition>
+        <antcall target="extract-resources-task">
+            <param name="groupId" value="${groupId}"/>
+            <param name="artifactId" value="${artifactId}"/>
+            <param name="version" value="${version}"/>
+            <param name="target.dir" value="${target.dir}"/>
+            <param name="archive.type" value="${archive.type}"/>
+            <param name="remote.repository" value="${remote.repository}"/>
+        </antcall>
+        <touch file="${target.dir}/.artifact_extracted"/>
+    </target>
+
+     <target name="extract-resources-task" if="ok.to.extract.resources">
+         <echo>Extracting resources ${groupId}:${artifactId}:${version}:${archive.type} to ${target.dir}</echo>
+        <artifact:dependencies filesetId="extract-resources-task.filesetId">
+            <dependency groupId="${groupId}" artifactId="${artifactId}"
+                version="${version}" type="${archive.type}"/>
+            <remoteRepository refid="${remote.repository}" />
+            <!--include name="**/${artifactId}-${version}.${archive.type}"/-->
+        </artifact:dependencies>
+        <unjar dest="${target.dir}">
+            <fileset refId="extract-resources-task.filesetId"/>
+             <patternset>
+                 <include name="*.jsp"/>
+                 <include name="*.html"/>
+                 <include name="*.html"/>
+                 <include name="WEB-INF/**"/>
+                 <include name="html/**"/>
+                 <include name="templates/**"/>
+                 <include name="wml/**"/>
+                 <include name="javascript/**"/>
+                 <include name="media/**"/>
+             </patternset>
+        </unjar>
+    </target>
+
+    <target name="deploy-toro-resources">
+        <antcall target="extract-artifact">
+          <param name="groupId" value="net.unicon.toro"/>
+          <param name="artifactId" value="${artifactId}"/>
+          <param name="version" value="${project.version}"/>
+          <param name="target.dir" value="${work.dir}/${artifactId}-resources"/>
+          <param name="archive.type" value="jar"/>
+          <param name="remote.repository" value="uportal.repository"/>
+        </antcall>
+        <copy todir="${portal.webapp.home}">
+            <fileset dir="${work.dir}/${artifactId}-resources"/>
+            <filterset refid="tokens"/>
+        </copy>
+    </target>
+
+    <target name="deploy-channels" depends="
+        deploy-survey-channel
+        "/>
+
+    <target name="clean-channels" depends="
+        clean-survey-channel
+        "/>
+
+    <target name="deploy-survey-channel" if="run.deploy.survey.channel">
+        <antcall target="deploy-toro-jar">
+            <param name="artifactId" value="toro-survey-channel"/>
+            <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
+        </antcall>
+        <antcall target="deploy-toro-resources">
+            <param name="artifactId" value="toro-survey-channel"/>
+        </antcall>
+        <mkdir dir="${toro.data.home}/survey"/>
+        <antcall target="merge-uportal-configurations">
+            <param name="artifactId" value="toro-survey-channel"/>
+        </antcall>
+    </target>
+
+    <target name="clean-survey-channel" if="survey.active">
+        <antcall target="deploy-toro-jar">
+            <param name="artifactId" value="toro-survey-channel"/>
+            <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
+        </antcall>
+    </target>
+
+    <target name="initialize-toro-common" if="run.dbloader.toro.common">
+        <echo>Initializing Toro Common</echo>
+        <antcall target="uportal-dbloader-tables">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="toro-common"/>
+            <param name="version" value="${project.version}"/>
+        </antcall>
+        <antcall target="uportal-dbloader-data">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="toro-common"/>
+            <param name="version" value="${project.version}"/>
+            <param name="tables.xml" value="/properties/db/dbloader-tables.xml"/>
+        </antcall>
+    </target>
+
+    <target name="initialize-cdk" if="run.dbloader.cdk">
+        <echo>Initializing CDK</echo>
+        <antcall target="uportal-dbloader-tables">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="cdk"/>
+            <param name="version" value="${project.version}"/>
+        </antcall>
+        <antcall target="uportal-dbloader-data">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="cdk"/>
+            <param name="version" value="${project.version}"/>
+            <param name="tables.xml" value="/properties/db/dbloader-tables.xml"/>
+        </antcall>
+        <antcall target="uportal-dbloader-tables">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="toro-addressbook-channel"/>
+            <param name="version" value="${project.version}"/>
+        </antcall>
+    </target>
+
+    <target name="initialize-survey" if="run.dbloader.survey">
+        <echo>Initializing Survey Channel</echo>
+        <antcall target="uportal-dbloader-tables">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="toro-survey-channel"/>
+            <param name="version" value="${project.version}"/>
+        </antcall>
+        <antcall target="uportal-dbloader-data">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="toro-survey-channel"/>
+            <param name="version" value="${project.version}"/>
+            <param name="data.xml" value="/properties/db/dbloader-uportal-data.xml"/>
+        </antcall>
+    </target>
+
+    <target name="publish-addressbook" if="run.publish.addressbook.channel">
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="toro-addressbook-channel"/>
+            <param name="channel" value="addressbook-channel-publish.xml"/>
+        </antcall>
+    </target>
+
+    <target name="publish-survey" if="run.publish.survey.channel">
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="toro-survey-channel"/>
+            <param name="channel" value="poll-channel-publish.xml"/>
+        </antcall>
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="toro-survey-channel"/>
+            <param name="channel" value="survey-channel-publish.xml"/>
+        </antcall>
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="toro-survey-channel"/>
+            <param name="channel" value="survey-author-channel-publish.xml"/>
+        </antcall>
+    </target>
+
+    <target name="publish-toro-channel">
+        <echo>Publishing channel net.unicon.toro:${artifactId}:${project.version}:jar</echo>
+        <artifact:dependencies pathId="publish-toro-channel.classpath">
+            <dependency groupId="net.unicon.toro" artifactId="${artifactId}"
+                version="${project.version}" type="jar"/>
+        </artifact:dependencies>
+        <java fork="true" failonerror="true" dir="${basedir}" classname="org.jasig.portal.tools.chanpub.ChannelPublisher">
+          <classpath>
+            <path refId="publish-toro-channel.classpath"/>
+            <pathelement path="${work.dir}/uportal-properties"/>
+            <pathelement path="${work.dir}/${upPublishArtifactId}-${project.version}"/>
+            <pathelement path="${basedir}"/>
+            <path refId="uportal.classpath"/>
+            <fileset refId="uportal-jar.fileset"/>
+          </classpath>
+          <arg value="-n"/>
+          <arg value="${channel}"/>
+        </java> 
+    </target>
+
     <!-- End Channel Targets -->
 
     <!-- uPortal Targets -->
@@ -962,7 +1277,30 @@ xercesImpl.version=${xercesImpl.version}
         version="${postgresql.version}" type="jar"/>
       <dependency groupId="javax.servlet" artifactId="servlet-api"
         version="${servlet-api.version}" type="jar"/>
+      <dependency groupId="commons-dbcp" artifactId="commons-dbcp"
+          version="${commons-dbcp.version}" type="jar"/>
+      <dependency groupId="commons-logging" artifactId="commons-logging"
+          version="${commons-logging.version}" type="jar"/>
+      <dependency groupId="org.springframework" artifactId="spring"
+          version="${springframework.version}" type="jar"/>
+      <dependency groupId="backport-util-concurrent" artifactId="backport-util-concurrent"
+          version="${backport-util-concurrent.version}" type="jar"/>
+      <dependency groupId="com.whirlycott" artifactId="whirlycache"
+          version="${whirlycache.version}" type="jar"/>
+      <dependency groupId="dom4j" artifactId="dom4j"
+          version="${dom4j.version}" type="jar"/>
+      <dependency groupId="jaxen" artifactId="jaxen"
+          version="${jaxen.version}" type="jar"/>
+      <dependency groupId="commons-jexl" artifactId="commons-jexl"
+          version="${commons-jexl.version}" type="jar"/>
       <remoteRepository refid="toro.repository" />
+      <remoteRepository refid="central.repository" />
+    </artifact:dependencies>
+
+    <artifact:dependencies filesetId="uportal-jar.fileset">
+      <dependency groupId="uportal" artifactId="uportal"
+          version="${uportal.version}" type="jar"/>
+      <remoteRepository refid="uportal.repository" />
     </artifact:dependencies>
 
     <target name="deploy-uportal" if="run.uportal.deploy">
@@ -1047,25 +1385,31 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="extract-uportal">
-        <artifact:dependencies pathId="uportal.war">
-            <dependency groupId="uportal" artifactId="uportal"
-                version="${uportal.version}" type="war"/>
-            <remoteRepository refid="toro.repository" />
-        </artifact:dependencies>
- 
+    <target name="extract-uportal-jar">
+        <antcall target="extract-artifact">
+          <param name="groupId" value="uportal"/>
+          <param name="artifactId" value="uportal"/>
+          <param name="version" value="${uportal.version}"/>
+          <param name="target.dir" value="${work.dir}/uportal-${uportal.version}"/>
+          <param name="archive.type" value="jar"/>
+          <param name="remote.repository" value="uportal.repository"/>
+        </antcall>
+    </target>
+
+    <target name="extract-uportal-war">
         <antcall target="extract-artifact">
           <param name="groupId" value="uportal"/>
           <param name="artifactId" value="uportal"/>
           <param name="version" value="${uportal.version}"/>
           <param name="target.dir" value="${work.dir}/uportal-${uportal.version}"/>
           <param name="archive.type" value="war"/>
+          <param name="remote.repository" value="uportal.repository"/>
         </antcall>
     </target>
 
     <target name="execute-deploy-uportal">
 
-        <antcall target="extract-uportal"/>
+        <antcall target="extract-uportal-war"/>
  
          <!-- Copy the contents of the build directory -->
          <mkdir     dir="${portal.webapp.home}"/>
@@ -1135,7 +1479,7 @@ xercesImpl.version=${xercesImpl.version}
                -->
  
          <copy tofile="${tomcat.host.conf}/${portal.webapp.name}.xml"
-             file="${basedir}/properties/uportal-context.xml"
+             file="${basedir}/properties/uPortal-${uportal.version}/context.xml"
              overwrite="true">
          <filterset>
              <filter token="webappDocBase" value="${portal.webapp.name}"/>
@@ -1159,10 +1503,25 @@ xercesImpl.version=${xercesImpl.version}
          </copy>
  
          <copy tofile="${portal.webapp.home}/WEB-INF/classes/log4j.properties"
-             file="${basedir}/properties/uportal-log4j.properties"
+             file="${basedir}/properties/uPortal-${uportal.version}/log4j.properties"
              overwrite="true">
              <filterset refid="tokens"/>
          </copy>
+   </target>
+
+   <target name="uportal-add-additional-constraints">
+       <echo>Adding additional uportal constraints</echo>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue"
+           src="${basedir}/db/uportal-additional-constraints-${db.platform}.sql">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+       </sql>
    </target>
 
    <target name="uportal-initportal">
@@ -1171,28 +1530,43 @@ xercesImpl.version=${xercesImpl.version}
        <antcall target="exec-uportal-initportal"/>
    </target>
 
-   <target name="create-uportal-rdbm-properties">
-       <copy overwrite="true" filtering="on" tofile="${work.dir}/uportal-${uportal.version}/WEB-INF/classes/properties/rdbm.properties" file="${basedir}/properties/uportal.rdbm.properties">
-       <filterset refid="tokens"/>
-     </copy>
+   <target name="create-uportal-properties">
+       <mkdir dir="${work.dir}/uportal-properties/properties/db"/>
+       <mkdir dir="${work.dir}/uportal-properties/properties/chanpub"/>
+       <copy overwrite="true" todir="${work.dir}/uportal-properties">
+           <fileset dir="${basedir}/properties/uPortal-${uportal.version}">
+               <include name="*.crn"/>
+           </fileset>
+           <fileset dir="${basedir}/properties">
+               <include name="log4j.properties"/>
+           </fileset>
+       </copy>
+       <copy overwrite="true" todir="${basedir}">
+           <fileset dir="${basedir}/properties/uPortal-${uportal.version}">
+               <include name="*.dtd"/>
+           </fileset>
+       </copy>
+       <copy overwrite="true" todir="${basedir}/dtd">
+           <fileset dir="${basedir}/properties/uPortal-${uportal.version}">
+               <include name="*.dtd"/>
+           </fileset>
+       </copy>
+       <copy overwrite="true" filtering="on" tofile="${work.dir}/uportal-properties/properties/rdbm.properties" file="${basedir}/properties/uPortal-${uportal.version}/rdbm.properties">
+           <filterset refid="tokens"/>
+       </copy>
+       <copy overwrite="true" todir="${work.dir}/uportal-properties/properties/db" file="${basedir}/properties/uPortal-${uportal.version}/dbloader.xml">
+           <filterset refid="tokens"/>
+       </copy>
+       <copy overwrite="true" todir="${work.dir}/uportal-properties/properties/chanpub">
+           <fileset dir="${basedir}/properties/uPortal-${uportal.version}/chanpub"/>
+       </copy>
    </target>
 
    <target name="exec-uportal-initportal" if="uportal.deployment.exists">
        <echo>Executing uPortal Initialization</echo>
-     <antcall target="extract-artifact">
-       <param name="groupId" value="uportal"/>
-       <param name="artifactId" value="uportal"/>
-       <param name="version" value="${uportal.version}"/>
-       <param name="target.dir" value="${work.dir}/uportal-${uportal.version}"/>
-       <param name="archive.type" value="war"/>
-     </antcall>
-     <antcall target="create-uportal-rdbm-properties"/>
-     <antcall target="merge-configuration">
-       <param name="configfile" value="${basedir}/properties/uPortalDbLoaderConfigurationChange.xml"/>
-       <param name="targetdir" value="${work.dir}/uportal-${uportal.version}"/>
-     </antcall>
+     <antcall target="create-uportal-properties"/>
 
-     <antcall target="uportal-db"/>
+     <antcall target="uportal-load-db"/>
      <antcall target="uportal-pubchan"/>
      <antcall target="uportal-i18n-db"/>
      <antcall target="uportal-pubfragments">
@@ -1211,16 +1585,12 @@ xercesImpl.version=${xercesImpl.version}
    <target name="exec-uportal-pubchan">
      <echo>Executing uPortal Channel Publishing</echo>
      <property name="channel" value="all"/>
-     <property name="uportal.pubchan.classpath.id" value="uportal.classpath"/>
 
-     <antcall target="extract-uportal"/>
      <java fork="true" failonerror="true" dir="${basedir}" classname="org.jasig.portal.tools.chanpub.ChannelPublisher">
        <classpath>
-           <pathelement path="${work.dir}/uportal-${uportal.version}/WEB-INF/classes"/>
-           <fileset dir="${work.dir}/uportal-${uportal.version}/WEB-INF/lib">
-           <include name="**/*.jar"/>
-         </fileset>
-         <path refId="${uportal.pubchan.classpath.id}"/>
+         <pathelement path="${work.dir}/uportal-properties"/>
+         <path refId="uportal.classpath"/>
+         <fileset refId="uportal-jar.fileset"/>
        </classpath>
        <arg value="-n"/>
        <arg value="${channel}"/>
@@ -1240,10 +1610,8 @@ xercesImpl.version=${xercesImpl.version}
      <echo>Running DbLoader with droptables option: #${uportal.db.droptables.arg}#</echo>
      <java fork="true" failonerror="true" dir="${basedir}" classname="org.jasig.portal.tools.dbloader.DbLoader">
        <classpath>
-           <pathelement path="${work.dir}/uportal-${uportal.version}/WEB-INF/classes"/>
-           <fileset dir="${work.dir}/uportal-${uportal.version}/WEB-INF/lib">
-           <include name="**/*.jar"/>
-         </fileset>
+         <pathelement path="${work.dir}/uportal-properties"/>
+         <fileset refId="uportal-jar.fileset"/>
          <path refId="uportal.classpath"/>
        </classpath>
 
@@ -1267,10 +1635,8 @@ xercesImpl.version=${xercesImpl.version}
          <arg value="${fragmentFile}"/>
          <arg value="${work.dir}/uportal-${uportal.version}/WEB-INF/classes${tempDataXML}"/>
          <classpath>
-             <pathelement path="${work.dir}/uportal-${uportal.version}/WEB-INF/classes"/>
-             <fileset dir="${work.dir}/uportal-${uportal.version}/WEB-INF/lib">
-               <include name="**/*.jar"/>
-             </fileset>
+             <pathelement path="${work.dir}/uportal-properties"/>
+             <fileset refId="uportal-jar.fileset"/>
              <path refId="uportal.classpath"/>
          </classpath>
      </java>
@@ -1289,65 +1655,102 @@ xercesImpl.version=${xercesImpl.version}
         <arg value="-nD"/>
         <arg value="-P"/>
         <classpath>
-            <pathelement path="${work.dir}/uportal-${uportal.version}/WEB-INF/classes"/>
-            <fileset dir="${work.dir}/uportal-${uportal.version}/WEB-INF/lib">
-              <include name="**/*.jar"/>
-            </fileset>
-            <path refId="uportal.classpath"/>
+             <pathelement path="${work.dir}/uportal-properties"/>
+             <fileset refId="uportal-jar.fileset"/>
+             <path refId="uportal.classpath"/>
         </classpath>
     </java>
     <delete file="${build.home}/WEB-INF/classes/${tempDataXML}"/>
   </target>
 
+   <artifact:dependencies pathId="cernunnos.classpath">
+      <dependency groupId="cernunnos" artifactId="cernunnos"
+          version="${cernunnos.version}" type="jar"/>
+   </artifact:dependencies>
+
    <target name="uportal-deploy-portlet-apps" if="run.uportal.deploy.portlet.apps">
      <echo>uPortal deploy portlets</echo>
+     <!--mkdir dir="${work.dir}/uportal-${uportal.version}/lib/portlets"/>
+     <copy todir="${work.dir}/lib/portlets">
+         <fileset dir="./lib/portlets"/>
+     </copy-->
+     <!--java fork="true" failonerror="true" dir="${work.dir}/uportal-${uportal.version}" classname="org.danann.cernunnos.runtime.Main"-->
      <java fork="true" failonerror="true" dir="${basedir}" classname="org.danann.cernunnos.runtime.Main">
        <classpath>
-           <pathelement path="${work.dir}/uportal-${uportal.version}/WEB-INF/classes"/>
-           <fileset dir="${work.dir}/uportal-${uportal.version}/WEB-INF/lib">
-           <include name="**/*.jar"/>
-         </fileset>
+         <pathelement path="${work.dir}/uportal-properties"/>
+         <fileset refId="uportal-jar.fileset"/>
          <path refId="uportal.classpath"/>
+         <path refId="cernunnos.classpath"/>
        </classpath>
-       <arg value="classpath://org/jasig/portal/container/deploy/deploy-archives.crn"/>
+       <arg value="classpath://deploy-archives.crn"/>
        <arg value="${portletApp}"/>
        <arg value="${tomcat.home}/webapps"/>
      </java>
    </target>
 
-   <target name="uportal-db" if="run.uportal.db">
+   <target name="uportal-load-db" if="run.uportal.db">
     <echo>uPortal initialize db</echo>
-    <property name="usetable" value=" "/>
-    <property name="tablefile" value=" "/>
-    <property name="usedata" value=" "/>
-    <property name="datafile" value=" "/>
-    <property name="createscript" value=" "/>
     <property name="droptables" value="${uportal.db.droptables.arg}"/>
-    <property name="createtables" value=" "/>
-    <property name="populatetables" value=" "/>
-    <property name="localeaware" value=" "/>
-    <property name="adminlocale" value=" "/>
     <echo>Running DbLoader with droptables option: #${uportal.db.droptables.arg}#</echo>
     <java fork="true" failonerror="true" dir="${basedir}" classname="org.jasig.portal.tools.dbloader.DbLoader">
       <classpath>
-          <pathelement path="${work.dir}/uportal-${uportal.version}/WEB-INF/classes"/>
-          <fileset dir="${work.dir}/uportal-${uportal.version}/WEB-INF/lib">
-          <include name="**/*.jar"/>
-        </fileset>
+        <pathelement path="${work.dir}/uportal-properties"/>
+        <fileset refId="uportal-jar.fileset"/>
         <path refId="uportal.classpath"/>
       </classpath>
 
-      <arg value="${usetable}"/>
-      <arg value="${tablefile}"/>
-      <arg value="${usedata}"/>
-      <arg value="${datafile}"/>
-      <arg value="${createscript}"/>
       <arg value="${droptables}"/>
-      <arg value="${createtables}"/>
-      <arg value="${populatetables}"/>
-      <arg value="${localeaware}"/>
-      <arg value="${adminlocale}"/>
     </java>
+   </target>
+
+   <target name="uportal-dbloader-tables">
+       <artifact:dependencies fileSetId="data.loader.file">
+           <dependency groupId="${groupId}" artifactId="${artifactId}"
+                       version="${version}" type="jar"/>
+       </artifact:dependencies>
+       <unjar dest="${work.dir}/uportal-properties/properties/db">
+           <fileset refId="data.loader.file"/>
+           <patternset>
+               <include name="**/dbloader-*.xml"/>
+           </patternset>
+       </unjar>
+       <mkdir dir="${work.dir}/uportal-properties/org/jasig/portal/tools/dbloader"/>
+       <copy tofile="${work.dir}/uportal-properties/org/jasig/portal/tools/dbloader/tables.xsl" overwrite="true"
+           file="${basedir}/properties/toro_${db.platform}_schema.xsl"/>
+       <property name="tables.xml" value="/properties/db/tables.xml"/>
+       <java fork="true" failonerror="true" dir="${basedir}" classname="org.jasig.portal.tools.dbloader.DbLoader">
+           <classpath>
+               <pathelement path="${work.dir}/uportal-properties"/>
+               <fileset refId="uportal-jar.fileset"/>
+               <path refId="uportal.classpath"/>
+           </classpath>
+
+           <arg line="${uportal.db.droptables.arg} -C -nP -t /properties/db/dbloader-tables.xml"/>
+       </java>
+   </target>
+
+   <target name="uportal-dbloader-data">
+       <artifact:dependencies fileSetId="data.loader.file">
+           <dependency groupId="${groupId}" artifactId="${artifactId}"
+                       version="${version}" type="jar"/>
+       </artifact:dependencies>
+       <unjar dest="${work.dir}/uportal-properties/properties/db">
+           <fileset refId="data.loader.file"/>
+           <patternset>
+               <include name="**/dbloader-*.xml"/>
+           </patternset>
+       </unjar>
+       <property name="tables.xml" value="/properties/db/tables.xml"/>
+       <property name="data.xml" value="/properties/db/dbloader-data.xml"/>
+       <java fork="true" failonerror="true" dir="${basedir}" classname="org.jasig.portal.tools.dbloader.DbLoader">
+           <classpath>
+               <pathelement path="${work.dir}/uportal-properties"/>
+               <fileset refId="uportal-jar.fileset"/>
+               <path refId="uportal.classpath"/>
+           </classpath>
+
+           <arg line="-nD -nC -P -t ${tables.xml} -d ${data.xml}"/>
+       </java>
    </target>
     <!-- End uPortal Targets -->
 </project>

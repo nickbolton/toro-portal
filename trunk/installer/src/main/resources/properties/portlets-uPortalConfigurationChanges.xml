@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<changes>
+  <file path="WEB-INF/classes/properties/services.xml">
+    <add-or-replace where="end">
+      <xpath>/servicelist</xpath>
+      <value>
+        <service>
+          <name>Academus Facade API</name>
+          <class>net.unicon.academus.api.uportal.UPortalAcademusFacade</class>
+          <method type="static">register</method>
+        </service>
+      </value>
+    </add-or-replace>
+  </file>
+</changes>
+

@@ -11,7 +11,7 @@
 			defaultImageResource="/resources/antbar.png"
 			minJavaVersion="1.5"
 			finishButtonText="Install"
-			loadDefaults="prompt"
+			loadDefaults="true"
 			version="1.0">
 	<page
 			type="splash"
@@ -39,6 +39,10 @@
             property="toro.remote.repo"
             defaultValue="@toro.remote.repo@"
             displayText="Toro Maven Repository"/>
+		<text
+            property="central.remote.repo"
+            defaultValue="@central.remote.repo@"
+            displayText="Central Maven Repository"/>
 	</page>
     <page
         type="input"
@@ -69,6 +73,7 @@
         <hidden property="dom4j.version" value="@dom4j.version@"/>
         <hidden property="springframework.version" value="@springframework.version@"/>
         <hidden property="backport-util-concurrent.version" value="@backport-util-concurrent.version@"/>
+        <hidden property="commons-jexl.version" value="@commons-jexl.version@"/>
         <hidden property="commons-dbcp.version" value="@commons-dbcp.version@"/>
         <hidden property="hsqldb.version" value="@hsqldb.version@"/>
         <hidden property="jtds.version" value="@jtds.version@"/>
@@ -78,6 +83,8 @@
         <hidden property="standard.version" value="@standard.version@"/>
         <hidden property="jstl.version" value="@jstl.version@"/>
         <hidden property="hibernate.version" value="@hibernate.version@"/>
+        <hidden property="whirlycache.version" value="@whirlycache.version@"/>
+        <hidden property="cernunnos.version" value="@cernunnos.version@"/>
 
         <comment displayText="    Deploy uPortal"/>
         <comment displayText="    Common Libraries"/>
@@ -163,10 +170,10 @@
 			type="input"
             name="uPortal version"
                 overflow="true"
-			displayText="uPortal Version">
+			displayText="Select which version to install">
         <select
             property="uportal.version"
-            displayText="Select which version to install"
+            displayText="uPortal version"
             defaultValue="@uportal.version1@">
             <option text="@uportal.version1@" value="@uportal.version1@"/>
         </select>
@@ -176,10 +183,10 @@
 			type="input"
             name="uPortal version"
                 overflow="true"
-			displayText="uPortal Version">
+			displayText="Select which uPortal version is installed">
         <select
             property="uportal.version"
-            displayText="Select which uPortal version is installed"
+            displayText="uPortal version"
             defaultValue="@uportal.version1@">
             <option text="@uportal.version1@" value="@uportal.version1@"/>
         </select>
@@ -213,19 +220,9 @@
 	<page
             ifProperty="(${deploy.all}!=true)"
 			type="input"
-			name="components"
+			name="toro.portlets"
 			overflow="true"
-			displayText="Toro Components">
-		<checkbox
-            property="common.libraries"
-            displayText="Common Libraries"
-			defaultValue="true"
-			force="true"/>
-		<checkbox
-            property="common.portlets.webapp"
-            displayText="Common Portlets Webapp"
-			defaultValue="true"
-			force="true"/>
+			displayText="Toro Portlets">
 		<checkbox
 			displayText="Briefcase Portlet"
 			property="briefcase-portlet.active"
@@ -256,15 +253,20 @@
 			property="blojsom.active"
             defaultValue="@blojsom.active@"
 			force="false"/>
-        <select
-            property="project.version"
-            displayText="Select which version to install"
-            defaultValue="@project.version1@">
-            <option text="@project.version1@" value="@project.version1@"/>
-        </select>
     </page>
 	<page
-            ifProperty="(${deploy.all}=true) AND (${toro.version}=)"
+            ifProperty="(${deploy.all}!=true)"
+			type="input"
+            name="toro.channels"
+			overflow="true"
+			displayText="Toro Channels">
+		<checkbox
+			displayText="Survey Channel"
+			property="survey.active"
+            defaultValue="@survey.active@"
+			force="false"/>
+    </page>
+	<page
 			type="input"
             name="toro version"
 			overflow="true"
@@ -275,6 +277,44 @@
             defaultValue="@project.version1@">
             <option text="@project.version1@" value="@project.version1@"/>
         </select>
+    </page>
+    <page
+        type="input"
+        overflow="true"
+        name="Directory Server"
+        displayText="Directory Server">
+		<text
+            property="ldap.server.hostname"
+            defaultValue=""
+            displayText="LDAP Servername"/>
+		<validated
+			property="ldap.server.port"
+            defaultValue=""
+            regex="^$|^[0-9]+$"
+            displayText="LDAP port"/>
+		<text
+            property="ldap.server.managerdn"
+            defaultValue=""
+            displayText="LDAP Admin DN"/>
+		<text
+            property="ldap.server.manager.password"
+            defaultValue=""
+            displayText="LDAP Admin Password"/>
+		<text
+            property="ldap.server.basedn"
+            defaultValue=""
+            displayText="LDAP BaseDN"/>
+		<text
+            property="ldap.server.uid"
+            defaultValue=""
+            displayText="LDAP uid Attribute"/>
+		<text
+            property="ldap.protocol.checkbox"
+            defaultValue="false"
+            displayText="LDAP SSL Protocol"/>
+        <conditional ifProperty="(${ldap.protocol.checkbox}=true)">
+            <hidden property="ldap.protocol" value="ssl"/>
+        </conditional>
     </page>
     <page
         ifProperty="(${deploy.all}=true) OR (${messaging-portlet.active}=true)"
@@ -289,7 +329,7 @@
 		<validated
 			property="smtp.server.port"
             defaultValue="@smtp.server.port@"
-            regex="^[0-9]+$"
+            regex="^$|^[0-9]+$"
             displayText="SMTP port"/>
 		<text
 			property="smtp.server.username"
@@ -298,7 +338,7 @@
 		<validated
 			property="smtp.server.password"
             defaultValue="@smtp.server.password@"
-            regex="^[a-zA-Z_0-9]+$"
+            regex="^$|^[a-zA-Z_0-9]+$"
             displayText="SMTP password (if necessary)"/>
         <!--password-confirm
 			property="smtp.server.password.confirm"
@@ -391,7 +431,7 @@
         <validated
             property="jdbc.password"
             defaultValue="@jdbc.password@"
-            regex="^[a-zA-Z_0-9]+$"
+            regex="^$|^[a-zA-Z_0-9]+$"
             displayText="JDBC User"/>
         <!--password-confirm
             property="jdbc.password.confirm"
@@ -435,30 +475,6 @@
             defaultValue="@jdbc.poolsize.blojsom@"
             displayText="Blojsom jdbc poolsize"
             regex="^[0-9]+$"/>
-        <conditional ifProperty="(${jdbc.driver}=org.postgresql.Driver)">
-            <hidden property="db.platform" value="postgres"/>
-            <hidden property="jdbc.simplesql" value="select 1"/>
-        </conditional>
-        <conditional ifProperty="(${jdbc.driver}=oracle.jdbc.driver.OracleDriver)">
-            <hidden property="db.platform" value="oracle"/>
-            <hidden property="jdbc.simplesql" value="select 1 from dual"/>
-        </conditional>
-        <conditional ifProperty="(${jdbc.driver}=net.sourceforge.jtds.jdbc.Driver)">
-            <hidden property="db.platform" value="sqlserver"/>
-            <hidden property="jdbc.simplesql" value="select 1"/>
-        </conditional>
-        <conditional ifProperty="(${jdbc.driver}=com.jnetdirect.jsql.JSQLDriver)">
-            <hidden property="db.platform" value="sqlserver"/>
-            <hidden property="jdbc.simplesql" value="select 1"/>
-        </conditional>
-        <conditional ifProperty="(${jdbc.driver}=org.hsqldb.jdbcDriver)">
-            <hidden property="db.platform" value="hsql"/>
-            <hidden property="jdbc.simplesql" value="select 1"/>
-        </conditional>
-        <conditional ifProperty="(${jdbc.driver}=com.mysql.jdbc.Driver)">
-            <hidden property="db.platform" value="mysql"/>
-            <hidden property="jdbc.simplesql" value="select 1"/>
-        </conditional>
     </page>
 	<page
             ifProperty="(${initialize.all}!=true)"
@@ -466,16 +482,12 @@
             overflow="true"
 			name="properties"
             displayText="Schema Creation">
+        <comment displayText="Portlets" title="true"/>
 		<checkbox
             displayText="Alchemist (Sequencer, Access Controller)"
 			property="hibernate.alchemist"
             defaultValue="@hibernate.alchemist@"
 			force="false"/>
-        <!--checkbox
-            displayText="Channels Common"
-			property="hibernate.cdk"
-			defaultValue="false"
-			force="false"/-->
 		<checkbox
             displayText="Portlets Common"
 			property="hibernate.portlets-common"
@@ -491,9 +503,60 @@
 			property="hibernate.mercury"
             defaultValue="@hibernate.mercury@"
 			force="false"/>
+        <comment displayText="Channels" title="true"/>
+        <checkbox
+            displayText="Toro Common"
+			property="dbloader.toro.common"
+            defaultValue="@dbloader.toro.common@"
+			force="false"/>
+        <checkbox
+            displayText="Channels Common"
+			property="dbloader.cdk"
+			defaultValue="@dbloader.cdk@"
+			force="false"/>
+		<checkbox
+            displayText="Survey"
+			property="dbloader.survey"
+            defaultValue="@dbloader.survey@"
+			force="false"/>
+        <conditional ifProperty="(${jdbc.driver}=org.postgresql.Driver)">
+            <hidden property="db.platform" value="postgres"/>
+            <hidden property="jdbc.simplesql" value="select 1"/>
+            <hidden property="db.time.impl" value="net.unicon.portal.util.PostgresTimeServiceImpl"/>
+            <hidden property="db.sqlconcat" value="||"/>
+        </conditional>
+        <conditional ifProperty="(${jdbc.driver}=oracle.jdbc.driver.OracleDriver)">
+            <hidden property="db.platform" value="oracle"/>
+            <hidden property="jdbc.simplesql" value="select 1 from dual"/>
+            <hidden property="db.time.impl" value="net.unicon.portal.util.OracleTimeServiceImpl"/>
+            <hidden property="db.sqlconcat" value="||"/>
+        </conditional>
+        <conditional ifProperty="(${jdbc.driver}=net.sourceforge.jtds.jdbc.Driver)">
+            <hidden property="db.platform" value="sqlserver"/>
+            <hidden property="jdbc.simplesql" value="select 1"/>
+            <hidden property="db.time.impl" value="net.unicon.portal.util.SqlServerTimeServiceImpl"/>
+            <hidden property="db.sqlconcat" value="+"/>
+        </conditional>
+        <conditional ifProperty="(${jdbc.driver}=com.jnetdirect.jsql.JSQLDriver)">
+            <hidden property="db.platform" value="sqlserver"/>
+            <hidden property="jdbc.simplesql" value="select 1"/>
+            <hidden property="db.time.impl" value="net.unicon.portal.util.SqlServerTimeServiceImpl"/>
+            <hidden property="db.sqlconcat" value="+"/>
+        </conditional>
+        <conditional ifProperty="(${jdbc.driver}=org.hsqldb.jdbcDriver)">
+            <hidden property="db.platform" value="hsql"/>
+            <hidden property="jdbc.simplesql" value="select 1"/>
+            <hidden property="db.sqlconcat" value="||"/>
+        </conditional>
+        <conditional ifProperty="(${jdbc.driver}=com.mysql.jdbc.Driver)">
+            <hidden property="db.platform" value="mysql"/>
+            <hidden property="jdbc.simplesql" value="select 1"/>
+            <hidden property="db.time.impl" value="net.unicon.portal.util.MySqlTimeServiceImpl"/>
+            <hidden property="db.sqlconcat" value="||"/>
+        </conditional>
     </page>
 	<page
-        ifProperty="(${initialize.all}=true) OR (${hibernate.alchemist}=true) OR (${hibernate.portlets-common}=true) OR (${hibernate.demetrius}=true) OR (${hibernate.mercury}=true) OR (${uportal.db}=true) OR (${uportal.i18n.db}=true)"
+        ifProperty="(${initialize.all}=true) OR (${hibernate.alchemist}=true) OR (${hibernate.portlets-common}=true) OR (${hibernate.demetrius}=true) OR (${hibernate.mercury}=true) OR (${uportal.db}=true) OR (${uportal.i18n.db}=true) OR (${dbloader.cdk}=true) OR (${dbloader.survey}=true) OR (${dbloader.toro.common}=true)"
 			type="input"
             overflow="true"
             name="schema creation mode"
