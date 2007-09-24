@@ -8,10 +8,10 @@
 -->
 
 <channel-definition>
-    <title>Addressbook Channel</title>
-    <name>Addressbook Channel</name>
-    <fname>addressbook-channel</fname>
-    <desc>Addressbook Channel</desc>
+    <title>Toro Addressbook Channel</title>
+    <name>Toro Addressbook Channel</name>
+    <fname>toro-addressbook-channel</fname>
+    <desc>Toro Addressbook Channel</desc>
     <type>Custom</type>
     <class>net.unicon.portal.channels.addressbook.CAddressBook</class>
     <timeout>60000</timeout>
