@@ -58,8 +58,6 @@
         url="${central.remote.repo}" />
 
     <artifact:dependencies pathId="db.classpath">
-        <dependency groupId="hsqldb" artifactId="hsqldb"
-            version="${hsqldb.version}" type="jar"/>
         <dependency groupId="net.sourceforge.jtds" artifactId="jtds"
             version="${jtds.version}" type="jar"/>
         <dependency groupId="mysql" artifactId="mysql-connector-java"
@@ -77,7 +75,7 @@
     </filterset>
 
     <!--  Driver targets  -->
-    <target name="clean" depends="clean-portlets, clean-channels">
+    <target name="clean" depends="clean-portlets">
         <delete dir="${work.dir}"/>
         <delete dir="${webapp.home}/toro-portlets-common"/>
         <delete>
@@ -156,6 +154,7 @@
             <or>
                 <equals arg1="${deploy.all}" arg2="true"/>
                 <equals arg1="${survey.active}" arg2="true"/>
+                <equals arg1="${news.active}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.deploy.toro.common">
@@ -168,6 +167,12 @@
             <or>
                 <equals arg1="${deploy.all}" arg2="true"/>
                 <equals arg1="${survey.active}" arg2="true"/>
+            </or>
+        </condition>
+        <condition property="run.deploy.news.channel">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${news.active}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.publish.briefcase.portlet">
@@ -218,9 +223,18 @@
                 <equals arg1="${survey.active}" arg2="true"/>
             </or>
         </condition>
+        <condition property="run.publish.news.channel">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${initialize.all}" arg2="true"/>
+                <equals arg1="${news.publish}" arg2="true"/>
+                <equals arg1="${news.active}" arg2="true"/>
+            </or>
+        </condition>
         <condition property="run.publish.addressbook.channel">
             <or>
                 <equals arg1="${run.publish.survey.channel}" arg2="true"/>
+                <equals arg1="${run.publish.news.channel}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.uportal.db">
@@ -295,6 +309,12 @@
                 <equals arg1="${dbloader.survey}" arg2="true"/>
             </or>
         </condition>
+        <condition property="run.dbloader.news">
+            <or>
+                <equals arg1="${initialize.all}" arg2="true"/>
+                <equals arg1="${dbloader.news}" arg2="true"/>
+            </or>
+        </condition>
         <condition property="hibernate.create.only" value="--create">
             <equals arg1="${hibernate.create.only.checkbox}" arg2="true"/>
         </condition>
@@ -322,12 +342,14 @@ run.deploy.gateway.portlet=${run.deploy.gateway.portlet}
 run.deploy.web.content.portlet=${run.deploy.web.content.portlet}
 run.deploy.blojsom.portlet=${run.deploy.blojsom.portlet}
 run.deploy.survey.channel=${run.deploy.survey.channel}
+run.deploy.news.channel=${run.deploy.news.channel}
 run.publish.briefcase.portlet=${run.publish.briefcase.portlet}
 run.publish.gateway.portlet=${run.publish.gateway.portlet}
 run.publish.messaging.portlet=${run.publish.messaging.portlet}
 run.publish.permissions.portlet=${run.publish.permissions.portlet}
 run.publish.web.content.portlet=${run.publish.web.content.portlet}
 run.publish.survey.channel=${run.publish.survey.channel}
+run.publish.news.channel=${run.publish.news.channel}
 run.uportal.db=${run.uportal.db}
 run.uportal.pubchan=${run.uportal.pubchan}
 run.uportal.i18n.db=${run.uportal.i18n.db}
@@ -340,6 +362,7 @@ run.hibernate.portlets-common=${run.hibernate.portlets-common}
 run.dbloader.cdk=${run.dbloader.cdk}
 run.dbloader.toro.common=${run.dbloader.toro.common}
 run.dbloader.survey=${run.dbloader.survey}
+run.dbloader.news=${run.dbloader.news}
 hibernate.create.only=${hibernate.create.only}
 uportal.db.droptables.arg=${uportal.db.droptables.arg}
 
@@ -369,7 +392,6 @@ hibernate.demetrius=${hibernate.demetrius}
 hibernate.mercury=${hibernate.mercury}
 hibernate.portlets-common=${hibernate.portlets-common}
 hibernate.version=${hibernate.version}
-hsqldb.version=${hsqldb.version}
 initialize.all=${initialize.all}
 jaxen.version=${jaxen.version}
 jdbc.driver=${jdbc.driver}
@@ -462,9 +484,6 @@ xercesImpl.version=${xercesImpl.version}
 
 
    <target name="initialize">
-     <condition property="hsql.driver">
-         <contains string="${jdbc.driver}" substring="hsql"/>
-     </condition>
      <condition property="postgres.driver">
          <contains string="${jdbc.driver}" substring="postgres"/>
      </condition>
@@ -480,20 +499,10 @@ xercesImpl.version=${xercesImpl.version}
              <contains string="${jdbc.driver}" substring="jnetdirect"/>
          </or>
      </condition>
-     <echo>calling execute-initalize-with-hsql</echo>
-     <antcall target="execute-initalize-with-hsql"/>
-     <echo>calling execute-initalize-with-postgres</echo>
      <antcall target="execute-initalize-with-postgres"/>
-     <echo>calling execute-initalize-with-oracle</echo>
      <antcall target="execute-initalize-with-oracle"/>
      <antcall target="execute-initalize-with-mysql"/>
      <antcall target="execute-initalize-with-sqlserver"/>
-   </target>
-
-   <target name="execute-initalize-with-hsql" if="hsql.driver">
-     <echo>Running execute-initalize-with-hsql</echo>
-     <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
-     <antcall target="exec-initalize"/>
    </target>
 
    <target name="execute-initalize-with-postgres" if="postgres.driver">
@@ -536,6 +545,7 @@ xercesImpl.version=${xercesImpl.version}
       <antcall target="initialize-toro-common"/>
       <antcall target="initialize-cdk"/>
       <antcall target="initialize-survey"/>
+      <antcall target="initialize-news"/>
 
       <property name="uportal.pubchan" value="true"/>
       <antcall target="publish-briefcase-portlet"/>
@@ -545,6 +555,7 @@ xercesImpl.version=${xercesImpl.version}
       <antcall target="publish-web-content-portlet"/>
       <antcall target="publish-addressbook"/>
       <antcall target="publish-survey"/>
+      <antcall target="publish-news"/>
     </target>
     <!--  End Driver targets  -->
 
@@ -1139,11 +1150,8 @@ xercesImpl.version=${xercesImpl.version}
     </target>
 
     <target name="deploy-channels" depends="
-        deploy-survey-channel
-        "/>
-
-    <target name="clean-channels" depends="
-        clean-survey-channel
+        deploy-survey-channel,
+        deploy-news-channel
         "/>
 
     <target name="deploy-survey-channel" if="run.deploy.survey.channel">
@@ -1160,11 +1168,15 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="clean-survey-channel" if="survey.active">
+    <target name="deploy-news-channel" if="run.deploy.news.channel">
         <antcall target="deploy-toro-jar">
-            <param name="artifactId" value="toro-survey-channel"/>
+            <param name="artifactId" value="toro-news-channel"/>
             <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
         </antcall>
+        <antcall target="deploy-toro-resources">
+            <param name="artifactId" value="toro-news-channel"/>
+        </antcall>
+        <mkdir dir="${toro.data.home}/campus_news"/>
     </target>
 
     <target name="initialize-toro-common" if="run.dbloader.toro.common">
@@ -1217,6 +1229,27 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
+    <target name="initialize-news" if="run.dbloader.news">
+        <echo>Initializing News Channel</echo>
+        <antcall target="uportal-dbloader-tables">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="toro-news-channel"/>
+            <param name="version" value="${project.version}"/>
+        </antcall>
+        <antcall target="uportal-dbloader-data">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="toro-news-channel"/>
+            <param name="version" value="${project.version}"/>
+            <param name="data.xml" value="/properties/db/dbloader-uportal-data.xml"/>
+        </antcall>
+        <antcall target="uportal-dbloader-data">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="cdk"/>
+            <param name="version" value="${project.version}"/>
+            <param name="tables.xml" value="/properties/db/dbloader-tables.xml"/>
+        </antcall>
+    </target>
+
     <target name="publish-addressbook" if="run.publish.addressbook.channel">
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="toro-addressbook-channel"/>
@@ -1236,6 +1269,13 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="toro-survey-channel"/>
             <param name="channel" value="survey-author-channel-publish.xml"/>
+        </antcall>
+    </target>
+
+    <target name="publish-news" if="run.publish.news.channel">
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="toro-news-channel"/>
+            <param name="channel" value="news-channel-publish.xml"/>
         </antcall>
     </target>
 
@@ -1265,8 +1305,6 @@ xercesImpl.version=${xercesImpl.version}
     <artifact:dependencies pathId="uportal.classpath">
       <dependency groupId="org.apache.pluto" artifactId="pluto"
         version="${pluto.version}" type="jar"/>
-      <dependency groupId="hsqldb" artifactId="hsqldb"
-        version="${hsqldb.version}" type="jar"/>
       <dependency groupId="net.sourceforge.jtds" artifactId="jtds"
         version="${jtds.version}" type="jar"/>
       <dependency groupId="mysql" artifactId="mysql-connector-java"
@@ -1305,9 +1343,6 @@ xercesImpl.version=${xercesImpl.version}
 
     <target name="deploy-uportal" if="run.uportal.deploy">
         <echo>Deploying uPortal ${uportal.version}</echo>
-        <condition property="hsql.driver">
-            <contains string="${jdbc.driver}" substring="hsql"/>
-        </condition>
         <condition property="postgres.driver">
             <contains string="${jdbc.driver}" substring="postgres"/>
         </condition>
@@ -1323,21 +1358,11 @@ xercesImpl.version=${xercesImpl.version}
         <condition property="jnetdirect.driver">
             <contains string="${jdbc.driver}" substring="jnetdirect"/>
         </condition>
-        <antcall target="execute-deploy-uportal-with-hsql"/>
         <antcall target="execute-deploy-uportal-with-postgres"/>
         <antcall target="execute-deploy-uportal-with-oracle"/>
         <antcall target="execute-deploy-uportal-with-mysql"/>
         <antcall target="execute-deploy-uportal-with-jtds"/>
         <antcall target="execute-deploy-uportal-with-jnetdirect"/>
-    </target>
-
-    <target name="execute-deploy-uportal-with-hsql" if="hsql.driver">
-        <echo message="setting hsql db properties..."/>
-        <antcall target="execute-deploy-uportal">
-            <param name="db.driver.groupId" value="hsqldb"/>
-            <param name="db.driver.artifactId" value="hsqldb"/>
-            <param name="db.driver.version" value="${hsqldb.version}"/>
-        </antcall>
     </target>
 
     <target name="execute-deploy-uportal-with-postgres" if="postgres.driver">
@@ -1715,6 +1740,7 @@ xercesImpl.version=${xercesImpl.version}
            </patternset>
        </unjar>
        <mkdir dir="${work.dir}/uportal-properties/org/jasig/portal/tools/dbloader"/>
+       <echo>Copying ${basedir}/properties/toro_${db.platform}_schema.xsl to ${work.dir}/uportal-properties/org/jasig/portal/tools/dbloader/tables.xsl</echo>
        <copy tofile="${work.dir}/uportal-properties/org/jasig/portal/tools/dbloader/tables.xsl" overwrite="true"
            file="${basedir}/properties/toro_${db.platform}_schema.xsl"/>
        <property name="tables.xml" value="/properties/db/tables.xml"/>
@@ -1727,6 +1753,13 @@ xercesImpl.version=${xercesImpl.version}
 
            <arg line="${uportal.db.droptables.arg} -C -nP -t /properties/db/dbloader-tables.xml"/>
        </java>
+       <delete>
+           <fileset dir="${work.dir}/uportal-properties/properties/db">
+               <patternset>
+                   <include name="**/dbloader-*.xml"/>
+               </patternset>
+           </fileset>
+       </delete>
    </target>
 
    <target name="uportal-dbloader-data">

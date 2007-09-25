@@ -227,9 +227,11 @@ JServer Release 8.1.7.0.0 - Production</db-version>
     <type><generic>VARCHAR</generic><local>VARCHAR</local></type>
     <type><generic>LONGVARBINARY</generic><local>BYTEA</local></type>
     <type><generic>VARBINARY</generic><local>BYTEA</local></type>
-    <type><generic>INTEGER</generic><local>integer</local></type>
-  </db-type-mapping>   
-  
+    <type><generic>INTEGER</generic><local>INTEGER</local></type>
+    <type><generic>BOOLEAN</generic><local>BOOLEAN</local></type>
+    <type><generic>CHAR</generic><local>CHAR</local></type>
+  </db-type-mapping>
+ 
   <db-type-mapping>
     <db-name>PostgreSQL</db-name>
     <db-version>8.1.9</db-version>

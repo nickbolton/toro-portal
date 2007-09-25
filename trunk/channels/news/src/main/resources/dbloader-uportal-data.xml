@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<data>
+  <table>
+    <name>UP_PERMISSION</name>
+    <rows>
+      <row>
+        <column><name>OWNER</name><value>AcademusCampusNews</value></column>
+        <column><name>PRINCIPAL_TYPE</name><value>3</value></column>
+        <column><name>PRINCIPAL_KEY</name><value>local.14</value></column>
+        <column><name>ACTIVITY</name><value>VIEW</value></column>
+        <column><name>TARGET</name><value>TOPICS_ICON</value></column>
+        <column><name>PERMISSION_TYPE</name><value>GRANT</value></column>
+      </row>
+      <row>
+        <column><name>OWNER</name><value>AcademusCampusNews</value></column>
+        <column><name>PRINCIPAL_TYPE</name><value>3</value></column>
+        <column><name>PRINCIPAL_KEY</name><value>local.128</value></column>
+        <column><name>ACTIVITY</name><value>VIEW</value></column>
+        <column><name>TARGET</name><value>TOPICS_ICON</value></column>
+        <column><name>PERMISSION_TYPE</name><value>GRANT</value></column>
+      </row>
+    </rows>
+  </table>
+</data>

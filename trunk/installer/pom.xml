@@ -63,7 +63,6 @@
                     <filter token="backport-util-concurrent.version" value="${backport-util-concurrent.version}"/>
                     <filter token="commons-jexl.version" value="${commons-jexl.version}"/>
                     <filter token="commons-dbcp.version" value="${commons-dbcp.version}"/>
-                    <filter token="hsqldb.version" value="${hsqldb.version}"/>
                     <filter token="jtds.version" value="${jtds.version}"/>
                     <filter token="mysql.version" value="${mysql.version}"/>
                     <filter token="oracle.version" value="${oracle.version}"/>
@@ -95,6 +94,7 @@
                     <filter token="permissions-portlet.active" value="true"/>
                     <filter token="blojsom.active" value="true"/>
                     <filter token="survey.active" value="true"/>
+                    <filter token="news.active" value="true"/>
                     <filter token="project.version1" value="1.0.0-SNAPSHOT"/>
                     <filter token="tomcat.host.conf.relative" value="conf/Catalina/localhost"/>
                     <filter token="toro.data.home" value="/Users/deuce/dev/src/unicon/toro/data"/>
@@ -134,6 +134,7 @@
                     <filter token="dbloader.cdk" value="true"/>
                     <filter token="dbloader.toro.common" value="true"/>
                     <filter token="dbloader.survey" value="true"/>
+                    <filter token="dbloader.news" value="true"/>
                   </filterset>
                 </copy>
               </tasks>

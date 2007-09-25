@@ -75,7 +75,6 @@
         <hidden property="backport-util-concurrent.version" value="@backport-util-concurrent.version@"/>
         <hidden property="commons-jexl.version" value="@commons-jexl.version@"/>
         <hidden property="commons-dbcp.version" value="@commons-dbcp.version@"/>
-        <hidden property="hsqldb.version" value="@hsqldb.version@"/>
         <hidden property="jtds.version" value="@jtds.version@"/>
         <hidden property="mysql.version" value="@mysql.version@"/>
         <hidden property="oracle.version" value="@oracle.version@"/>
@@ -89,12 +88,8 @@
         <comment displayText="    Deploy uPortal"/>
         <comment displayText="    Common Libraries"/>
         <comment displayText="    Common Portlets Webapp"/>
-        <comment displayText="    Briefcase Portlet"/>
-        <comment displayText="    Messaging Portlet"/>
-        <comment displayText="    Gateway Portlet"/>
-        <comment displayText="    Web Content Portlet (Reddot)"/>
-        <comment displayText="    Permissions Portlet"/>
-        <comment displayText="    Blojsom Blog Application"/>
+        <comment displayText="    All Portlets"/>
+        <comment displayText="    All Channels"/>
 		<checkbox
             property="deploy.all"
             displayText="Deploy All"
@@ -111,10 +106,8 @@
         <comment displayText="    Publish uPortal Channels"/>
         <comment displayText="    Publish uPortal ALM Fragments"/>
         <comment displayText="    Deploy uPortal Portlet Apps"/>
-        <comment displayText="    Toro Alchemist (Sequencer, Access Controller)"/>
-        <comment displayText="    Toro Portlets Common"/>
-        <comment displayText="    Toro Demetrius (Briefcase)"/>
-        <comment displayText="    Toro Mercury (Messaging)"/>
+        <comment displayText="    All portlet related db objects"/>
+        <comment displayText="    All channel related db objects"/>
 		<checkbox
             property="initialize.all"
             displayText="Initialize All Database targets"
@@ -264,6 +257,11 @@
 			displayText="Survey Channel"
 			property="survey.active"
             defaultValue="@survey.active@"
+			force="false"/>
+		<checkbox
+            displayText="News Channel"
+			property="news.active"
+            defaultValue="@news.active@"
 			force="false"/>
     </page>
 	<page
@@ -519,6 +517,11 @@
 			property="dbloader.survey"
             defaultValue="@dbloader.survey@"
 			force="false"/>
+		<checkbox
+            displayText="News"
+			property="dbloader.news"
+            defaultValue="@dbloader.news@"
+			force="false"/>
         <conditional ifProperty="(${jdbc.driver}=org.postgresql.Driver)">
             <hidden property="db.platform" value="postgres"/>
             <hidden property="jdbc.simplesql" value="select 1"/>
@@ -543,11 +546,6 @@
             <hidden property="db.time.impl" value="net.unicon.portal.util.SqlServerTimeServiceImpl"/>
             <hidden property="db.sqlconcat" value="+"/>
         </conditional>
-        <conditional ifProperty="(${jdbc.driver}=org.hsqldb.jdbcDriver)">
-            <hidden property="db.platform" value="hsql"/>
-            <hidden property="jdbc.simplesql" value="select 1"/>
-            <hidden property="db.sqlconcat" value="||"/>
-        </conditional>
         <conditional ifProperty="(${jdbc.driver}=com.mysql.jdbc.Driver)">
             <hidden property="db.platform" value="mysql"/>
             <hidden property="jdbc.simplesql" value="select 1"/>
@@ -556,7 +554,7 @@
         </conditional>
     </page>
 	<page
-        ifProperty="(${initialize.all}=true) OR (${hibernate.alchemist}=true) OR (${hibernate.portlets-common}=true) OR (${hibernate.demetrius}=true) OR (${hibernate.mercury}=true) OR (${uportal.db}=true) OR (${uportal.i18n.db}=true) OR (${dbloader.cdk}=true) OR (${dbloader.survey}=true) OR (${dbloader.toro.common}=true)"
+        ifProperty="(${initialize.all}=true) OR (${hibernate.alchemist}=true) OR (${hibernate.portlets-common}=true) OR (${hibernate.demetrius}=true) OR (${hibernate.mercury}=true) OR (${uportal.db}=true) OR (${uportal.i18n.db}=true) OR (${dbloader.cdk}=true) OR (${dbloader.survey}=true) OR (${dbloader.news}=true) OR (${dbloader.toro.common}=true)"
 			type="input"
             overflow="true"
             name="schema creation mode"
