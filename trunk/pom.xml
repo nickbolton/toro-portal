@@ -122,8 +122,6 @@
       <hibernate.skip.demetrius>false</hibernate.skip.demetrius>
       <hibernate.skip.mercury>false</hibernate.skip.mercury>
       <hibernate.skip.portlets-common>false</hibernate.skip.portlets-common>
-      <hibernate.skip.cdk>false</hibernate.skip.cdk>
-      <hibernate.skip.survey>false</hibernate.skip.survey>
   </properties>
 
   <dependencies>
