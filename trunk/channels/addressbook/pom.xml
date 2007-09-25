@@ -90,20 +90,5 @@
     </dependency>
   </dependencies>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>hibernate3-maven-plugin</artifactId>
-        <configuration>
-          <componentProperties>
-            <propertyfile>../../../hibernate.properties</propertyfile>
-            <skip>${hibernate.skip.survey}</skip>
-          </componentProperties>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-
 </project>
 
