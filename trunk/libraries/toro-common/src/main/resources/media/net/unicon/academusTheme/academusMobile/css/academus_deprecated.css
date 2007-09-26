@@ -1,0 +1,820 @@
+/*_______________uPortal Images_______________
+--------------------------------------------------------------------------*/
+.img-float-left {
+	float: left;
+	margin: 0pt 10pt 10pt 0pt;
+}
+
+.img-float-right {
+	float: right;
+	margin: 0pt 0pt 10pt 10pt;
+}
+
+/*_______________uPortal Tables_______________
+--------------------------------------------------------------------------*/
+/*
+TABLE {
+border-collapse: collapse;
+}
+*/
+
+.table-content, .table-content-iso, .table-content-top, .table-content-left-top, .table-content-right-top, .table-content-left, .table-content-right, .table-content-single, .table-content-single-top, .table-content-bottom, .table-content-left-bottom, .table-content-right-bottom, .table-content-single-bottom {
+padding: 5px;
+font-size: 8pt;
+}
+
+.table-extend, .table-extend-bottom {
+padding: 5px;
+color: #555;
+font-size: 8pt;
+}
+
+.table-light, .table-light-left-top, .table-light-right-top, .table-light-left, .table-light-right, .table-light-single, .table-light-bottom, .table-light-left-bottom, .table-light-right-bottom, .table-light-single-bottom {
+padding: 5px;
+color: #000;
+font-size: 8pt;
+}
+
+.table-nav, .table-nav-gradebook {
+padding: 5px;
+color : #555;
+font-size: 8pt;
+text-align: center;
+}
+
+.table-option, .table-option-right, .table-option-left, .table-option-single, .table-option-bottom, .table-option-right-bottom, .table-option-left-bottom, .table-option-single-bottom {
+padding: 5px;
+color: #555;
+font-size: 8pt;
+}
+
+.th, .th-right, .th-left, .th-top, .th-top-single, .th-top-right, .th-top-left, .th-thin, .th-thin-left, .th-thin-right {
+padding: 5px;
+border-bottom: 1px solid #D8D8D8;
+color: #555;
+font-size: 8pt;
+font-weight: bold;
+text-align:left;
+}
+
+/*====================================================*/
+
+
+
+/*==========================PORTAL CHANNELS==========================
+Classes for portal channels */
+
+
+.uportal-button-disabled{
+color : #ACAFB9;
+font-weight: bold;
+background : #FFFFFF;
+}
+
+
+/*_______________LMS Channel View Navigation_______________
+------------------------------------------------------------------------------------------------*/
+.views{
+/*background: #EBEBEC;*/
+background-color: #F3F6FC;
+color : #505050;
+padding-left: 2px;
+padding-right: 2px;
+font-size : 7pt;
+font-weight : normal;
+border-top: 1px solid #D8D8D8;
+border-bottom: 1px solid #FFFFFF;
+}
+
+
+.views-title{
+/*background: #EBEBEC;*/
+background-color: #F3F6FC;
+color : #505050;
+font-size : 7pt;
+font-weight : normal;
+text-align: center;
+padding-top: 0px;
+padding-bottom: 0px;
+padding-left: 2px;
+padding-right: 1px;
+border-top: 1px solid #D8D8D8;
+border-bottom : 1px solid #FFFFFF;
+}
+
+.views-subtitle{
+background-color: #F3F6FC;
+font-size: 9pt;
+padding: 2px 2px 2px 6px;
+}
+
+/*_______________LMS Channel Sorting_______________
+-----------------------------------------------------------------------------------*/
+A.sort{
+	color: #3366CC;
+	font-size : 9pt;
+}
+
+A.sort:hover{
+	color: #FF6300;
+	font-size : 9pt;
+}
+
+A.sort:visited{
+	color: #3366CC;
+	font-size : 9pt;
+}
+
+/*_______________LMS Channel Page Navigation_______________
+------------------------------------------------------------------------------------------------*/
+.page-menu {
+	color: #BDB9D5;
+}
+
+.page-menu-current {
+	color: #99CC00;
+	font-weight: bold;
+}
+
+A.page-menu {
+	color: #684787;
+}
+
+A.page-menu:hover {
+	color: #99CC00;
+}
+
+/*_______________LMS Navigation Channel_______________
+----------------------------------------------------------------------------------------*/
+.table-nav-channel{
+	background : #FFFFFF;
+	border-top: 2px solid #F5F5F6;
+	border-bottom: 2px solid #F5F5F6;
+	border-left: 2px solid #F5F5F6;
+	border-right: 2px solid #F5F5F6;
+	padding: 5px;
+	color : #000000;
+	font-size : 8pt;
+}
+
+.table-row-nav-channel{
+}
+
+.nav-folder-administration{
+}
+
+.nav-folder-subscription{
+}
+
+.nav-folder-academics{
+}
+
+a.nav-folder{
+	font-weight: bold;
+}
+
+a.nav-folder:hover{
+	font-weight: bold;
+}
+
+/*a.nav-folder:visited{
+	font-weight: bold;
+}*/
+
+a.nav-folder-selected{
+	font-weight: bold;
+}
+
+a.nav-folder-selected:hover{
+}
+
+/*a.nav-folder-selected:visited{
+}*/
+
+IMG.nav-folder-selected{
+}
+
+.nav-offering{
+	font-size : 8pt;
+	padding: 3px 0 3px 15px;
+}
+
+a.nav-offering{
+}
+
+a.nav-offering:hover{
+}
+
+a.nav-offering:visited{
+}
+
+a.nav-offering-selected:link, a.nav-offering-selected:visited {
+    background: #FEFF99;
+	color: #000;
+	font-weight: bold;
+}
+
+a.nav-offering-selected:hover{
+	color: #FF6300;
+}
+
+a.nav-offering-selected:visited{
+	color: #000;
+}
+
+.nav-offering-inactive{
+	color: #253FB1;
+	font-style: italic;
+	padding-left: 15px;
+}
+
+/*_______________LMS Gradebook Channel_______________
+-----------------------------------------------------------------------------------------*/
+.ADA-invisible{
+	display : none;
+}
+
+.gradebook-empty{
+border-top: 0px solid #F5F5F6;
+border-bottom: 0px solid #F5F5F6;
+border-left: 2px solid #F5F5F6;
+border-right: 0px solid #F5F5F6;
+padding: 1px;
+font-size : 8pt;
+}
+
+.gradebook-empty{
+border-top: 0px solid #F5F5F6;
+border-bottom: 0px solid #F5F5F6;
+border-left: 2px solid #F5F5F6;
+border-right: 0px solid #F5F5F6;
+padding: 1px;
+font-size : 8pt;
+}
+
+.gradebook-empty-right{
+border-top: 0px solid #F5F5F6;
+border-bottom: 0px solid #F5F5F6;
+border-left: 0px solid #F5F5F6;
+border-right: 2px solid #F5F5F6;
+padding: 1px;
+font-size : 8pt;
+}
+
+.gradebook-empty-left-top{
+border-top: 2px solid #F5F5F6;
+border-bottom: 0px solid #F5F5F6;
+border-left: 2px solid #F5F5F6;
+border-right: 0px solid #F5F5F6;
+padding: 1px;
+font-size : 8pt;
+}
+
+.gradebook-empty-top{
+border-top: 2px solid #F5F5F6;
+border-bottom: 0px solid #F5F5F6;
+border-left: 0px solid #F5F5F6;
+border-right: 0px solid #F5F5F6;
+padding: 1px;
+font-size : 8pt;
+}
+
+.gradebook-empty-right-top{
+border-top: 2px solid #F5F5F6;
+border-bottom: 0px solid #F5F5F6;
+border-left: 0px solid #F5F5F6;
+border-right: 2px solid #F5F5F6;
+padding: 1px;
+font-size : 8pt;
+}
+
+.gradebook-empty-left-bottom{
+border-top: 0px solid #F5F5F6;
+border-bottom: 2px solid #F5F5F6;
+border-left: 2px solid #F5F5F6;
+border-right: 0px solid #F5F5F6;
+padding: 1px;
+font-size : 8pt;
+}
+
+.gradebook-empty-bottom{
+border-top: 0px solid #F5F5F6;
+border-bottom: 2px solid #F5F5F6;
+border-left: 0px solid #F5F5F6;
+border-right: 0px solid #F5F5F6;
+padding: 1px;
+font-size : 8pt;
+}
+
+.gradebook-empty-right-bottom{
+border-top: 0px solid #F5F5F6;
+border-bottom: 1px solid #F5F5F6;
+border-left: 0px solid #F5F5F6;
+border-right: 2px solid #F5F5F6;
+padding: 1px;
+font-size : 8pt;
+}
+
+.gradebook-user{
+background : #F0F0F0;
+border-top: 1px solid #F5F5F6;
+border-bottom: 1px solid #F5F5F6;
+border-left: 1px solid #F5F5F6;
+border-right: 1px solid #F5F5F6;
+padding: 1px;
+font-size : 8pt;
+}
+
+.gradebook-user-left{
+background : #F0F0F0;
+border-top: 1px solid #F5F5F6;
+border-bottom: 1px solid #F5F5F6;
+border-left: 2px solid #F5F5F6;
+border-right: 1px solid #F5F5F6;
+padding: 1px;
+font-size : 8pt;
+}
+
+.gradebook-user-right{
+background : #F0F0F0;
+border-top: 1px solid #F5F5F6;
+border-bottom: 1px solid #F5F5F6;
+border-left: 1px solid #F5F5F6;
+border-right: 2px solid #F5F5F6;
+padding: 1px;
+font-size : 8pt;
+}
+
+.gradebook-data{
+background : #E4E4E4;
+border-top: 1px solid #F5F5F6;
+border-bottom: 1px solid #F5F5F6;
+border-left: 1px solid #F5F5F6;
+border-right: 1px solid #F5F5F6;
+padding: 1px;
+font-size : 8pt;
+}
+
+.gradebook-data-right{
+background : #E4E4E4;
+border-top: 1px solid #F5F5F6;
+border-bottom: 1px solid #F5F5F6;
+border-left: 1px solid #F5F5F6;
+border-right: 2px solid #F5F5F6;
+padding: 1px;
+font-size : 8pt;
+}
+
+.gradebook-data-bottom{
+background : #E4E4E4;
+border-top: 1px solid #F5F5F6;
+border-bottom: 2px solid #F5F5F6;
+border-left: 1px solid #F5F5F6;
+border-right: 1px solid #F5F5F6;
+padding: 1px;
+font-size : 8pt;
+}
+
+.gradebook-data-right-bottom{
+background : #E4E4E4;
+border-top: 1px solid #F5F5F6;
+border-bottom: 2px solid #F5F5F6;
+border-left: 1px solid #F5F5F6;
+border-right: 2px solid #F5F5F6;
+padding: 1px;
+font-size : 8pt;
+}
+
+input.sort{
+text-align: left;
+font-weight: normal;
+width: auto;
+margin-left: 0px;
+background-color: transparent;
+color: #000000;
+border: 0px;
+}
+
+/*_______________LMS Roster Channel_______________
+----------------------------------------------------------------------------------*/
+.enrolled{
+border-top: 1px solid #F5F5F6;
+border-bottom: 1px solid #F5F5F6;
+border-left: 1px solid #F5F5F6;
+border-right: 2px solid #F5F5F6;
+padding: 5px;
+color : #555143;
+font-size : 8pt;
+}
+
+.enrolled-bottom{
+background : #FFFFFF;
+border-top: 1px solid #F5F5F6;
+border-bottom: 2px solid #F5F5F6;
+border-left: 1px solid #F5F5F6;
+border-right: 2px solid #F5F5F6;
+padding: 5px;
+color : #555143;
+font-size : 8pt;
+}
+
+.pending{
+background : #99CC00;
+border-top: 1px solid #F5F5F6;
+border-bottom: 1px solid #F5F5F6;
+border-left: 1px solid #F5F5F6;
+border-right: 4px solid #F5F5F6;
+padding: 5px;
+color : #555143;
+font-size : 8pt;
+}
+
+.pending-bottom{
+background : #99CC00;
+border-top: 1px solid #F5F5F6;
+border-bottom: 4px solid #F5F5F6;
+border-left: 1px solid #F5F5F6;
+border-right: 4px solid #F5F5F6;
+padding: 5px;
+color : #555143;
+font-size : 8pt;
+}
+
+/*_______________LMS Calendar Channel_______________
+--------------------------------------------------------------------------------------*/
+.calendar-title{
+color : #333333;
+font-family : Arial, Helvetica, sans-serif;
+font-size : 14px;
+font-weight : bold;
+text-align: center;
+padding: 10px;
+}
+
+.th-calendar{
+font-family : Verdana, Arial, sans-serif;
+font-size : 10px;
+font-weight : bold;
+}
+
+.calendar-container {
+padding: 8px 4px 8px 4px;
+margin: 10px 10px 10px 10px;
+border: 1px solid #D5E4F4;
+font-family: verdana;
+font-size: 9pt;
+_width:100%;
+}
+
+.calendar-text {
+font-family: verdana;
+font-size: 11px;
+color: #666666;
+}
+
+.calendar-text-sm {
+font-family: verdana;
+font-size: 9px;
+color:#666666;
+}
+
+.mini-events-today {
+font-family: verdana;
+font-size: 11px;
+font-weight: bold;
+color: #2348AB;
+text-align: center;
+padding: 3px;
+margin-top: 4px;
+}
+
+.mini-monthly-27 .mini-monthly-cell {
+width: 27px;
+height: 27px;
+}
+
+.mini-monthly-27 .mini-monthly-cell a{
+text-decoration: none;
+font-size: 11px;
+}
+
+.mini-monthly-20 .mini-monthly-cell {
+width: 20px;
+height: 20px;
+}
+
+.mini-monthly-20 .mini-monthly-cell a{
+text-decoration: none;
+font-size: 9px;
+}
+
+.mini-events-title {
+margin: 0 10px 0 10px;
+padding: 5px;
+background-color: #7BADDD;
+color: white;
+font-size: 11px;
+font-weight: bold;
+}
+
+.event-box {
+padding:5px;
+margin: 10px;
+border: 1px solid #D5E4F4;
+text-align: center;
+_width:100%;
+}
+
+.weekday{
+background-color: #D5E4F4;
+padding: 0px;
+font-weight : bold;
+}
+
+.weekend{
+background-color: #F5F5F5;
+padding: 0px;
+font-weight : bold;
+}
+
+.current-day{
+background: #FFFFFF;
+border: 1px solid #FF6600;
+padding: 0px;
+color : #FF6600;
+font-weight : bold;
+}
+
+.current-day a, .current-day a:hover, .current-day a:visited {
+color: #FF6600;
+}
+
+.not-a-day{
+background-color: #7BADDD;
+border-top: 0px;
+padding: 0px;
+}
+
+.weekday-title{
+padding-bottom: 2px;
+color : #477BAD;
+font-size : 11px;
+font-family: verdana, sans-serif;
+font-weight : bold;
+text-align: center;
+}
+
+.weekview-title1{
+background : #c1c1c1;
+border-top: 4px solid #F5F5F6;
+border-bottom: 2px solid #F5F5F6;
+border-left: 4px solid #F5F5F6;
+border-right: 1px solid #F5F5F6;
+padding: 2px;
+color : #EDECF4;
+font-size : 8pt;
+font-weight : bold;
+}
+
+.weekview-title7{
+background : #c1c1c1;
+border-top: 4px solid #F5F5F6;
+border-bottom: 2px solid #F5F5F6;
+border-left: 1px solid #F5F5F6;
+border-right: 4px solid #F5F5F6;
+padding: 2px;
+color : #EDECF4;
+font-size : 8pt;
+font-weight : bold;
+}
+
+.weekview-title{
+background-color: #c1c1c1;
+border-top: 4px solid #F5F5F6;
+border-bottom: 2px solid #F5F5F6;
+border-left: 1px solid #F5F5F6;
+border-right: 1px solid #F5F5F6;
+padding-top: 2px;
+color : White;
+font-size : 8pt;
+font-weight : bold;
+}
+
+.calendar-weekview-dom{
+background : #FFFFFF;
+border-top: 1px solid #CCCCCC;
+border-bottom: 1px solid #CCCCCC;
+border-left: 2px solid #CCCCCC;
+border-right: 2px solid #CCCCCC;
+padding-top: 1px;
+padding-bottom: 1px;
+padding-left: 5px;
+padding-right: 5px;
+color : #402B64;
+}
+
+.calendar-weekview-dom2{
+background : #D5E4F4;
+border-top: 1px solid #CCCCCC;
+border-bottom: 1px solid #CCCCCC;
+border-left: 2px solid #CCCCCC;
+border-right: 2px solid #CCCCCC;
+padding-top: 1px;
+padding-bottom: 1px;
+padding-left: 5px;
+padding-right: 5px;
+color : #402B64;
+}
+
+a.calendar:link, a.calendar:visited {
+}
+
+a.calendar-event:link, a.calendar-event:visited {
+}
+
+.calendar-event-text{
+}
+
+.calendar-event-title{
+color: #2F6BE2;
+font-size: 12pt;
+font-weight: bold;
+}
+
+.calendar-event-sub{
+font-weight: bold;
+font-size: 11pt;
+}
+
+.task-box {
+padding: 5px;
+_width: 100%;
+}
+
+.calendar-toolbar-container{
+line-height: normal;
+background-color: #F3F3F3;
+color : #505050;
+height: 37px;
+padding-left: 10px;
+}
+
+.calendar-tool {
+margin: 6px 2px 0 0;
+float: left;
+}
+
+.calendar-navigation-right {
+position: relative;
+float: right;
+padding: 5px;
+margin: 5px;
+}
+ 
+.calendar-selected-tool {
+background-color: #ADADAD;
+color: #FFFFFF;
+}
+
+.calendar-tool-body {
+padding: 6px 1px 7px 1px;
+font-size: 9px;
+font-weight: bold;
+font-family: verdana;
+}
+
+.calendar-tool-left {
+background: url("../images/navigation/calendar_nav_left.gif") no-repeat top right;
+}
+
+.calendar-tool-right {
+background: url("../images/navigation/calendar_nav_right.gif") no-repeat top left;
+}
+
+a.calendar-top-link {
+text-decoration: none;
+color: #666666;
+}
+
+.calendar-spacer {
+padding: 5px;
+}
+
+.calendar-navigation-container {
+background-color: #D5E4F4;
+height: 37px;
+padding-left: 10px;
+border-bottom: 1px solid #7BADDD;
+}
+
+.calendar-tab {
+margin: 16px 2px 0 2px;
+float: left;
+padding: 5px 0 5px 0;
+width: 60px;
+text-align: center;
+background-color: #477BAD;
+position: relative;
+_top: 2px;
+}
+
+.calendar-tab a:link, .calendar-tab a:visited, .calendar-tab a:hover {
+color: #FFFFFF;
+font-weight: bold;
+text-decoration: none;
+}
+
+.calendar-tab-selected {
+margin: 16px 2px 0 2px;
+float: left;
+background-color: #FFFFFF;
+position: relative;
+_top: 1px;
+padding: 5px 0 5px 0;
+width: 60px;
+text-align: center;
+border-top: 1px solid #7BADDD;
+border-left: 1px solid #7BADDD;
+border-right: 1px solid #7BADDD;
+}
+
+.daily-container {
+
+}
+
+.event-title {
+font-size: 15;
+font-family: arial, verdana;
+padding: 10px 0 0 8px;
+font-weight: normal;
+}
+
+.event-subtitle {
+font-size: 10pt;
+font-family: verdana;
+font-weight: normal;
+padding: 0 0 10px 8px;
+}
+
+.add-event-img {
+margin-left: 5px;
+}
+
+.event-background {
+background-color: #EFEFEF;
+}
+
+.weekly-event-row{ 
+padding-left: 8px;
+}
+
+#CPE-CalenderS1 {
+width: 170px;
+}
+
+#CPE-ToDoS1 {
+width:180px;
+}
+/*====================================================*/
+
+
+/*_______________RSS Channel_______________
+--------------------------------------------------------------------------------------*/
+.hide-description {
+display:none;
+}
+
+.show-description {
+display:normal;
+}
+
+.show-description-toggle {
+display: none;
+}
+
+.rss-feed-container h1 {
+text-align:left;
+font-size: 9pt;
+margin: 0px 0 5px 0;
+padding: 0;
+}
+.rss-feed-container h1 a {
+	color: #000000;
+}
+.rss-feed-container ul {
+	padding: 0 0 0 0px;
+	margin: 0;	
+}
+.rss-feed-container ul li {
+padding:5px 0; 
+margin:0;
+list-style: none;
+border-bottom: 1px solid #e4e4e4;
+}
+.rss-feed-container ul li p.show-description {
+	padding: 3px 0;
+	margin: 0;
+}
+
+/*====================================================*/
+
