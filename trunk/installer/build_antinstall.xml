@@ -103,15 +103,30 @@
                 <equals arg1="${uportal.deploy}" arg2="true"/>
             </or>
         </condition>
+        <condition property="run.deploy.channel.common">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${survey.active}" arg2="true"/>
+                <equals arg1="${news.active}" arg2="true"/>
+                <equals arg1="${classifieds.active}" arg2="true"/>
+            </or>
+        </condition>
         <condition property="run.deploy.portlets.common">
             <or>
                 <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${run.deploy.channel.common}" arg2="true"/>
                 <equals arg1="${briefcase-portlet.active}" arg2="true"/>
                 <equals arg1="${messaging-portlet.active}" arg2="true"/>
                 <equals arg1="${permissions-portlet.active}" arg2="true"/>
                 <equals arg1="${gateway-portlet.active}" arg2="true"/>
                 <equals arg1="${web-content-portlet.active}" arg2="true"/>
                 <equals arg1="${blojsom-portlet.active}" arg2="true"/>
+            </or>
+        </condition>
+        <condition property="run.deploy.toro.common">
+            <or>
+                <equals arg1="${run.deploy.channel.common}" arg2="true"/>
+                <equals arg1="${run.deploy.portlets.common}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.deploy.briefcase.portlet">
@@ -150,19 +165,6 @@
                 <equals arg1="${blojsom-portlet.active}" arg2="true"/>
             </or>
         </condition>
-        <condition property="run.deploy.channel.common">
-            <or>
-                <equals arg1="${deploy.all}" arg2="true"/>
-                <equals arg1="${survey.active}" arg2="true"/>
-                <equals arg1="${news.active}" arg2="true"/>
-            </or>
-        </condition>
-        <condition property="run.deploy.toro.common">
-            <or>
-                <equals arg1="${run.deploy.channel.common}" arg2="true"/>
-                <equals arg1="${run.deploy.portlets.common}" arg2="true"/>
-            </or>
-        </condition>
         <condition property="run.deploy.survey.channel">
             <or>
                 <equals arg1="${deploy.all}" arg2="true"/>
@@ -173,6 +175,12 @@
             <or>
                 <equals arg1="${deploy.all}" arg2="true"/>
                 <equals arg1="${news.active}" arg2="true"/>
+            </or>
+        </condition>
+        <condition property="run.deploy.classifieds.channel">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${classifieds.active}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.publish.briefcase.portlet">
@@ -231,10 +239,19 @@
                 <equals arg1="${news.active}" arg2="true"/>
             </or>
         </condition>
+        <condition property="run.publish.classifieds.channel">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${initialize.all}" arg2="true"/>
+                <equals arg1="${classifieds.publish}" arg2="true"/>
+                <equals arg1="${classifieds.active}" arg2="true"/>
+            </or>
+        </condition>
         <condition property="run.publish.addressbook.channel">
             <or>
                 <equals arg1="${run.publish.survey.channel}" arg2="true"/>
                 <equals arg1="${run.publish.news.channel}" arg2="true"/>
+                <equals arg1="${run.publish.classifieds.channel}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.uportal.db">
@@ -315,6 +332,12 @@
                 <equals arg1="${dbloader.news}" arg2="true"/>
             </or>
         </condition>
+        <condition property="run.dbloader.classifieds">
+            <or>
+                <equals arg1="${initialize.all}" arg2="true"/>
+                <equals arg1="${dbloader.classifieds}" arg2="true"/>
+            </or>
+        </condition>
         <condition property="hibernate.create.only" value="--create">
             <equals arg1="${hibernate.create.only.checkbox}" arg2="true"/>
         </condition>
@@ -343,6 +366,7 @@ run.deploy.web.content.portlet=${run.deploy.web.content.portlet}
 run.deploy.blojsom.portlet=${run.deploy.blojsom.portlet}
 run.deploy.survey.channel=${run.deploy.survey.channel}
 run.deploy.news.channel=${run.deploy.news.channel}
+run.deploy.classifieds.channel=${run.deploy.classifieds.channel}
 run.publish.briefcase.portlet=${run.publish.briefcase.portlet}
 run.publish.gateway.portlet=${run.publish.gateway.portlet}
 run.publish.messaging.portlet=${run.publish.messaging.portlet}
@@ -350,6 +374,7 @@ run.publish.permissions.portlet=${run.publish.permissions.portlet}
 run.publish.web.content.portlet=${run.publish.web.content.portlet}
 run.publish.survey.channel=${run.publish.survey.channel}
 run.publish.news.channel=${run.publish.news.channel}
+run.publish.classifieds.channel=${run.publish.classifieds.channel}
 run.uportal.db=${run.uportal.db}
 run.uportal.pubchan=${run.uportal.pubchan}
 run.uportal.i18n.db=${run.uportal.i18n.db}
@@ -363,6 +388,7 @@ run.dbloader.cdk=${run.dbloader.cdk}
 run.dbloader.toro.common=${run.dbloader.toro.common}
 run.dbloader.survey=${run.dbloader.survey}
 run.dbloader.news=${run.dbloader.news}
+run.dbloader.classifieds=${run.dbloader.classifieds}
 hibernate.create.only=${hibernate.create.only}
 uportal.db.droptables.arg=${uportal.db.droptables.arg}
 
@@ -475,7 +501,6 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="deploy-portlets-common"/>
         <antcall target="deploy-portlets-common-webapp"/>
         <antcall target="deploy-portlets"/>
-        <antcall target="portlets-add-uportal-configurations"/>
         <antcall target="deploy-channels-common"/>
         <antcall target="deploy-channels"/>
 
@@ -546,6 +571,7 @@ xercesImpl.version=${xercesImpl.version}
       <antcall target="initialize-cdk"/>
       <antcall target="initialize-survey"/>
       <antcall target="initialize-news"/>
+      <antcall target="initialize-classifieds"/>
 
       <property name="uportal.pubchan" value="true"/>
       <antcall target="publish-briefcase-portlet"/>
@@ -556,6 +582,7 @@ xercesImpl.version=${xercesImpl.version}
       <antcall target="publish-addressbook"/>
       <antcall target="publish-survey"/>
       <antcall target="publish-news"/>
+      <antcall target="publish-classifieds"/>
     </target>
     <!--  End Driver targets  -->
 
@@ -745,6 +772,7 @@ xercesImpl.version=${xercesImpl.version}
             todir="${portal.webapp.home}/WEB-INF/classes/org/jasig/portal/layout/tab-column/xhtml-theme"/>
         <copy overwrite="true" outputencoding="utf-8" file="${basedir}/properties/uPortal-${uportal.version}/ajax-preferences.js"
             todir="${portal.webapp.home}/WEB-INF/classes/org/jasig/portal/layout/tab-column/xhtml-theme/common"/>
+        <antcall target="common-add-uportal-configurations"/>
     </target>
 
 
@@ -763,6 +791,19 @@ xercesImpl.version=${xercesImpl.version}
             <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
             <param name="exclusions" value="&lt;exclusions>&lt;exclusion>&lt;groupId>uportal&lt;/groupId>&lt;artifactId>uportal&lt;/artifactId>&lt;/exclusion>&lt;/exclusions>"/>
         </antcall>
+        <artifact:dependencies filesetId="messaging-portlet.fileset">
+            <dependency groupId="net.unicon.toro" artifactId="messaging-portlet" version="${project.version}" type="war"/>
+        </artifact:dependencies>
+        <unjar dest="${work.dir}/toro-portlets-common">
+            <fileset refid="messaging-portlet.fileset"/>
+            <patternset>
+                <include name="WEB-INF/classes/config/messaging-portlet.xml"/>
+            </patternset>
+        </unjar>
+        <copy overwrite="yes" filtering="on" todir="${tomcat.home}/webapps/toro-portlets-common">
+            <fileset dir="${work.dir}/toro-portlets-common"/>
+            <filterset refid="tokens"/>
+        </copy>
     </target> 
 
     <target name="deploy-portlet">
@@ -849,9 +890,9 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="portlets-add-uportal-configurations" if="run.deploy.portlets.common">
+    <target name="common-add-uportal-configurations" if="run.deploy.toro.common">
         <antcall target="merge-configuration">
-            <param name="configfile" value="${basedir}/properties/portlets-uPortalConfigurationChanges.xml"/>
+            <param name="configfile" value="${basedir}/properties/common-uPortalConfigurationChanges.xml"/>
             <param name="targetdir" value="${portal.webapp.home}"/>
         </antcall>
     </target>
@@ -1056,13 +1097,6 @@ xercesImpl.version=${xercesImpl.version}
 
     <!-- Channel Targets -->
     <target name="deploy-channels-common" if="run.deploy.channel.common">
-        <artifact:dependencies filesetId="deploy-channels-common.filesetId">
-            <dependency groupId="net.unicon.toro" artifactId="cdk" version="${project.version}" type="jar"/>
-        </artifact:dependencies>
-        <antcall target="deploy-toro-resources">
-            <param name="artifactId" value="cdk"/>
-        </antcall>
-
         <antcall target="deploy-toro-jar">
             <param name="artifactId" value="toro-addressbook-channel"/>
             <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
@@ -1144,14 +1178,27 @@ xercesImpl.version=${xercesImpl.version}
           <param name="remote.repository" value="uportal.repository"/>
         </antcall>
         <copy todir="${portal.webapp.home}">
-            <fileset dir="${work.dir}/${artifactId}-resources"/>
+            <fileset dir="${work.dir}/${artifactId}-resources">
+                 <patternset>
+                     <include name="*.jsp"/>
+                     <include name="*.html"/>
+                     <include name="*.html"/>
+                     <include name="WEB-INF/**"/>
+                     <include name="html/**"/>
+                     <include name="templates/**"/>
+                     <include name="wml/**"/>
+                     <include name="javascript/**"/>
+                     <include name="media/**"/>
+                 </patternset>
+             </fileset>
             <filterset refid="tokens"/>
         </copy>
     </target>
 
     <target name="deploy-channels" depends="
         deploy-survey-channel,
-        deploy-news-channel
+        deploy-news-channel,
+        deploy-classifieds-channel
         "/>
 
     <target name="deploy-survey-channel" if="run.deploy.survey.channel">
@@ -1177,6 +1224,17 @@ xercesImpl.version=${xercesImpl.version}
             <param name="artifactId" value="toro-news-channel"/>
         </antcall>
         <mkdir dir="${toro.data.home}/campus_news"/>
+    </target>
+
+    <target name="deploy-classifieds-channel" if="run.deploy.classifieds.channel">
+        <antcall target="deploy-toro-jar">
+            <param name="artifactId" value="toro-classifieds-channel"/>
+            <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
+        </antcall>
+        <antcall target="deploy-toro-resources">
+            <param name="artifactId" value="toro-classifieds-channel"/>
+        </antcall>
+        <mkdir dir="${toro.data.home}/classifieds"/>
     </target>
 
     <target name="initialize-toro-common" if="run.dbloader.toro.common">
@@ -1244,7 +1302,28 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
         <antcall target="uportal-dbloader-data">
             <param name="groupId" value="net.unicon.toro"/>
-            <param name="artifactId" value="cdk"/>
+            <param name="artifactId" value="toro-news-channel"/>
+            <param name="version" value="${project.version}"/>
+            <param name="tables.xml" value="/properties/db/dbloader-tables.xml"/>
+        </antcall>
+    </target>
+
+    <target name="initialize-classifieds" if="run.dbloader.classifieds">
+        <echo>Initializing Classifieds Channel</echo>
+        <antcall target="uportal-dbloader-tables">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="toro-classifieds-channel"/>
+            <param name="version" value="${project.version}"/>
+        </antcall>
+        <antcall target="uportal-dbloader-data">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="toro-classifieds-channel"/>
+            <param name="version" value="${project.version}"/>
+            <param name="data.xml" value="/properties/db/dbloader-uportal-data.xml"/>
+        </antcall>
+        <antcall target="uportal-dbloader-data">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="toro-classifieds-channel"/>
             <param name="version" value="${project.version}"/>
             <param name="tables.xml" value="/properties/db/dbloader-tables.xml"/>
         </antcall>
@@ -1276,6 +1355,13 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="toro-news-channel"/>
             <param name="channel" value="news-channel-publish.xml"/>
+        </antcall>
+    </target>
+
+    <target name="publish-classifieds" if="run.publish.classifieds.channel">
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="toro-classifieds-channel"/>
+            <param name="channel" value="classifieds-channel-publish.xml"/>
         </antcall>
     </target>
 

@@ -95,6 +95,7 @@
                     <filter token="blojsom.active" value="true"/>
                     <filter token="survey.active" value="true"/>
                     <filter token="news.active" value="true"/>
+                    <filter token="classifieds.active" value="true"/>
                     <filter token="project.version1" value="1.0.0-SNAPSHOT"/>
                     <filter token="tomcat.host.conf.relative" value="conf/Catalina/localhost"/>
                     <filter token="toro.data.home" value="/Users/deuce/dev/src/unicon/toro/data"/>
@@ -135,6 +136,7 @@
                     <filter token="dbloader.toro.common" value="true"/>
                     <filter token="dbloader.survey" value="true"/>
                     <filter token="dbloader.news" value="true"/>
+                    <filter token="dbloader.classifieds" value="true"/>
                   </filterset>
                 </copy>
               </tasks>

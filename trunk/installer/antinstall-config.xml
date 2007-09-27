@@ -86,8 +86,6 @@
         <hidden property="cernunnos.version" value="@cernunnos.version@"/>
 
         <comment displayText="    Deploy uPortal"/>
-        <comment displayText="    Common Libraries"/>
-        <comment displayText="    Common Portlets Webapp"/>
         <comment displayText="    All Portlets"/>
         <comment displayText="    All Channels"/>
 		<checkbox
@@ -262,6 +260,11 @@
             displayText="News Channel"
 			property="news.active"
             defaultValue="@news.active@"
+			force="false"/>
+		<checkbox
+            displayText="Classifieds Channel"
+			property="classifieds.active"
+            defaultValue="@classifieds.active@"
 			force="false"/>
     </page>
 	<page
@@ -522,6 +525,11 @@
 			property="dbloader.news"
             defaultValue="@dbloader.news@"
 			force="false"/>
+		<checkbox
+            displayText="Classifieds"
+			property="dbloader.classifieds"
+            defaultValue="@dbloader.classifieds@"
+			force="false"/>
         <conditional ifProperty="(${jdbc.driver}=org.postgresql.Driver)">
             <hidden property="db.platform" value="postgres"/>
             <hidden property="jdbc.simplesql" value="select 1"/>
@@ -554,7 +562,7 @@
         </conditional>
     </page>
 	<page
-        ifProperty="(${initialize.all}=true) OR (${hibernate.alchemist}=true) OR (${hibernate.portlets-common}=true) OR (${hibernate.demetrius}=true) OR (${hibernate.mercury}=true) OR (${uportal.db}=true) OR (${uportal.i18n.db}=true) OR (${dbloader.cdk}=true) OR (${dbloader.survey}=true) OR (${dbloader.news}=true) OR (${dbloader.toro.common}=true)"
+        ifProperty="(${initialize.all}=true) OR (${hibernate.alchemist}=true) OR (${hibernate.portlets-common}=true) OR (${hibernate.demetrius}=true) OR (${hibernate.mercury}=true) OR (${uportal.db}=true) OR (${uportal.i18n.db}=true) OR (${dbloader.cdk}=true) OR (${dbloader.survey}=true) OR (${dbloader.news}=true) OR (${dbloader.classifieds}=true) OR (${dbloader.toro.common}=true)"
 			type="input"
             overflow="true"
             name="schema creation mode"

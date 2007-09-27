@@ -33,31 +33,41 @@
             <groupId>net.unicon.toro</groupId>
             <artifactId>mercury</artifactId>
             <version>${project.version}</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.unicon.toro</groupId>
             <artifactId>penelope</artifactId>
             <version>${project.version}</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.unicon.toro</groupId>
             <artifactId>sdk</artifactId>
             <version>${project.version}</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.unicon.toro</groupId>
             <artifactId>jgrapht</artifactId>
             <version>${project.version}</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.unicon.toro</groupId>
             <artifactId>messaging-portlet-client</artifactId>
             <version>${project.version}</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>dom4j</groupId>
+                    <artifactId>dom4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>dom4j</groupId>
@@ -142,25 +152,6 @@
             <artifactId>junit</artifactId>
             <version>3.8.1</version>
             <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>${commons-codec.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>${commons-collections.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>xml-apis</groupId>
-            <artifactId>xml-apis</artifactId>
-            <version>${xml-apis.version}</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 

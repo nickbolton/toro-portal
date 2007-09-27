@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+
+<changes>
+  <file path="WEB-INF/classes/properties/services.xml">
+    <add-or-replace where="end">
+      <xpath>/servicelist</xpath>
+      <value>
+        <service>
+          <name>RMIRegistryService</name>
+          <class>net.unicon.sdk.j2ee.rmi.RMIRegistryBootstrap</class>
+          <method type="static">bootstrapRMIRegistry</method>
+        </service>
+        <service>
+          <name>Waiting for RMI Registry</name>
+          <class>java.lang.Thread</class>
+          <method type="static">sleep</method>
+          <arguments>
+            <!-- Index interval: the indexing process will restart after this period (in seconds)-->
+            <argitem>
+              <datatype array="false">long.class</datatype>
+              <value>3000</value>
+            </argitem>
+          </arguments>
+        </service>
+        <!-- This must be started after the RMIRegistryService -->
+        <service>
+          <name>AcademusImportService</name>
+          <class>net.unicon.academus.service.RFAcademusImportService</class>
+          <method type="static">initRMIImportService</method>
+        </service>
+        <service>
+          <name>CSCR Browser Registry</name>
+          <class>net.unicon.portal.cscr.CscrBrowserRegistry</class>
+          <method type="static">instance</method>
+        </service>
+        <service>
+          <name>Academus Facade API</name>
+          <class>net.unicon.academus.api.impl.AcademusFacadeImpl</class>
+          <method type="static">register</method>
+        </service>
+        <service>
+          <name>Academus CMS Facade API</name>
+          <class>net.unicon.academus.cms.api.impl.AcademusCMSFacadeImpl</class>
+          <method type="static">register</method>
+        </service>
+        <service>
+          <name>Academus Mercury Cache Validator</name>
+          <class>net.unicon.mercury.cache.impl.MercuryCacheValidatorImpl</class>
+          <method type="static">register</method>
+        </service>
+        <!-- >
+          <name>JMSCacheMessageListener</name>
+          <class>net.unicon.sdk.cache.jms.JMSCacheMessageListener</class>
+          <method>getName</method>
+        </service-->
+      </value>
+    </add-or-replace>
+  </file>
+</changes>
+

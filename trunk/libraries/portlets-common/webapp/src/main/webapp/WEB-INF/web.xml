@@ -3,6 +3,10 @@
 <web-app>
     <display-name>toro-portlets-common</display-name>
 
+    <listener>
+        <listener-class>net.unicon.academus.apps.messaging.PortletSessionCleanupListener</listener-class>
+    </listener>
+
     <servlet>
         <servlet-name>DownloadServlet</servlet-name>
         <servlet-class>net.unicon.academus.apps.download.DownloadServlet</servlet-class>
@@ -48,6 +52,17 @@
         </init-param>
     </servlet>
 
+    <servlet>
+        <servlet-name>AxisServlet</servlet-name> 
+        <display-name>Apache-Axis Servlet</display-name>
+        <servlet-class>org.apache.axis.transport.http.AxisServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AxisServlet</servlet-name>
+        <url-pattern>/services/*</url-pattern>
+    </servlet-mapping>
+
     <servlet-mapping>
            <servlet-name>DownloadServlet</servlet-name>
            <url-pattern>/download/*</url-pattern>
@@ -62,5 +77,14 @@
            <servlet-name>SpellCheckerServlet</servlet-name>
            <url-pattern>/spellcheck/*</url-pattern>
     </servlet-mapping>
+
+    <mime-mapping>
+        <extension>wsdl</extension>
+        <mime-type>text/xml</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>xsd</extension>
+        <mime-type>text/xml</mime-type>
+    </mime-mapping>
 </web-app>
 

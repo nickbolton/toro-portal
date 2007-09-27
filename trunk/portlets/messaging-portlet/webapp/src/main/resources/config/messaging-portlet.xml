@@ -115,7 +115,7 @@
         <!-- localhost (127.0.0.1) should always be present. -->
         <host>127.0.0.1</host>
         <!-- The server's hostname should always be present. -->
-        <host>portal.server.hostname</host>
+        <host>@portal.server.hostname@</host>
     </allowed-hosts>
 
     <!-- Nothing below this line should require modification in normal configurations. -->
