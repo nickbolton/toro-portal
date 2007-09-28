@@ -651,10 +651,15 @@ while (e.hasMoreElements()) {
     Hashtable params = new Hashtable();
     for (Enumeration e = m_crd.getParameterNames(); e.hasMoreElements();) {
       String key = (String)e.nextElement();
-      String value = m_crd.getParameter(key);
-      if (value != null) {
+      Object value = m_crd.get(key);
+      //Object[] value = m_crd.getParameters((String)key);
+      if (value instanceof String[]) {
+        String[] values = (String[])value;
+        if (values.length > 0 && values[0] != null)
+          params.put(key, values[0]);
+      } else if (value != null)
         params.put(key, value);
-      }
+
     }
     return params;
   }

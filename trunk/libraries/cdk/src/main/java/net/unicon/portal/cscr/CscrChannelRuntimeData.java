@@ -463,6 +463,10 @@ public final class CscrChannelRuntimeData extends ChannelRuntimeData implements 
     public boolean containsKey(String key) {
         return channelRuntimeData.containsKey(key);
     }
+    
+    public Object get(Object key) {
+        return channelRuntimeData.get((String)key);
+    }
 
     public Object get(String key) {
         return channelRuntimeData.get(key);

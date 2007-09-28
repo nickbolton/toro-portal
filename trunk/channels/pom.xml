@@ -25,6 +25,7 @@
       <module>addressbook</module>
       <module>survey</module>
       <module>news</module>
+      <module>classifieds</module>
   </modules>
 
 </project>
