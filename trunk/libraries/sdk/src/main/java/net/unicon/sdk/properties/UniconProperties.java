@@ -25,12 +25,19 @@
 package net.unicon.sdk.properties;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
-import java.util.List;
-import java.util.ArrayList;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class UniconProperties extends Properties {
+    
+    private Log log = LogFactory.getLog(getClass());
+    
     protected UniconProperties(String propertiesFileName) {
         loadProps(propertiesFileName);
     }
@@ -38,6 +45,13 @@ public class UniconProperties extends Properties {
     protected void loadProps (String propertiesFileName) {
         try {
             System.out.println("Loading " + propertiesFileName);
+            InputStream is = UniconProperties.class.getResourceAsStream(
+                propertiesFileName);
+            if (is == null) {
+                String msg = "Failed to find property file: " + propertiesFileName;
+                log.error(msg);
+                throw new RuntimeException(msg);
+            }
             load(UniconProperties.class.getResourceAsStream(
             propertiesFileName));
         } catch (IOException ioe) {
