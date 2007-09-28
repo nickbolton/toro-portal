@@ -271,6 +271,11 @@
 			property="calendar.active"
             defaultValue="@calendar.active@"
 			force="false"/>
+		<checkbox
+            displayText="Notes Channel"
+			property="notes.active"
+            defaultValue="@notes.active@"
+			force="false"/>
     </page>
 	<page
 			type="input"
@@ -543,6 +548,11 @@
             property="dbloader.calendar"
             defaultValue="@dbloader.calendar@"
 			force="false"/>
+		<checkbox
+            displayText="Notes"
+            property="dbloader.notes"
+            defaultValue="@dbloader.notes@"
+			force="false"/>
         <conditional ifProperty="(${jdbc.driver}=org.postgresql.Driver)">
             <hidden property="db.platform" value="postgres"/>
             <hidden property="jdbc.simplesql" value="select 1"/>
@@ -575,7 +585,7 @@
         </conditional>
     </page>
 	<page
-        ifProperty="(${initialize.all}=true) OR (${hibernate.alchemist}=true) OR (${hibernate.portlets-common}=true) OR (${hibernate.demetrius}=true) OR (${hibernate.mercury}=true) OR (${uportal.db}=true) OR (${uportal.i18n.db}=true) OR (${dbloader.cdk}=true) OR (${dbloader.survey}=true) OR (${dbloader.news}=true) OR (${dbloader.classifieds}=true) OR (${dbloader.calendar}=true) OR (${dbloader.toro.common}=true)"
+        ifProperty="(${initialize.all}=true) OR (${hibernate.alchemist}=true) OR (${hibernate.portlets-common}=true) OR (${hibernate.demetrius}=true) OR (${hibernate.mercury}=true) OR (${uportal.db}=true) OR (${uportal.i18n.db}=true) OR (${dbloader.cdk}=true) OR (${dbloader.survey}=true) OR (${dbloader.news}=true) OR (${dbloader.classifieds}=true) OR (${dbloader.calendar}=true) OR (${dbloader.notes}=true) OR (${dbloader.toro.common}=true)"
 			type="input"
             overflow="true"
             name="schema creation mode"

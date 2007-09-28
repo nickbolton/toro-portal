@@ -27,6 +27,7 @@
       <module>news</module>
       <module>classifieds</module>
       <module>calendar</module>
+      <module>notes</module>
   </modules>
 
 </project>

@@ -97,6 +97,7 @@
                     <filter token="news.active" value="true"/>
                     <filter token="classifieds.active" value="true"/>
                     <filter token="calendar.active" value="true"/>
+                    <filter token="notes.active" value="true"/>
                     <filter token="project.version1" value="1.0.0-SNAPSHOT"/>
                     <filter token="tomcat.host.conf.relative" value="conf/Catalina/localhost"/>
                     <filter token="toro.data.home" value="/Users/deuce/dev/src/unicon/toro/data"/>
@@ -138,7 +139,7 @@
                     <filter token="dbloader.survey" value="true"/>
                     <filter token="dbloader.news" value="true"/>
                     <filter token="dbloader.classifieds" value="true"/>
-                    <filter token="dbloader.calendar" value="true"/>
+                    <filter token="dbloader.notes" value="true"/>
                   </filterset>
                 </copy>
               </tasks>
