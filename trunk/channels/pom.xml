@@ -26,6 +26,7 @@
       <module>survey</module>
       <module>news</module>
       <module>classifieds</module>
+      <module>calendar</module>
   </modules>
 
 </project>

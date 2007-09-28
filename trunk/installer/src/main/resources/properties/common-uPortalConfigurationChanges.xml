@@ -1,6 +1,44 @@
 <?xml version="1.0"?>
 
 <changes>
+  <file path="WEB-INF/web.xml">
+        <add-servlet>
+            <servlet>
+                <servlet-name>SsoCallback</servlet-name>
+                <servlet-class>net.unicon.academus.apps.sso.SsoCallbackServlet</servlet-class>
+                <load-on-startup>4</load-on-startup>
+                <init-param>
+                    <!-- This path should map back to the Login servlet -->
+                    <param-name>unauthenticatedRedirectUrl</param-name>
+                    <param-value>/Login</param-value>
+                </init-param>
+            </servlet>
+        </add-servlet>
+        <add-servlet>
+            <servlet>
+                <servlet-name>CalendarReply</servlet-name>
+                <servlet-class>net.unicon.academus.apps.calendar.CalendarReplyServlet</servlet-class>
+            </servlet>
+        </add-servlet>
+        <add-servlet-mapping>
+            <servlet-mapping>
+                <servlet-name>SsoCallback</servlet-name>
+                <url-pattern>/ssoCallback</url-pattern>
+            </servlet-mapping>
+        </add-servlet-mapping>
+        <add-servlet-mapping>
+            <servlet-mapping>
+                <servlet-name>CalendarReply</servlet-name>
+                <url-pattern>/CalendarReply</url-pattern>
+            </servlet-mapping>
+        </add-servlet-mapping>
+        <add-error-page>
+            <error-page>
+                <exception-type>java.lang.Exception</exception-type>
+                <location>/WEB-INF/view/jsp/errors.jsp</location>
+            </error-page>
+        </add-error-page>
+    </file>
   <file path="WEB-INF/classes/properties/services.xml">
     <add-or-replace where="end">
       <xpath>/servicelist</xpath>

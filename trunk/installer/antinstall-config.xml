@@ -266,6 +266,11 @@
 			property="classifieds.active"
             defaultValue="@classifieds.active@"
 			force="false"/>
+		<checkbox
+            displayText="Calendar Channel"
+			property="calendar.active"
+            defaultValue="@calendar.active@"
+			force="false"/>
     </page>
 	<page
 			type="input"
@@ -402,6 +407,9 @@
             <hidden property="server.base.url" value="${portal.server.http.protocol}://${portal.server.hostname}${portal.server.port}"/>
             <hidden property="portal.base.url" value="${portal.server.http.protocol}://${portal.server.hostname}${portal.server.port}/${portal.webapp.name}"/>
         </conditional>
+        <conditional ifProperty="(${cms.active}!=true)">
+            <hidden property="cms.active" value="false"/>
+        </conditional>
     </page>
 	<page
 			type="input"
@@ -530,6 +538,11 @@
 			property="dbloader.classifieds"
             defaultValue="@dbloader.classifieds@"
 			force="false"/>
+		<checkbox
+            displayText="Calendar"
+            property="dbloader.calendar"
+            defaultValue="@dbloader.calendar@"
+			force="false"/>
         <conditional ifProperty="(${jdbc.driver}=org.postgresql.Driver)">
             <hidden property="db.platform" value="postgres"/>
             <hidden property="jdbc.simplesql" value="select 1"/>
@@ -562,7 +575,7 @@
         </conditional>
     </page>
 	<page
-        ifProperty="(${initialize.all}=true) OR (${hibernate.alchemist}=true) OR (${hibernate.portlets-common}=true) OR (${hibernate.demetrius}=true) OR (${hibernate.mercury}=true) OR (${uportal.db}=true) OR (${uportal.i18n.db}=true) OR (${dbloader.cdk}=true) OR (${dbloader.survey}=true) OR (${dbloader.news}=true) OR (${dbloader.classifieds}=true) OR (${dbloader.toro.common}=true)"
+        ifProperty="(${initialize.all}=true) OR (${hibernate.alchemist}=true) OR (${hibernate.portlets-common}=true) OR (${hibernate.demetrius}=true) OR (${hibernate.mercury}=true) OR (${uportal.db}=true) OR (${uportal.i18n.db}=true) OR (${dbloader.cdk}=true) OR (${dbloader.survey}=true) OR (${dbloader.news}=true) OR (${dbloader.classifieds}=true) OR (${dbloader.calendar}=true) OR (${dbloader.toro.common}=true)"
 			type="input"
             overflow="true"
             name="schema creation mode"

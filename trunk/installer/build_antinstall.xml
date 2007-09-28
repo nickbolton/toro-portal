@@ -109,6 +109,7 @@
                 <equals arg1="${survey.active}" arg2="true"/>
                 <equals arg1="${news.active}" arg2="true"/>
                 <equals arg1="${classifieds.active}" arg2="true"/>
+                <equals arg1="${calendar.active}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.deploy.portlets.common">
@@ -183,6 +184,12 @@
                 <equals arg1="${classifieds.active}" arg2="true"/>
             </or>
         </condition>
+        <condition property="run.deploy.calendar.channel">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${calendar.active}" arg2="true"/>
+            </or>
+        </condition>
         <condition property="run.publish.briefcase.portlet">
             <or>
                 <equals arg1="${deploy.all}" arg2="true"/>
@@ -247,11 +254,20 @@
                 <equals arg1="${classifieds.active}" arg2="true"/>
             </or>
         </condition>
+        <condition property="run.publish.calendar.channel">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${initialize.all}" arg2="true"/>
+                <equals arg1="${calendar.publish}" arg2="true"/>
+                <equals arg1="${calendar.active}" arg2="true"/>
+            </or>
+        </condition>
         <condition property="run.publish.addressbook.channel">
             <or>
                 <equals arg1="${run.publish.survey.channel}" arg2="true"/>
                 <equals arg1="${run.publish.news.channel}" arg2="true"/>
                 <equals arg1="${run.publish.classifieds.channel}" arg2="true"/>
+                <equals arg1="${run.publish.calendar.channel}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.uportal.db">
@@ -338,6 +354,12 @@
                 <equals arg1="${dbloader.classifieds}" arg2="true"/>
             </or>
         </condition>
+        <condition property="run.dbloader.calendar">
+            <or>
+                <equals arg1="${initialize.all}" arg2="true"/>
+                <equals arg1="${dbloader.calendar}" arg2="true"/>
+            </or>
+        </condition>
         <condition property="hibernate.create.only" value="--create">
             <equals arg1="${hibernate.create.only.checkbox}" arg2="true"/>
         </condition>
@@ -367,6 +389,7 @@ run.deploy.blojsom.portlet=${run.deploy.blojsom.portlet}
 run.deploy.survey.channel=${run.deploy.survey.channel}
 run.deploy.news.channel=${run.deploy.news.channel}
 run.deploy.classifieds.channel=${run.deploy.classifieds.channel}
+run.deploy.calendar.channel=${run.deploy.calendar.channel}
 run.publish.briefcase.portlet=${run.publish.briefcase.portlet}
 run.publish.gateway.portlet=${run.publish.gateway.portlet}
 run.publish.messaging.portlet=${run.publish.messaging.portlet}
@@ -375,6 +398,7 @@ run.publish.web.content.portlet=${run.publish.web.content.portlet}
 run.publish.survey.channel=${run.publish.survey.channel}
 run.publish.news.channel=${run.publish.news.channel}
 run.publish.classifieds.channel=${run.publish.classifieds.channel}
+run.publish.calendar.channel=${run.publish.calendar.channel}
 run.uportal.db=${run.uportal.db}
 run.uportal.pubchan=${run.uportal.pubchan}
 run.uportal.i18n.db=${run.uportal.i18n.db}
@@ -389,6 +413,7 @@ run.dbloader.toro.common=${run.dbloader.toro.common}
 run.dbloader.survey=${run.dbloader.survey}
 run.dbloader.news=${run.dbloader.news}
 run.dbloader.classifieds=${run.dbloader.classifieds}
+run.dbloader.calendar=${run.dbloader.calendar}
 hibernate.create.only=${hibernate.create.only}
 uportal.db.droptables.arg=${uportal.db.droptables.arg}
 
@@ -572,6 +597,7 @@ xercesImpl.version=${xercesImpl.version}
       <antcall target="initialize-survey"/>
       <antcall target="initialize-news"/>
       <antcall target="initialize-classifieds"/>
+      <antcall target="initialize-calendar"/>
 
       <property name="uportal.pubchan" value="true"/>
       <antcall target="publish-briefcase-portlet"/>
@@ -583,6 +609,7 @@ xercesImpl.version=${xercesImpl.version}
       <antcall target="publish-survey"/>
       <antcall target="publish-news"/>
       <antcall target="publish-classifieds"/>
+      <antcall target="publish-calendar"/>
     </target>
     <!--  End Driver targets  -->
 
@@ -1177,7 +1204,7 @@ xercesImpl.version=${xercesImpl.version}
           <param name="archive.type" value="jar"/>
           <param name="remote.repository" value="uportal.repository"/>
         </antcall>
-        <copy todir="${portal.webapp.home}">
+        <copy overwrite="true" todir="${portal.webapp.home}">
             <fileset dir="${work.dir}/${artifactId}-resources">
                  <patternset>
                      <include name="*.jsp"/>
@@ -1198,7 +1225,8 @@ xercesImpl.version=${xercesImpl.version}
     <target name="deploy-channels" depends="
         deploy-survey-channel,
         deploy-news-channel,
-        deploy-classifieds-channel
+        deploy-classifieds-channel,
+        deploy-calendar-channel
         "/>
 
     <target name="deploy-survey-channel" if="run.deploy.survey.channel">
@@ -1235,6 +1263,16 @@ xercesImpl.version=${xercesImpl.version}
             <param name="artifactId" value="toro-classifieds-channel"/>
         </antcall>
         <mkdir dir="${toro.data.home}/classifieds"/>
+    </target>
+
+    <target name="deploy-calendar-channel" if="run.deploy.calendar.channel">
+        <antcall target="deploy-toro-jar">
+            <param name="artifactId" value="toro-calendar-channel"/>
+            <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
+        </antcall>
+        <antcall target="deploy-toro-resources">
+            <param name="artifactId" value="toro-calendar-channel"/>
+        </antcall>
     </target>
 
     <target name="initialize-toro-common" if="run.dbloader.toro.common">
@@ -1329,6 +1367,21 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
+    <target name="initialize-calendar" if="run.dbloader.calendar">
+        <echo>Initializing Calendar Channel</echo>
+        <antcall target="uportal-dbloader-tables">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="toro-calendar-channel"/>
+            <param name="version" value="${project.version}"/>
+        </antcall>
+        <antcall target="uportal-dbloader-data">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="toro-calendar-channel"/>
+            <param name="version" value="${project.version}"/>
+            <param name="data.xml" value="/properties/db/dbloader-uportal-data.xml"/>
+        </antcall>
+    </target>
+
     <target name="publish-addressbook" if="run.publish.addressbook.channel">
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="toro-addressbook-channel"/>
@@ -1362,6 +1415,21 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="toro-classifieds-channel"/>
             <param name="channel" value="classifieds-channel-publish.xml"/>
+        </antcall>
+    </target>
+
+    <target name="publish-calendar" if="run.publish.calendar.channel">
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="toro-calendar-channel"/>
+            <param name="channel" value="calendar-channel-publish.xml"/>
+        </antcall>
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="toro-calendar-channel"/>
+            <param name="channel" value="calendar-events-channel-publish.xml"/>
+        </antcall>
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="toro-calendar-channel"/>
+            <param name="channel" value="calendar-tasks-channel-publish.xml"/>
         </antcall>
     </target>
 

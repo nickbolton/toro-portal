@@ -659,28 +659,35 @@ public class MergeConfiguration {
             super.startDocument();
             LexicalHandler lexicalHandler = getLexicalHandler();
             if (lexicalHandler != null) {
-                lexicalHandler.startDTD(dtdName, publicId, systemId);
-                lexicalHandler.endDTD();
+                if (publicId != null && systemId != null) {
+                    lexicalHandler.startDTD(dtdName, publicId, systemId);
+                    lexicalHandler.endDTD();
+                }
             }
         }
 
         @Override
         public void write(Document document) throws SAXException {
+            System.out.println("ZZZZ xml:\n"+document.asXML());
             int startingPos = document.asXML().indexOf("<!DOCTYPE");
+            System.out.println("ZZZZ startingPos: " + startingPos);
             if (startingPos >= 0) {
                 int endingPos = document.asXML().substring(startingPos).indexOf(">");
                 String docTypeDeclaration = document.asXML().substring(startingPos, startingPos+endingPos+1);
-                StringTokenizer tok = new StringTokenizer(docTypeDeclaration, " ");
-                tok.nextToken();
-                dtdName = tok.nextToken();
-                
-                startingPos = docTypeDeclaration.indexOf('"');
-                endingPos = docTypeDeclaration.substring(startingPos+1).indexOf('"');
-                publicId = docTypeDeclaration.substring(startingPos+1, startingPos+endingPos+1);
-                
-                endingPos = docTypeDeclaration.lastIndexOf('"');
-                startingPos = docTypeDeclaration.substring(0, endingPos-1).lastIndexOf('"');
-                systemId = docTypeDeclaration.substring(startingPos+1, endingPos);
+                System.out.println("ZZZ docTypeDeclaration: #" + docTypeDeclaration + "#");
+                if (!"<!DOCTYPE null>".equals(docTypeDeclaration)) {
+                    StringTokenizer tok = new StringTokenizer(docTypeDeclaration, " ");
+                    tok.nextToken();
+                    dtdName = tok.nextToken();
+                    
+                    startingPos = docTypeDeclaration.indexOf('"');
+                    endingPos = docTypeDeclaration.substring(startingPos+1).indexOf('"');
+                    publicId = docTypeDeclaration.substring(startingPos+1, startingPos+endingPos+1);
+                    
+                    endingPos = docTypeDeclaration.lastIndexOf('"');
+                    startingPos = docTypeDeclaration.substring(0, endingPos-1).lastIndexOf('"');
+                    systemId = docTypeDeclaration.substring(startingPos+1, endingPos);
+                }
                 
             }
             super.write(document);
