@@ -276,6 +276,11 @@
 			property="notes.active"
             defaultValue="@notes.active@"
 			force="false"/>
+		<checkbox
+            displayText="Bookmarks Channel"
+			property="bookmarks.active"
+            defaultValue="@bookmarks.active@"
+			force="false"/>
     </page>
 	<page
 			type="input"
@@ -553,39 +558,14 @@
             property="dbloader.notes"
             defaultValue="@dbloader.notes@"
 			force="false"/>
-        <conditional ifProperty="(${jdbc.driver}=org.postgresql.Driver)">
-            <hidden property="db.platform" value="postgres"/>
-            <hidden property="jdbc.simplesql" value="select 1"/>
-            <hidden property="db.time.impl" value="net.unicon.portal.util.PostgresTimeServiceImpl"/>
-            <hidden property="db.sqlconcat" value="||"/>
-        </conditional>
-        <conditional ifProperty="(${jdbc.driver}=oracle.jdbc.driver.OracleDriver)">
-            <hidden property="db.platform" value="oracle"/>
-            <hidden property="jdbc.simplesql" value="select 1 from dual"/>
-            <hidden property="db.time.impl" value="net.unicon.portal.util.OracleTimeServiceImpl"/>
-            <hidden property="db.sqlconcat" value="||"/>
-        </conditional>
-        <conditional ifProperty="(${jdbc.driver}=net.sourceforge.jtds.jdbc.Driver)">
-            <hidden property="db.platform" value="sqlserver"/>
-            <hidden property="jdbc.simplesql" value="select 1"/>
-            <hidden property="db.time.impl" value="net.unicon.portal.util.SqlServerTimeServiceImpl"/>
-            <hidden property="db.sqlconcat" value="+"/>
-        </conditional>
-        <conditional ifProperty="(${jdbc.driver}=com.jnetdirect.jsql.JSQLDriver)">
-            <hidden property="db.platform" value="sqlserver"/>
-            <hidden property="jdbc.simplesql" value="select 1"/>
-            <hidden property="db.time.impl" value="net.unicon.portal.util.SqlServerTimeServiceImpl"/>
-            <hidden property="db.sqlconcat" value="+"/>
-        </conditional>
-        <conditional ifProperty="(${jdbc.driver}=com.mysql.jdbc.Driver)">
-            <hidden property="db.platform" value="mysql"/>
-            <hidden property="jdbc.simplesql" value="select 1"/>
-            <hidden property="db.time.impl" value="net.unicon.portal.util.MySqlTimeServiceImpl"/>
-            <hidden property="db.sqlconcat" value="||"/>
-        </conditional>
+		<checkbox
+            displayText="Bookmarks"
+            property="dbloader.bookmarks"
+            defaultValue="@dbloader.bookmarks@"
+			force="false"/>
     </page>
 	<page
-        ifProperty="(${initialize.all}=true) OR (${hibernate.alchemist}=true) OR (${hibernate.portlets-common}=true) OR (${hibernate.demetrius}=true) OR (${hibernate.mercury}=true) OR (${uportal.db}=true) OR (${uportal.i18n.db}=true) OR (${dbloader.cdk}=true) OR (${dbloader.survey}=true) OR (${dbloader.news}=true) OR (${dbloader.classifieds}=true) OR (${dbloader.calendar}=true) OR (${dbloader.notes}=true) OR (${dbloader.toro.common}=true)"
+        ifProperty="(${initialize.all}=true) OR (${hibernate.alchemist}=true) OR (${hibernate.portlets-common}=true) OR (${hibernate.demetrius}=true) OR (${hibernate.mercury}=true) OR (${uportal.db}=true) OR (${uportal.i18n.db}=true) OR (${dbloader.cdk}=true) OR (${dbloader.survey}=true) OR (${dbloader.news}=true) OR (${dbloader.classifieds}=true) OR (${dbloader.calendar}=true) OR (${dbloader.notes}=true) OR (${dbloader.bookmarks}=true) OR (${dbloader.toro.common}=true)"
 			type="input"
             overflow="true"
             name="schema creation mode"

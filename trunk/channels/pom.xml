@@ -28,6 +28,7 @@
       <module>classifieds</module>
       <module>calendar</module>
       <module>notes</module>
+      <module>bookmarks</module>
   </modules>
 
 </project>

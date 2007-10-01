@@ -111,6 +111,7 @@
                 <equals arg1="${classifieds.active}" arg2="true"/>
                 <equals arg1="${calendar.active}" arg2="true"/>
                 <equals arg1="${notes.active}" arg2="true"/>
+                <equals arg1="${bookmarks.active}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.deploy.portlets.common">
@@ -197,6 +198,12 @@
                 <equals arg1="${notes.active}" arg2="true"/>
             </or>
         </condition>
+        <condition property="run.deploy.bookmarks.channel">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${bookmarks.active}" arg2="true"/>
+            </or>
+        </condition>
         <condition property="run.publish.briefcase.portlet">
             <or>
                 <equals arg1="${deploy.all}" arg2="true"/>
@@ -277,6 +284,14 @@
                 <equals arg1="${notes.active}" arg2="true"/>
             </or>
         </condition>
+        <condition property="run.publish.bookmarks.channel">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${initialize.all}" arg2="true"/>
+                <equals arg1="${bookmarks.publish}" arg2="true"/>
+                <equals arg1="${bookmarks.active}" arg2="true"/>
+            </or>
+        </condition>
         <condition property="run.publish.addressbook.channel">
             <or>
                 <equals arg1="${run.publish.survey.channel}" arg2="true"/>
@@ -284,6 +299,7 @@
                 <equals arg1="${run.publish.classifieds.channel}" arg2="true"/>
                 <equals arg1="${run.publish.calendar.channel}" arg2="true"/>
                 <equals arg1="${run.publish.notes.channel}" arg2="true"/>
+                <equals arg1="${run.publish.bookmarks.channel}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.uportal.db">
@@ -382,6 +398,12 @@
                 <equals arg1="${dbloader.notes}" arg2="true"/>
             </or>
         </condition>
+        <condition property="run.dbloader.bookmarks">
+            <or>
+                <equals arg1="${initialize.all}" arg2="true"/>
+                <equals arg1="${dbloader.bookmarks}" arg2="true"/>
+            </or>
+        </condition>
         <condition property="hibernate.create.only" value="--create">
             <equals arg1="${hibernate.create.only.checkbox}" arg2="true"/>
         </condition>
@@ -394,6 +416,54 @@
         <condition property="uportal.db.droptables.arg" value=" ">
             <not><equals arg1="${hibernate.create.only.checkbox}" arg2="true"/></not>
         </condition>
+
+        <condition property="postgres.platform" value="true">
+            <contains string="${jdbc.driver}" substring="postgres"/>
+        </condition>
+        <condition property="oracle.platform" value="true">
+            <contains string="${jdbc.driver}" substring="oracle"/>
+        </condition>
+        <condition property="sqlserver.platform" value="true">
+            <or>
+                <contains string="${jdbc.driver}" substring="jtds"/>
+                <contains string="${jdbc.driver}" substring="jnetdirect"/>
+            </or>
+        </condition>
+        <condition property="mysql.platform" value="true">
+            <contains string="${jdbc.driver}" substring="mysql"/>
+        </condition>
+    </target>
+
+    <target name="set-postgres-platform-specific-properties" if="postgres.platform">
+        <echo>Setting postgres specific properties...</echo>
+        <property name="db.platform" value="postgres"/>
+        <property name="jdbc.simplesql" value="select 1"/>
+        <property name="db.time.impl" value="net.unicon.portal.util.PostgresTimeServiceImpl"/>
+        <property name="db.sqlconcat" value="||"/>
+    </target>
+
+    <target name="set-oracle-platform-specific-properties" if="oracle.platform">
+        <echo>Setting oracle specific properties...</echo>
+        <property name="db.platform" value="oracle"/>
+        <property name="jdbc.simplesql" value="select 1 from dual"/>
+        <property name="db.time.impl" value="net.unicon.portal.util.OracleTimeServiceImpl"/>
+        <property name="db.sqlconcat" value="||"/>
+    </target>
+
+    <target name="set-sqlserver-platform-specific-properties" if="sqlserver.platform">
+        <echo>Setting sqlserver specific properties...</echo>
+        <property name="db.platform" value="sqlserver"/>
+        <property name="jdbc.simplesql" value="select 1"/>
+        <property name="db.time.impl" value="net.unicon.portal.util.SqlServerTimeServiceImpl"/>
+        <property name="db.sqlconcat" value="+"/>
+    </target>
+
+    <target name="set-mysql-platform-specific-properties" if="mysql.platform">
+        <echo>Setting mysql specific properties...</echo>
+        <property name="db.platform" value="mysql"/>
+        <property name="jdbc.simplesql" value="select 1"/>
+        <property name="db.time.impl" value="net.unicon.portal.util.MySqlTimeServiceImpl"/>
+        <property name="db.sqlconcat" value="||"/>
     </target>
 
     <target name="dump-properties">
@@ -413,6 +483,7 @@ run.deploy.news.channel=${run.deploy.news.channel}
 run.deploy.classifieds.channel=${run.deploy.classifieds.channel}
 run.deploy.calendar.channel=${run.deploy.calendar.channel}
 run.deploy.notes.channel=${run.deploy.notes.channel}
+run.deploy.bookmarks.channel=${run.deploy.bookmarks.channel}
 run.publish.briefcase.portlet=${run.publish.briefcase.portlet}
 run.publish.gateway.portlet=${run.publish.gateway.portlet}
 run.publish.messaging.portlet=${run.publish.messaging.portlet}
@@ -423,6 +494,7 @@ run.publish.news.channel=${run.publish.news.channel}
 run.publish.classifieds.channel=${run.publish.classifieds.channel}
 run.publish.calendar.channel=${run.publish.calendar.channel}
 run.publish.notes.channel=${run.publish.notes.channel}
+run.publish.bookmarks.channel=${run.publish.bookmarks.channel}
 run.uportal.db=${run.uportal.db}
 run.uportal.pubchan=${run.uportal.pubchan}
 run.uportal.i18n.db=${run.uportal.i18n.db}
@@ -439,6 +511,7 @@ run.dbloader.news=${run.dbloader.news}
 run.dbloader.classifieds=${run.dbloader.classifieds}
 run.dbloader.calendar=${run.dbloader.calendar}
 run.dbloader.notes=${run.dbloader.notes}
+run.dbloader.bookmarks=${run.dbloader.bookmarks}
 hibernate.create.only=${hibernate.create.only}
 uportal.db.droptables.arg=${uportal.db.droptables.arg}
 
@@ -541,7 +614,7 @@ xercesImpl.version=${xercesImpl.version}
             message="ERROR: Java version too old: found ${java.version}, needs ${minJavaVersion}."/> 
     </target>
 
-    <target name="deploy-all" depends="initialize-run-targets">
+    <target name="deploy-all" depends="initialize-run-targets, set-postgres-platform-specific-properties, set-oracle-platform-specific-properties, set-sqlserver-platform-specific-properties, set-mysql-platform-specific-properties">
         <antcall target="check-java-version"/>
         <antcall target="dump-properties"/>
         <antcall target="deploy-uportal"/>
@@ -624,6 +697,7 @@ xercesImpl.version=${xercesImpl.version}
       <antcall target="initialize-classifieds"/>
       <antcall target="initialize-calendar"/>
       <antcall target="initialize-notes"/>
+      <antcall target="initialize-bookmarks"/>
 
       <property name="uportal.pubchan" value="true"/>
       <antcall target="publish-briefcase-portlet"/>
@@ -637,6 +711,7 @@ xercesImpl.version=${xercesImpl.version}
       <antcall target="publish-classifieds"/>
       <antcall target="publish-calendar"/>
       <antcall target="publish-notes"/>
+      <antcall target="publish-bookmarks"/>
     </target>
     <!--  End Driver targets  -->
 
@@ -1254,7 +1329,8 @@ xercesImpl.version=${xercesImpl.version}
         deploy-news-channel,
         deploy-classifieds-channel,
         deploy-calendar-channel,
-        deploy-notes-channel
+        deploy-notes-channel,
+        deploy-bookmarks-channel
         "/>
 
     <target name="deploy-survey-channel" if="run.deploy.survey.channel">
@@ -1310,6 +1386,16 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
         <antcall target="deploy-toro-resources">
             <param name="artifactId" value="toro-notes-channel"/>
+        </antcall>
+    </target>
+
+    <target name="deploy-bookmarks-channel" if="run.deploy.bookmarks.channel">
+        <antcall target="deploy-toro-jar">
+            <param name="artifactId" value="toro-bookmarks-channel"/>
+            <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
+        </antcall>
+        <antcall target="deploy-toro-resources">
+            <param name="artifactId" value="toro-bookmarks-channel"/>
         </antcall>
     </target>
 
@@ -1429,6 +1515,15 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
+    <target name="initialize-bookmarks" if="run.dbloader.bookmarks">
+        <echo>Initializing Bookmarks Channel</echo>
+        <antcall target="uportal-dbloader-tables">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="toro-bookmarks-channel"/>
+            <param name="version" value="${project.version}"/>
+        </antcall>
+    </target>
+
     <target name="publish-addressbook" if="run.publish.addressbook.channel">
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="toro-addressbook-channel"/>
@@ -1484,6 +1579,13 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="toro-notes-channel"/>
             <param name="channel" value="notes-channel-publish.xml"/>
+        </antcall>
+    </target>
+
+    <target name="publish-bookmarks" if="run.publish.bookmarks.channel">
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="toro-bookmarks-channel"/>
+            <param name="channel" value="bookmarks-channel-publish.xml"/>
         </antcall>
     </target>
 
@@ -1787,12 +1889,29 @@ xercesImpl.version=${xercesImpl.version}
        <copy overwrite="true" filtering="on" tofile="${work.dir}/uportal-properties/properties/rdbm.properties" file="${basedir}/properties/uPortal-${uportal.version}/rdbm.properties">
            <filterset refid="tokens"/>
        </copy>
-       <copy overwrite="true" todir="${work.dir}/uportal-properties/properties/db" file="${basedir}/properties/uPortal-${uportal.version}/dbloader.xml">
-           <filterset refid="tokens"/>
-       </copy>
        <copy overwrite="true" todir="${work.dir}/uportal-properties/properties/chanpub">
            <fileset dir="${basedir}/properties/uPortal-${uportal.version}/chanpub"/>
        </copy>
+
+       <!-- constructing a dbloader.xml based on the jdbc properties -->
+       <copy overwrite="true" todir="${work.dir}/uportal-properties/properties/db" file="${basedir}/properties/uPortal-${uportal.version}/dbloader.xml"/>
+        <java outputproperty="db.meta.data" fork="true" failonerror="true" dir="${basedir}" classname="net.unicon.toro.installer.dbloader.DbVersion">
+            <classpath>
+                <pathelement path="${basedir}"/>
+                <path refId="uportal.classpath"/>
+            </classpath>
+            <arg line="${jdbc.driver} ${jdbc.url} ${jdbc.user} ${jdbc.password}"/>
+        </java>
+        <echo>db.meta.data =\n${db.meta.data}</echo>
+        <copy overwrite="true" todir="${work.dir}" file="${basedir}/properties/dbloader-${db.platform}-mapping.xml">
+           <filterset>
+               <filter token="db.meta.data" value="${db.meta.data}"/>
+           </filterset>
+       </copy>
+       <antcall target="merge-configuration">
+           <param name="configfile" value="${work.dir}/dbloader-${db.platform}-mapping.xml"/>
+           <param name="targetdir" value="${work.dir}/uportal-properties"/>
+       </antcall>
    </target>
 
    <target name="exec-uportal-initportal" if="uportal.deployment.exists">
