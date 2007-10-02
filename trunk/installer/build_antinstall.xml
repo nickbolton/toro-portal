@@ -72,6 +72,10 @@
     <filterset id="tokens">
         <filtersfile file="${basedir}/build.properties"/>
         <filtersfile file="${basedir}/ant.install.properties"/>
+        <filter token="db.platform" value="${db.platform}"/>
+        <filter token="jdbc.simplesql" value="${jdbc.simplesql}"/>
+        <filter token="db.time.impl" value="${db.time.impl}"/>
+        <filter token="db.sqlconcat" value="${db.sqlconcat}"/>
     </filterset>
 
     <!--  Driver targets  -->
@@ -112,6 +116,7 @@
                 <equals arg1="${calendar.active}" arg2="true"/>
                 <equals arg1="${notes.active}" arg2="true"/>
                 <equals arg1="${bookmarks.active}" arg2="true"/>
+                <equals arg1="${campusannouncement.active}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.deploy.portlets.common">
@@ -204,6 +209,12 @@
                 <equals arg1="${bookmarks.active}" arg2="true"/>
             </or>
         </condition>
+        <condition property="run.deploy.campusannouncement.channel">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${campusannouncement.active}" arg2="true"/>
+            </or>
+        </condition>
         <condition property="run.publish.briefcase.portlet">
             <or>
                 <equals arg1="${deploy.all}" arg2="true"/>
@@ -292,6 +303,14 @@
                 <equals arg1="${bookmarks.active}" arg2="true"/>
             </or>
         </condition>
+        <condition property="run.publish.campusannouncement.channel">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${initialize.all}" arg2="true"/>
+                <equals arg1="${campusannouncement.publish}" arg2="true"/>
+                <equals arg1="${campusannouncement.active}" arg2="true"/>
+            </or>
+        </condition>
         <condition property="run.publish.addressbook.channel">
             <or>
                 <equals arg1="${run.publish.survey.channel}" arg2="true"/>
@@ -300,6 +319,7 @@
                 <equals arg1="${run.publish.calendar.channel}" arg2="true"/>
                 <equals arg1="${run.publish.notes.channel}" arg2="true"/>
                 <equals arg1="${run.publish.bookmarks.channel}" arg2="true"/>
+                <equals arg1="${run.publish.campusannouncement.channel}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.uportal.db">
@@ -404,6 +424,12 @@
                 <equals arg1="${dbloader.bookmarks}" arg2="true"/>
             </or>
         </condition>
+        <condition property="run.dbloader.campusannouncement">
+            <or>
+                <equals arg1="${initialize.all}" arg2="true"/>
+                <equals arg1="${dbloader.campusannouncement}" arg2="true"/>
+            </or>
+        </condition>
         <condition property="hibernate.create.only" value="--create">
             <equals arg1="${hibernate.create.only.checkbox}" arg2="true"/>
         </condition>
@@ -484,6 +510,7 @@ run.deploy.classifieds.channel=${run.deploy.classifieds.channel}
 run.deploy.calendar.channel=${run.deploy.calendar.channel}
 run.deploy.notes.channel=${run.deploy.notes.channel}
 run.deploy.bookmarks.channel=${run.deploy.bookmarks.channel}
+run.deploy.campusannouncement.channel=${run.deploy.campusannouncement.channel}
 run.publish.briefcase.portlet=${run.publish.briefcase.portlet}
 run.publish.gateway.portlet=${run.publish.gateway.portlet}
 run.publish.messaging.portlet=${run.publish.messaging.portlet}
@@ -495,6 +522,7 @@ run.publish.classifieds.channel=${run.publish.classifieds.channel}
 run.publish.calendar.channel=${run.publish.calendar.channel}
 run.publish.notes.channel=${run.publish.notes.channel}
 run.publish.bookmarks.channel=${run.publish.bookmarks.channel}
+run.publish.campusannouncement.channel=${run.publish.campusannouncement.channel}
 run.uportal.db=${run.uportal.db}
 run.uportal.pubchan=${run.uportal.pubchan}
 run.uportal.i18n.db=${run.uportal.i18n.db}
@@ -512,6 +540,7 @@ run.dbloader.classifieds=${run.dbloader.classifieds}
 run.dbloader.calendar=${run.dbloader.calendar}
 run.dbloader.notes=${run.dbloader.notes}
 run.dbloader.bookmarks=${run.dbloader.bookmarks}
+run.dbloader.campusannouncement=${run.dbloader.campusannouncement}
 hibernate.create.only=${hibernate.create.only}
 uportal.db.droptables.arg=${uportal.db.droptables.arg}
 
@@ -698,6 +727,7 @@ xercesImpl.version=${xercesImpl.version}
       <antcall target="initialize-calendar"/>
       <antcall target="initialize-notes"/>
       <antcall target="initialize-bookmarks"/>
+      <antcall target="initialize-campusannouncement"/>
 
       <property name="uportal.pubchan" value="true"/>
       <antcall target="publish-briefcase-portlet"/>
@@ -712,6 +742,7 @@ xercesImpl.version=${xercesImpl.version}
       <antcall target="publish-calendar"/>
       <antcall target="publish-notes"/>
       <antcall target="publish-bookmarks"/>
+      <antcall target="publish-campusannouncement"/>
     </target>
     <!--  End Driver targets  -->
 
@@ -1330,7 +1361,8 @@ xercesImpl.version=${xercesImpl.version}
         deploy-classifieds-channel,
         deploy-calendar-channel,
         deploy-notes-channel,
-        deploy-bookmarks-channel
+        deploy-bookmarks-channel,
+        deploy-campusannouncement-channel
         "/>
 
     <target name="deploy-survey-channel" if="run.deploy.survey.channel">
@@ -1396,6 +1428,16 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
         <antcall target="deploy-toro-resources">
             <param name="artifactId" value="toro-bookmarks-channel"/>
+        </antcall>
+    </target>
+
+    <target name="deploy-campusannouncement-channel" if="run.deploy.campusannouncement.channel">
+        <antcall target="deploy-toro-jar">
+            <param name="artifactId" value="toro-campusannouncement-channel"/>
+            <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
+        </antcall>
+        <antcall target="deploy-toro-resources">
+            <param name="artifactId" value="toro-campusannouncement-channel"/>
         </antcall>
     </target>
 
@@ -1522,6 +1564,21 @@ xercesImpl.version=${xercesImpl.version}
             <param name="artifactId" value="toro-bookmarks-channel"/>
             <param name="version" value="${project.version}"/>
         </antcall>
+        <antcall target="uportal-dbloader-data">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="toro-campusannouncement-channel"/>
+            <param name="version" value="${project.version}"/>
+            <param name="data.xml" value="/properties/db/dbloader-uportal-data.xml"/>
+        </antcall>
+    </target>
+
+    <target name="initialize-campusannouncement" if="run.dbloader.campusannouncement">
+        <echo>Initializing Campus Announcements Channel</echo>
+        <antcall target="uportal-dbloader-tables">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="toro-campusannouncement-channel"/>
+            <param name="version" value="${project.version}"/>
+        </antcall>
     </target>
 
     <target name="publish-addressbook" if="run.publish.addressbook.channel">
@@ -1586,6 +1643,13 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="toro-bookmarks-channel"/>
             <param name="channel" value="bookmarks-channel-publish.xml"/>
+        </antcall>
+    </target>
+
+    <target name="publish-campusannouncement" if="run.publish.campusannouncement.channel">
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="toro-campusannouncement-channel"/>
+            <param name="channel" value="campusannouncement-channel-publish.xml"/>
         </antcall>
     </target>
 

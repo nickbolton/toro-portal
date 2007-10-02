@@ -11,14 +11,6 @@
         <column><name>TARGET</name><value>Academus Survey Author</value></column>
         <column><name>PERMISSION_TYPE</name><value>GRANT</value></column>
       </row>
-      <row>
-        <column><name>OWNER</name><value>Academus Survey Author</value></column>
-        <column><name>PRINCIPAL_TYPE</name><value>3</value></column>
-        <column><name>PRINCIPAL_KEY</name><value>local.128</value></column>
-        <column><name>ACTIVITY</name><value>editAll</value></column>
-        <column><name>TARGET</name><value>Academus Survey Author</value></column>
-        <column><name>PERMISSION_TYPE</name><value>GRANT</value></column>
-      </row>
     </rows>
   </table>
   <table>

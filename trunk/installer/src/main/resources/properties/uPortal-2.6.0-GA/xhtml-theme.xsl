@@ -76,7 +76,7 @@
 				</xsl:if>				
 				<link xmlns="" type="text/css" rel="stylesheet" href="media/net/unicon/toro/css/toro-channels.css"/>
                 <link xmlns="" type="text/css" rel="stylesheet" href="media/net/unicon/toro/css/toro-groupware.css"/>
-                <link xmlns="" type="text/css" rel="stylesheet" href="media/net/unicon/toro/css/toro-skin-fix.css"/>
+                <link xmlns="" type="text/css" rel="stylesheet" href="media/net/unicon/toro/css/toro-skin-fixes.css"/>
 				<script src="javascript/common/toro-channels.js" type="text/javascript"/>
 			</head>
 			<body>

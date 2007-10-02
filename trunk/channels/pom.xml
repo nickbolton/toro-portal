@@ -23,12 +23,13 @@
 
   <modules>
       <module>addressbook</module>
-      <module>survey</module>
-      <module>news</module>
-      <module>classifieds</module>
-      <module>calendar</module>
-      <module>notes</module>
       <module>bookmarks</module>
+      <module>calendar</module>
+      <module>campusannouncement</module>
+      <module>classifieds</module>
+      <module>news</module>
+      <module>notes</module>
+      <module>survey</module>
   </modules>
 
 </project>

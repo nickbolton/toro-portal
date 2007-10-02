@@ -4,14 +4,6 @@
     <name>UP_PERMISSION</name>
     <rows>
       <row>
-        <column><name>OWNER</name><value>AcademusClassifieds</value></column>
-        <column><name>PRINCIPAL_TYPE</name><value>3</value></column>
-        <column><name>PRINCIPAL_KEY</name><value>local.128</value></column>
-        <column><name>ACTIVITY</name><value>VIEW</value></column>
-        <column><name>TARGET</name><value>TOPICS_ICON</value></column>
-        <column><name>PERMISSION_TYPE</name><value>GRANT</value></column>
-      </row>
-      <row>
         <column><name>OWNER</name><value>COM.IBSDP.CALENDAR.DPCS</value></column>
         <column><name>PRINCIPAL_TYPE</name><value>2</value></column>
         <column><name>PRINCIPAL_KEY</name><value>demo</value></column>
