@@ -93,6 +93,7 @@
                     <filter token="web-content-portlet.active" value="true"/>
                     <filter token="permissions-portlet.active" value="true"/>
                     <filter token="blojsom.active" value="true"/>
+                    <filter token="addressbook.active" value="true"/>
                     <filter token="survey.active" value="true"/>
                     <filter token="news.active" value="true"/>
                     <filter token="classifieds.active" value="true"/>
@@ -100,6 +101,7 @@
                     <filter token="notes.active" value="true"/>
                     <filter token="bookmarks.active" value="true"/>
                     <filter token="campusannouncement.active" value="true"/>
+                    <filter token="ldapchangepw.active" value="true"/>
                     <filter token="project.version1" value="1.0.0-SNAPSHOT"/>
                     <filter token="tomcat.host.conf.relative" value="conf/Catalina/localhost"/>
                     <filter token="toro.data.home" value="/Users/deuce/dev/src/unicon/toro/data"/>
@@ -138,11 +140,13 @@
                     <filter token="hibernate.mercury" value="true"/>
                     <filter token="dbloader.cdk" value="true"/>
                     <filter token="dbloader.toro.common" value="true"/>
+                    <filter token="dbloader.addressbook" value="true"/>
                     <filter token="dbloader.survey" value="true"/>
                     <filter token="dbloader.news" value="true"/>
                     <filter token="dbloader.classifieds" value="true"/>
                     <filter token="dbloader.notes" value="true"/>
                     <filter token="dbloader.campusannouncement" value="true"/>
+                    <filter token="dbloader.ldapchangepw" value="true"/>
                   </filterset>
                 </copy>
               </tasks>

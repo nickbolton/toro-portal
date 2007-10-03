@@ -252,29 +252,9 @@
 			overflow="true"
 			displayText="Toro Channels">
 		<checkbox
-			displayText="Survey Channel"
-			property="survey.active"
-            defaultValue="@survey.active@"
-			force="false"/>
-		<checkbox
-            displayText="News Channel"
-			property="news.active"
-            defaultValue="@news.active@"
-			force="false"/>
-		<checkbox
-            displayText="Classifieds Channel"
-			property="classifieds.active"
-            defaultValue="@classifieds.active@"
-			force="false"/>
-		<checkbox
-            displayText="Calendar Channel"
-			property="calendar.active"
-            defaultValue="@calendar.active@"
-			force="false"/>
-		<checkbox
-            displayText="Notes Channel"
-			property="notes.active"
-            defaultValue="@notes.active@"
+			displayText="Addressbook Channel"
+			property="addressbook.active"
+            defaultValue="@addressbook.active@"
 			force="false"/>
 		<checkbox
             displayText="Bookmarks Channel"
@@ -282,9 +262,39 @@
             defaultValue="@bookmarks.active@"
 			force="false"/>
 		<checkbox
+            displayText="Calendar Channel"
+			property="calendar.active"
+            defaultValue="@calendar.active@"
+			force="false"/>
+		<checkbox
             displayText="Campus Announcements Channel"
 			property="campusannouncement.active"
             defaultValue="@campusannouncement.active@"
+			force="false"/>
+		<checkbox
+            displayText="Classifieds Channel"
+			property="classifieds.active"
+            defaultValue="@classifieds.active@"
+			force="false"/>
+		<checkbox
+            displayText="LDAP Change Password Channel"
+			property="ldapchangepw.active"
+            defaultValue="@ldapchangepw.active@"
+			force="false"/>
+		<checkbox
+            displayText="News Channel"
+			property="news.active"
+            defaultValue="@news.active@"
+			force="false"/>
+		<checkbox
+            displayText="Notes Channel"
+			property="notes.active"
+            defaultValue="@notes.active@"
+			force="false"/>
+		<checkbox
+			displayText="Survey Channel"
+			property="survey.active"
+            defaultValue="@survey.active@"
 			force="false"/>
     </page>
 	<page
@@ -539,29 +549,9 @@
 			defaultValue="@dbloader.cdk@"
 			force="false"/>
 		<checkbox
-            displayText="Survey"
-			property="dbloader.survey"
-            defaultValue="@dbloader.survey@"
-			force="false"/>
-		<checkbox
-            displayText="News"
-			property="dbloader.news"
-            defaultValue="@dbloader.news@"
-			force="false"/>
-		<checkbox
-            displayText="Classifieds"
-			property="dbloader.classifieds"
-            defaultValue="@dbloader.classifieds@"
-			force="false"/>
-		<checkbox
-            displayText="Calendar"
-            property="dbloader.calendar"
-            defaultValue="@dbloader.calendar@"
-			force="false"/>
-		<checkbox
-            displayText="Notes"
-            property="dbloader.notes"
-            defaultValue="@dbloader.notes@"
+            displayText="Addressbook"
+			property="dbloader.addressbook"
+            defaultValue="@dbloader.addressbook@"
 			force="false"/>
 		<checkbox
             displayText="Bookmarks"
@@ -569,13 +559,38 @@
             defaultValue="@dbloader.bookmarks@"
 			force="false"/>
 		<checkbox
+            displayText="Calendar"
+            property="dbloader.calendar"
+            defaultValue="@dbloader.calendar@"
+			force="false"/>
+		<checkbox
             displayText="Campus Announcements"
             property="dbloader.campusannouncement"
             defaultValue="@dbloader.campusannouncement@"
 			force="false"/>
+		<checkbox
+            displayText="Classifieds"
+			property="dbloader.classifieds"
+            defaultValue="@dbloader.classifieds@"
+			force="false"/>
+		<checkbox
+            displayText="News"
+			property="dbloader.news"
+            defaultValue="@dbloader.news@"
+			force="false"/>
+		<checkbox
+            displayText="Notes"
+            property="dbloader.notes"
+            defaultValue="@dbloader.notes@"
+			force="false"/>
+		<checkbox
+            displayText="Survey"
+			property="dbloader.survey"
+            defaultValue="@dbloader.survey@"
+			force="false"/>
     </page>
 	<page
-        ifProperty="(${initialize.all}=true) OR (${hibernate.alchemist}=true) OR (${hibernate.portlets-common}=true) OR (${hibernate.demetrius}=true) OR (${hibernate.mercury}=true) OR (${uportal.db}=true) OR (${uportal.i18n.db}=true) OR (${dbloader.cdk}=true) OR (${dbloader.survey}=true) OR (${dbloader.news}=true) OR (${dbloader.classifieds}=true) OR (${dbloader.calendar}=true) OR (${dbloader.notes}=true) OR (${dbloader.bookmarks}=true) OR (${dbloader.campusannouncement}=true) OR (${dbloader.toro.common}=true)"
+        ifProperty="(${initialize.all}=true) OR (${hibernate.alchemist}=true) OR (${hibernate.portlets-common}=true) OR (${hibernate.demetrius}=true) OR (${hibernate.mercury}=true) OR (${uportal.db}=true) OR (${uportal.i18n.db}=true) OR (${dbloader.cdk}=true) OR (${dbloader.survey}=true) OR (${dbloader.news}=true) OR (${dbloader.classifieds}=true) OR (${dbloader.calendar}=true) OR (${dbloader.notes}=true) OR (${dbloader.bookmarks}=true) OR (${dbloader.campusannouncement}=true) OR (${dbloader.addressbook}=true) OR (${dbloader.toro.common}=true)"
 			type="input"
             overflow="true"
             name="schema creation mode"
