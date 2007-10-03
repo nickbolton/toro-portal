@@ -765,6 +765,7 @@ xercesImpl.version=${xercesImpl.version}
       <antcall target="initialize-campusannouncement"/>
 
       <property name="uportal.pubchan" value="true"/>
+      <antcall target="publish-systray"/>
       <antcall target="publish-briefcase-portlet"/>
       <antcall target="publish-gateway-portlet"/>
       <antcall target="publish-messaging-portlet"/>
@@ -970,6 +971,14 @@ xercesImpl.version=${xercesImpl.version}
         <copy overwrite="true" outputencoding="utf-8" file="${basedir}/properties/uPortal-${uportal.version}/ajax-preferences.js"
             todir="${portal.webapp.home}/WEB-INF/classes/org/jasig/portal/layout/tab-column/xhtml-theme/common"/>
         <antcall target="common-add-uportal-configurations"/>
+
+        <antcall target="deploy-toro-jar">
+            <param name="artifactId" value="toro-systray-channel"/>
+            <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
+        </antcall>
+        <antcall target="deploy-toro-resources">
+            <param name="artifactId" value="toro-systray-channel"/>
+        </antcall>
     </target>
 
 
@@ -1637,6 +1646,13 @@ xercesImpl.version=${xercesImpl.version}
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-campusannouncement-channel"/>
             <param name="version" value="${project.version}"/>
+        </antcall>
+    </target>
+
+    <target name="publish-systray">
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="toro-systray-channel"/>
+            <param name="channel" value="systray-channel-publish.xml"/>
         </antcall>
     </target>
 

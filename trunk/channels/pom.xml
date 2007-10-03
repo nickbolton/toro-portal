@@ -32,6 +32,7 @@
       <module>news</module>
       <module>notes</module>
       <module>survey</module>
+      <module>systray</module>
   </modules>
 
 </project>
