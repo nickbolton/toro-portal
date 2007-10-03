@@ -301,6 +301,11 @@
 			property="survey.active"
             defaultValue="@survey.active@"
 			force="false"/>
+		<checkbox
+			displayText="User Admin Channel"
+			property="useradmin.active"
+            defaultValue="@useradmin.active@"
+			force="false"/>
     </page>
 	<page
 			type="input"
@@ -344,9 +349,10 @@
             property="ldap.server.uid"
             defaultValue=""
             displayText="LDAP uid Attribute"/>
-		<text
+        <checkbox
             property="ldap.protocol.checkbox"
             defaultValue="false"
+            force="false"
             displayText="LDAP SSL Protocol"/>
         <conditional ifProperty="(${ldap.protocol.checkbox}=true)">
             <hidden property="ldap.protocol" value="ssl"/>

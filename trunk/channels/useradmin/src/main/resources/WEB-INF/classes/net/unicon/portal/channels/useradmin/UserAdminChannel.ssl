@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet title="main" href="useradmin/main.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet alternate="true" title="main" href="useradmin/main.xsl" type="text/xsl" media="netscape"?>
+
+<?xml-stylesheet title="blank" href="useradmin/main.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet alternate="true" title="blank" href="useradmin/main.xsl" type="text/xsl" media="netscape"?>
+
+<?xml-stylesheet title="add" href="useradmin/add_user.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet alternate="true" title="add" href="useradmin/add_user.xsl" type="text/xsl" media="netscape"?>
+
+<?xml-stylesheet title="edit" href="useradmin/edit_user.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet alternate="true" title="edit" href="useradmin/edit_user.xsl" type="text/xsl" media="netscape"?>
+
+<?xml-stylesheet title="delete" href="useradmin/delete.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet alternate="true" title="delete" href="useradmin/delete.xsl" type="text/xsl" media="netscape"?>
+
+<?xml-stylesheet title="search" href="useradmin/search_user.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet alternate="true" title="search" href="useradmin/search_user.xsl" type="text/xsl" media="netscape"?>
+
+<?xml-stylesheet title="find" href="useradmin/find_user.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet alternate="true" title="find" href="useradmin/find_user.xsl" type="text/xsl" media="netscape"?>
+
+<?xml-stylesheet title="change_password" href="useradmin/change_password.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet title="change_password" href="useradmin/change_password.xsl" type="text/xsl" media="explorer"?>
+
+<?xml-stylesheet alternate="true" title="change_email" href="useradmin/change_email.xsl" type="text/xsl" media="netscape"?>
+<?xml-stylesheet alternate="true" title="change_email" href="useradmin/change_email.xsl" type="text/xsl" media="netscape"?>
+
+<document>
+</document>

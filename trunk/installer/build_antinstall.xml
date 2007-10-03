@@ -119,6 +119,7 @@
                 <equals arg1="${campusannouncement.active}" arg2="true"/>
                 <equals arg1="${addressbook.active}" arg2="true"/>
                 <equals arg1="${ldapchangepw.active}" arg2="true"/>
+                <equals arg1="${useradmin.active}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.deploy.portlets.common">
@@ -221,6 +222,12 @@
             <or>
                 <equals arg1="${deploy.all}" arg2="true"/>
                 <equals arg1="${ldapchangepw.active}" arg2="true"/>
+            </or>
+        </condition>
+        <condition property="run.deploy.useradmin.channel">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${useradmin.active}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.deploy.login.channel">
@@ -331,6 +338,14 @@
                 <equals arg1="${initialize.all}" arg2="true"/>
                 <equals arg1="${ldapchangepw.publish}" arg2="true"/>
                 <equals arg1="${ldapchangepw.active}" arg2="true"/>
+            </or>
+        </condition>
+        <condition property="run.publish.useradmin.channel">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${initialize.all}" arg2="true"/>
+                <equals arg1="${useradmin.publish}" arg2="true"/>
+                <equals arg1="${useradmin.active}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.publish.login.channel">
@@ -544,6 +559,7 @@ run.deploy.bookmarks.channel=${run.deploy.bookmarks.channel}
 run.deploy.campusannouncement.channel=${run.deploy.campusannouncement.channel}
 run.deploy.ldapchangepw.channel=${run.deploy.ldapchangepw.channel}
 run.deploy.login.channel=${run.deploy.login.channel}
+run.deploy.useradmin.channel=${run.deploy.useradmin.channel}
 run.publish.briefcase.portlet=${run.publish.briefcase.portlet}
 run.publish.gateway.portlet=${run.publish.gateway.portlet}
 run.publish.messaging.portlet=${run.publish.messaging.portlet}
@@ -558,6 +574,7 @@ run.publish.bookmarks.channel=${run.publish.bookmarks.channel}
 run.publish.campusannouncement.channel=${run.publish.campusannouncement.channel}
 run.publish.ldapchangepw.channel=${run.publish.ldapchangepw.channel}
 run.publish.login.channel=${run.publish.login.channel}
+run.publish.useradmin.channel=${run.publish.useradmin.channel}
 run.uportal.db=${run.uportal.db}
 run.uportal.pubchan=${run.uportal.pubchan}
 run.uportal.i18n.db=${run.uportal.i18n.db}
@@ -776,11 +793,12 @@ xercesImpl.version=${xercesImpl.version}
       <antcall target="publish-news"/>
       <antcall target="publish-classifieds"/>
       <antcall target="publish-calendar"/>
+      <antcall target="publish-login"/>
       <antcall target="publish-notes"/>
       <antcall target="publish-bookmarks"/>
       <antcall target="publish-campusannouncement"/>
       <antcall target="publish-ldapchangepw"/>
-      <antcall target="publish-login"/>
+      <antcall target="publish-useradmin"/>
     </target>
     <!--  End Driver targets  -->
 
@@ -1410,7 +1428,8 @@ xercesImpl.version=${xercesImpl.version}
         deploy-login-channel,
         deploy-news-channel,
         deploy-notes-channel,
-        deploy-survey-channel
+        deploy-survey-channel,
+        deploy-useradmin-channel
         "/>
 
     <target name="deploy-survey-channel" if="run.deploy.survey.channel">
@@ -1496,6 +1515,16 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
         <antcall target="deploy-toro-resources">
             <param name="artifactId" value="toro-ldapchangepw-channel"/>
+        </antcall>
+    </target>
+
+    <target name="deploy-useradmin-channel" if="run.deploy.useradmin.channel">
+        <antcall target="deploy-toro-jar">
+            <param name="artifactId" value="toro-useradmin-channel"/>
+            <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
+        </antcall>
+        <antcall target="deploy-toro-resources">
+            <param name="artifactId" value="toro-useradmin-channel"/>
         </antcall>
     </target>
 
@@ -1732,6 +1761,13 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="toro-ldapchangepw-channel"/>
             <param name="channel" value="ldapchangepw-channel-publish.xml"/>
+        </antcall>
+    </target>
+
+    <target name="publish-useradmin" if="run.publish.useradmin.channel">
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="toro-useradmin-channel"/>
+            <param name="channel" value="useradmin-channel-publish.xml"/>
         </antcall>
     </target>
 

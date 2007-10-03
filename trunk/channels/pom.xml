@@ -33,6 +33,7 @@
       <module>notes</module>
       <module>survey</module>
       <module>systray</module>
+      <module>useradmin</module>
   </modules>
 
 </project>

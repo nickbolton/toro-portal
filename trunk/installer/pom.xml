@@ -103,6 +103,7 @@
                     <filter token="campusannouncement.active" value="true"/>
                     <filter token="ldapchangepw.active" value="true"/>
                     <filter token="login.active" value="true"/>
+                    <filter token="useradmin.active" value="true"/>
                     <filter token="project.version1" value="1.0.0-SNAPSHOT"/>
                     <filter token="tomcat.host.conf.relative" value="conf/Catalina/localhost"/>
                     <filter token="toro.data.home" value="/Users/deuce/dev/src/unicon/toro/data"/>
