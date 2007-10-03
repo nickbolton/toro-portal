@@ -28,6 +28,7 @@
       <module>campusannouncement</module>
       <module>classifieds</module>
       <module>ldapchangepw</module>
+      <module>login</module>
       <module>news</module>
       <module>notes</module>
       <module>survey</module>

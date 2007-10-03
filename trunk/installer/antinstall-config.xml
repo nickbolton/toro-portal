@@ -282,6 +282,11 @@
             defaultValue="@ldapchangepw.active@"
 			force="false"/>
 		<checkbox
+            displayText="Login Channel"
+			property="login.active"
+            defaultValue="@login.active@"
+			force="false"/>
+		<checkbox
             displayText="News Channel"
 			property="news.active"
             defaultValue="@news.active@"

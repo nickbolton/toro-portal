@@ -223,6 +223,12 @@
                 <equals arg1="${ldapchangepw.active}" arg2="true"/>
             </or>
         </condition>
+        <condition property="run.deploy.login.channel">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${login.active}" arg2="true"/>
+            </or>
+        </condition>
         <condition property="run.publish.briefcase.portlet">
             <or>
                 <equals arg1="${deploy.all}" arg2="true"/>
@@ -325,6 +331,14 @@
                 <equals arg1="${initialize.all}" arg2="true"/>
                 <equals arg1="${ldapchangepw.publish}" arg2="true"/>
                 <equals arg1="${ldapchangepw.active}" arg2="true"/>
+            </or>
+        </condition>
+        <condition property="run.publish.login.channel">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${initialize.all}" arg2="true"/>
+                <equals arg1="${login.publish}" arg2="true"/>
+                <equals arg1="${login.active}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.publish.addressbook.channel">
@@ -529,6 +543,7 @@ run.deploy.notes.channel=${run.deploy.notes.channel}
 run.deploy.bookmarks.channel=${run.deploy.bookmarks.channel}
 run.deploy.campusannouncement.channel=${run.deploy.campusannouncement.channel}
 run.deploy.ldapchangepw.channel=${run.deploy.ldapchangepw.channel}
+run.deploy.login.channel=${run.deploy.login.channel}
 run.publish.briefcase.portlet=${run.publish.briefcase.portlet}
 run.publish.gateway.portlet=${run.publish.gateway.portlet}
 run.publish.messaging.portlet=${run.publish.messaging.portlet}
@@ -542,6 +557,7 @@ run.publish.notes.channel=${run.publish.notes.channel}
 run.publish.bookmarks.channel=${run.publish.bookmarks.channel}
 run.publish.campusannouncement.channel=${run.publish.campusannouncement.channel}
 run.publish.ldapchangepw.channel=${run.publish.ldapchangepw.channel}
+run.publish.login.channel=${run.publish.login.channel}
 run.uportal.db=${run.uportal.db}
 run.uportal.pubchan=${run.uportal.pubchan}
 run.uportal.i18n.db=${run.uportal.i18n.db}
@@ -763,6 +779,7 @@ xercesImpl.version=${xercesImpl.version}
       <antcall target="publish-bookmarks"/>
       <antcall target="publish-campusannouncement"/>
       <antcall target="publish-ldapchangepw"/>
+      <antcall target="publish-login"/>
     </target>
     <!--  End Driver targets  -->
 
@@ -1381,6 +1398,7 @@ xercesImpl.version=${xercesImpl.version}
         deploy-campusannouncement-channel,
         deploy-classifieds-channel,
         deploy-ldapchangepw-channel,
+        deploy-login-channel,
         deploy-news-channel,
         deploy-notes-channel,
         deploy-survey-channel
@@ -1469,6 +1487,16 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
         <antcall target="deploy-toro-resources">
             <param name="artifactId" value="toro-ldapchangepw-channel"/>
+        </antcall>
+    </target>
+
+    <target name="deploy-login-channel" if="run.deploy.login.channel">
+        <antcall target="deploy-toro-jar">
+            <param name="artifactId" value="toro-login-channel"/>
+            <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
+        </antcall>
+        <antcall target="deploy-toro-resources">
+            <param name="artifactId" value="toro-login-channel"/>
         </antcall>
     </target>
 
@@ -1689,6 +1717,21 @@ xercesImpl.version=${xercesImpl.version}
             <param name="artifactId" value="toro-ldapchangepw-channel"/>
             <param name="channel" value="ldapchangepw-channel-publish.xml"/>
         </antcall>
+    </target>
+
+    <target name="publish-login" if="run.publish.login.channel">
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[update up_channel set chan_class='net.unicon.portal.channels.login.CLogin' where chan_id=99;]]>
+       </sql>
     </target>
 
     <target name="publish-toro-channel">
