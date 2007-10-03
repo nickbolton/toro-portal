@@ -76,6 +76,7 @@
         <filter token="jdbc.simplesql" value="${jdbc.simplesql}"/>
         <filter token="db.time.impl" value="${db.time.impl}"/>
         <filter token="db.sqlconcat" value="${db.sqlconcat}"/>
+        <filter token="db.length" value="${db.length}"/>
     </filterset>
 
     <!--  Driver targets  -->
@@ -512,6 +513,7 @@
         <property name="jdbc.simplesql" value="select 1"/>
         <property name="db.time.impl" value="net.unicon.portal.util.PostgresTimeServiceImpl"/>
         <property name="db.sqlconcat" value="||"/>
+        <property name="db.length" value="length"/>
     </target>
 
     <target name="set-oracle-platform-specific-properties" if="oracle.platform">
@@ -520,6 +522,7 @@
         <property name="jdbc.simplesql" value="select 1 from dual"/>
         <property name="db.time.impl" value="net.unicon.portal.util.OracleTimeServiceImpl"/>
         <property name="db.sqlconcat" value="||"/>
+        <property name="db.length" value="length"/>
     </target>
 
     <target name="set-sqlserver-platform-specific-properties" if="sqlserver.platform">
@@ -528,6 +531,7 @@
         <property name="jdbc.simplesql" value="select 1"/>
         <property name="db.time.impl" value="net.unicon.portal.util.SqlServerTimeServiceImpl"/>
         <property name="db.sqlconcat" value="+"/>
+        <property name="db.length" value="datalength"/>
     </target>
 
     <target name="set-mysql-platform-specific-properties" if="mysql.platform">
@@ -536,6 +540,7 @@
         <property name="jdbc.simplesql" value="select 1"/>
         <property name="db.time.impl" value="net.unicon.portal.util.MySqlTimeServiceImpl"/>
         <property name="db.sqlconcat" value="||"/>
+        <property name="db.length" value="length"/>
     </target>
 
     <target name="dump-properties">

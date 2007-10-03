@@ -25,7 +25,6 @@ import org.jasig.portal.RDBMServices;
 import org.jasig.portal.security.IPerson;
 import org.jasig.portal.security.provider.PersonImpl;
 import org.jasig.portal.services.LogService;
-import org.jasig.portal.services.PersonDirectory;
 import org.jasig.portal.utils.ResourceLoader;
 
 import java.util.Vector;
@@ -608,9 +607,9 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
         sources= new Vector();
         try  {
 
-            // Build a DOM tree out of uPortal/properties/PersonDirs.xml
+            // Build a DOM tree out of uPortal/properties/ToroPersonDirs.xml
             Document doc = ResourceLoader.getResourceAsDocument(
-                this.getClass(), "/properties/PersonDirs.xml");
+                this.getClass(), "/properties/ToroPersonDirs.xml");
 
             // Each directory source is a <PersonDirInfo> (and its contents)
             NodeList list = doc.getElementsByTagName("PersonDirInfo");
@@ -710,7 +709,7 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
                             }
                         }
                     } else {
-                        LogService.instance().log(LogService.ERROR,"PersonDirectory::getParameters(): Unrecognized tag "+tagname+" in PersonDirs.xml");
+                        LogService.instance().log(LogService.ERROR,"PersonDirectory::getParameters(): Unrecognized tag "+tagname+" in ToroPersonDirs.xml");
                     }
                 }
                 if (pdi.ResRefName != null && !"".equals(pdi.ResRefName)) {
@@ -722,7 +721,7 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
                 sources.addElement(pdi);//Add one LDAP or JDBC source to the list
             }
         } catch(Exception e) {
-            LogService.instance().log(LogService.WARN,"PersonDirectory::getParameters(): properties/PersonDirs.xml is not available, directory searching disabled.");
+            LogService.instance().log(LogService.WARN,"PersonDirectory::getParameters(): properties/ToroPersonDirs.xml is not available, directory searching disabled.");
             return false;
         }
         return true;
