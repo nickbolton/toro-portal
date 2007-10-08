@@ -1864,10 +1864,6 @@ xercesImpl.version=${xercesImpl.version}
     </target>
 
     <target name="deploy-calendar-channel">
-        <antcall target="deploy-toro-jar">
-            <param name="artifactId" value="toro-calendar-channel"/>
-            <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
-        </antcall>
         <antcall target="deploy-toro-resources">
             <param name="artifactId" value="toro-calendar-channel"/>
         </antcall>
