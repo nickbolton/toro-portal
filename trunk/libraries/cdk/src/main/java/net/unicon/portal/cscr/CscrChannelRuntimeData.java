@@ -479,6 +479,10 @@ public final class CscrChannelRuntimeData extends ChannelRuntimeData implements 
     public Object remove(String key) {
         return channelRuntimeData.remove(key);
     }
+    
+    public Object remove(Object key) {
+        return channelRuntimeData.remove(key);
+    }
 
     public void putAll(Map t) {
         channelRuntimeData.putAll(t);
