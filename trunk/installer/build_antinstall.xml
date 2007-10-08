@@ -22,7 +22,7 @@
   a copy of the text describing the FLOSS exception along with this
   distribution.
 -->
-<project name="toro-deployment" default="deploy-all" basedir="${basedir}"
+<project name="toro-deployment" default="driver" basedir="${basedir}"
     xmlns:artifact="urn:maven-artifact-ant">
 
     <property file="build.properties"/>
@@ -40,6 +40,14 @@
             <pathelement path="${basedir}"/>
         </classpath>
     </typedef>
+
+    <artifact:dependencies pathId="ant-contrib.pathId">
+        <dependency groupId="ant-contrib" artifactId="ant-contrib"
+            version="${ant-contrib.version}" type="jar"/>
+    </artifact:dependencies>
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath refId="ant-contrib.pathId"/>
+    </taskdef>
 
     <!--taskdef name="filtered-dependencies" classname="net.unicon.toro.installer.anttask.FilteredDependenciesTask" classpath="${basedir}"/-->
 
@@ -68,16 +76,6 @@
             version="${postgresql.version}" type="jar"/>
         <remoteRepository refid="toro.repository" />
     </artifact:dependencies>
-
-    <filterset id="tokens">
-        <filtersfile file="${basedir}/build.properties"/>
-        <filtersfile file="${basedir}/ant.install.properties"/>
-        <filter token="db.platform" value="${db.platform}"/>
-        <filter token="jdbc.simplesql" value="${jdbc.simplesql}"/>
-        <filter token="db.time.impl" value="${db.time.impl}"/>
-        <filter token="db.sqlconcat" value="${db.sqlconcat}"/>
-        <filter token="db.length" value="${db.length}"/>
-    </filterset>
 
     <!--  Driver targets  -->
     <target name="clean" depends="clean-portlets">
@@ -111,6 +109,7 @@
         <condition property="run.deploy.channel.common">
             <or>
                 <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${cms.active}" arg2="true"/>
                 <equals arg1="${survey.active}" arg2="true"/>
                 <equals arg1="${news.active}" arg2="true"/>
                 <equals arg1="${classifieds.active}" arg2="true"/>
@@ -183,6 +182,12 @@
                 <equals arg1="${survey.active}" arg2="true"/>
             </or>
         </condition>
+        <condition property="run.deploy.cms.channel">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${cms.active}" arg2="true"/>
+            </or>
+        </condition>
         <condition property="run.deploy.news.channel">
             <or>
                 <equals arg1="${deploy.all}" arg2="true"/>
@@ -199,6 +204,7 @@
             <or>
                 <equals arg1="${deploy.all}" arg2="true"/>
                 <equals arg1="${calendar.active}" arg2="true"/>
+                <equals arg1="${cms.active}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.deploy.notes.channel">
@@ -229,6 +235,7 @@
             <or>
                 <equals arg1="${deploy.all}" arg2="true"/>
                 <equals arg1="${useradmin.active}" arg2="true"/>
+                <equals arg1="${cms.active}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.deploy.login.channel">
@@ -285,6 +292,14 @@
                 <equals arg1="${survey.active}" arg2="true"/>
             </or>
         </condition>
+        <condition property="run.publish.cms.channel">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${initialize.all}" arg2="true"/>
+                <equals arg1="${cms.publish}" arg2="true"/>
+                <equals arg1="${cms.active}" arg2="true"/>
+            </or>
+        </condition>
         <condition property="run.publish.news.channel">
             <or>
                 <equals arg1="${deploy.all}" arg2="true"/>
@@ -306,7 +321,7 @@
                 <equals arg1="${deploy.all}" arg2="true"/>
                 <equals arg1="${initialize.all}" arg2="true"/>
                 <equals arg1="${calendar.publish}" arg2="true"/>
-                <equals arg1="${calendar.active}" arg2="true"/>
+                <equals arg1="${run.deploy.calendar.channel}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.publish.notes.channel">
@@ -346,7 +361,7 @@
                 <equals arg1="${deploy.all}" arg2="true"/>
                 <equals arg1="${initialize.all}" arg2="true"/>
                 <equals arg1="${useradmin.publish}" arg2="true"/>
-                <equals arg1="${useradmin.active}" arg2="true"/>
+                <equals arg1="${run.deploy.useradmin.channel}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.publish.login.channel">
@@ -357,8 +372,9 @@
                 <equals arg1="${login.active}" arg2="true"/>
             </or>
         </condition>
-        <condition property="run.publish.addressbook.channel">
+        <condition property="run.publish.common.channels">
             <or>
+                <equals arg1="${run.publish.cms.channel}" arg2="true"/>
                 <equals arg1="${run.publish.survey.channel}" arg2="true"/>
                 <equals arg1="${run.publish.news.channel}" arg2="true"/>
                 <equals arg1="${run.publish.classifieds.channel}" arg2="true"/>
@@ -366,7 +382,6 @@
                 <equals arg1="${run.publish.notes.channel}" arg2="true"/>
                 <equals arg1="${run.publish.bookmarks.channel}" arg2="true"/>
                 <equals arg1="${run.publish.campusannouncement.channel}" arg2="true"/>
-                <equals arg1="${run.publish.addressbook.channel}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.uportal.db">
@@ -393,10 +408,34 @@
                 <equals arg1="${uportal.pubfragments}" arg2="true"/>
             </or>
         </condition>
-        <condition property="run.uportal.deploy.portlet.apps">
+        <condition property="run.uportal.deploy.testsuite.portlet">
             <or>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${uportal.deploy.portlet.apps}" arg2="true"/>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${uportal.deploy.testsuite.portlet}" arg2="true"/>
+            </or>
+        </condition>
+        <condition property="run.uportal.deploy.proxyportlet.portlet">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${uportal.deploy.proxyportlet.portlet}" arg2="true"/>
+            </or>
+        </condition>
+        <condition property="run.uportal.deploy.bookmarks.portlet">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${uportal.deploy.bookmarks.portlet}" arg2="true"/>
+            </or>
+        </condition>
+        <condition property="run.uportal.deploy.rss.portlet">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${uportal.deploy.rss.portlet}" arg2="true"/>
+            </or>
+        </condition>
+        <condition property="run.uportal.deploy.google.portlet">
+            <or>
+                <equals arg1="${deploy.all}" arg2="true"/>
+                <equals arg1="${uportal.deploy.google.portlet}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.hibernate.alchemist">
@@ -439,6 +478,12 @@
             <or>
                 <equals arg1="${initialize.all}" arg2="true"/>
                 <equals arg1="${dbloader.survey}" arg2="true"/>
+            </or>
+        </condition>
+        <condition property="run.dbloader.cms">
+            <or>
+                <equals arg1="${initialize.all}" arg2="true"/>
+                <equals arg1="${dbloader.cms}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.dbloader.news">
@@ -507,40 +552,77 @@
         </condition>
     </target>
 
-    <target name="set-postgres-platform-specific-properties" if="postgres.platform">
-        <echo>Setting postgres specific properties...</echo>
-        <property name="db.platform" value="postgres"/>
-        <property name="jdbc.simplesql" value="select 1"/>
-        <property name="db.time.impl" value="net.unicon.portal.util.PostgresTimeServiceImpl"/>
-        <property name="db.sqlconcat" value="||"/>
-        <property name="db.length" value="length"/>
+    <target name="set-resource-tokens">
+        <filterset id="tokens">
+            <filtersfile file="${basedir}/build.properties"/>
+            <filtersfile file="${basedir}/ant.install.properties"/>
+            <filter token="db.platform" value="${db.platform}"/>
+            <filter token="jdbc.simplesql" value="${jdbc.simplesql}"/>
+            <filter token="db.time.impl" value="${db.time.impl}"/>
+            <filter token="db.sqlconcat" value="${db.sqlconcat}"/>
+            <filter token="db.length" value="${db.length}"/>
+            <filter token="cms.enabled" value="${run.deploy.cms.channel}"/>
+        </filterset>
     </target>
 
-    <target name="set-oracle-platform-specific-properties" if="oracle.platform">
-        <echo>Setting oracle specific properties...</echo>
-        <property name="db.platform" value="oracle"/>
-        <property name="jdbc.simplesql" value="select 1 from dual"/>
-        <property name="db.time.impl" value="net.unicon.portal.util.OracleTimeServiceImpl"/>
-        <property name="db.sqlconcat" value="||"/>
-        <property name="db.length" value="length"/>
+    <target name="set-postgres-platform-specific-properties">
+        <if>
+            <isset property="postgres.platform"/>
+            <then>
+                <echo>Setting postgres specific properties...</echo>
+                <property name="db.platform" value="postgres"/>
+                <property name="jdbc.simplesql" value="select 1"/>
+                <property name="db.time.impl" value="net.unicon.portal.util.PostgresTimeServiceImpl"/>
+                <property name="db.sqlconcat" value="||"/>
+                <property name="db.length" value="length"/>
+                <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            </then>
+        </if>
     </target>
 
-    <target name="set-sqlserver-platform-specific-properties" if="sqlserver.platform">
-        <echo>Setting sqlserver specific properties...</echo>
-        <property name="db.platform" value="sqlserver"/>
-        <property name="jdbc.simplesql" value="select 1"/>
-        <property name="db.time.impl" value="net.unicon.portal.util.SqlServerTimeServiceImpl"/>
-        <property name="db.sqlconcat" value="+"/>
-        <property name="db.length" value="datalength"/>
+    <target name="set-oracle-platform-specific-properties">
+        <if>
+            <isset property="postgres.platform"/>
+            <then>
+                <echo>Setting oracle specific properties...</echo>
+                <property name="db.platform" value="oracle"/>
+                <property name="jdbc.simplesql" value="select 1 from dual"/>
+                <property name="db.time.impl" value="net.unicon.portal.util.OracleTimeServiceImpl"/>
+                <property name="db.sqlconcat" value="||"/>
+                <property name="db.length" value="length"/>
+                <property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect"/>
+            </then>
+        </if>
     </target>
 
-    <target name="set-mysql-platform-specific-properties" if="mysql.platform">
-        <echo>Setting mysql specific properties...</echo>
-        <property name="db.platform" value="mysql"/>
-        <property name="jdbc.simplesql" value="select 1"/>
-        <property name="db.time.impl" value="net.unicon.portal.util.MySqlTimeServiceImpl"/>
-        <property name="db.sqlconcat" value="||"/>
-        <property name="db.length" value="length"/>
+    <target name="set-sqlserver-platform-specific-properties">
+        <if>
+            <isset property="postgres.platform"/>
+            <then>
+                <echo>Setting sqlserver specific properties...</echo>
+                <property name="db.platform" value="sqlserver"/>
+                <property name="jdbc.simplesql" value="select 1"/>
+                <property name="db.time.impl" value="net.unicon.portal.util.SqlServerTimeServiceImpl"/>
+                <property name="db.sqlconcat" value="+"/>
+                <property name="db.length" value="datalength"/>
+                <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
+            </then>
+        </if>
+    </target>
+
+    <target name="set-mysql-platform-specific-properties">
+        <if>
+            <isset property="postgres.platform"/>
+            <then>
+                <echo>Setting mysql specific properties...</echo>
+                <property name="db.platform" value="mysql"/>
+                <property name="jdbc.simplesql" value="select 1"/>
+                <property name="db.time.impl" value="net.unicon.portal.util.MySqlTimeServiceImpl"/>
+                <property name="db.sqlconcat" value="||"/>
+                <property name="db.length" value="length"/>
+                <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+            </then>
+        </if>
     </target>
 
     <target name="dump-properties">
@@ -555,6 +637,7 @@ run.deploy.permissions.portlet=${run.deploy.permissions.portlet}
 run.deploy.gateway.portlet=${run.deploy.gateway.portlet}
 run.deploy.web.content.portlet=${run.deploy.web.content.portlet}
 run.deploy.blojsom.portlet=${run.deploy.blojsom.portlet}
+run.deploy.cms.channel=${run.deploy.cms.channel}
 run.deploy.survey.channel=${run.deploy.survey.channel}
 run.deploy.news.channel=${run.deploy.news.channel}
 run.deploy.classifieds.channel=${run.deploy.classifieds.channel}
@@ -570,6 +653,7 @@ run.publish.gateway.portlet=${run.publish.gateway.portlet}
 run.publish.messaging.portlet=${run.publish.messaging.portlet}
 run.publish.permissions.portlet=${run.publish.permissions.portlet}
 run.publish.web.content.portlet=${run.publish.web.content.portlet}
+run.publish.cms.channel=${run.publish.cms.channel}
 run.publish.survey.channel=${run.publish.survey.channel}
 run.publish.news.channel=${run.publish.news.channel}
 run.publish.classifieds.channel=${run.publish.classifieds.channel}
@@ -584,13 +668,18 @@ run.uportal.db=${run.uportal.db}
 run.uportal.pubchan=${run.uportal.pubchan}
 run.uportal.i18n.db=${run.uportal.i18n.db}
 run.uportal.pubfragments=${run.uportal.pubfragments}
-run.uportal.deploy.portlet.apps=${run.uportal.deploy.portlet.apps}
+run.uportal.deploy.testsuite.portlet=${run.uportal.deploy.testsuite.portlet}
+run.uportal.deploy.proxyportlet.portlet=${run.uportal.deploy.proxyportlet.portlet}
+run.uportal.deploy.bookmarks.portlet=${run.uportal.deploy.bookmarks.portlet}
+run.uportal.deploy.rss.portlet=${run.uportal.deploy.rss.portlet}
+run.uportal.deploy.google.portlet=${run.uportal.deploy.google.portlet}
 run.hibernate.alchemist=${run.hibernate.alchemist}
 run.hibernate.demetrius=${run.hibernate.demetrius}
 run.hibernate.mercury=${run.hibernate.mercury}
 run.hibernate.portlets-common=${run.hibernate.portlets-common}
 run.dbloader.cdk=${run.dbloader.cdk}
 run.dbloader.toro.common=${run.dbloader.toro.common}
+run.dbloader.cms=${run.dbloader.cms}
 run.dbloader.survey=${run.dbloader.survey}
 run.dbloader.news=${run.dbloader.news}
 run.dbloader.classifieds=${run.dbloader.classifieds}
@@ -680,7 +769,11 @@ toro.data.home=${toro.data.home}
 uportal.db=${uportal.db}
 uportal.db.droptables.arg=${uportal.db.droptables.arg}
 uportal.deploy=${uportal.deploy}
-uportal.deploy.portlet.apps=${uportal.deploy.portlet.apps}
+uportal.deploy.testsuite.portlet=${uportal.deploy.testsuite.portlet}
+uportal.deploy.proxyportlet.portlet=${uportal.deploy.proxyportlet.portlet}
+uportal.deploy.bookmarks.portlet=${uportal.deploy.bookmarks.portlet}
+uportal.deploy.rss.portlet=${uportal.deploy.rss.portlet}
+uportal.deploy.google.portlet=${uportal.deploy.google.portlet}
 uportal.i18n.db=${uportal.i18n.db}
 uportal.pubchan=${uportal.pubchan}
 uportal.pubfragments=${uportal.pubfragments}
@@ -700,110 +793,418 @@ xercesImpl.version=${xercesImpl.version}
             message="ERROR: Java version too old: found ${java.version}, needs ${minJavaVersion}."/> 
     </target>
 
-    <target name="deploy-all" depends="initialize-run-targets, set-postgres-platform-specific-properties, set-oracle-platform-specific-properties, set-sqlserver-platform-specific-properties, set-mysql-platform-specific-properties">
+    <target name="driver" depends="initialize-run-targets, set-resource-tokens, set-postgres-platform-specific-properties, set-oracle-platform-specific-properties, set-sqlserver-platform-specific-properties, set-mysql-platform-specific-properties">
         <antcall target="check-java-version"/>
         <antcall target="dump-properties"/>
-        <antcall target="deploy-uportal"/>
+        <antcall target="create-uportal-properties"/>
+
+        <if>
+            <isset property="run.uportal.deploy"/>
+            <then>
+                <antcall target="deploy-uportal"/>
+            </then>
+        </if>
+
         <available property="portal.webapp.home.exists" file="${portal.webapp.home}"/>
         <fail message="uPortal deployment does not exist as specified by portal.webapp.home=${portal.webapp.home}" unless="portal.webapp.home.exists"/>
-        <antcall target="deploy-toro-common"/>
-        <antcall target="deploy-portlets-common"/>
-        <antcall target="deploy-portlets-common-webapp"/>
-        <antcall target="deploy-portlets"/>
-        <antcall target="deploy-channels-common"/>
-        <antcall target="deploy-channels"/>
+
+
+        <if>
+            <isset property="run.uportal.deploy.testsuite.portlet"/>
+            <then>
+                <antcall target="uportal-deploy-testsuite-portlet"/>
+            </then>
+        </if>
+
+        <if>
+            <isset property="run.uportal.deploy.proxyportlet.portlet"/>
+            <then>
+                <antcall target="uportal-deploy-proxyportlet-portlet"/>
+            </then>
+        </if>
+
+        <if>
+            <isset property="run.uportal.deploy.bookmarks.portlet"/>
+            <then>
+                <antcall target="uportal-deploy-bookmarks-portlet"/>
+            </then>
+        </if>
+
+        <if>
+            <isset property="run.uportal.deploy.rss.portlet"/>
+            <then>
+                <antcall target="uportal-deploy-rss-portlet"/>
+            </then>
+        </if>
+
+        <if>
+            <isset property="run.uportal.deploy.google.portlet"/>
+            <then>
+                <antcall target="uportal-deploy-google-portlet"/>
+            </then>
+        </if>
+
+        <if>
+            <isset property="run.deploy.toro.common"/>
+            <then>
+                <antcall target="deploy-toro-common"/>
+            </then>
+        </if>
+
+        <if>
+            <isset property="run.deploy.portlets.common"/>
+            <then>
+                <antcall target="deploy-portlets-common"/>
+                <antcall target="deploy-portlets-common-webapp"/>
+            </then>
+        </if>
+
+        <if>
+            <isset property="run.deploy.briefcase.portlet"/>
+            <then>
+                <antcall target="deploy-briefcase-portlet"/>
+            </then>
+        </if>
+
+        <if>
+            <isset property="run.deploy.messaging.portlet"/>
+            <then>
+                <antcall target="deploy-messaging-portlet"/>
+            </then>
+        </if>
+        <if>
+            <isset property="run.deploy.gateway.portlet"/>
+            <then>
+                <antcall target="deploy-gateway-portlet"/>
+            </then>
+        </if>
+        <if>
+            <isset property="run.deploy.web.content.portlet"/>
+            <then>
+                <antcall target="deploy-web-content-portlet"/>
+            </then>
+        </if>
+        <if>
+            <isset property="run.deploy.permissions.portlet"/>
+            <then>
+                <antcall target="deploy-permissions-portlet"/>
+            </then>
+        </if>
+        <if>
+            <isset property="run.deploy.blojsom.portlet"/>
+            <then>
+                <antcall target="deploy-blojsom"/>
+            </then>
+        </if>
+
+        <if>
+            <isset property="run.deploy.channel.common"/>
+            <then>
+                <antcall target="deploy-channels-common"/>
+            </then>
+        </if>
+
+        <if>
+            <isset property="run.deploy.bookmarks.channel"/>
+            <then>
+                <antcall target="deploy-bookmarks-channel"/>
+            </then>
+        </if>
+        <if>
+            <isset property="run.deploy.calendar.channel"/>
+            <then>
+                <antcall target="deploy-calendar-channel"/>
+            </then>
+        </if>
+        <if>
+            <isset property="run.deploy.campusannouncement.channel"/>
+            <then>
+                <antcall target="deploy-campusannouncement-channel"/>
+            </then>
+        </if>
+        <if>
+            <isset property="run.deploy.classifieds.channel"/>
+            <then>
+                <antcall target="deploy-classifieds-channel"/>
+            </then>
+        </if>
+        <if>
+            <isset property="run.deploy.ldapchangepw.channel"/>
+            <then>
+                <antcall target="deploy-ldapchangepw-channel"/>
+            </then>
+        </if>
+        <if>
+            <isset property="run.deploy.login.channel"/>
+            <then>
+                <antcall target="deploy-login-channel"/>
+            </then>
+        </if>
+        <if>
+            <isset property="run.deploy.news.channel"/>
+            <then>
+                <antcall target="deploy-news-channel"/>
+            </then>
+        </if>
+        <if>
+            <isset property="run.deploy.notes.channel"/>
+            <then>
+                <antcall target="deploy-notes-channel"/>
+            </then>
+        </if>
+        <if>
+            <isset property="run.deploy.survey.channel"/>
+            <then>
+                <antcall target="deploy-survey-channel"/>
+            </then>
+        </if>
+        <if>
+            <isset property="run.deploy.useradmin.channel"/>
+            <then>
+                <antcall target="deploy-useradmin-channel"/>
+            </then>
+        </if>
+        <if>
+            <isset property="run.deploy.cms.channel"/>
+            <then>
+                <antcall target="deploy-cms-channel"/>
+            </then>
+        </if>
 
         <antcall target="initialize"/>
+
     </target>
 
 
    <target name="initialize">
-     <condition property="postgres.driver">
-         <contains string="${jdbc.driver}" substring="postgres"/>
-     </condition>
-     <condition property="oracle.driver">
-         <contains string="${jdbc.driver}" substring="oracle"/>
-     </condition>
-     <condition property="mysql.driver">
-         <contains string="${jdbc.driver}" substring="mysql"/>
-     </condition>
-     <condition property="sqlserver.driver">
-         <or>
-             <contains string="${jdbc.driver}" substring="jtds"/>
-             <contains string="${jdbc.driver}" substring="jnetdirect"/>
-         </or>
-     </condition>
-     <antcall target="execute-initalize-with-postgres"/>
-     <antcall target="execute-initalize-with-oracle"/>
-     <antcall target="execute-initalize-with-mysql"/>
-     <antcall target="execute-initalize-with-sqlserver"/>
-   </target>
-
-   <target name="execute-initalize-with-postgres" if="postgres.driver">
-     <echo>Running execute-initalize-with-postgres</echo>
-     <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-     <antcall target="exec-initalize"/>
-   </target>
-
-   <target name="execute-initalize-with-oracle" if="oracle.driver">
-     <echo>Running execute-initalize-with-oracle</echo>
-     <property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect"/>
-     <antcall target="exec-initalize"/>
-   </target>
-
-   <target name="execute-initalize-with-mysql" if="mysql.driver">
-     <echo>Running execute-initalize-with-mysql</echo>
-     <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
-     <antcall target="exec-initalize"/>
-   </target>
-
-   <target name="execute-initalize-with-sqlserver" if="sqlserver.driver">
-     <echo>Running execute-initalize-with-sqlserver</echo>
-     <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
-     <antcall target="exec-initalize"/>
-   </target>
-
-   <target name="exec-initalize">
       <copy file="${basedir}/properties/hibernate.properties" todir="${work.dir}" filtering="on">
         <filterset refId="tokens"/>
         <filterset>
           <filter token="hibernate.dialect" value="${hibernate.dialect}"/>
         </filterset>
       </copy>
-      <antcall target="uportal-initportal"/>
+
+      <if>
+          <isset property="run.uportal.db"/>
+          <then>
+              <antcall target="uportal-load-db"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.uportal.pubchan"/>
+          <then>
+              <antcall target="uportal-pubchan"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.uportal.i18n.db"/>
+          <then>
+              <antcall target="uportal-i18n-db"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.uportal.pubfragments"/>
+          <then>
+              <antcall target="uportal-pubfragments">
+                  <param name="fragmentFile" value="/properties/al/fragments.xml"/>
+              </antcall>
+          </then>
+      </if>
+
       <antcall target="uportal-add-additional-constraints"/>
-      <antcall target="initialize-alchemist"/>
-      <antcall target="initialize-demetrius"/>
-      <antcall target="initialize-mercury"/>
-      <antcall target="initialize-portlets-common"/>
-      <antcall target="initialize-toro-common"/>
-      <antcall target="initialize-cdk"/>
-      <antcall target="initialize-survey"/>
-      <antcall target="initialize-news"/>
-      <antcall target="initialize-classifieds"/>
-      <antcall target="initialize-calendar"/>
-      <antcall target="initialize-notes"/>
-      <antcall target="initialize-bookmarks"/>
-      <antcall target="initialize-campusannouncement"/>
+
+      <if>
+          <isset property="run.dbloader.toro.common"/>
+          <then>
+              <antcall target="initialize-toro-common"/>
+          </then>
+      </if>
+
+      <if>
+          <isset property="run.hibernate.alchemist"/>
+          <then>
+              <antcall target="initialize-alchemist"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.hibernate.demetrius"/>
+          <then>
+              <antcall target="initialize-demetrius"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.hibernate.mercury"/>
+          <then>
+              <antcall target="initialize-mercury"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.hibernate.portlets-common"/>
+          <then>
+              <antcall target="initialize-portlets-common"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.dbloader.cdk"/>
+          <then>
+              <antcall target="initialize-cdk"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.dbloader.survey"/>
+          <then>
+              <antcall target="initialize-survey"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.dbloader.news"/>
+          <then>
+              <antcall target="initialize-news"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.dbloader.classifieds"/>
+          <then>
+              <antcall target="initialize-classifieds"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.dbloader.calendar"/>
+          <then>
+              <antcall target="initialize-calendar"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.dbloader.notes"/>
+          <then>
+              <antcall target="initialize-notes"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.dbloader.bookmarks"/>
+          <then>
+              <antcall target="initialize-bookmarks"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.dbloader.campusannouncement"/>
+          <then>
+              <antcall target="initialize-campusannouncement"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.dbloader.cms"/>
+          <then>
+              <antcall target="initialize-cms"/>
+          </then>
+      </if>
 
       <property name="uportal.pubchan" value="true"/>
-      <antcall target="publish-systray"/>
-      <antcall target="publish-briefcase-portlet"/>
-      <antcall target="publish-gateway-portlet"/>
-      <antcall target="publish-messaging-portlet"/>
-      <antcall target="publish-permissions-portlet"/>
-      <antcall target="publish-web-content-portlet"/>
-      <antcall target="publish-addressbook"/>
-      <antcall target="publish-survey"/>
-      <antcall target="publish-news"/>
-      <antcall target="publish-classifieds"/>
-      <antcall target="publish-calendar"/>
-      <antcall target="publish-login"/>
-      <antcall target="publish-notes"/>
-      <antcall target="publish-bookmarks"/>
-      <antcall target="publish-campusannouncement"/>
-      <antcall target="publish-ldapchangepw"/>
-      <antcall target="publish-useradmin"/>
+
+      <if>
+          <isset property="run.publish.common.channels"/>
+          <then>
+              <antcall target="publish-addressbook"/>
+              <antcall target="publish-systray"/>
+          </then>
+      </if>
+
+      <if>
+          <isset property="run.publish.briefcase.portlet"/>
+          <then>
+              <antcall target="publish-briefcase-portlet"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.publish.gateway.portlet"/>
+          <then>
+              <antcall target="publish-gateway-portlet"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.publish.messaging.portlet"/>
+          <then>
+              <antcall target="publish-messaging-portlet"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.publish.permissions.portlet"/>
+          <then>
+              <antcall target="publish-permissions-portlet"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.publish.web.content.portlet"/>
+          <then>
+              <antcall target="publish-web-content-portlet"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.publish.survey.channel"/>
+          <then>
+              <antcall target="publish-survey"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.publish.news.channel"/>
+          <then>
+              <antcall target="publish-news"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.publish.classifieds.channel"/>
+          <then>
+              <antcall target="publish-classifieds"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.publish.calendar.channel"/>
+          <then>
+              <antcall target="publish-calendar"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.publish.login.channel"/>
+          <then>
+              <antcall target="publish-login"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.publish.notes.channel"/>
+          <then>
+              <antcall target="publish-notes"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.publish.bookmarks.channel"/>
+          <then>
+              <antcall target="publish-bookmarks"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.publish.campusannouncement.channel"/>
+          <then>
+              <antcall target="publish-campusannouncement"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.publish.ldapchangepw.channel"/>
+          <then>
+              <antcall target="publish-ldapchangepw"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.publish.useradmin.channel"/>
+          <then>
+              <antcall target="publish-useradmin"/>
+          </then>
+      </if>
+      <if>
+          <isset property="run.publish.cms.channel"/>
+          <then>
+              <antcall target="publish-cms"/>
+          </then>
+      </if>
     </target>
     <!--  End Driver targets  -->
 
@@ -984,7 +1385,7 @@ xercesImpl.version=${xercesImpl.version}
     </target>
     <!-- End Common Utilities -->
 
-    <target name="deploy-toro-common" if="run.deploy.toro.common">
+    <target name="deploy-toro-common">
         <mkdir dir="${toro.data.home}" /> 
         <antcall target="deploy-toro-resources">
             <param name="artifactId" value="toro-common"/>
@@ -1006,7 +1407,7 @@ xercesImpl.version=${xercesImpl.version}
 
 
     <!-- Portlet Targets -->
-    <target name="deploy-portlets-common" if="run.deploy.portlets.common">
+    <target name="deploy-portlets-common">
         <antcall target="deploy-toro-jar"> 
             <param name="artifactId" value="academus-api"/>
             <param name="todir" value="${tomcat.home}/shared/lib"/>
@@ -1094,14 +1495,6 @@ xercesImpl.version=${xercesImpl.version}
         </copy>
     </target>
 
-    <target name="deploy-portlets" depends="
-        deploy-briefcase-portlet,
-        deploy-messaging-portlet,
-        deploy-gateway-portlet,
-        deploy-web-content-portlet,
-        deploy-permissions-portlet,
-        deploy-blojsom
-        "/>
 
     <target name="clean-portlets" depends="
         clean-briefcase-portlet,
@@ -1112,21 +1505,21 @@ xercesImpl.version=${xercesImpl.version}
         clean-blojsom
         "/>
 
-    <target name="deploy-portlets-common-webapp" if="run.deploy.portlets.common">
+    <target name="deploy-portlets-common-webapp">
         <antcall target="deploy-toro-war">
             <param name="webappName" value="toro-portlets-common"/>
             <param name="artifactId" value="portlets-common-webapp"/>
         </antcall>
     </target>
 
-    <target name="common-add-uportal-configurations" if="run.deploy.toro.common">
+    <target name="common-add-uportal-configurations">
         <antcall target="merge-configuration">
-            <param name="configfile" value="${basedir}/properties/common-uPortalConfigurationChanges.xml"/>
+            <param name="configfile" value="${basedir}/properties/uportal-${uportal.version}/common-uPortalConfigurationChanges.xml"/>
             <param name="targetdir" value="${portal.webapp.home}"/>
         </antcall>
     </target>
 
-    <target name="deploy-briefcase-portlet" if="run.deploy.briefcase.portlet">
+    <target name="deploy-briefcase-portlet">
         <echo>Deploying Briefcase Portlet</echo>
         <antcall target="deploy-portlet">
             <param name="artifactId" value="briefcase-portlet"/>
@@ -1139,7 +1532,7 @@ xercesImpl.version=${xercesImpl.version}
         <delete dir="${webapp.home}/toro-briefcase-portlet"/>
     </target>
 
-    <target name="deploy-messaging-portlet" if="run.deploy.messaging.portlet">
+    <target name="deploy-messaging-portlet">
         <echo>Deploying Messaging Portlet</echo>
         <antcall target="deploy-portlet">
             <param name="artifactId" value="messaging-portlet"/>
@@ -1152,7 +1545,7 @@ xercesImpl.version=${xercesImpl.version}
         <delete dir="${webapp.home}/toro-messaging-portlet"/>
     </target>
 
-    <target name="deploy-permissions-portlet" if="run.deploy.permissions.portlet">
+    <target name="deploy-permissions-portlet">
         <echo>Deploying Permissions Portlet</echo>
         <antcall target="deploy-portlet">
             <param name="artifactId" value="permissions-portlet"/>
@@ -1170,7 +1563,7 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="merge-permissions-descriptor-for-web-content"/>
     </target>
 
-    <target name="deploy-gateway-portlet" if="run.deploy.gateway.portlet">
+    <target name="deploy-gateway-portlet">
         <echo>Deploying Gateway Portlet</echo>
         <antcall target="deploy-portlet">
             <param name="artifactId" value="gateway-portlet"/>
@@ -1183,7 +1576,7 @@ xercesImpl.version=${xercesImpl.version}
         <delete dir="${webapp.home}/toro-gateway-portlet"/>
     </target>
 
-    <target name="deploy-web-content-portlet" if="run.deploy.web.content.portlet">
+    <target name="deploy-web-content-portlet">
         <echo>Deploying Web Content Portlet</echo>
         <antcall target="deploy-portlet">
             <param name="artifactId" value="web-content-portlet"/>
@@ -1196,7 +1589,7 @@ xercesImpl.version=${xercesImpl.version}
         <delete dir="${webapp.home}/toro-web-content-portlet"/>
     </target>
 
-    <target name="deploy-blojsom" if="run.deploy.blojsom.portlet">
+    <target name="deploy-blojsom">
         <echo>Deploying Blojsom</echo>
         <antcall target="deploy-toro-war">
             <param name="webappName" value="toro-blojsom"/>
@@ -1248,14 +1641,14 @@ xercesImpl.version=${xercesImpl.version}
         <delete dir="${webapp.home}/toro-permissions-portlet"/>
     </target>
 
-    <target name="publish-briefcase-portlet" if="run.publish.briefcase.portlet">
+    <target name="publish-briefcase-portlet">
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="briefcase-lib"/>
             <param name="channel" value="briefcase-channel-publish.xml"/>
         </antcall>
     </target>
 
-    <target name="publish-gateway-portlet" if="run.publish.gateway.portlet">
+    <target name="publish-gateway-portlet">
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="gateway-lib"/>
             <param name="channel" value="gateway-blogger-channel-publish.xml"/>
@@ -1266,28 +1659,28 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="publish-messaging-portlet" if="run.publish.messaging.portlet">
+    <target name="publish-messaging-portlet">
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="messaging-lib"/>
             <param name="channel" value="messaging-channel-publish.xml"/>
         </antcall>
     </target>
 
-    <target name="publish-permissions-portlet" if="run.publish.permissions.portlet">
+    <target name="publish-permissions-portlet">
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="permissions-lib"/>
             <param name="channel" value="permissions-channel-publish.xml"/>
         </antcall>
     </target>
 
-    <target name="publish-web-content-portlet" if="run.publish.web.content.portlet">
+    <target name="publish-web-content-portlet">
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="web-content-lib"/>
             <param name="channel" value="web-content-channel-publish.xml"/>
         </antcall>
     </target>
 
-    <target name="initialize-alchemist" if="run.hibernate.alchemist">
+    <target name="initialize-alchemist">
         <echo>Initializing Alchemist</echo>
         <antcall target="run-hbm2dll">
             <param name="groupId" value="net.unicon.toro"/>
@@ -1296,7 +1689,7 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="initialize-demetrius" if="run.hibernate.demetrius">
+    <target name="initialize-demetrius">
         <echo>Initializing Demetrius</echo>
         <antcall target="run-hbm2dll">
             <param name="groupId" value="net.unicon.toro"/>
@@ -1305,7 +1698,7 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="initialize-mercury" if="run.hibernate.mercury">
+    <target name="initialize-mercury">
         <echo>Initializing Mercury</echo>
         <antcall target="run-hbm2dll">
             <param name="groupId" value="net.unicon.toro"/>
@@ -1314,7 +1707,7 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="initialize-portlets-common" if="run.hibernate.portlets-common">
+    <target name="initialize-portlets-common">
         <echo>Initializing Portlets Common</echo>
         <antcall target="run-hbm2dll">
             <param name="groupId" value="net.unicon.toro"/>
@@ -1325,7 +1718,7 @@ xercesImpl.version=${xercesImpl.version}
     <!-- End Portlet Targets -->
 
     <!-- Channel Targets -->
-    <target name="deploy-channels-common" if="run.deploy.channel.common">
+    <target name="deploy-channels-common">
         <antcall target="deploy-toro-jar">
             <param name="artifactId" value="toro-addressbook-channel"/>
             <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
@@ -1424,20 +1817,7 @@ xercesImpl.version=${xercesImpl.version}
         </copy>
     </target>
 
-    <target name="deploy-channels" depends="
-        deploy-bookmarks-channel,
-        deploy-calendar-channel,
-        deploy-campusannouncement-channel,
-        deploy-classifieds-channel,
-        deploy-ldapchangepw-channel,
-        deploy-login-channel,
-        deploy-news-channel,
-        deploy-notes-channel,
-        deploy-survey-channel,
-        deploy-useradmin-channel
-        "/>
-
-    <target name="deploy-survey-channel" if="run.deploy.survey.channel">
+    <target name="deploy-survey-channel">
         <antcall target="deploy-toro-jar">
             <param name="artifactId" value="toro-survey-channel"/>
             <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
@@ -1451,7 +1831,17 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="deploy-news-channel" if="run.deploy.news.channel">
+    <target name="deploy-cms-channel">
+        <antcall target="deploy-toro-jar">
+            <param name="artifactId" value="toro-cms-channel"/>
+            <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
+        </antcall>
+        <antcall target="deploy-toro-resources">
+            <param name="artifactId" value="toro-cms-channel"/>
+        </antcall>
+    </target>
+
+    <target name="deploy-news-channel">
         <antcall target="deploy-toro-jar">
             <param name="artifactId" value="toro-news-channel"/>
             <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
@@ -1462,7 +1852,7 @@ xercesImpl.version=${xercesImpl.version}
         <mkdir dir="${toro.data.home}/campus_news"/>
     </target>
 
-    <target name="deploy-classifieds-channel" if="run.deploy.classifieds.channel">
+    <target name="deploy-classifieds-channel">
         <antcall target="deploy-toro-jar">
             <param name="artifactId" value="toro-classifieds-channel"/>
             <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
@@ -1473,7 +1863,7 @@ xercesImpl.version=${xercesImpl.version}
         <mkdir dir="${toro.data.home}/classifieds"/>
     </target>
 
-    <target name="deploy-calendar-channel" if="run.deploy.calendar.channel">
+    <target name="deploy-calendar-channel">
         <antcall target="deploy-toro-jar">
             <param name="artifactId" value="toro-calendar-channel"/>
             <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
@@ -1483,7 +1873,7 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="deploy-notes-channel" if="run.deploy.notes.channel">
+    <target name="deploy-notes-channel">
         <antcall target="deploy-toro-jar">
             <param name="artifactId" value="toro-notes-channel"/>
             <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
@@ -1493,7 +1883,7 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="deploy-bookmarks-channel" if="run.deploy.bookmarks.channel">
+    <target name="deploy-bookmarks-channel">
         <antcall target="deploy-toro-jar">
             <param name="artifactId" value="toro-bookmarks-channel"/>
             <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
@@ -1503,7 +1893,7 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="deploy-campusannouncement-channel" if="run.deploy.campusannouncement.channel">
+    <target name="deploy-campusannouncement-channel">
         <antcall target="deploy-toro-jar">
             <param name="artifactId" value="toro-campusannouncement-channel"/>
             <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
@@ -1513,7 +1903,7 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="deploy-ldapchangepw-channel" if="run.deploy.ldapchangepw.channel">
+    <target name="deploy-ldapchangepw-channel">
         <antcall target="deploy-toro-jar">
             <param name="artifactId" value="toro-ldapchangepw-channel"/>
             <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
@@ -1523,7 +1913,7 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="deploy-useradmin-channel" if="run.deploy.useradmin.channel">
+    <target name="deploy-useradmin-channel">
         <antcall target="deploy-toro-jar">
             <param name="artifactId" value="toro-useradmin-channel"/>
             <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
@@ -1533,7 +1923,7 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="deploy-login-channel" if="run.deploy.login.channel">
+    <target name="deploy-login-channel">
         <antcall target="deploy-toro-jar">
             <param name="artifactId" value="toro-login-channel"/>
             <param name="todir" value="${portal.webapp.home}/WEB-INF/lib"/>
@@ -1543,7 +1933,7 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="initialize-toro-common" if="run.dbloader.toro.common">
+    <target name="initialize-toro-common">
         <echo>Initializing Toro Common</echo>
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
@@ -1558,7 +1948,7 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="initialize-cdk" if="run.dbloader.cdk">
+    <target name="initialize-cdk">
         <echo>Initializing CDK</echo>
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
@@ -1578,7 +1968,88 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="initialize-survey" if="run.dbloader.survey">
+    <target name="initialize-cms">
+        <echo>Initializing CMS</echo>
+        <antcall target="uportal-dbloader-tables">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="toro-cms-channel"/>
+            <param name="version" value="${project.version}"/>
+        </antcall>
+
+        <artifact:dependencies fileSetId="cdk.filesetId">
+            <dependency groupId="net.unicon.toro" artifactId="cdk"
+                        version="${project.version}" type="jar"/>
+        </artifact:dependencies>
+        <unjar dest="${work.dir}/uportal-properties/properties">
+            <fileset refId="cdk.filesetId"/>
+            <patternset>
+                <include name="**/academus-apps-lms.properties"/>
+                <include name="**/academus-apps.properties"/>
+                <include name="**/academus-lms.properties"/>
+                <include name="**/factoryImpl.properties"/>
+                <include name="**/ToroPersonDirs.xml"/>
+                <include name="**/unicon-service.properties"/>
+                <include name="**/academus-portal.properties"/>
+                <include name="**/common-factory.properties"/>
+            </patternset>
+        </unjar>
+        <move filtering="on" todir="${work.dir}/uportal-properties/properties">
+            <fileset dir="${work.dir}/uportal-properties/properties/WEB-INF/classes/properties">
+                <include name="academus-apps-lms.properties"/>
+                <include name="academus-apps.properties"/>
+                <include name="academus-lms.properties"/>
+                <include name="factoryImpl.properties"/>
+                <include name="ToroPersonDirs.xml"/>
+                <include name="unicon-service.properties"/>
+                <include name="academus-portal.properties"/>
+                <include name="common-factory.properties"/>
+            </fileset>
+            <filterset refid="tokens"/>
+        </move>
+
+        <artifact:dependencies pathId="cmsGroupInitialization.classpath">
+            <dependency groupId="net.unicon.toro" artifactId="cdk"
+                version="${project.version}" type="jar"/>
+        </artifact:dependencies>
+        <java fork="true" failonerror="true" dir="${work.dir}" classname="net.unicon.toro.installer.tools.CmsGroupInitialization">
+          <classpath>
+            <pathelement path="${work.dir}/uportal-properties"/>
+            <pathelement path="${basedir}"/>
+            <path refId="cmsGroupInitialization.classpath"/>
+            <path refId="uportal.classpath"/>
+            <fileset refId="uportal-jar.fileset"/>
+          </classpath>
+          <arg value="-n"/>
+          <arg value="${channel}"/>
+        </java> 
+
+        <artifact:dependencies fileSetId="data.loader.file">
+           <dependency groupId="net.unicon.toro" artifactId="toro-cms-channel"
+                       version="${project.version}" type="jar"/>
+       </artifact:dependencies>
+       <unjar dest="${work.dir}">
+           <fileset refId="data.loader.file"/>
+           <patternset>
+               <include name="**/dbloader-uportal-data.xml"/>
+           </patternset>
+       </unjar>
+       <move filtering="on" file="${work.dir}/dbloader-uportal-data.xml" todir="${work.dir}/uportal-properties/properties/db">
+           <filterset>
+               <filtersfile file="${work.dir}/roleGroupKeys.properties"/>
+           </filterset>
+       </move>
+       <java fork="true" failonerror="true" dir="${basedir}" classname="org.jasig.portal.tools.dbloader.DbLoader">
+           <classpath>
+               <pathelement path="${work.dir}/uportal-properties"/>
+               <fileset refId="uportal-jar.fileset"/>
+               <path refId="uportal.classpath"/>
+           </classpath>
+
+           <arg line="-nD -nC -P -t /properties/db/tables.xml -d /properties/db/dbloader-uportal-data.xml"/>
+       </java>
+    </target>
+
+    <target name="initialize-survey">
         <echo>Initializing Survey Channel</echo>
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
@@ -1593,7 +2064,7 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="initialize-news" if="run.dbloader.news">
+    <target name="initialize-news">
         <echo>Initializing News Channel</echo>
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
@@ -1614,7 +2085,7 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="initialize-classifieds" if="run.dbloader.classifieds">
+    <target name="initialize-classifieds">
         <echo>Initializing Classifieds Channel</echo>
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
@@ -1635,7 +2106,7 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="initialize-calendar" if="run.dbloader.calendar">
+    <target name="initialize-calendar">
         <echo>Initializing Calendar Channel</echo>
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
@@ -1650,7 +2121,7 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="initialize-notes" if="run.dbloader.notes">
+    <target name="initialize-notes">
         <echo>Initializing Notes Channel</echo>
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
@@ -1659,22 +2130,16 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="initialize-bookmarks" if="run.dbloader.bookmarks">
+    <target name="initialize-bookmarks">
         <echo>Initializing Bookmarks Channel</echo>
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-bookmarks-channel"/>
             <param name="version" value="${project.version}"/>
         </antcall>
-        <antcall target="uportal-dbloader-data">
-            <param name="groupId" value="net.unicon.toro"/>
-            <param name="artifactId" value="toro-bookmarks-channel"/>
-            <param name="version" value="${project.version}"/>
-            <param name="data.xml" value="/properties/db/dbloader-uportal-data.xml"/>
-        </antcall>
     </target>
 
-    <target name="initialize-campusannouncement" if="run.dbloader.campusannouncement">
+    <target name="initialize-campusannouncement">
         <echo>Initializing Campus Announcements Channel</echo>
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
@@ -1690,14 +2155,21 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="publish-addressbook" if="run.publish.addressbook.channel">
+    <target name="publish-addressbook">
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="toro-addressbook-channel"/>
             <param name="channel" value="addressbook-channel-publish.xml"/>
         </antcall>
     </target>
 
-    <target name="publish-survey" if="run.publish.survey.channel">
+    <target name="publish-cms">
+        <antcall target="publish-toro-channel">
+            <param name="artifactId" value="toro-cms-channel"/>
+            <param name="channel" value="cms-channel-publish.xml"/>
+        </antcall>
+    </target>
+
+    <target name="publish-survey">
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="toro-survey-channel"/>
             <param name="channel" value="poll-channel-publish.xml"/>
@@ -1712,21 +2184,21 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="publish-news" if="run.publish.news.channel">
+    <target name="publish-news">
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="toro-news-channel"/>
             <param name="channel" value="news-channel-publish.xml"/>
         </antcall>
     </target>
 
-    <target name="publish-classifieds" if="run.publish.classifieds.channel">
+    <target name="publish-classifieds">
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="toro-classifieds-channel"/>
             <param name="channel" value="classifieds-channel-publish.xml"/>
         </antcall>
     </target>
 
-    <target name="publish-calendar" if="run.publish.calendar.channel">
+    <target name="publish-calendar">
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="toro-calendar-channel"/>
             <param name="channel" value="calendar-channel-publish.xml"/>
@@ -1741,42 +2213,42 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
     </target>
 
-    <target name="publish-notes" if="run.publish.notes.channel">
+    <target name="publish-notes">
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="toro-notes-channel"/>
             <param name="channel" value="notes-channel-publish.xml"/>
         </antcall>
     </target>
 
-    <target name="publish-bookmarks" if="run.publish.bookmarks.channel">
+    <target name="publish-bookmarks">
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="toro-bookmarks-channel"/>
             <param name="channel" value="bookmarks-channel-publish.xml"/>
         </antcall>
     </target>
 
-    <target name="publish-campusannouncement" if="run.publish.campusannouncement.channel">
+    <target name="publish-campusannouncement">
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="toro-campusannouncement-channel"/>
             <param name="channel" value="campusannouncement-channel-publish.xml"/>
         </antcall>
     </target>
 
-    <target name="publish-ldapchangepw" if="run.publish.ldapchangepw.channel">
+    <target name="publish-ldapchangepw">
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="toro-ldapchangepw-channel"/>
             <param name="channel" value="ldapchangepw-channel-publish.xml"/>
         </antcall>
     </target>
 
-    <target name="publish-useradmin" if="run.publish.useradmin.channel">
+    <target name="publish-useradmin">
         <antcall target="publish-toro-channel">
             <param name="artifactId" value="toro-useradmin-channel"/>
             <param name="channel" value="useradmin-channel-publish.xml"/>
         </antcall>
     </target>
 
-    <target name="publish-login" if="run.publish.login.channel">
+    <target name="publish-login">
        <sql
            driver="${jdbc.driver}"
            url="${jdbc.url}"
@@ -2061,19 +2533,15 @@ xercesImpl.version=${xercesImpl.version}
        </sql>
    </target>
 
-   <target name="uportal-initportal">
-       <echo>Initializing uPortal</echo>
-       <available property="uportal.deployment.exists" file="${portal.webapp.home}"/>
-       <antcall target="exec-uportal-initportal"/>
-   </target>
-
    <target name="create-uportal-properties">
        <mkdir dir="${work.dir}/uportal-properties/properties/db"/>
        <mkdir dir="${work.dir}/uportal-properties/properties/chanpub"/>
-       <copy overwrite="true" todir="${work.dir}/uportal-properties">
+       <copy overwrite="true" todir="${work.dir}/uportal-properties/org/jasig/portal/container/deploy">
            <fileset dir="${basedir}/properties/uPortal-${uportal.version}">
                <include name="*.crn"/>
            </fileset>
+       </copy>
+       <copy overwrite="true" todir="${work.dir}/uportal-properties">
            <fileset dir="${basedir}/properties">
                <include name="log4j.properties"/>
            </fileset>
@@ -2116,28 +2584,8 @@ xercesImpl.version=${xercesImpl.version}
        </antcall>
    </target>
 
-   <target name="exec-uportal-initportal" if="uportal.deployment.exists">
-       <echo>Executing uPortal Initialization</echo>
-     <antcall target="create-uportal-properties"/>
-
-     <antcall target="uportal-load-db"/>
-     <antcall target="uportal-pubchan"/>
-     <antcall target="uportal-i18n-db"/>
-     <antcall target="uportal-pubfragments">
-       <param name="fragmentFile" value="/properties/al/fragments.xml"/>
-     </antcall>
-     <antcall target="uportal-deploy-portlet-apps">
-       <param name="portletApp" value="all"/>
-     </antcall>
-   </target>
-
-   <target name="uportal-pubchan" if="run.uportal.pubchan">
+   <target name="uportal-pubchan">
      <echo>uPortal Channel Publishing</echo>
-     <antcall target="exec-uportal-pubchan"/>
-   </target>
-
-   <target name="exec-uportal-pubchan">
-     <echo>Executing uPortal Channel Publishing</echo>
      <property name="channel" value="all"/>
 
      <java fork="true" failonerror="true" dir="${basedir}" classname="org.jasig.portal.tools.chanpub.ChannelPublisher">
@@ -2151,7 +2599,7 @@ xercesImpl.version=${xercesImpl.version}
      </java> 
    </target>
 
-   <target name="uportal-i18n-db" if="run.uportal.i18n.db">
+   <target name="uportal-i18n-db">
      <echo>uPortal i18n Initialization</echo>
      <property name="usetable" value="-t"/>
      <property name="tablefile" value="/properties/db/tables-i18n.xml"/>
@@ -2180,7 +2628,7 @@ xercesImpl.version=${xercesImpl.version}
      </java>
    </target>
 
-   <target name="uportal-pubfragments" if="run.uportal.pubfragments">
+   <target name="uportal-pubfragments">
      <echo>uPortal publish fragments</echo>
      <property name="tempDataXML" value="/properties/al/fragment.temp.data.xml"/>
      <property name="fragmentFile" value=" "/>
@@ -2222,13 +2670,63 @@ xercesImpl.version=${xercesImpl.version}
           version="${cernunnos.version}" type="jar"/>
    </artifact:dependencies>
 
-   <target name="uportal-deploy-portlet-apps" if="run.uportal.deploy.portlet.apps">
-     <echo>uPortal deploy portlets</echo>
+   <target name="uportal-deploy-testsuite-portlet">
+       <antcall target="uportal-deploy-portlet">
+           <param name="groupId" value="uportal"/>
+           <param name="artifactId" value="testsuite"/>
+           <param name="version" value="${uportal.version}"/>
+       </antcall>
+   </target>
+
+   <target name="uportal-deploy-proxyportlet-portlet">
+       <antcall target="uportal-deploy-portlet">
+           <param name="groupId" value="uportal"/>
+           <param name="artifactId" value="proxyportlet"/>
+           <param name="version" value="${uportal.version}"/>
+       </antcall>
+   </target>
+
+   <target name="uportal-deploy-bookmarks-portlet">
+       <antcall target="uportal-deploy-portlet">
+           <param name="groupId" value="uportal"/>
+           <param name="artifactId" value="BookmarksPortlet"/>
+           <param name="version" value="${uportal.version}"/>
+       </antcall>
+   </target>
+
+   <target name="uportal-deploy-rss-portlet">
+       <antcall target="uportal-deploy-portlet">
+           <param name="groupId" value="uportal"/>
+           <param name="artifactId" value="RssPortlet"/>
+           <param name="version" value="${uportal.version}"/>
+       </antcall>
+   </target>
+
+   <target name="uportal-deploy-google-portlet">
+       <antcall target="uportal-deploy-portlet">
+           <param name="groupId" value="uportal"/>
+           <param name="artifactId" value="googleportlet"/>
+           <param name="version" value="${uportal.version}"/>
+       </antcall>
+   </target>
+
+   <target name="uportal-deploy-portlet">
+       <echo>uPortal deploying ${groupId}:${artifactId}:${version} portlet</echo>
      <!--mkdir dir="${work.dir}/uportal-${uportal.version}/lib/portlets"/>
      <copy todir="${work.dir}/lib/portlets">
          <fileset dir="./lib/portlets"/>
      </copy-->
      <!--java fork="true" failonerror="true" dir="${work.dir}/uportal-${uportal.version}" classname="org.danann.cernunnos.runtime.Main"-->
+
+
+     <artifact:dependencies filesetId="uportal-deploy-portlet.filesetId">
+         <dependency groupId="${groupId}" artifactId="${artifactId}"
+             version="${version}" type="war"/>
+         <remoteRepository refid="uportal.repository" />
+     </artifact:dependencies>
+     <copy flatten="true" tofile="${basedir}/lib/portlets/${artifactId}.war">
+         <fileset refId="uportal-deploy-portlet.filesetId"/>
+     </copy>
      <java fork="true" failonerror="true" dir="${basedir}" classname="org.danann.cernunnos.runtime.Main">
        <classpath>
          <pathelement path="${work.dir}/uportal-properties"/>
@@ -2236,13 +2734,13 @@ xercesImpl.version=${xercesImpl.version}
          <path refId="uportal.classpath"/>
          <path refId="cernunnos.classpath"/>
        </classpath>
-       <arg value="classpath://deploy-archives.crn"/>
-       <arg value="${portletApp}"/>
+       <arg value="classpath://org/jasig/portal/container/deploy/deploy-portlet-app.crn"/>
+       <arg value="lib/portlets/${artifactId}.war"/>
        <arg value="${tomcat.home}/webapps"/>
      </java>
    </target>
 
-   <target name="uportal-load-db" if="run.uportal.db">
+   <target name="uportal-load-db">
     <echo>uPortal initialize db</echo>
     <property name="droptables" value="${uportal.db.droptables.arg}"/>
     <echo>Running DbLoader with droptables option: #${uportal.db.droptables.arg}#</echo>

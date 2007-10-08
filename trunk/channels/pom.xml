@@ -27,6 +27,7 @@
       <module>calendar</module>
       <module>campusannouncement</module>
       <module>classifieds</module>
+      <module>cms</module>
       <module>ldapchangepw</module>
       <module>login</module>
       <module>news</module>

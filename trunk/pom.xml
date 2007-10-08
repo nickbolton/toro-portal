@@ -94,7 +94,6 @@
       <jtds.version>1.2</jtds.version>
       <log4j.version>1.2.14</log4j.version>
       <mail.version>1.4</mail.version>
-      <maven-ant-tasks.version>2.0.7</maven-ant-tasks.version>
       <mysql.version>5.0.4</mysql.version>
       <oracle.version>10.2.0.2.0</oracle.version>
       <oro.version>2.0.8</oro.version>
