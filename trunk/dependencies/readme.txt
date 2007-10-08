@@ -31,6 +31,17 @@ mvn install:install-file -DgroupId=cernunnos -DartifactId=cernunnos \
 mvn install:install-file -DgroupId=cernunnos -DartifactId=cernunnos \
           -Dversion=1.0-M2 -Dpackaging=jar -Dfile=cernunnos-1.0-M2.jar
 
+mvn install:install-file -DgroupId=uportal -DartifactId=testsuite \
+          -Dversion=2.6.0-GA -Dpackaging=war -Dfile=testsuite.war
+mvn install:install-file -DgroupId=uportal -DartifactId=proxyportlet \
+          -Dversion=2.6.0-GA -Dpackaging=war -Dfile=proxyportlet.war
+mvn install:install-file -DgroupId=uportal -DartifactId=BookmarksPortlet \
+          -Dversion=2.6.0-GA -Dpackaging=war -Dfile=BookmarksPortlet.war
+mvn install:install-file -DgroupId=uportal -DartifactId=RssPortlet \
+          -Dversion=2.6.0-GA -Dpackaging=war -Dfile=RssPortlet.war
+mvn install:install-file -DgroupId=uportal -DartifactId=googleportlet \
+          -Dversion=2.6.0-GA -Dpackaging=war -Dfile=googleportlet.war
+
 # not certain about the ejb version
 mvn install:install-file -DgroupId=javax.ejb -DartifactId=ejb \
           -Dversion=2.0 -Dpackaging=jar -Dfile=ejb-2.0.jar
