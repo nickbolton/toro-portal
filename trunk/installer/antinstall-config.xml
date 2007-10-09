@@ -45,6 +45,18 @@
             displayText="Central Maven Repository"/>
 	</page>
     <page
+			type="input"
+            name="remote-config"
+			overflow="true"
+			displayText="Remote Configuration?">
+		<checkbox
+            property="remote.configuration"
+            displayText="Is this a remote configuration?"
+            defaultValue="false"
+			force="false"/>
+    </page>
+    <page
+        ifProperty="(${remote.configuration}!=true)"
         type="input"
         name="application-root"
         overflow="true"
@@ -55,6 +67,19 @@
             displayText="TOMCAT_HOME"
             checkFile1="conf/server.xml"
             checkDir1="webapps"/>
+    </page>
+    <page
+        ifProperty="(${remote.configuration}=true)"
+        type="input"
+        name="application-root-remote"
+        overflow="true"
+        displayText="Application Root">
+		<directory
+				property="tomcat.home"
+                defaultValue="${env.TOMCAT_HOME}"
+                displayText="TOMCAT_HOME"
+				create="false"
+				checkExists="false"/>
     </page>
 	<page
 			type="input"
@@ -426,7 +451,7 @@
                 defaultValue="@reddot.content.path@"
                 displayText="Reddot home"
 				create="false"
-				checkExists="true"/>
+                checkExists="${remote.configuration}"/>
 		<text
 			property="reddot.url"
             defaultValue="@reddot.url@"
@@ -449,14 +474,14 @@
                 defaultValue="${tomcat.home}/@tomcat.host.conf.relative@"
                 displayText="Tomcat host path"
 				create="false"
-				checkExists="true"/>
+                checkExists="${remote.configuration}"/>
 		<directory
 				property="toro.data.home"
                 defaultValue="@toro.data.home@"
                 defaultValueWin="@toro.data.home.win@"
                 displayText="Toro Data Home"
 				create="true"
-				checkExists="true"/>
+                checkExists="${remote.configuration}"/>
 		<file
 				property="aspell.executable.path"
                 defaultValue="@aspell.executable.path@"

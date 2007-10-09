@@ -37,6 +37,12 @@
         </dependency>
         <dependency>
             <groupId>net.unicon.toro</groupId>
+            <artifactId>demetrius</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.unicon.toro</groupId>
             <artifactId>warlock</artifactId>
             <version>${project.version}</version>
             <scope>runtime</scope>
