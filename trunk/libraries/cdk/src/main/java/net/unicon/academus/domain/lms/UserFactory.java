@@ -1303,20 +1303,6 @@ public final class UserFactory {
         }
 
         try {
-        sql = "DELETE FROM calendar WHERE user_name = ?";
-        pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, username);
-            pstmt.executeUpdate();
-        } finally {
-            try {
-                if (pstmt != null) pstmt.close();
-                pstmt = null;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        try {
         /* ------ REMOVE USER'S CHANNEL PREFERENCES  ------ */
         sql = "DELETE FROM channel_preference WHERE user_name = ?";
         pstmt = conn.prepareStatement(sql);
