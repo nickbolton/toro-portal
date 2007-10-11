@@ -802,6 +802,8 @@ xercesImpl.version=${xercesImpl.version}
             message="ERROR: Java version too old: found ${java.version}, needs ${minJavaVersion}."/> 
     </target>
 
+    <target name="remote-config"/>
+
     <target name="driver" depends="initialize-run-targets, set-resource-tokens, set-postgres-platform-specific-properties, set-oracle-platform-specific-properties, set-sqlserver-platform-specific-properties, set-mysql-platform-specific-properties">
         <antcall target="check-java-version"/>
         <antcall target="dump-properties"/>
