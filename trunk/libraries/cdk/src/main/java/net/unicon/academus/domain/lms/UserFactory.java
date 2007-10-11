@@ -1262,47 +1262,6 @@ public final class UserFactory {
         }
 
         try {
-        /* ------ CALENDAR CHANNEL  ------ */
-        sql = "SELECT calendar_id FROM calendar WHERE user_name = ?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, username);
-            rs  = pstmt.executeQuery();
-
-        sql = "DELETE FROM event WHERE calendar_id = ?";
-        String calendar_id;
-
-        pstmt2 = conn.prepareStatement(sql);
-
-        while (rs.next())
-        {
-        calendar_id = rs.getString("calendar_id");
-
-        pstmt2.setString(1, calendar_id);
-        pstmt2.executeUpdate();
-
-        }
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                rs = null;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            try {
-                if (pstmt != null) pstmt.close();
-                pstmt = null;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            try {
-                if (pstmt2 != null) pstmt2.close();
-                pstmt2 = null;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        try {
         /* ------ REMOVE USER'S CHANNEL PREFERENCES  ------ */
         sql = "DELETE FROM channel_preference WHERE user_name = ?";
         pstmt = conn.prepareStatement(sql);
