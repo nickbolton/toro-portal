@@ -81,6 +81,7 @@
                 displayText="TOMCAT_HOME"
 				create="false"
 				checkExists="false"/>
+
     </page>
 	<page
 			type="input"
@@ -233,6 +234,11 @@
             name="server.properties"
 			overflow="true"
 			displayText="Server Properties">
+		<checkbox
+			displayText="Multibox"
+			property="multibox.configuration"
+            defaultValue="false"
+			force="false"/>
 		<text
 			property="portal.webapp.name"
             defaultValue="@portal.webapp.name@"
@@ -253,6 +259,22 @@
             defaultValue="@portal.server.port@"
             regex="^:[0-9]+$|^$"
             displayText="Server port (including the colon)"/>
+    </page>
+    <page
+            ifProperty="(${multibox.configuration}=true)"
+			type="input"
+			name="jms.server"
+			overflow="true"
+			displayText="JMS Server">
+		<text
+			property="jms.server.hostname"
+            defaultValue="@jms.server.hostname@"
+            displayText="JMS Server hostname"/>
+		<validated
+			property="jms.server.port"
+            defaultValue="@jms.server.port@"
+            regex="^:[0-9]+$|^$"
+            displayText="JMS Server port (including the colon)"/>
     </page>
 	<page
             ifProperty="(${deploy.all}!=true)"
@@ -375,6 +397,22 @@
         overflow="true"
         name="Directory Server"
         displayText="Directory Server">
+        <checkbox
+            property="ldap.checkbox"
+            defaultValue="false"
+            force="false"
+            displayText="Configure a Directory Source?"/>
+    </page>
+    <page
+        ifProperty="(${ldap.checkbox}=true)"
+        type="input"
+        overflow="true"
+        name="Directory Server"
+        displayText="Directory Server">
+		<text
+            property="ldap.name"
+            defaultValue=""
+            displayText="LDAP Source Name"/>
 		<text
             property="ldap.server.hostname"
             defaultValue=""
@@ -405,12 +443,177 @@
             defaultValue="false"
             force="false"
             displayText="LDAP SSL Protocol"/>
-        <conditional ifProperty="(${ldap.protocol.checkbox}=true)">
-            <hidden property="ldap.protocol" value="ssl"/>
+    </page>
+    <page
+        ifProperty="(${ldap.checkbox}=true)"
+        type="input"
+        overflow="true"
+        name="Another Directory Server"
+        displayText="Another Directory Server">
+        <checkbox
+            property="ldap2.checkbox"
+            defaultValue="false"
+            force="false"
+            displayText="Configure another Directory Source?"/>
+    </page>
+    <page
+        ifProperty="(${ldap2.checkbox}=true)"
+        type="input"
+        overflow="true"
+        name="Directory Server"
+        displayText="Directory Server">
+		<text
+            property="ldap2.name"
+            defaultValue=""
+            displayText="LDAP Source Name"/>
+		<text
+            property="ldap2.server.hostname"
+            defaultValue=""
+            displayText="LDAP Servername"/>
+		<validated
+			property="ldap2.server.port"
+            defaultValue=""
+            regex="^$|^[0-9]+$"
+            displayText="LDAP port"/>
+		<text
+            property="ldap2.server.managerdn"
+            defaultValue=""
+            displayText="LDAP Admin DN"/>
+		<text
+            property="ldap2.server.manager.password"
+            defaultValue=""
+            displayText="LDAP Admin Password"/>
+		<text
+            property="ldap2.server.basedn"
+            defaultValue=""
+            displayText="LDAP BaseDN"/>
+		<text
+            property="ldap2.server.uid"
+            defaultValue=""
+            displayText="LDAP uid Attribute"/>
+        <checkbox
+            property="ldap2.protocol.checkbox"
+            defaultValue="false"
+            force="false"
+            displayText="LDAP SSL Protocol"/>
+        <conditional ifProperty="(${ldap2.protocol.checkbox}=true)">
+            <hidden property="ldap2.protocol" value="ssl"/>
         </conditional>
     </page>
     <page
-        ifProperty="(${deploy.all}=true) OR (${messaging-portlet.active}=true)"
+        ifProperty="(${ldap2.checkbox}=true)"
+        type="input"
+        overflow="true"
+        name="Another Directory Server"
+        displayText="Another Directory Server">
+        <checkbox
+            property="ldap3.checkbox"
+            defaultValue="false"
+            force="false"
+            displayText="Configure another Directory Source?"/>
+    </page>
+    <page
+        ifProperty="(${ldap3.checkbox}=true)"
+        type="input"
+        overflow="true"
+        name="Directory Server"
+        displayText="Directory Server">
+		<text
+            property="ldap3.name"
+            defaultValue=""
+            displayText="LDAP Source Name"/>
+		<text
+            property="ldap3.server.hostname"
+            defaultValue=""
+            displayText="LDAP Servername"/>
+		<validated
+			property="ldap3.server.port"
+            defaultValue=""
+            regex="^$|^[0-9]+$"
+            displayText="LDAP port"/>
+		<text
+            property="ldap3.server.managerdn"
+            defaultValue=""
+            displayText="LDAP Admin DN"/>
+		<text
+            property="ldap3.server.manager.password"
+            defaultValue=""
+            displayText="LDAP Admin Password"/>
+		<text
+            property="ldap3.server.basedn"
+            defaultValue=""
+            displayText="LDAP BaseDN"/>
+		<text
+            property="ldap3.server.uid"
+            defaultValue=""
+            displayText="LDAP uid Attribute"/>
+        <checkbox
+            property="ldap3.protocol.checkbox"
+            defaultValue="false"
+            force="false"
+            displayText="LDAP SSL Protocol"/>
+        <conditional ifProperty="(${ldap3.protocol.checkbox}=true)">
+            <hidden property="ldap3.protocol" value="ssl"/>
+        </conditional>
+    </page>
+    <page
+        ifProperty="(${ldap3.checkbox}=true)"
+        type="input"
+        overflow="true"
+        name="Another Directory Server"
+        displayText="Another Directory Server">
+        <checkbox
+            property="ldap4.checkbox"
+            defaultValue="false"
+            force="false"
+            displayText="Configure another Directory Source?"/>
+    </page>
+    <page
+        ifProperty="(${ldap4.checkbox}=true)"
+        type="input"
+        overflow="true"
+        name="Directory Server"
+        displayText="Directory Server">
+		<text
+            property="ldap4.name"
+            defaultValue=""
+            displayText="LDAP Source Name"/>
+		<text
+            property="ldap4.server.hostname"
+            defaultValue=""
+            displayText="LDAP Servername"/>
+		<validated
+			property="ldap4.server.port"
+            defaultValue=""
+            regex="^$|^[0-9]+$"
+            displayText="LDAP port"/>
+		<text
+            property="ldap4.server.managerdn"
+            defaultValue=""
+            displayText="LDAP Admin DN"/>
+		<text
+            property="ldap4.server.manager.password"
+            defaultValue=""
+            displayText="LDAP Admin Password"/>
+		<text
+            property="ldap4.server.basedn"
+            defaultValue=""
+            displayText="LDAP BaseDN"/>
+		<text
+            property="ldap4.server.uid"
+            defaultValue=""
+            displayText="LDAP uid Attribute"/>
+        <checkbox
+            property="ldap4.protocol.checkbox"
+            defaultValue="false"
+            force="false"
+            displayText="LDAP SSL Protocol"/>
+        <conditional ifProperty="(${ldap4.protocol.checkbox}=true)">
+            <hidden property="ldap4.protocol" value="ssl"/>
+        </conditional>
+    </page>
+    <page
+        ifProperty="(${deploy.all}=true) OR (${messaging-portlet.active}=true) OR (${blojsom.active}=true) OR (${cms.active}=true) OR (${survey.active}=true) OR (${news.active}=true) OR (${classifieds.active}=true) OR (${calendar.active}=true) OR (${notes.active}=true) OR (${bookmarks.active}=true) OR (${campusannouncement.active}=true) OR (${addressbook.active}=true) OR (${ldapchangepw.active}=true) OR (${useradmin.active}=true)"
         type="input"
         overflow="true"
         name="smtp"

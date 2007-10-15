@@ -135,13 +135,15 @@
                     <filter token="useradmin.active" value="true"/>
                     <filter token="project.version1" value="1.0.0-SNAPSHOT"/>
                     <filter token="tomcat.host.conf.relative" value="conf/Catalina/localhost"/>
-                    <filter token="toro.data.home" value="/Users/deuce/dev/src/unicon/toro/data"/>
+                    <filter token="toro.data.home" value="/toro/data"/>
                     <filter token="toro.data.home.win" value="C:\toro\data"/>
-                    <filter token="aspell.executable.path" value="/tmp/aspell"/>
+                    <filter token="aspell.executable.path" value="/usr/bin/aspell"/>
                     <filter token="smtp.server.hostname" value="smtp.unicon.net"/>
                     <filter token="smtp.server.port" value="25"/>
                     <filter token="smtp.server.username" value="smtpuser"/>
                     <filter token="smtp.server.password" value="smtppa55wd"/>
+                    <filter token="jms.server.hostname" value=""/>
+                    <filter token="jms.server.port" value=":3099"/>
                     <filter token="datasource" value="PortalDb"/>
                     <filter token="jdbc.driver1" value="org.postgresql.Driver"/>
                     <filter token="jdbc.driver1.text" value="Postgres"/>
@@ -191,7 +193,8 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>org.tp23.antinstaller.selfextract.SelfExtractor</mainClass>
+              <!--mainClass>org.tp23.antinstaller.selfextract.SelfExtractor</mainClass-->
+              <mainClass>net.unicon.toro.installer.tools.Launcher</mainClass>
               <addClasspath>true</addClasspath>
             </manifest>
           </archive>

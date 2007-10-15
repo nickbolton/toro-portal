@@ -253,6 +253,12 @@
                 <equals arg1="${login.active}" arg2="true"/>
             </or>
         </condition>
+        <condition property="run.ldap.merge">
+            <or>
+                <equals arg1="${run.uportal.deploy}" arg2="true"/>
+                <equals arg1="${run.deploy.channel.common}" arg2="true"/>
+            </or>
+        </condition>
         <condition property="run.publish.briefcase.portlet">
             <or>
                 <equals arg1="${deploy.all}" arg2="true"/>
@@ -562,6 +568,119 @@
     </target>
 
     <target name="set-resource-tokens">
+        <if>
+            <equals arg1="${multibox.configuration}" arg2="true"/>
+            <then>
+                <property name="multibox.comment" value=""/>
+                <property name="dirty.cache.request.handler" value="net.unicon.portal.cache.jms.JMSDirtyCacheRequestHandlerImpl"/>
+            </then>
+            <else>
+                <property name="multibox.comment" value="!--"/>
+                <property name="dirty.cache.request.handler" value="net.unicon.portal.cache.SBDirtyCacheRequestHandlerImpl"/>
+            </else>
+        </if>
+        <if>
+            <equals arg1="${ldap.checkbox}" arg2="true"/>
+            <then>
+                <property name="ldap.comment" value=""/>
+                <if>
+                    <equals arg1="${ldap.protocol.checkbox}" arg2="true"/>
+                    <then>
+                        <property name="ldap.protocol" value="ssl"/>
+                    </then>
+                    <else>
+                        <property name="ldap.protocol" value=""/>
+                    </else>
+                </if>
+            </then>
+            <else>
+                <property name="ldap.comment" value="!--"/>
+            </else>
+        </if>
+        <if>
+            <and>
+                <equals arg1="${ldap2.checkbox}" arg2="true"/>
+            </and>
+            <then>
+                <property name="ldap2.comment" value=""/>
+                <if>
+                    <equals arg1="${ldap2.protocol.checkbox}" arg2="true"/>
+                    <then>
+                        <property name="ldap2.protocol" value="ssl"/>
+                    </then>
+                    <else>
+                        <property name="ldap2.protocol" value=""/>
+                    </else>
+                </if>
+            </then>
+            <else>
+                <if>
+                    <equals arg1="${ldap.checkbox}" arg2="true"/>
+                    <then>
+                        <property name="ldap2.comment" value="!--"/>
+                    </then>
+                    <else>
+                        <property name="ldap2.comment" value=""/>
+                    </else>
+                </if>
+            </else>
+        </if>
+        <if>
+            <and>
+                <equals arg1="${ldap3.checkbox}" arg2="true"/>
+            </and>
+            <then>
+                <property name="ldap3.comment" value=""/>
+                <if>
+                    <equals arg1="${ldap3.protocol.checkbox}" arg2="true"/>
+                    <then>
+                        <property name="ldap3.protocol" value="ssl"/>
+                    </then>
+                    <else>
+                        <property name="ldap3.protocol" value=""/>
+                    </else>
+                </if>
+            </then>
+            <else>
+                <if>
+                    <equals arg1="${ldap.checkbox}" arg2="true"/>
+                    <then>
+                        <property name="ldap3.comment" value="!--"/>
+                    </then>
+                    <else>
+                        <property name="ldap3.comment" value=""/>
+                    </else>
+                </if>
+            </else>
+        </if>
+        <if>
+            <and>
+                <equals arg1="${ldap4.checkbox}" arg2="true"/>
+            </and>
+            <then>
+                <property name="ldap4.comment" value=""/>
+                <if>
+                    <equals arg1="${ldap4.protocol.checkbox}" arg2="true"/>
+                    <then>
+                        <property name="ldap4.protocol" value="ssl"/>
+                    </then>
+                    <else>
+                        <property name="ldap4.protocol" value=""/>
+                    </else>
+                </if>
+            </then>
+            <else>
+                <if>
+                    <equals arg1="${ldap.checkbox}" arg2="true"/>
+                    <then>
+                        <property name="ldap4.comment" value="!--"/>
+                    </then>
+                    <else>
+                        <property name="ldap4.comment" value=""/>
+                    </else>
+                </if>
+            </else>
+        </if>
         <filterset id="tokens">
             <filtersfile file="${basedir}/build.properties"/>
             <filtersfile file="${basedir}/ant.install.properties"/>
@@ -571,6 +690,18 @@
             <filter token="db.sqlconcat" value="${db.sqlconcat}"/>
             <filter token="db.length" value="${db.length}"/>
             <filter token="cms.enabled" value="${run.deploy.cms.channel}"/>
+            <filter token="multibox.configuration" value="${multibox.configuration}"/>
+            <filter token="multibox.comment" value="${multibox.comment}"/>
+            <filter token="dirty.cache.request.handler" value="${dirty.cache.request.handler}"/>
+            <filter token="ldap.protocol" value="${ldap.protocol}"/>
+            <filter token="ldap.comment" value="${ldap.comment}"/>
+            <filter token="ldap.protocol" value="${ldap.protocol}"/>
+            <filter token="ldap2.comment" value="${ldap2.comment}"/>
+            <filter token="ldap2.protocol" value="${ldap2.protocol}"/>
+            <filter token="ldap3.comment" value="${ldap3.comment}"/>
+            <filter token="ldap3.protocol" value="${ldap3.protocol}"/>
+            <filter token="ldap4.comment" value="${ldap4.comment}"/>
+            <filter token="ldap4.protocol" value="${ldap4.protocol}"/>
         </filterset>
     </target>
 
@@ -698,6 +829,23 @@ run.dbloader.bookmarks=${run.dbloader.bookmarks}
 run.dbloader.campusannouncement=${run.dbloader.campusannouncement}
 hibernate.create.only=${hibernate.create.only}
 uportal.db.droptables.arg=${uportal.db.droptables.arg}
+db.platform=${db.platform}
+jdbc.simplesql=${jdbc.simplesql}
+db.time.impl=${db.time.impl}
+db.sqlconcat=${db.sqlconcat}
+db.length=${db.length}
+multibox.configuration=${multibox.configuration}
+multibox.comment=${multibox.comment}
+dirty.cache.request.handler=${dirty.cache.request.handler}
+ldap.protocol=${ldap.protocol}
+ldap.comment=${ldap.comment}
+ldap.protocol=${ldap.protocol}
+ldap2.comment=${ldap2.comment}
+ldap2.protocol=${ldap2.protocol}
+ldap3.comment=${ldap3.comment}
+ldap3.protocol=${ldap3.protocol}
+ldap4.comment=${ldap4.comment}
+ldap4.protocol=${ldap4.protocol}
 
 Given Properties:
 uportal.remote.repo=${uportal.remote.repo}
@@ -802,7 +950,22 @@ xercesImpl.version=${xercesImpl.version}
             message="ERROR: Java version too old: found ${java.version}, needs ${minJavaVersion}."/> 
     </target>
 
-    <target name="remote-config"/>
+    <target name="remote-config">
+        <!-- if it's being executed from the remote configured machine, then execute away.. -->
+        <taskdef name="sethostname" classname="net.unicon.toro.installer.anttask.SetHostname" classpath="${basedir}"/>
+        <sethostname property="my.hostname"/>
+        <echo>Checking hostnames. (configured remote=${portal.server.hostname}, this host=${my.hostname})</echo>
+        <if>
+            <equals arg1="${portal.server.hostname}" arg2="${my.hostname}"/>
+            <then>
+                <echo>Proceeding with install...</echo>
+                <antcall target="driver"/>
+            </then>
+            <else>
+                <echo>The installer was run in remote-config mode.  If you wish to run the installer with the configuration in ant.install.properties, edit it and set remote-config = false.</echo>
+            </else>
+        </if>
+    </target>
 
     <target name="driver" depends="initialize-run-targets, set-resource-tokens, set-postgres-platform-specific-properties, set-oracle-platform-specific-properties, set-sqlserver-platform-specific-properties, set-mysql-platform-specific-properties">
         <antcall target="check-java-version"/>
@@ -912,6 +1075,13 @@ xercesImpl.version=${xercesImpl.version}
             <isset property="run.deploy.channel.common"/>
             <then>
                 <antcall target="deploy-channels-common"/>
+            </then>
+        </if>
+
+        <if>
+            <isset property="run.ldap.merge"/>
+            <then>
+                <antcall target="ldap-merge"/>
             </then>
         </if>
 
@@ -1526,8 +1696,21 @@ xercesImpl.version=${xercesImpl.version}
     </target>
 
     <target name="common-add-uportal-configurations">
+        <copy filtering="on" todir="${work.dir}/common-add-uportal-configurations" file="${basedir}/properties/uPortal-${uportal.version}/common-uPortalConfigurationChanges.xml">
+            <filterset refid="tokens"/>
+        </copy>
         <antcall target="merge-configuration">
-            <param name="configfile" value="${basedir}/properties/uPortal-${uportal.version}/common-uPortalConfigurationChanges.xml"/>
+            <param name="configfile" value="${work.dir}/common-add-uportal-configurations/common-uPortalConfigurationChanges.xml"/>
+            <param name="targetdir" value="${portal.webapp.home}"/>
+        </antcall>
+    </target>
+
+    <target name="ldap-merge">
+        <copy filtering="on" todir="${work.dir}/ldap-merge" file="${basedir}/properties/uPortal-${uportal.version}/ldap-merge-configuration.xml">
+            <filterset refid="tokens"/>
+        </copy>
+        <antcall target="merge-configuration">
+            <param name="configfile" value="${work.dir}/ldap-merge/ldap-merge-configuration.xml"/>
             <param name="targetdir" value="${portal.webapp.home}"/>
         </antcall>
     </target>
@@ -2533,6 +2716,12 @@ xercesImpl.version=${xercesImpl.version}
  
          <copy tofile="${portal.webapp.home}/WEB-INF/classes/log4j.properties"
              file="${basedir}/properties/uPortal-${uportal.version}/log4j.properties"
+             overwrite="true">
+             <filterset refid="tokens"/>
+         </copy>
+
+         <copy tofile="${portal.webapp.home}/WEB-INF/classes/properties/portal.properties"
+             file="${basedir}/properties/uPortal-${uportal.version}/portal.properties"
              overwrite="true">
              <filterset refid="tokens"/>
          </copy>

@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <changes>
-    <file path="WEB-INF/classes/properties/ldap.xml">
-        <add-or-replace where="end">
-            <xpath>/ldapConnections</xpath>
-            <value>
-                <connection default="@ldap.default.connection@">
+  <@ldap.comment@file path="WEB-INF/classes/properties/ldap.xml">
+    <add-or-replace where="end">
+      <xpath>/ldapConnections</xpath>
+      <value>
+                <connection default="true">
                     <name>@ldap.name@</name>
                     <host>@ldap.server.hostname@</host>
                     <port>@ldap.server.port@</port>
@@ -12,8 +12,42 @@
                     <managerDN>@ldap.server.managerdn@</managerDN>
                     <managerPW>@ldap.server.manager.password@</managerPW>
                     <uidAttribute>@ldap.server.uid@</uidAttribute>
-                    <protocol>ssl</protocol>	    
+                    <protocol>@ldap.protocol@</protocol>	    
                 </connection>
-            </value>
-        </add-or-replace>
+
+                <@ldap2.comment@connection default="false">
+                    <name>@ldap2.name@</name>
+                    <host>@ldap2.server.hostname@</host>
+                    <port>@ldap2.server.port@</port>
+                    <baseDN>@ldap2.server.basedn@</baseDN>
+                    <managerDN>@ldap2.server.managerdn@</managerDN>
+                    <managerPW>@ldap2.server.manager.password@</managerPW>
+                    <uidAttribute>@ldap2.server.uid@</uidAttribute>
+                    <protocol>@ldap2.protocol@</protocol>	    
+                </connection@ldap2.comment@>
+
+                <@ldap3.comment@connection default="false">
+                    <name>@ldap3.name@</name>
+                    <host>@ldap3.server.hostname@</host>
+                    <port>@ldap3.server.port@</port>
+                    <baseDN>@ldap3.server.basedn@</baseDN>
+                    <managerDN>@ldap3.server.managerdn@</managerDN>
+                    <managerPW>@ldap3.server.manager.password@</managerPW>
+                    <uidAttribute>@ldap3.server.uid@</uidAttribute>
+                    <protocol>@ldap3.protocol@</protocol>	    
+                </connection@ldap3.comment@>
+
+                <@ldap4.comment@connection default="false">
+                    <name>@ldap4.name@</name>
+                    <host>@ldap4.server.hostname@</host>
+                    <port>@ldap4.server.port@</port>
+                    <baseDN>@ldap4.server.basedn@</baseDN>
+                    <managerDN>@ldap4.server.managerdn@</managerDN>
+                    <managerPW>@ldap4.server.manager.password@</managerPW>
+                    <uidAttribute>@ldap4.server.uid@</uidAttribute>
+                    <protocol>@ldap4.protocol@</protocol>	    
+                </connection@ldap4.comment@>
+      </value>
+    </add-or-replace>
+  </file@ldap.comment@>
 </changes>
