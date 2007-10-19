@@ -50,6 +50,8 @@ import java.util.StringTokenizer;
 
 import javax.xml.transform.sax.SAXSource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.jetspeed.util.OverwriteProperties;
 import org.dom4j.CDATA;
 import org.dom4j.Comment;
@@ -80,6 +82,8 @@ public class MergeConfiguration {
     
     private File file;
     private File target;
+
+    private Log log = LogFactory.getLog(getClass());
     
     public void setFile(String file) {
         this.file = new File(file);
@@ -163,31 +167,12 @@ public class MergeConfiguration {
         
         String xmlEncoding = doc.getXMLEncoding();
         
-        /*
-        System.out.println("ZZZ children root: " + source.getPath());
-        List l = source.elements();
-        Iterator itr = l.iterator();
-        while (itr.hasNext()) {
-            Element ee = (Element)itr.next();
-            System.out.println("\t"+ee.getName() + " - " + ee.getNamespacePrefix());
+        if (log.isDebugEnabled()) {
+            StringBuffer sb = new StringBuffer();
+            sb.append('\n').append("children root: ").append(source.getPath()).append('\n');
+            outputElement(source, sb, 1);
+            log.debug(sb.toString());
         }
-        
-        String xpath = "/xsl:stylesheet/xsl:template/*[name()='html']/*[name()='head']";
-        System.out.println("ZZZ searching for xpath: " + xpath);
-        l = source.selectNodes(xpath);
-        itr = l.iterator();
-        while (itr.hasNext()) {
-            Element ee = (Element)itr.next();
-            System.out.println("ZZZZ "+ee.getName() + " - " + ee.getNamespacePrefix());
-            List l2 = ee.elements();
-            Iterator itr2 = l2.iterator();
-            while (itr2.hasNext()) {
-                Element eee = (Element)itr2.next();
-                System.out.println("\t"+eee.getName() + " - " + eee.getNamespacePrefix() + " - " + eee.getPath());
-            }
-        }
-        */
-        
         
         processElementValueReplacements(el, source);
         processNodeReplacements(el, source);
@@ -203,6 +188,23 @@ public class MergeConfiguration {
         writer.close();
     }
     
+    private void outputElement(Element source, StringBuffer sb, int level) {
+        List l = source.elements();
+        Iterator itr = l.iterator();
+        while (itr.hasNext()) {
+            Element ee = (Element)itr.next();
+            for (int i=0; i<level; i++) {
+                sb.append('\t');
+            }
+            sb.append(ee.getName()).append(" - ").append(ee.getNamespacePrefix());
+            sb.append(" - path: ").append(ee.getPath());
+            sb.append('\n');
+            if (ee.elements().size() > 0) {
+                outputElement(ee, sb, level+1);
+            }
+        }
+    }
+
     private void processNodeAddOrReplace(Element el, Element source) {
         List list = el.selectNodes("add-or-replace[@where='end']");
         if (list == null) return;
@@ -257,10 +259,13 @@ public class MergeConfiguration {
         if (sourceList == null || sourceList.size() == 0) {
             throw new RuntimeException("xpath expression doesn't resolve to a node: " + xpath);
         }
+
+        System.out.println("Xpath: " + xpath + " resolves to " + sourceList.size() + " nodes.");
         
         itr = sourceList.iterator();
         while (itr.hasNext()) {
             Element sourceEl = (Element)itr.next();
+            System.out.println("Appending to xpath: " + sourceEl.getPath());
             sourceEl.appendContent(newContent);
         }
     }
@@ -668,13 +673,13 @@ public class MergeConfiguration {
 
         @Override
         public void write(Document document) throws SAXException {
-            System.out.println("ZZZZ xml:\n"+document.asXML());
+            //System.out.println("ZZZZ xml:\n"+document.asXML());
             int startingPos = document.asXML().indexOf("<!DOCTYPE");
-            System.out.println("ZZZZ startingPos: " + startingPos);
+            //System.out.println("ZZZZ startingPos: " + startingPos);
             if (startingPos >= 0) {
                 int endingPos = document.asXML().substring(startingPos).indexOf(">");
                 String docTypeDeclaration = document.asXML().substring(startingPos, startingPos+endingPos+1);
-                System.out.println("ZZZ docTypeDeclaration: #" + docTypeDeclaration + "#");
+                //System.out.println("ZZZ docTypeDeclaration: #" + docTypeDeclaration + "#");
                 if (!"<!DOCTYPE null>".equals(docTypeDeclaration)) {
                     StringTokenizer tok = new StringTokenizer(docTypeDeclaration, " ");
                     tok.nextToken();
