@@ -409,6 +409,11 @@
         overflow="true"
         name="Directory Server"
         displayText="Directory Server">
+        <checkbox
+            property="ldap.security.checkbox"
+            defaultValue="true"
+            force="false"
+            displayText="Configure as security context source?"/>
 		<text
             property="ldap.name"
             defaultValue=""
@@ -462,6 +467,11 @@
         overflow="true"
         name="Directory Server"
         displayText="Directory Server">
+        <checkbox
+            property="ldap2.security.checkbox"
+            defaultValue="true"
+            force="false"
+            displayText="Configure as security context source?"/>
 		<text
             property="ldap2.name"
             defaultValue=""
@@ -518,6 +528,11 @@
         overflow="true"
         name="Directory Server"
         displayText="Directory Server">
+        <checkbox
+            property="ldap3.security.checkbox"
+            defaultValue="true"
+            force="false"
+            displayText="Configure as security context source?"/>
 		<text
             property="ldap3.name"
             defaultValue=""
@@ -574,6 +589,11 @@
         overflow="true"
         name="Directory Server"
         displayText="Directory Server">
+        <checkbox
+            property="ldap4.security.checkbox"
+            defaultValue="true"
+            force="false"
+            displayText="Configure as security context source?"/>
 		<text
             property="ldap4.name"
             defaultValue=""

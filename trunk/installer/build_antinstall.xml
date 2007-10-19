@@ -1539,6 +1539,9 @@ xercesImpl.version=${xercesImpl.version}
         <echo>MergeConfiguration configfile=${configfile} targetdir=${targetdir}</echo>
         <java failonerror="true" fork="true" dir="${basedir}" classname="net.unicon.alchemist.tools.MergeConfiguration">
             <classpath refid="configuration.classpath"/>
+            <classpath>
+                <pathelement path="${work.dir}/uportal-properties"/>
+            </classpath>
             <arg line="${configfile} ${targetdir}"/>    
         </java>
     </target>
@@ -1584,6 +1587,10 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
         <antcall target="deploy-toro-resources">
             <param name="artifactId" value="toro-systray-channel"/>
+        </antcall>
+        <antcall target="deploy-toro-jar">
+            <param name="artifactId" value="resource-pool"/>
+            <param name="todir" value="${tomcat.home}/shared/lib"/>
         </antcall>
     </target>
 
@@ -1711,6 +1718,34 @@ xercesImpl.version=${xercesImpl.version}
         </copy>
         <antcall target="merge-configuration">
             <param name="configfile" value="${work.dir}/ldap-merge/ldap-merge-configuration.xml"/>
+            <param name="targetdir" value="${portal.webapp.home}"/>
+        </antcall>
+
+        <copy filtering="on" todir="${work.dir}/ldap-merge" file="${basedir}/properties/uPortal-${uportal.version}/personDirectory-bean-merge-configuration.xml">
+            <filterset refid="tokens"/>
+        </copy>
+        <antcall target="merge-configuration">
+            <param name="configfile" value="${work.dir}/ldap-merge/personDirectory-bean-merge-configuration.xml"/>
+            <param name="targetdir" value="${portal.webapp.home}"/>
+        </antcall>
+
+        <taskdef name="gen-security-context-props" classname="net.unicon.toro.installer.anttask.GenerateSecurityContextProperties" classpath="${basedir}"/>
+        <gen-security-context-props/>
+        <copy filtering="on" todir="${work.dir}/ldap-merge" file="${basedir}/properties/uPortal-${uportal.version}/security-context-bean-merge-configuration.xml">
+            <filterset refid="tokens"/>
+            <filterset>
+                <filter token="ldap.security.comment" value="${ldap.security.comment}"/>
+                <filter token="ldap2.security.comment" value="${ldap2.security.comment}"/>
+                <filter token="ldap3.security.comment" value="${ldap3.security.comment}"/>
+                <filter token="ldap4.security.comment" value="${ldap4.security.comment}"/>
+                <filter token="ldap.name.security" value="${ldap.name.security}"/>
+                <filter token="ldap2.name.security" value="${ldap2.name.security}"/>
+                <filter token="ldap3.name.security" value="${ldap3.name.security}"/>
+                <filter token="ldap4.name.security" value="${ldap4.name.security}"/>
+            </filterset>
+        </copy>
+        <antcall target="merge-configuration">
+            <param name="configfile" value="${work.dir}/ldap-merge/security-context-bean-merge-configuration.xml"/>
             <param name="targetdir" value="${portal.webapp.home}"/>
         </antcall>
     </target>

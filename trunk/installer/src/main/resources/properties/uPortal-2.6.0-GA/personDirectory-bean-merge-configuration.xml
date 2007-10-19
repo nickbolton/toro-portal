@@ -1,94 +1,376 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <changes>
-    <file path="WEB-INF/classes/properties/personDirectory.xml">
-        <add where="end">
+    <@ldap.comment@file path="WEB-INF/classes/properties/personDirectory.xml">
+        <add-or-replace where="end">
+            <xpath>/beans/bean[@id='mergedPersonAttributeDao']/property[@name='personAttributeDaos']/list</xpath>
+            <value>
+                <ref bean="uPortalLdapAttributeSource-@ldap.name@"/>
+                <@ldap2.comment@ref bean="uPortalLdapAttributeSource-@ldap2.name@"/@ldap2.comment@>
+                <@ldap3.comment@ref bean="uPortalLdapAttributeSource-@ldap3.name@"/@ldap3.comment@>
+                <@ldap4.comment@ref bean="uPortalLdapAttributeSource-@ldap4.name@"/@ldap4.comment@>
+            </value>
+        </add-or-replace>
+        <add-or-replace where="end">
             <xpath>/beans</xpath>
             <value>
-                <bean id="uPortalLdapAttributeSource" class="org.jasig.portal.services.persondir.support.LdapPersonAttributeDaoImpl">
-                    <property name="ldapServer">
-                        <ref bean="defaultLdapServer"/>
-                    </property>
-                    <property name="queryAttributes">
-                        <list>
-                            <value>username</value>
-                        </list>
-                    </property>
-                    <property name="query">
-                        <value>(cn={0})</value>
-                    </property>
-                    <property name="ldapAttributesToPortalAttributes">
-                        <map>
-                            <entry key="eduPersonPrimaryAffiliation">   <value>uPortalTemplateUserName</value></entry>
-                            <entry key="eduPersonAffiliation">          <value>eduPersonAffiliation</value></entry>
-                            <entry key="eduPersonNickname">
-                                                                <set>
-                                                                  <value>eduPersonNickname</value>
-                                                                  <value>user.name.nickName</value>
-                                                                </set>
-                    </entry>
-                            <entry key="eduPersonOrgDN">
-                                                                <set>
-                                                                  <value>eduPersonOrgDN</value>
-                                                                  <value>user.employer</value>
-                                                                </set>
-                    </entry>
-                            <entry key="eduPersonOrgUnitDN">
-                                                                <set>
-                                                                  <value>eduPersonOrgUnitDN</value>
-                                                                  <value>user.department</value>
-                                                                </set>
-                    </entry>
-                            <entry key="eduPersonPrimaryAffiliation">   <value>eduPersonPrimaryAffiliation</value></entry>
-                            <entry key="eduPersonPrincipalName">        <value>eduPersonPrincipalName</value></entry>
-                            <entry key="c">                             <value>c</value></entry>
-                            <entry key="cn">                            <value>cn</value></entry>
-                            <entry key="description">                   <value>description</value></entry>
-                            <entry key="displayName">                   <value>displayName</value></entry>
-                            <entry key="facsimileTelephoneNumber">      <value>facsimileTelephoneNumber</value></entry>
-                            <entry key="givenName">
-                                                                <set>
-                                                                  <value>givenName</value>
-                                                                  <value>user.name.given</value>
-                                                                </set>
-                    </entry>
-                            <entry key="homePhone">                     <value>homePhone</value></entry>
-                            <entry key="homePostalAddress">             <value>homePostalAddress</value></entry>
-                            <entry key="initials">                      <value>initials</value></entry>
-                            <entry key="jpegPhoto">                     <value>jpegPhoto</value></entry>
-                            <entry key="l">                             <value>l</value></entry>
-                            <entry key="labeledURI">                    <value>labeledURI</value></entry>
-                            <entry key="mail">
-                                                                <set>
-                                                                  <value>mail</value>
-                                                                  <value>user.home-info.online.email</value>
-                                                                </set>
-                    </entry>
-                            <entry key="mobile">                        <value>mobile</value></entry>
-                            <entry key="o">                             <value>o</value></entry>
-                            <entry key="ou">                            <value>ou</value></entry>
-                            <entry key="pager">                         <value>pager</value></entry>
-                            <entry key="postalAddress">                 <value>postalAddress</value></entry>
-                            <entry key="postalCode">                    <value>postalCode</value></entry>
-                            <entry key="postOfficeBox">                 <value>postOfficeBox</value></entry>
-                            <entry key="preferredLanguage">             <value>preferredLanguage</value></entry>
-                            <entry key="seeAlso">                       <value>seeAlso</value></entry>
-                            <entry key="sn">
-                                                                <set>
-                                                                  <value>sn</value>
-                                                                  <value>user.name.family</value>
-                                                                </set>
-                    </entry>
-                            <entry key="st">                            <value>st</value></entry>
-                            <entry key="street">                        <value>street</value></entry>
-                            <entry key="telephoneNumber">               <value>telephoneNumber</value></entry>
-                            <entry key="uid">                           <value>uid</value></entry>
-                            <entry key="userCertificate">               <value>userCertificate</value></entry>
-                            <entry key="userSMIMECertificate">          <value>userSMIMECertificate</value></entry>
-                        </map>
-                    </property>
-                </bean>
+    <bean id="uPortalLdapAttributeSource-@ldap.name@" class="org.jasig.portal.services.persondir.support.LdapPersonAttributeDaoImpl">
+        <property name="ldapServer">
+            <ref bean="ldapServer@ldap.name@"/>
+        </property>
+        <property name="queryAttributes">
+            <list>
+                <value>username</value>
+            </list>
+        </property>
+        <property name="query">
+            <value>(@ldap.server.uid@={0})</value>
+        </property>
+        <property name="ldapAttributesToPortalAttributes">
+            <map>
+                <entry key="@ldap.server.uid@"><value>username</value></entry>
+                <entry key="@ldap.server.uid@"><value>user.login.id</value></entry>
+                <entry key="@ldap.server.uid@"><value>user.login.password</value></entry>
+                <entry key="givenName"><value>firstName</value></entry>
+                <entry key="sn"><value>lastname</value></entry>
+                <entry key="userPrincipalName"><value>mail</value></entry>
+                <entry key="cn"><value>displayName</value></entry>
+                <entry key="destinationIndicator"><value>uPortalTemplateUserName</value></entry>
+            </map>
+        </property>
+    </bean>
+    <bean id="ldapServer@ldap.name@" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="staticMethod">
+            <value>org.jasig.portal.ldap.LdapServices.getLdapServer</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>@ldap.name@</value>
+            </list>
+        </property>
+    </bean> 
+
+    <@ldap2.comment@bean id="uPortalLdapAttributeSource-@ldap2.name@" class="org.jasig.portal.services.persondir.support.LdapPersonAttributeDaoImpl">
+        <property name="ldapServer">
+            <ref bean="ldapServer@ldap2.name@"/>
+        </property>
+        <property name="queryAttributes">
+            <list>
+                <value>username</value>
+            </list>
+        </property>
+        <property name="query">
+            <value>(@ldap2.server.uid@={0})</value>
+        </property>
+        <property name="ldapAttributesToPortalAttributes">
+            <map>
+                <entry key="@ldap2.server.uid@"><value>username</value></entry>
+                <entry key="@ldap2.server.uid@"><value>user.login.id</value></entry>
+                <entry key="@ldap2.server.uid@"><value>user.login.password</value></entry>
+                <entry key="givenName"><value>firstName</value></entry>
+                <entry key="sn"><value>lastname</value></entry>
+                <entry key="userPrincipalName"><value>mail</value></entry>
+                <entry key="cn"><value>displayName</value></entry>
+                <entry key="destinationIndicator"><value>uPortalTemplateUserName</value></entry>
+            </map>
+        </property>
+    </bean>
+    <bean id="ldapServer@ldap2.name@" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="staticMethod">
+            <value>org.jasig.portal.ldap.LdapServices.getLdapServer</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>@ldap2.name@</value>
+            </list>
+        </property>
+    </bean@ldap2.comment@> 
+
+    <@ldap3.comment@bean id="uPortalLdapAttributeSource-@ldap3.name@" class="org.jasig.portal.services.persondir.support.LdapPersonAttributeDaoImpl">
+        <property name="ldapServer">
+            <ref bean="ldapServer@ldap3.name@"/>
+        </property>
+        <property name="queryAttributes">
+            <list>
+                <value>username</value>
+            </list>
+        </property>
+        <property name="query">
+            <value>(@ldap3.server.uid@={0})</value>
+        </property>
+        <property name="ldapAttributesToPortalAttributes">
+            <map>
+                <entry key="@ldap3.server.uid@"><value>username</value></entry>
+                <entry key="@ldap3.server.uid@"><value>user.login.id</value></entry>
+                <entry key="@ldap3.server.uid@"><value>user.login.password</value></entry>
+                <entry key="givenName"><value>firstName</value></entry>
+                <entry key="sn"><value>lastname</value></entry>
+                <entry key="userPrincipalName"><value>mail</value></entry>
+                <entry key="cn"><value>displayName</value></entry>
+                <entry key="destinationIndicator"><value>uPortalTemplateUserName</value></entry>
+            </map>
+        </property>
+    </bean>
+    <bean id="ldapServer@ldap3.name@" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="staticMethod">
+            <value>org.jasig.portal.ldap.LdapServices.getLdapServer</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>@ldap3.name@</value>
+            </list>
+        </property>
+    </bean@ldap3.comment@> 
+
+    <@ldap4.comment@bean id="uPortalLdapAttributeSource-@ldap4.name@" class="org.jasig.portal.services.persondir.support.LdapPersonAttributeDaoImpl">
+        <property name="ldapServer">
+            <ref bean="ldapServer@ldap4.name@"/>
+        </property>
+        <property name="queryAttributes">
+            <list>
+                <value>username</value>
+            </list>
+        </property>
+        <property name="query">
+            <value>(@ldap4.server.uid@={0})</value>
+        </property>
+        <property name="ldapAttributesToPortalAttributes">
+            <map>
+                <entry key="@ldap4.server.uid@"><value>username</value></entry>
+                <entry key="@ldap4.server.uid@"><value>user.login.id</value></entry>
+                <entry key="@ldap4.server.uid@"><value>user.login.password</value></entry>
+                <entry key="givenName"><value>firstName</value></entry>
+                <entry key="sn"><value>lastname</value></entry>
+                <entry key="mail"><value>mail</value></entry>
+                <entry key="cn"><value>displayName</value></entry>
+                <entry key="destinationIndicator"><value>uPortalTemplateUserName</value></entry>
+            </map>
+        </property>
+    </bean>
+    <bean id="ldapServer@ldap4.name@" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="staticMethod">
+            <value>org.jasig.portal.ldap.LdapServices.getLdapServer</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>@ldap4.name@</value>
+            </list>
+        </property>
+    </bean@ldap4.comment@> 
+
             </value>
-        </add>
-    </file>
-</changes>	
+        </add-or-replace>
+    </file@ldap.comment@>
+
+    <@ldap.comment@file path="WEB-INF/classes/properties/ToroPersonDirs.xml">
+        <add-or-replace where="end">
+            <xpath>/PersonDirs/PersonDirInfo</xpath>
+            <value>
+<PersonDirInfo>
+
+        <driver></driver>
+        <url>ldap://phoneserv.unicon.net:389</url>
+        <logonid>cn=ldap lookup,ou=Resources,dc=unicon,dc=net</logonid>
+        <logonpassword>uni.dev</logonpassword>
+        <uidquery>(sAMAccountName={0})</uidquery>
+        <searchquery>(~MATCH_ALL_OP~(sAMAccountName={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(userPrincipalName={3}~WILDCARD_3~))</searchquery>
+        <searchquery2>(&amp;~SEARCH_QUERY~(|~USER_FILTER~))</searchquery2>
+        <unionOperator>|</unionOperator>
+        <intersectionOperator>&amp;</intersectionOperator>
+        <uidSelect>(sAMAccountName={~ARG~})</uidSelect>
+        <wildcard>*</wildcard>
+        <trueClause></trueClause>
+        <usercontext>dc=unicon,dc=net</usercontext>
+
+        <attributes>
+                <attribute>
+                        <name>@ldap.server.uid@</name>
+                        <alias>username</alias>
+                </attribute>
+                <attribute>
+                        <name>@ldap.server.uid@</name>
+                        <alias>user.login.id</alias>
+                </attribute>
+                <attribute>
+                        <name>@ldap.server.uid@</name>
+                        <alias>user.login.password</alias>
+                </attribute>
+                <attribute>
+                        <name>givenName</name>
+                        <alias>firstName</alias>
+                </attribute>
+                <attribute>
+                        <name>sn</name>
+                        <alias>lastName</alias>
+                </attribute>
+                <attribute>
+                        <name>mail</name>
+                        <alias>mail</alias>
+                </attribute>
+                <attribute>
+                        <name>cn</name>
+                        <alias>displayName</alias>
+                </attribute>
+                <attribute>
+                        <name>destinationIndicator</name>
+                        <alias>uPortalTemplateUserName</alias>
+                </attribute>
+        </attributes>
+</PersonDirInfo>
+<@ldap2.comment@PersonDirInfo>
+
+        <driver></driver>
+        <url>ldap://phoneserv.unicon.net:389</url>
+        <logonid>cn=ldap lookup,ou=Resources,dc=unicon,dc=net</logonid>
+        <logonpassword>uni.dev</logonpassword>
+        <uidquery>(sAMAccountName={0})</uidquery>
+        <searchquery>(~MATCH_ALL_OP~(sAMAccountName={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(userPrincipalName={3}~WILDCARD_3~))</searchquery>
+        <searchquery2>(&amp;~SEARCH_QUERY~(|~USER_FILTER~))</searchquery2>
+        <unionOperator>|</unionOperator>
+        <intersectionOperator>&amp;</intersectionOperator>
+        <uidSelect>(sAMAccountName={~ARG~})</uidSelect>
+        <wildcard>*</wildcard>
+        <trueClause></trueClause>
+        <usercontext>dc=unicon,dc=net</usercontext>
+
+        <attributes>
+                <attribute>
+                        <name>@ldap2.server.uid@</name>
+                        <alias>username</alias>
+                </attribute>
+                <attribute>
+                        <name>@ldap2.server.uid@</name>
+                        <alias>user.login.id</alias>
+                </attribute>
+                <attribute>
+                        <name>@ldap2.server.uid@</name>
+                        <alias>user.login.password</alias>
+                </attribute>
+                <attribute>
+                        <name>givenName</name>
+                        <alias>firstName</alias>
+                </attribute>
+                <attribute>
+                        <name>sn</name>
+                        <alias>lastName</alias>
+                </attribute>
+                <attribute>
+                        <name>mail</name>
+                        <alias>mail</alias>
+                </attribute>
+                <attribute>
+                        <name>cn</name>
+                        <alias>displayName</alias>
+                </attribute>
+                <attribute>
+                        <name>destinationIndicator</name>
+                        <alias>uPortalTemplateUserName</alias>
+                </attribute>
+        </attributes>
+</PersonDirInfo@ldap2.comment@>
+<@ldap3.comment@PersonDirInfo>
+
+        <driver></driver>
+        <url>ldap://phoneserv.unicon.net:389</url>
+        <logonid>cn=ldap lookup,ou=Resources,dc=unicon,dc=net</logonid>
+        <logonpassword>uni.dev</logonpassword>
+        <uidquery>(sAMAccountName={0})</uidquery>
+        <searchquery>(~MATCH_ALL_OP~(sAMAccountName={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(userPrincipalName={3}~WILDCARD_3~))</searchquery>
+        <searchquery2>(&amp;~SEARCH_QUERY~(|~USER_FILTER~))</searchquery2>
+        <unionOperator>|</unionOperator>
+        <intersectionOperator>&amp;</intersectionOperator>
+        <uidSelect>(sAMAccountName={~ARG~})</uidSelect>
+        <wildcard>*</wildcard>
+        <trueClause></trueClause>
+        <usercontext>dc=unicon,dc=net</usercontext>
+
+        <attributes>
+                <attribute>
+                        <name>@ldap3.server.uid@</name>
+                        <alias>username</alias>
+                </attribute>
+                <attribute>
+                        <name>@ldap3.server.uid@</name>
+                        <alias>user.login.id</alias>
+                </attribute>
+                <attribute>
+                        <name>@ldap3.server.uid@</name>
+                        <alias>user.login.password</alias>
+                </attribute>
+                <attribute>
+                        <name>givenName</name>
+                        <alias>firstName</alias>
+                </attribute>
+                <attribute>
+                        <name>sn</name>
+                        <alias>lastName</alias>
+                </attribute>
+                <attribute>
+                        <name>mail</name>
+                        <alias>mail</alias>
+                </attribute>
+                <attribute>
+                        <name>cn</name>
+                        <alias>displayName</alias>
+                </attribute>
+                <attribute>
+                        <name>destinationIndicator</name>
+                        <alias>uPortalTemplateUserName</alias>
+                </attribute>
+        </attributes>
+</PersonDirInfo@ldap3.comment@>
+<@ldap4.comment@PersonDirInfo>
+
+        <driver></driver>
+        <url>ldap://phoneserv.unicon.net:389</url>
+        <logonid>cn=ldap lookup,ou=Resources,dc=unicon,dc=net</logonid>
+        <logonpassword>uni.dev</logonpassword>
+        <uidquery>(sAMAccountName={0})</uidquery>
+        <searchquery>(~MATCH_ALL_OP~(sAMAccountName={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(userPrincipalName={3}~WILDCARD_3~))</searchquery>
+        <searchquery2>(&amp;~SEARCH_QUERY~(|~USER_FILTER~))</searchquery2>
+        <unionOperator>|</unionOperator>
+        <intersectionOperator>&amp;</intersectionOperator>
+        <uidSelect>(sAMAccountName={~ARG~})</uidSelect>
+        <wildcard>*</wildcard>
+        <trueClause></trueClause>
+        <usercontext>dc=unicon,dc=net</usercontext>
+
+        <attributes>
+                <attribute>
+                        <name>@ldap4.server.uid@</name>
+                        <alias>username</alias>
+                </attribute>
+                <attribute>
+                        <name>@ldap4.server.uid@</name>
+                        <alias>user.login.id</alias>
+                </attribute>
+                <attribute>
+                        <name>@ldap4.server.uid@</name>
+                        <alias>user.login.password</alias>
+                </attribute>
+                <attribute>
+                        <name>givenName</name>
+                        <alias>firstName</alias>
+                </attribute>
+                <attribute>
+                        <name>sn</name>
+                        <alias>lastName</alias>
+                </attribute>
+                <attribute>
+                        <name>mail</name>
+                        <alias>mail</alias>
+                </attribute>
+                <attribute>
+                        <name>cn</name>
+                        <alias>displayName</alias>
+                </attribute>
+                <attribute>
+                        <name>destinationIndicator</name>
+                        <alias>uPortalTemplateUserName</alias>
+                </attribute>
+        </attributes>
+</PersonDirInfo@ldap4.comment@>
+            </value>
+        </add-or-replace>
+    </file@ldap.comment@>
+</changes>

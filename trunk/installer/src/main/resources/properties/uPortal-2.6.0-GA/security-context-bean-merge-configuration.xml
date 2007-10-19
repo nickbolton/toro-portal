@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<changes>
+    <@ldap.security.comment@file path="WEB-INF/classes/properties/security.properties">
+        <add-or-replace>
+            <name>root</name>
+            <value>org.jasig.portal.security.provider.UnionSecurityContextFactory</value>
+        </add-or-replace>
+        <add-or-replace>
+            <name>root.db</name>
+            <value>org.jasig.portal.security.provider.SimpleSecurityContextFactory</value>
+        </add-or-replace>
+        <add-or-replace>
+            <name>root.db.cache</name>
+            <value>org.jasig.portal.security.provider.CacheSecurityContextFactory</value>
+        </add-or-replace>
+        <add-or-replace>
+            <name>root.ldap-@ldap.name.security@</name>
+            <value>org.jasig.portal.security.provider.SimpleLdapSecurityContextFactory</value>
+        </add-or-replace>
+        <add-or-replace>
+            <name>root.ldap-@ldap.name.security@.cache</name>
+            <value>org.jasig.portal.security.provider.CacheSecurityContextFactory</value>
+        </add-or-replace>
+        <add-or-replace>
+            <name>securityContextProperty.root.ldap-@ldap.name.security@</name>
+            <value>@ldap.name.security@</value>
+        </add-or-replace>
+        <@ldap2.security.comment@add-or-replace>
+            <name>root.ldap-@ldap2.name.security@</name>
+            <value>org.jasig.portal.security.provider.SimpleLdapSecurityContextFactory</value>
+        </add-or-replace>
+        <add-or-replace>
+            <name>root.ldap-@ldap2.name.security@.cache</name>
+            <value>org.jasig.portal.security.provider.CacheSecurityContextFactory</value>
+        </add-or-replace>
+        <add-or-replace>
+            <name>securityContextProperty.root.ldap-@ldap2.name.security@</name>
+            <value>@ldap2.name.security@</value>
+        </add-or-replace@ldap2.security.comment@>
+        <@@ldap3.name.security@add-or-replace>
+            <name>root.ldap-@ldap3.name.security@</name>
+            <value>org.jasig.portal.security.provider.SimpleLdapSecurityContextFactory</value>
+        </add-or-replace>
+        <add-or-replace>
+            <name>root.ldap-@ldap3.name.security@.cache</name>
+            <value>org.jasig.portal.security.provider.CacheSecurityContextFactory</value>
+        </add-or-replace>
+        <add-or-replace>
+            <name>securityContextProperty.root.ldap-@ldap3.name.security@</name>
+            <value>@ldap3.name.security@</value>
+        </add-or-replace@ldap3.name.security@>
+        <@ldap4.name.security@add-or-replace>
+            <name>root.ldap-@ldap4.name.security@</name>
+            <value>org.jasig.portal.security.provider.SimpleLdapSecurityContextFactory</value>
+        </add-or-replace>
+        <add-or-replace>
+            <name>root.ldap-@ldap4.name.security@.cache</name>
+            <value>org.jasig.portal.security.provider.CacheSecurityContextFactory</value>
+        </add-or-replace>
+        <add-or-replace>
+            <name>securityContextProperty.root.ldap-@ldap4.name.security@</name>
+            <value>@ldap4.name.security@</value>
+        </add-or-replace@@ldap4.name.security@>
+    </file@ldap.security.comment@>
+</changes>
