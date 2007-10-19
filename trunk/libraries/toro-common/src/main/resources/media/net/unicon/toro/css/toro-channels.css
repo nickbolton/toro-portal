@@ -599,6 +599,7 @@ div.areabox1 a, div.areabox1 a:link, div.areabox1 a:visited, div.areabox1 a:hove
 /**************************************/
 /*********  SURVEY STYLING  ************/
 .custom {
+    text-align: left;
 }
 .custom .survey-title {
 	font-size: 11pt;
@@ -660,6 +661,10 @@ div.areabox1 a, div.areabox1 a:link, div.areabox1 a:visited, div.areabox1 a:hove
 	
 }
 
+.blocks, .simple {
+    text-align: left;
+}
+
 .blocks .survey-table td {
 	padding: 3px;
 	line-height: 16px;
@@ -687,7 +692,7 @@ div.areabox1 a, div.areabox1 a:link, div.areabox1 a:visited, div.areabox1 a:hove
 	border-right: 1px solid #BBBBBB;
 }
 
-
+.simple td.uportal-channel-subtitle {width: 10%;}
 .simple .survey-table td {
 	padding: 3px;
 	line-height: 16px;
@@ -748,6 +753,11 @@ div.areabox1 a, div.areabox1 a:link, div.areabox1 a:visited, div.areabox1 a:hove
 /*
 TABLE {
 border-collapse: collapse;
+}
+*/
+/* Uncommenting fixes Survey Simple style but potentially affects other places
+.table-content {
+text-align:left;
 }
 */
 
