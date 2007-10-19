@@ -30,8 +30,10 @@
 <hibernate-mapping auto-import="false">
 
     <class name="net.unicon.mercury.fac.rdbms.GroupDispatch" table="HG_GROUP_DISPATCH">
-        <id name="id" type="int" column="MSG_ID"/>
-        <property name="groupPath" type="string" column="GROUP_PATH"/>
+        <composite-id>
+            <key-property name="id" type="int" column="MSG_ID"/>
+            <key-property name="groupPath" type="string" column="GROUP_PATH"/>
+        </composite-id>
     </class>
 
 </hibernate-mapping>
