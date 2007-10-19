@@ -14,48 +14,48 @@
 
 package net.unicon.portal.common;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
+import java.util.Vector;
+
+import javax.naming.Context;
+import javax.naming.NamingEnumeration;
+import javax.naming.NamingException;
+import javax.naming.directory.Attribute;
+import javax.naming.directory.Attributes;
+import javax.naming.directory.DirContext;
+import javax.naming.directory.InitialDirContext;
+import javax.naming.directory.SearchControls;
+import javax.naming.directory.SearchResult;
+
 import net.unicon.academus.common.PersonDirectoryService;
-import net.unicon.portal.common.properties.*;
-import net.unicon.portal.util.db.AcademusDBUtil;
-import net.unicon.sdk.properties.*;
 import net.unicon.academus.domain.lms.User;
 import net.unicon.academus.domain.lms.UserFactory;
+import net.unicon.portal.common.properties.PortalPropertiesType;
+import net.unicon.portal.util.db.AcademusDBUtil;
+import net.unicon.sdk.properties.UniconPropertiesFactory;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jasig.portal.RDBMServices;
 import org.jasig.portal.security.IPerson;
 import org.jasig.portal.security.provider.PersonImpl;
 import org.jasig.portal.services.LogService;
 import org.jasig.portal.utils.ResourceLoader;
-
-import java.util.Vector;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.StringTokenizer;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.naming.Context;
-import javax.naming.directory.InitialDirContext;
-import javax.naming.NamingException;
-import javax.naming.NamingEnumeration;
-import javax.naming.directory.DirContext;
-import javax.naming.directory.SearchControls;
-import javax.naming.directory.SearchResult;
-import javax.naming.directory.Attribute;
-import javax.naming.directory.Attributes;
-
-import java.sql.ResultSet;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 public class PersonDirectoryServiceImpl implements PersonDirectoryService {
@@ -63,6 +63,7 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
     static Vector sources = null; // List of PersonDirInfo objects
     static Hashtable drivers = new Hashtable(); // Registered JDBC drivers
     private PersonDirectory personDirService = null;
+    private Log log = LogFactory.getLog(getClass());
     
     static String uidKey   = UniconPropertiesFactory.getManager(
         PortalPropertiesType.LMS).getProperty(
@@ -157,13 +158,15 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
 
         final int numArgs = 4;
 
-        StringBuffer debugMsg = new StringBuffer();
-        debugMsg.append("PersonDirectoryServiceImpl::find() ");
-        debugMsg.append("username: ").append(username);
-        debugMsg.append(" - firstname: ").append(firstname);
-        debugMsg.append(" - lastname: ").append(lastname);
-        debugMsg.append(" - email: ").append(email);
-        LogService.log(LogService.DEBUG, debugMsg.toString());
+        if (log.isDebugEnabled()) {
+            StringBuffer debugMsg = new StringBuffer();
+            debugMsg.append("PersonDirectoryServiceImpl::find() ");
+            debugMsg.append("username: ").append(username);
+            debugMsg.append(" - firstname: ").append(firstname);
+            debugMsg.append(" - lastname: ").append(lastname);
+            debugMsg.append(" - email: ").append(email);
+            log.debug(debugMsg.toString());
+        }
 
         // normalize the search criteria (make non-null)
         username = normalize(username);
@@ -179,7 +182,9 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
         for (int i=0; i<sources.size(); i++) {
             queryResults = null;
             PersonDirInfo pdi = (PersonDirInfo) sources.elementAt(i);
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl::find() : finding using source " + i + " pdi" + (pdi.disabled ? "(disabled)" : "" ) + ": " + pdi.url);
+            if (log.isDebugEnabled()) {
+                log.debug("PersonDirectoryServiceImpl::find() : finding using source " + i + " pdi" + (pdi.disabled ? "(disabled)" : "" ) + ": " + pdi.url);
+            }
 
             if (pdi.disabled) continue;
 
@@ -331,9 +336,11 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
         SearchResult result = null;
         Attributes ldapattribs = null;
 
-        LogService.log(LogService.DEBUG,
-            "PersonDirectoryServiceImpl::processLdapSearch() filter: " +
-            searchQuery);
+        if (log.isDebugEnabled()) {
+            log.debug(
+                "PersonDirectoryServiceImpl::processLdapSearch() filter: " +
+                searchQuery);
+        }
 
         //JNDI boilerplate to connect to an initial context
         Hashtable jndienv = new Hashtable();
@@ -390,7 +397,7 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
         try {
             context = new InitialDirContext(jndienv);
         } catch (NamingException nex) {
-            LogService.instance().log(LogService.ERROR,
+            log.error(
                 "PersonDirectoryServiceImpl::processLdapSearch(): "+
                 "Error getting InitialDirContext: " + nex, nex);
             return results;
@@ -403,19 +410,21 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
         sc.setSearchScope(SearchControls.SUBTREE_SCOPE);
         try {
 
-            for (int i=0; args != null && i<args.length; i++) {
-                LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl::processLdapSearch() : arg " + i + ": " + args[i]);
+            if (log.isDebugEnabled()) {
+                for (int i=0; args != null && i<args.length; i++) {
+                    log.debug("PersonDirectoryServiceImpl::processLdapSearch() : arg " + i + ": " + args[i]);
+                }
             }
             userlist = context.search(pdi.usercontext,searchQuery,args,sc);
         } catch (NamingException nex) {
-            LogService.instance().log(LogService.ERROR,
+            log.error(
                 "PersonDirectoryServiceImpl::processLdapSearch(): "+
                 "Error during search: " + nex, nex);
             try {
                 context.close();
                 context = null;
             } catch (NamingException ne) {
-                LogService.instance().log(LogService.ERROR,
+                log.error(
                     "PersonDirectoryServiceImpl::processLdapSearch(): "+
                     "Error cleaning up naming context: " + ne, ne);
             }
@@ -441,7 +450,7 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
                 results.add(attribs);
             }
         } catch (NamingException nex) {
-            LogService.instance().log(LogService.ERROR,
+            log.error(
                 "PersonDirectoryServiceImpl::processLdapSearch(): "+
                 "Error during search: " + nex, nex);
             return results;
@@ -450,7 +459,7 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
                 userlist.close();
                 userlist = null;
             } catch (NamingException ne) {
-                LogService.instance().log(LogService.ERROR,
+                log.error(
                     "PersonDirectoryServiceImpl::processLdapSearch(): "+
                     "Error cleaning up naming enumeration: " + ne, ne);
             }
@@ -458,7 +467,7 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
                 context.close();
                 context = null;
             } catch (NamingException ne) {
-                LogService.instance().log(LogService.ERROR,
+                log.error(
                     "PersonDirectoryServiceImpl::processLdapSearch(): "+
                     "Error cleaning up naming context: " + ne, ne);
             }
@@ -507,30 +516,38 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
             // Get a connection with URL, userid, password
             if (pdi.ResRefName!=null && pdi.ResRefName.length()>0) {
                 conn = RDBMServices.getConnection(pdi.ResRefName);
-                LogService.log(LogService.DEBUG,"PersonDirectoryServiceImpl::processJdbcSearch(): Looking in "+pdi.ResRefName+ " for person searching");
+                if (log.isDebugEnabled()) {
+                    log.debug("PersonDirectoryServiceImpl::processJdbcSearch(): Looking in "+pdi.ResRefName+ " for person searching");
+                }
             } else {
               conn = RDBMServices.getConnection();
             }
 
             // Execute query substituting Username for parameter
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl::processJdbcSearch() : PDI JDBC search query: " + sql);
+            if (log.isDebugEnabled()) {
+                log.debug("PersonDirectoryServiceImpl::processJdbcSearch() : PDI JDBC search query: " + sql);
+            }
             stmt = conn.prepareStatement(sql);
 
             int i=1;
             for (int j=0; usernames != null && j<usernames.length; j++) {
-                LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl::processJdbcSearch() : arg " + i + ": " + usernames[j]);
+                if (log.isDebugEnabled()) {
+                    log.debug("PersonDirectoryServiceImpl::processJdbcSearch() : arg " + i + ": " + usernames[j]);
+                }
                 stmt.setString(i++, usernames[j]);
             }
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl::processJdbcSearch() : arg " + i + ": " + username);
+            if (log.isDebugEnabled()) {
+                log.debug("PersonDirectoryServiceImpl::processJdbcSearch() : arg " + i + ": " + username);
+                log.debug("PersonDirectoryServiceImpl::processJdbcSearch() : arg " + i + ": " + firstname);
+                log.debug("PersonDirectoryServiceImpl::processJdbcSearch() : arg " + i + ": " + lastname);
+                log.debug("PersonDirectoryServiceImpl::processJdbcSearch() : arg " + i + ": " + email);
+            }
             stmt.setString(i++, username);
             stmt.setString(i++, username);
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl::processJdbcSearch() : arg " + i + ": " + firstname);
             stmt.setString(i++, firstname);
             stmt.setString(i++, firstname);
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl::processJdbcSearch() : arg " + i + ": " + lastname);
             stmt.setString(i++, lastname);
             stmt.setString(i++, lastname);
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl::processJdbcSearch() : arg " + i + ": " + email);
             stmt.setString(i++, email);
             stmt.setString(i++, email);
             rs = stmt.executeQuery();
@@ -552,7 +569,9 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
                     } catch (SQLException sqle) {
                         // Don't let error in a field prevent processing of
                         // others.
-                        LogService.log(LogService.DEBUG,"PersonDirectoryServiceImpl::processJdbcSearch(): Error accessing JDBC field "+pdi.attributenames[i]+" "+sqle, sqle);
+                        if (log.isDebugEnabled()) {
+                            log.debug("PersonDirectoryServiceImpl::processJdbcSearch(): Error accessing JDBC field "+pdi.attributenames[i]+" "+sqle, sqle);
+                        }
                     }
                 }
                 results.add(attribs);
@@ -561,8 +580,10 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
             // If database down or can't logon, ignore this data source
             // It is not clear that we want to disable the source, since the
             // database may be temporarily down.
-            LogService.log(LogService.DEBUG,
-                "PersonDirectoryServiceImpl::processJdbcSearch(): Error "+e, e);
+            if (log.isDebugEnabled()) {
+                log.debug(
+                    "PersonDirectoryServiceImpl::processJdbcSearch(): Error "+e, e);
+            }
         } finally {
             try {
                 if (rs!=null) {
@@ -570,7 +591,7 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
                     rs = null;
                 }
             } catch (Exception e) {
-                LogService.log(LogService.ERROR,
+                log.error(
                     "PersonDirectoryServiceImpl::processJdbcSearch(): " +
                     "Error cleaning up jdbc resources: "+e, e);
             }
@@ -587,7 +608,7 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
                 }
 */
             } catch (Exception e) {
-                LogService.log(LogService.ERROR,
+                log.error(
                     "PersonDirectoryServiceImpl::processJdbcSearch(): " +
                     "Error cleaning up jdbc resources: "+e, e);
             }
@@ -709,7 +730,7 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
                             }
                         }
                     } else {
-                        LogService.instance().log(LogService.ERROR,"PersonDirectory::getParameters(): Unrecognized tag "+tagname+" in ToroPersonDirs.xml");
+                        log.error("PersonDirectory::getParameters(): Unrecognized tag "+tagname+" in ToroPersonDirs.xml");
                     }
                 }
                 if (pdi.ResRefName != null && !"".equals(pdi.ResRefName)) {
@@ -721,7 +742,7 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
                 sources.addElement(pdi);//Add one LDAP or JDBC source to the list
             }
         } catch(Exception e) {
-            LogService.instance().log(LogService.WARN,"PersonDirectory::getParameters(): properties/ToroPersonDirs.xml is not available, directory searching disabled.");
+            log.warn("PersonDirectory::getParameters(): properties/ToroPersonDirs.xml is not available, directory searching disabled.");
             return false;
         }
         return true;
@@ -766,21 +787,23 @@ public class PersonDirectoryServiceImpl implements PersonDirectoryService {
         boolean logged = false;
 
         public void dump() {
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl:PersonDirInfo ResRefName          : " + ResRefName);
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl:PersonDirInfo url                 : " + url);
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl:PersonDirInfo driver              : " +driver);
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl:PersonDirInfo logonid             : " + logonid);
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl:PersonDirInfo logonpassword       : " + logonpassword);
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl:PersonDirInfo usercontext         : " + usercontext);
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl:PersonDirInfo uidquery            : " + uidquery);
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl:PersonDirInfo fullnamequery       : " + fullnamequery);
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl:PersonDirInfo searchquery         : " + searchquery);
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl:PersonDirInfo searchquery2        : " + searchquery2);
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl:PersonDirInfo unionOperator       : " + unionOperator);
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl:PersonDirInfo intersectionOperator: " + intersectionOperator);
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl:PersonDirInfo trueClause          : " + trueClause);
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl:PersonDirInfo wildcard            : " + wildcard);
-            LogService.log(LogService.DEBUG, "PersonDirectoryServiceImpl:PersonDirInfo uidSelect           : " + uidSelect);
+            if (log.isDebugEnabled()) {
+                log.debug("PersonDirectoryServiceImpl:PersonDirInfo ResRefName          : " + ResRefName);
+                log.debug("PersonDirectoryServiceImpl:PersonDirInfo url                 : " + url);
+                log.debug("PersonDirectoryServiceImpl:PersonDirInfo driver              : " +driver);
+                log.debug("PersonDirectoryServiceImpl:PersonDirInfo logonid             : " + logonid);
+                log.debug("PersonDirectoryServiceImpl:PersonDirInfo logonpassword       : " + logonpassword);
+                log.debug("PersonDirectoryServiceImpl:PersonDirInfo usercontext         : " + usercontext);
+                log.debug("PersonDirectoryServiceImpl:PersonDirInfo uidquery            : " + uidquery);
+                log.debug("PersonDirectoryServiceImpl:PersonDirInfo fullnamequery       : " + fullnamequery);
+                log.debug("PersonDirectoryServiceImpl:PersonDirInfo searchquery         : " + searchquery);
+                log.debug("PersonDirectoryServiceImpl:PersonDirInfo searchquery2        : " + searchquery2);
+                log.debug("PersonDirectoryServiceImpl:PersonDirInfo unionOperator       : " + unionOperator);
+                log.debug("PersonDirectoryServiceImpl:PersonDirInfo intersectionOperator: " + intersectionOperator);
+                log.debug("PersonDirectoryServiceImpl:PersonDirInfo trueClause          : " + trueClause);
+                log.debug("PersonDirectoryServiceImpl:PersonDirInfo wildcard            : " + wildcard);
+                log.debug("PersonDirectoryServiceImpl:PersonDirInfo uidSelect           : " + uidSelect);
+            }
         }
     }
 
