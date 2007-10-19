@@ -30,7 +30,7 @@
             <map>
                 <entry key="@ldap.server.uid@"><value>username</value></entry>
                 <entry key="@ldap.server.uid@"><value>user.login.id</value></entry>
-                <entry key="@ldap.server.uid@"><value>user.login.password</value></entry>
+                <entry key="@ldap.server.uid@"><value>password</value></entry>
                 <entry key="givenName"><value>firstName</value></entry>
                 <entry key="sn"><value>lastname</value></entry>
                 <entry key="userPrincipalName"><value>mail</value></entry>
@@ -66,7 +66,7 @@
             <map>
                 <entry key="@ldap2.server.uid@"><value>username</value></entry>
                 <entry key="@ldap2.server.uid@"><value>user.login.id</value></entry>
-                <entry key="@ldap2.server.uid@"><value>user.login.password</value></entry>
+                <entry key="@ldap2.server.uid@"><value>password</value></entry>
                 <entry key="givenName"><value>firstName</value></entry>
                 <entry key="sn"><value>lastname</value></entry>
                 <entry key="userPrincipalName"><value>mail</value></entry>
@@ -102,7 +102,7 @@
             <map>
                 <entry key="@ldap3.server.uid@"><value>username</value></entry>
                 <entry key="@ldap3.server.uid@"><value>user.login.id</value></entry>
-                <entry key="@ldap3.server.uid@"><value>user.login.password</value></entry>
+                <entry key="@ldap3.server.uid@"><value>password</value></entry>
                 <entry key="givenName"><value>firstName</value></entry>
                 <entry key="sn"><value>lastname</value></entry>
                 <entry key="userPrincipalName"><value>mail</value></entry>
@@ -138,7 +138,7 @@
             <map>
                 <entry key="@ldap4.server.uid@"><value>username</value></entry>
                 <entry key="@ldap4.server.uid@"><value>user.login.id</value></entry>
-                <entry key="@ldap4.server.uid@"><value>user.login.password</value></entry>
+                <entry key="@ldap4.server.uid@"><value>password</value></entry>
                 <entry key="givenName"><value>firstName</value></entry>
                 <entry key="sn"><value>lastname</value></entry>
                 <entry key="mail"><value>mail</value></entry>
@@ -169,18 +169,18 @@
 <PersonDirInfo>
 
         <driver></driver>
-        <url>ldap://phoneserv.unicon.net:389</url>
-        <logonid>cn=ldap lookup,ou=Resources,dc=unicon,dc=net</logonid>
-        <logonpassword>uni.dev</logonpassword>
-        <uidquery>(sAMAccountName={0})</uidquery>
-        <searchquery>(~MATCH_ALL_OP~(sAMAccountName={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(userPrincipalName={3}~WILDCARD_3~))</searchquery>
+        <url>@ldap.protocol.prefix@://@ldap.server.hostname@:@ldap.server.port@</url>
+        <logonid>@ldap.server.managerdn@</logonid>
+        <logonpassword>@ldap.server.manager.password@</logonpassword>
+        <uidquery>(@ldap.server.uid@={0})</uidquery>
+        <searchquery>(~MATCH_ALL_OP~(@ldap.server.uid@={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(userPrincipalName={3}~WILDCARD_3~))</searchquery>
         <searchquery2>(&amp;~SEARCH_QUERY~(|~USER_FILTER~))</searchquery2>
         <unionOperator>|</unionOperator>
         <intersectionOperator>&amp;</intersectionOperator>
-        <uidSelect>(sAMAccountName={~ARG~})</uidSelect>
+        <uidSelect>(@ldap.server.uid@={~ARG~})</uidSelect>
         <wildcard>*</wildcard>
         <trueClause></trueClause>
-        <usercontext>dc=unicon,dc=net</usercontext>
+        <usercontext>@ldap.server.basedn@</usercontext>
 
         <attributes>
                 <attribute>
@@ -193,7 +193,7 @@
                 </attribute>
                 <attribute>
                         <name>@ldap.server.uid@</name>
-                        <alias>user.login.password</alias>
+                        <alias>password</alias>
                 </attribute>
                 <attribute>
                         <name>givenName</name>
@@ -219,19 +219,20 @@
 </PersonDirInfo>
 <@ldap2.comment@PersonDirInfo>
 
+
         <driver></driver>
-        <url>ldap://phoneserv.unicon.net:389</url>
-        <logonid>cn=ldap lookup,ou=Resources,dc=unicon,dc=net</logonid>
-        <logonpassword>uni.dev</logonpassword>
-        <uidquery>(sAMAccountName={0})</uidquery>
-        <searchquery>(~MATCH_ALL_OP~(sAMAccountName={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(userPrincipalName={3}~WILDCARD_3~))</searchquery>
+        <url>@ldap2.protocol.prefix@://@ldap2.server.hostname@:@ldap2.server.port@</url>
+        <logonid>@ldap2.server.managerdn@</logonid>
+        <logonpassword>@ldap2.server.manager.password@</logonpassword>
+        <uidquery>(@ldap2.server.uid@={0})</uidquery>
+        <searchquery>(~MATCH_ALL_OP~(@ldap2.server.uid@={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(userPrincipalName={3}~WILDCARD_3~))</searchquery>
         <searchquery2>(&amp;~SEARCH_QUERY~(|~USER_FILTER~))</searchquery2>
         <unionOperator>|</unionOperator>
         <intersectionOperator>&amp;</intersectionOperator>
-        <uidSelect>(sAMAccountName={~ARG~})</uidSelect>
+        <uidSelect>(@ldap2.server.uid@={~ARG~})</uidSelect>
         <wildcard>*</wildcard>
         <trueClause></trueClause>
-        <usercontext>dc=unicon,dc=net</usercontext>
+        <usercontext>@ldap2.server.basedn@</usercontext>
 
         <attributes>
                 <attribute>
@@ -244,7 +245,7 @@
                 </attribute>
                 <attribute>
                         <name>@ldap2.server.uid@</name>
-                        <alias>user.login.password</alias>
+                        <alias>password</alias>
                 </attribute>
                 <attribute>
                         <name>givenName</name>
@@ -271,18 +272,18 @@
 <@ldap3.comment@PersonDirInfo>
 
         <driver></driver>
-        <url>ldap://phoneserv.unicon.net:389</url>
-        <logonid>cn=ldap lookup,ou=Resources,dc=unicon,dc=net</logonid>
-        <logonpassword>uni.dev</logonpassword>
-        <uidquery>(sAMAccountName={0})</uidquery>
-        <searchquery>(~MATCH_ALL_OP~(sAMAccountName={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(userPrincipalName={3}~WILDCARD_3~))</searchquery>
+        <url>@ldap3.protocol.prefix@://@ldap3.server.hostname@:@ldap3.server.port@</url>
+        <logonid>@ldap3.server.managerdn@</logonid>
+        <logonpassword>@ldap3.server.manager.password@</logonpassword>
+        <uidquery>(@ldap3.server.uid@={0})</uidquery>
+        <searchquery>(~MATCH_ALL_OP~(@ldap3.server.uid@={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(userPrincipalName={3}~WILDCARD_3~))</searchquery>
         <searchquery2>(&amp;~SEARCH_QUERY~(|~USER_FILTER~))</searchquery2>
         <unionOperator>|</unionOperator>
         <intersectionOperator>&amp;</intersectionOperator>
-        <uidSelect>(sAMAccountName={~ARG~})</uidSelect>
+        <uidSelect>(@ldap3.server.uid@={~ARG~})</uidSelect>
         <wildcard>*</wildcard>
         <trueClause></trueClause>
-        <usercontext>dc=unicon,dc=net</usercontext>
+        <usercontext>@ldap3.server.basedn@</usercontext>
 
         <attributes>
                 <attribute>
@@ -295,7 +296,7 @@
                 </attribute>
                 <attribute>
                         <name>@ldap3.server.uid@</name>
-                        <alias>user.login.password</alias>
+                        <alias>password</alias>
                 </attribute>
                 <attribute>
                         <name>givenName</name>
@@ -322,18 +323,18 @@
 <@ldap4.comment@PersonDirInfo>
 
         <driver></driver>
-        <url>ldap://phoneserv.unicon.net:389</url>
-        <logonid>cn=ldap lookup,ou=Resources,dc=unicon,dc=net</logonid>
-        <logonpassword>uni.dev</logonpassword>
-        <uidquery>(sAMAccountName={0})</uidquery>
-        <searchquery>(~MATCH_ALL_OP~(sAMAccountName={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(userPrincipalName={3}~WILDCARD_3~))</searchquery>
+        <url>@ldap4.protocol.prefix@://@ldap4.server.hostname@:@ldap4.server.port@</url>
+        <logonid>@ldap4.server.managerdn@</logonid>
+        <logonpassword>@ldap4.server.manager.password@</logonpassword>
+        <uidquery>(@ldap4.server.uid@={0})</uidquery>
+        <searchquery>(~MATCH_ALL_OP~(@ldap4.server.uid@={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(userPrincipalName={3}~WILDCARD_3~))</searchquery>
         <searchquery2>(&amp;~SEARCH_QUERY~(|~USER_FILTER~))</searchquery2>
         <unionOperator>|</unionOperator>
         <intersectionOperator>&amp;</intersectionOperator>
-        <uidSelect>(sAMAccountName={~ARG~})</uidSelect>
+        <uidSelect>(@ldap4.server.uid@={~ARG~})</uidSelect>
         <wildcard>*</wildcard>
         <trueClause></trueClause>
-        <usercontext>dc=unicon,dc=net</usercontext>
+        <usercontext>@ldap4.server.basedn@</usercontext>
 
         <attributes>
                 <attribute>
@@ -346,7 +347,7 @@
                 </attribute>
                 <attribute>
                         <name>@ldap4.server.uid@</name>
-                        <alias>user.login.password</alias>
+                        <alias>password</alias>
                 </attribute>
                 <attribute>
                         <name>givenName</name>
