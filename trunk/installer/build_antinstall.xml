@@ -255,8 +255,7 @@
         </condition>
         <condition property="run.ldap.merge">
             <or>
-                <equals arg1="${run.uportal.deploy}" arg2="true"/>
-                <equals arg1="${run.deploy.channel.common}" arg2="true"/>
+                <equals arg1="${ldap.checkbox}" arg2="true"/>
             </or>
         </condition>
         <condition property="run.publish.briefcase.portlet">
@@ -587,9 +586,11 @@
                     <equals arg1="${ldap.protocol.checkbox}" arg2="true"/>
                     <then>
                         <property name="ldap.protocol" value="ssl"/>
+                        <property name="ldap.protocol.prefix" value="ldaps"/>
                     </then>
                     <else>
                         <property name="ldap.protocol" value=""/>
+                        <property name="ldap.protocol.prefix" value="ldap"/>
                     </else>
                 </if>
             </then>
@@ -607,9 +608,11 @@
                     <equals arg1="${ldap2.protocol.checkbox}" arg2="true"/>
                     <then>
                         <property name="ldap2.protocol" value="ssl"/>
+                        <property name="ldap2.protocol.prefix" value="ldaps"/>
                     </then>
                     <else>
                         <property name="ldap2.protocol" value=""/>
+                        <property name="ldap2.protocol.prefix" value="ldap"/>
                     </else>
                 </if>
             </then>
@@ -635,9 +638,11 @@
                     <equals arg1="${ldap3.protocol.checkbox}" arg2="true"/>
                     <then>
                         <property name="ldap3.protocol" value="ssl"/>
+                        <property name="ldap3.protocol.prefix" value="ldaps"/>
                     </then>
                     <else>
                         <property name="ldap3.protocol" value=""/>
+                        <property name="ldap3.protocol.prefix" value="ldap"/>
                     </else>
                 </if>
             </then>
@@ -663,9 +668,11 @@
                     <equals arg1="${ldap4.protocol.checkbox}" arg2="true"/>
                     <then>
                         <property name="ldap4.protocol" value="ssl"/>
+                        <property name="ldap4.protocol.prefix" value="ldaps"/>
                     </then>
                     <else>
                         <property name="ldap4.protocol" value=""/>
+                        <property name="ldap4.protocol.prefix" value="ldap"/>
                     </else>
                 </if>
             </then>
@@ -693,15 +700,18 @@
             <filter token="multibox.configuration" value="${multibox.configuration}"/>
             <filter token="multibox.comment" value="${multibox.comment}"/>
             <filter token="dirty.cache.request.handler" value="${dirty.cache.request.handler}"/>
-            <filter token="ldap.protocol" value="${ldap.protocol}"/>
             <filter token="ldap.comment" value="${ldap.comment}"/>
             <filter token="ldap.protocol" value="${ldap.protocol}"/>
+            <filter token="ldap.protocol.prefix" value="${ldap.protocol.prefix}"/>
             <filter token="ldap2.comment" value="${ldap2.comment}"/>
             <filter token="ldap2.protocol" value="${ldap2.protocol}"/>
+            <filter token="ldap2.protocol.prefix" value="${ldap2.protocol.prefix}"/>
             <filter token="ldap3.comment" value="${ldap3.comment}"/>
             <filter token="ldap3.protocol" value="${ldap3.protocol}"/>
+            <filter token="ldap3.protocol.prefix" value="${ldap3.protocol.prefix}"/>
             <filter token="ldap4.comment" value="${ldap4.comment}"/>
             <filter token="ldap4.protocol" value="${ldap4.protocol}"/>
+            <filter token="ldap4.protocol.prefix" value="${ldap4.protocol.prefix}"/>
         </filterset>
     </target>
 
@@ -788,6 +798,7 @@ run.deploy.campusannouncement.channel=${run.deploy.campusannouncement.channel}
 run.deploy.ldapchangepw.channel=${run.deploy.ldapchangepw.channel}
 run.deploy.login.channel=${run.deploy.login.channel}
 run.deploy.useradmin.channel=${run.deploy.useradmin.channel}
+run.ldap.merge=${run.ldap.merge}
 run.publish.briefcase.portlet=${run.publish.briefcase.portlet}
 run.publish.gateway.portlet=${run.publish.gateway.portlet}
 run.publish.messaging.portlet=${run.publish.messaging.portlet}
@@ -2180,6 +2191,482 @@ xercesImpl.version=${xercesImpl.version}
             <param name="version" value="${project.version}"/>
             <param name="tables.xml" value="/properties/db/dbloader-tables.xml"/>
         </antcall>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_CONTROLLER (ACCESS_CONTROLLER_ID, NAME) VALUES (1, 'personal-resources');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_CONTROLLER (ACCESS_CONTROLLER_ID, NAME) VALUES (2, 'shared-resources');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_CONTROLLER (ACCESS_CONTROLLER_ID, NAME) VALUES (3, 'notifications-rdbms');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_CONTROLLER (ACCESS_CONTROLLER_ID, NAME) VALUES (4, 'personal-resources-t-i');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_CONTROLLER (ACCESS_CONTROLLER_ID, NAME) VALUES (5, 'personal-resources-p-i');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_CONTROLLER (ACCESS_CONTROLLER_ID, NAME) VALUES (6, 'notifications-t-i');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_CONTROLLER (ACCESS_CONTROLLER_ID, NAME) VALUES (7, 'notifications-p-i');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_CONTROLLER (ACCESS_CONTROLLER_ID, NAME) VALUES (8, 'blog-default-p');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_CONTROLLER (ACCESS_CONTROLLER_ID, NAME) VALUES (9, 'blog-blojsomA-p');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_CONTROLLER (ACCESS_CONTROLLER_ID, NAME) VALUES (10, 'blog-blojsomB-p');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_CONTROLLER (ACCESS_CONTROLLER_ID, NAME) VALUES (11, 'blog-blojsomC-p');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_CONTROLLER (ACCESS_CONTROLLER_ID, NAME) VALUES (12, 'content-p');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_ENTRY (ACCESS_ENTRY_ID, IDENTITY_TYPE, IDENTITY_NAME, TARGET, ACCESS_CONTROLLER_ID) VALUES (1, 0, 'admin', 'MSG://net.unicon.academus.apps.messaging.RdbmsMessageFactoryCreator$CreatorRdbmsMessageFactory/notifications/admin', 6);
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_ENTRY (ACCESS_ENTRY_ID, IDENTITY_TYPE, IDENTITY_NAME, TARGET, ACCESS_CONTROLLER_ID) VALUES (2, 1, 'Everyone', 'dummy://net.unicon.alchemist.access.permissions.Dummy/', 7);
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_ENTRY (ACCESS_ENTRY_ID, IDENTITY_TYPE, IDENTITY_NAME, TARGET, ACCESS_CONTROLLER_ID) VALUES (3, 0, 'admin', 'dummy://net.unicon.alchemist.access.permissions.Dummy/', 8);
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_ENTRY (ACCESS_ENTRY_ID, IDENTITY_TYPE, IDENTITY_NAME, TARGET, ACCESS_CONTROLLER_ID) VALUES (4, 0, 'demo', 'MSG://net.unicon.academus.apps.messaging.RdbmsMessageFactoryCreator$CreatorRdbmsMessageFactory/notifications/demo', 6);
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_ENTRY (ACCESS_ENTRY_ID, IDENTITY_TYPE, IDENTITY_NAME, TARGET, ACCESS_CONTROLLER_ID) VALUES (5, 0, 'student', 'MSG://net.unicon.academus.apps.messaging.RdbmsMessageFactoryCreator$CreatorRdbmsMessageFactory/notifications/student', 6);
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_ENTRY (ACCESS_ENTRY_ID, IDENTITY_TYPE, IDENTITY_NAME, TARGET, ACCESS_CONTROLLER_ID) VALUES (6, 0, 'staff', 'MSG://net.unicon.academus.apps.messaging.RdbmsMessageFactoryCreator$CreatorRdbmsMessageFactory/notifications/staff', 6);
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_ENTRY (ACCESS_ENTRY_ID, IDENTITY_TYPE, IDENTITY_NAME, TARGET, ACCESS_CONTROLLER_ID) VALUES (7, 0, 'faculty', 'MSG://net.unicon.academus.apps.messaging.RdbmsMessageFactoryCreator$CreatorRdbmsMessageFactory/notifications/faculty', 6);
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_ENTRY (ACCESS_ENTRY_ID, IDENTITY_TYPE, IDENTITY_NAME, TARGET, ACCESS_CONTROLLER_ID) VALUES (8, 1, 'Everyone - Staff - Web Content Managers', 'dummy://net.unicon.alchemist.access.permissions.Dummy/', 12);
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (1, 65536, 'T');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (2, 1, 'T');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (2, 2, 'T');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (2, 3, 'T');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (2, 4, 'T');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (3, 1, 'T');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (3, 2, 'T');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (3, 3, 'T');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (3, 4, 'T');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (4, 65536, 'T');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (5, 65536, 'T');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (6, 65536, 'T');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (7, 65536, 'T');
+           ]]>
+       </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T');
+           ]]>
+       </sql>
     </target>
 
     <target name="initialize-cdk">
