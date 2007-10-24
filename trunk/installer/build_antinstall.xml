@@ -1219,6 +1219,12 @@ xercesImpl.version=${xercesImpl.version}
           </then>
       </if>
       <if>
+          <isset property="run.dbloader.toro.common"/>
+          <then>
+              <antcall target="initialize-access-controller"/>
+          </then>
+      </if>
+      <if>
           <isset property="run.hibernate.demetrius"/>
           <then>
               <antcall target="initialize-demetrius"/>
@@ -2191,6 +2197,9 @@ xercesImpl.version=${xercesImpl.version}
             <param name="version" value="${project.version}"/>
             <param name="tables.xml" value="/properties/db/dbloader-tables.xml"/>
         </antcall>
+    </target>
+
+    <target name="initialize-access-controller">
        <sql
            driver="${jdbc.driver}"
            url="${jdbc.url}"
