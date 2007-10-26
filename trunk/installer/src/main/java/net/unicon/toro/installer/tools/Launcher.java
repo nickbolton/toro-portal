@@ -33,6 +33,12 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
 
+import org.tp23.antinstaller.InstallException;
+import org.tp23.antinstaller.runtime.ExecInstall;
+import org.tp23.antinstaller.runtime.exe.FilterChain;
+import org.tp23.antinstaller.runtime.exe.FilterFactory;
+import org.tp23.antinstaller.selfextract.SelfExtractor;
+
 public class Launcher {
 
     public static void main(String[] args) {
@@ -65,41 +71,90 @@ public class Launcher {
                 System.exit(-1);
             }
         }
-        ProcessBuilder pb;
+        ProcessBuilder pb = null;
         if (guiMode) {
             pb = new ProcessBuilder(jvmExe.getAbsolutePath(), "-Djava.awt.headless=false", "-Xmx1024m", "-XX:MaxPermSize=384m", "-classpath", System.getProperty("java.class.path"), "org.tp23.antinstaller.selfextract.SelfExtractor");
         } else if (autoMode) {
-            File propertyFile = new File("ant.install.properties");
-            if (!propertyFile.exists()) {
-                System.err.println("Missing ant.install.properties file.");
-                System.err.println("In order to run in auto mode, a property " +
-                    "file must exist in the current directory. " +
-                    "Try running the installer in non-auto mode and select " +
-                    "'Remote Configuration' to generate a property file.");
-                System.exit(-1);
+            File previousInstall = findPreviousInstall();
+            boolean usePreviousInstall = false;
+            if (previousInstall != null) {
+                File successIndicator = new File(previousInstall, "work/.successful");
+                if (!successIndicator.exists()) {
+                    System.out.print("A previously failed installation exists (" + previousInstall.getAbsolutePath() + "). Resume? (y/N) ");
+                    
+                    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+                    String ans = null;
+
+                    try {
+                       ans = br.readLine();
+                       usePreviousInstall = "y".equalsIgnoreCase(ans) || "yes".equalsIgnoreCase(ans);
+                    } catch (IOException ioe) {
+                        usePreviousInstall = false;
+                    }
+                }
             }
-            pb = new ProcessBuilder(jvmExe.getAbsolutePath(), "-Djava.awt.headless=true", "-Xmx1024m", "-XX:MaxPermSize=384m", "-classpath", System.getProperty("java.class.path"), "org.tp23.antinstaller.selfextract.SelfExtractor", "text-auto");
+            if (usePreviousInstall) {
+                try {
+                    FilterChain chain = FilterFactory.factory(SelfExtractor.CONFIG_RESOURCE);
+                    ExecInstall installExec = new ExecInstall(chain);
+                    installExec.parseArgs(args, false);
+                    installExec.setInstallRoot(previousInstall);
+                    installExec.setTempRoot(previousInstall);
+                    installExec.exec();
+                } catch (InstallException e) {
+                    throw new RuntimeException("Failed to launch installer.", e);
+                }     
+            } else {
+                File propertyFile = new File("ant.install.properties");
+                if (!propertyFile.exists()) {
+                    System.err.println("Missing ant.install.properties file.");
+                    System.err.println("In order to run in auto mode, a property " +
+                        "file must exist in the current directory. " +
+                        "Try running the installer in non-auto mode and select " +
+                        "'Remote Configuration' to generate a property file.");
+                    System.exit(-1);
+                }
+                pb = new ProcessBuilder(jvmExe.getAbsolutePath(), "-Djava.awt.headless=true", "-Xmx1024m", "-XX:MaxPermSize=384m", "-classpath", System.getProperty("java.class.path"), "org.tp23.antinstaller.selfextract.SelfExtractor", "text-auto");
+            }
         } else {
             pb = new ProcessBuilder(jvmExe.getAbsolutePath(), "-Djava.awt.headless=true", "-Xmx1024m", "-XX:MaxPermSize=384m", "-classpath", System.getProperty("java.class.path"), "org.tp23.antinstaller.selfextract.SelfExtractor");
         }
-        try {
-            pb.redirectErrorStream(true);
-            Process p = pb.start();
-            if (!guiMode) {
-                Writer writer = new OutputStreamWriter(p.getOutputStream());
-                StandardInputWorker stdinWorker = new StandardInputWorker(writer);
-                Thread stdinThread = new Thread(stdinWorker);
-                stdinThread.start();
-                String line;
-                BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-                while ((line = reader.readLine()) != null) {
-                  System.out.println(line);
+        
+        // delegate stdout/stdin from process.
+        if (pb != null) {
+            try {
+                pb.redirectErrorStream(true);
+                Process p = pb.start();
+                if (!guiMode) {
+                    Writer writer = new OutputStreamWriter(p.getOutputStream());
+                    StandardInputWorker stdinWorker = new StandardInputWorker(writer);
+                    Thread stdinThread = new Thread(stdinWorker);
+                    stdinThread.start();
+                    String line;
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                    while ((line = reader.readLine()) != null) {
+                      System.out.println(line);
+                    }
+                    stdinWorker.stop();
                 }
-                stdinWorker.stop();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+    }
+    
+    private static File findPreviousInstall() {
+        String tempDir = System.getProperty("java.io.tmpdir");
+        File extractDir = new File(tempDir, "antinstall");
+        File previousInstall = null;
+        int idx = 0;
+        while (extractDir.exists()) {
+            previousInstall = extractDir;
+            extractDir = new File(tempDir, "antinstall" + (idx++));
+        }
+        
+        return previousInstall;
     }
 
     private static String parseInstallerJar() {

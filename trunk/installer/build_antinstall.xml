@@ -995,176 +995,289 @@ xercesImpl.version=${xercesImpl.version}
 
 
         <if>
-            <isset property="run.uportal.deploy.testsuite.portlet"/>
+            <and>
+                <isset property="run.uportal.deploy.testsuite.portlet"/>
+                <not><available file="${work.dir}/.uportal-deploy-testsuite-portlet"/></not>
+            </and>
             <then>
                 <antcall target="uportal-deploy-testsuite-portlet"/>
+                <touch file="${work.dir}/.uportal-deploy-testsuite-portlet"/>
             </then>
         </if>
 
         <if>
-            <isset property="run.uportal.deploy.proxyportlet.portlet"/>
+            <and>
+                <isset property="run.uportal.deploy.proxyportlet.portlet"/>
+                <not><available file="${work.dir}/.uportal-deploy-proxyportlet-portlet"/></not>
+            </and>
             <then>
                 <antcall target="uportal-deploy-proxyportlet-portlet"/>
+                <touch file="${work.dir}/.uportal-deploy-proxyportlet-portlet"/>
             </then>
         </if>
 
         <if>
-            <isset property="run.uportal.deploy.bookmarks.portlet"/>
+            <and>
+                <isset property="run.uportal.deploy.bookmarks.portlet"/>
+                <not><available file="${work.dir}/.uportal-deploy-bookmarks-portlet"/></not>
+            </and>
             <then>
                 <antcall target="uportal-deploy-bookmarks-portlet"/>
+                <touch file="${work.dir}/.uportal-deploy-bookmarks-portlet"/>
             </then>
         </if>
 
         <if>
-            <isset property="run.uportal.deploy.rss.portlet"/>
+            <and>
+                <isset property="run.uportal.deploy.rss.portlet"/>
+                <not><available file="${work.dir}/.uportal-deploy-rss-portlet"/></not>
+            </and>
             <then>
                 <antcall target="uportal-deploy-rss-portlet"/>
+                <touch file="${work.dir}/.uportal-deploy-rss-portlet"/>
             </then>
         </if>
 
         <if>
-            <isset property="run.uportal.deploy.google.portlet"/>
+            <and>
+                <isset property="run.uportal.deploy.google.portlet"/>
+                <not><available file="${work.dir}/.uportal-deploy-google-portlet"/></not>
+            </and>
             <then>
                 <antcall target="uportal-deploy-google-portlet"/>
+                <touch file="${work.dir}/.uportal-deploy-google-portlet"/>
             </then>
         </if>
 
         <if>
-            <isset property="run.deploy.toro.common"/>
+            <and>
+                <isset property="run.deploy.toro.common"/>
+                <not><available file="${work.dir}/.deploy-toro-common"/></not>
+            </and>
             <then>
                 <antcall target="deploy-toro-common"/>
+                <touch file="${work.dir}/.deploy-toro-common"/>
             </then>
         </if>
 
         <if>
-            <isset property="run.deploy.portlets.common"/>
+            <and>
+                <isset property="run.deploy.portlets.common"/>
+                <not><available file="${work.dir}/.deploy-portlets-common"/></not>
+            </and>
             <then>
                 <antcall target="deploy-portlets-common"/>
                 <antcall target="deploy-portlets-common-webapp"/>
+                <touch file="${work.dir}/.deploy-portlets-common"/>
             </then>
         </if>
 
         <if>
-            <isset property="run.deploy.briefcase.portlet"/>
+            <and>
+                <isset property="run.deploy.briefcase.portlet"/>
+                <not><available file="${work.dir}/.deploy-briefcase-portlet"/></not>
+            </and>
             <then>
                 <antcall target="deploy-briefcase-portlet"/>
+                <touch file="${work.dir}/.deploy-briefcase-portlet"/>
             </then>
         </if>
 
         <if>
-            <isset property="run.deploy.messaging.portlet"/>
+            <and>
+                <isset property="run.deploy.messaging.portlet"/>
+                <not><available file="${work.dir}/.deploy-messaging-portlet"/></not>
+            </and>
             <then>
                 <antcall target="deploy-messaging-portlet"/>
+                <touch file="${work.dir}/.deploy-messaging-portlet"/>
             </then>
         </if>
         <if>
-            <isset property="run.deploy.gateway.portlet"/>
+            <and>
+                <isset property="run.deploy.gateway.portlet"/>
+                <not><available file="${work.dir}/.deploy-gateway-portlet"/></not>
+            </and>
             <then>
                 <antcall target="deploy-gateway-portlet"/>
+                <touch file="${work.dir}/.deploy-gateway-portlet"/>
             </then>
         </if>
         <if>
-            <isset property="run.deploy.web.content.portlet"/>
+            <and>
+                <isset property="run.deploy.web.content.portlet"/>
+                <not><available file="${work.dir}/.deploy-web-content-portlet"/></not>
+            </and>
             <then>
                 <antcall target="deploy-web-content-portlet"/>
+                <touch file="${work.dir}/.deploy-web-content-portlet"/>
             </then>
         </if>
         <if>
-            <isset property="run.deploy.permissions.portlet"/>
+            <and>
+                <isset property="run.deploy.permissions.portlet"/>
+                <not><available file="${work.dir}/.deploy-permissions-portlet"/></not>
+            </and>
             <then>
                 <antcall target="deploy-permissions-portlet"/>
+                <touch file="${work.dir}/.deploy-permissions-portlet"/>
             </then>
         </if>
         <if>
-            <isset property="run.deploy.blojsom.portlet"/>
+            <and>
+                <isset property="run.deploy.blojsom.portlet"/>
+                <not><available file="${work.dir}/.deploy-blojsom"/></not>
+            </and>
             <then>
                 <antcall target="deploy-blojsom"/>
+                <touch file="${work.dir}/.deploy-blojsom"/>
             </then>
         </if>
 
         <if>
-            <isset property="run.deploy.channel.common"/>
+            <and>
+                <isset property="run.deploy.channel.common"/>
+                <not><available file="${work.dir}/.deploy-channels-common"/></not>
+            </and>
             <then>
                 <antcall target="deploy-channels-common"/>
+                <touch file="${work.dir}/.deploy-channels-common"/>
             </then>
         </if>
 
         <if>
-            <isset property="run.ldap.merge"/>
+            <and>
+                <isset property="run.ldap.merge"/>
+                <not><available file="${work.dir}/.ldap-merge"/></not>
+            </and>
             <then>
                 <antcall target="ldap-merge"/>
+                <touch file="${work.dir}/.ldap-merge"/>
             </then>
         </if>
 
         <if>
-            <isset property="run.deploy.bookmarks.channel"/>
+            <not><available file="${work.dir}/.ensure-security-contexts-cached"/></not>
+            <then>
+                <antcall target="ensure-security-contexts-cached"/>
+                <touch file="${work.dir}/.ensure-security-contexts-cached"/>
+            </then>
+        </if>
+
+        <if>
+            <and>
+                <isset property="run.deploy.bookmarks.channel"/>
+                <not><available file="${work.dir}/.deploy-bookmarks-channel"/></not>
+            </and>
             <then>
                 <antcall target="deploy-bookmarks-channel"/>
+                <touch file="${work.dir}/.deploy-bookmarks-channel"/>
             </then>
         </if>
         <if>
-            <isset property="run.deploy.calendar.channel"/>
+            <and>
+                <isset property="run.deploy.calendar.channel"/>
+                <not><available file="${work.dir}/.deploy-calendar-channel"/></not>
+            </and>
             <then>
                 <antcall target="deploy-calendar-channel"/>
+                <touch file="${work.dir}/.deploy-calendar-channel"/>
             </then>
         </if>
         <if>
-            <isset property="run.deploy.campusannouncement.channel"/>
+            <and>
+                <isset property="run.deploy.campusannouncement.channel"/>
+                <not><available file="${work.dir}/.deploy-campusannouncement-channel"/></not>
+            </and>
             <then>
                 <antcall target="deploy-campusannouncement-channel"/>
+                <touch file="${work.dir}/.deploy-campusannouncement-channel"/>
             </then>
         </if>
         <if>
-            <isset property="run.deploy.classifieds.channel"/>
+            <and>
+                <isset property="run.deploy.classifieds.channel"/>
+                <not><available file="${work.dir}/.deploy-classifieds-channel"/></not>
+            </and>
             <then>
                 <antcall target="deploy-classifieds-channel"/>
+                <touch file="${work.dir}/.deploy-classifieds-channel"/>
             </then>
         </if>
         <if>
-            <isset property="run.deploy.ldapchangepw.channel"/>
+            <and>
+                <isset property="run.deploy.ldapchangepw.channel"/>
+                <not><available file="${work.dir}/.deploy-ldapchangepw-channel"/></not>
+            </and>
             <then>
                 <antcall target="deploy-ldapchangepw-channel"/>
+                <touch file="${work.dir}/.deploy-ldapchangepw-channel"/>
             </then>
         </if>
         <if>
-            <isset property="run.deploy.login.channel"/>
+            <and>
+                <isset property="run.deploy.login.channel"/>
+                <not><available file="${work.dir}/.deploy-login-channel"/></not>
+            </and>
             <then>
                 <antcall target="deploy-login-channel"/>
+                <touch file="${work.dir}/.deploy-login-channel"/>
             </then>
         </if>
         <if>
-            <isset property="run.deploy.news.channel"/>
+            <and>
+                <isset property="run.deploy.news.channel"/>
+                <not><available file="${work.dir}/.deploy-news-channel"/></not>
+            </and>
             <then>
                 <antcall target="deploy-news-channel"/>
+                <touch file="${work.dir}/.deploy-news-channel"/>
             </then>
         </if>
         <if>
-            <isset property="run.deploy.notes.channel"/>
+            <and>
+                <isset property="run.deploy.notes.channel"/>
+                <not><available file="${work.dir}/.deploy-notes-channel"/></not>
+            </and>
             <then>
                 <antcall target="deploy-notes-channel"/>
+                <touch file="${work.dir}/.deploy-notes-channel"/>
             </then>
         </if>
         <if>
-            <isset property="run.deploy.survey.channel"/>
+            <and>
+                <isset property="run.deploy.survey.channel"/>
+                <not><available file="${work.dir}/.deploy-survey-channel"/></not>
+            </and>
             <then>
                 <antcall target="deploy-survey-channel"/>
+                <touch file="${work.dir}/.deploy-survey-channel"/>
             </then>
         </if>
         <if>
-            <isset property="run.deploy.useradmin.channel"/>
+            <and>
+                <isset property="run.deploy.useradmin.channel"/>
+                <not><available file="${work.dir}/.deploy-useradmin-channel"/></not>
+            </and>
             <then>
                 <antcall target="deploy-useradmin-channel"/>
+                <touch file="${work.dir}/.deploy-useradmin-channel"/>
             </then>
         </if>
         <if>
-            <isset property="run.deploy.cms.channel"/>
+            <and>
+                <isset property="run.deploy.cms.channel"/>
+                <not><available file="${work.dir}/.deploy-cms-channel"/></not>
+            </and>
             <then>
                 <antcall target="deploy-cms-channel"/>
+                <touch file="${work.dir}/.deploy-cms-channel"/>
             </then>
         </if>
 
         <antcall target="initialize"/>
 
+        <touch file="${work.dir}/.successful"/>
     </target>
 
 
@@ -1177,230 +1290,380 @@ xercesImpl.version=${xercesImpl.version}
       </copy>
 
       <if>
-          <isset property="run.uportal.db"/>
+          <and>
+              <isset property="run.uportal.db"/>
+              <not><available file="${work.dir}/.uportal-load-db"/></not>
+          </and>
           <then>
               <antcall target="uportal-load-db"/>
+              <touch file="${work.dir}/.uportal-load-db"/>
           </then>
       </if>
       <if>
-          <isset property="run.uportal.pubchan"/>
+          <and>
+              <isset property="run.uportal.pubchan"/>
+              <not><available file="${work.dir}/.uportal-pubchan"/></not>
+          </and>
           <then>
               <antcall target="uportal-pubchan"/>
+              <touch file="${work.dir}/.uportal-pubchan"/>
           </then>
       </if>
       <if>
-          <isset property="run.uportal.i18n.db"/>
+          <and>
+              <isset property="run.uportal.i18n.db"/>
+              <not><available file="${work.dir}/.uportal-i18n-db"/></not>
+          </and>
           <then>
               <antcall target="uportal-i18n-db"/>
+              <touch file="${work.dir}/.uportal-i18n-db"/>
           </then>
       </if>
       <if>
-          <isset property="run.uportal.pubfragments"/>
+          <and>
+              <isset property="run.uportal.pubfragments"/>
+              <not><available file="${work.dir}/.uportal-pubfragments"/></not>
+          </and>
           <then>
               <antcall target="uportal-pubfragments">
                   <param name="fragmentFile" value="/properties/al/fragments.xml"/>
               </antcall>
+              <touch file="${work.dir}/.uportal-pubfragments"/>
           </then>
       </if>
 
-      <antcall target="uportal-add-additional-constraints"/>
+      <if>
+          <not><available file="${work.dir}/.uportal-add-additional-constraints"/></not>
+          <then>
+              <antcall target="uportal-add-additional-constraints"/>
+              <touch file="${work.dir}/.uportal-add-additional-constraints"/>
+          </then>
+      </if>
 
       <if>
-          <isset property="run.dbloader.toro.common"/>
+          <and>
+              <isset property="run.dbloader.toro.common"/>
+              <not><available file="${work.dir}/.initialize-toro-common"/></not>
+          </and>
           <then>
               <antcall target="initialize-toro-common"/>
+              <touch file="${work.dir}/.initialize-toro-common"/>
           </then>
       </if>
 
       <if>
-          <isset property="run.hibernate.alchemist"/>
+          <and>
+              <isset property="run.hibernate.alchemist"/>
+              <not><available file="${work.dir}/.initialize-alchemist"/></not>
+          </and>
           <then>
               <antcall target="initialize-alchemist"/>
+              <touch file="${work.dir}/.initialize-alchemist"/>
           </then>
       </if>
       <if>
-          <isset property="run.dbloader.toro.common"/>
+          <and>
+              <isset property="run.dbloader.toro.common"/>
+              <not><available file="${work.dir}/.initialize-access-controller"/></not>
+          </and>
           <then>
               <antcall target="initialize-access-controller"/>
+              <touch file="${work.dir}/.initialize-access-controller"/>
           </then>
       </if>
       <if>
-          <isset property="run.hibernate.demetrius"/>
+          <and>
+              <isset property="run.hibernate.demetrius"/>
+              <not><available file="${work.dir}/.initialize-demetrius"/></not>
+          </and>
           <then>
               <antcall target="initialize-demetrius"/>
+              <touch file="${work.dir}/.initialize-demetrius"/>
           </then>
       </if>
       <if>
-          <isset property="run.hibernate.mercury"/>
+          <and>
+              <isset property="run.hibernate.mercury"/>
+              <not><available file="${work.dir}/.initialize-mercury"/></not>
+          </and>
           <then>
               <antcall target="initialize-mercury"/>
+              <touch file="${work.dir}/.initialize-mercury"/>
           </then>
       </if>
       <if>
-          <isset property="run.hibernate.portlets-common"/>
+          <and>
+              <isset property="run.hibernate.portlets-common"/>
+              <not><available file="${work.dir}/.initialize-portlets-common"/></not>
+          </and>
           <then>
               <antcall target="initialize-portlets-common"/>
+              <touch file="${work.dir}/.initialize-portlets-common"/>
           </then>
       </if>
       <if>
-          <isset property="run.dbloader.cdk"/>
+          <and>
+              <isset property="run.dbloader.cdk"/>
+              <not><available file="${work.dir}/.initialize-cdk"/></not>
+          </and>
           <then>
               <antcall target="initialize-cdk"/>
+              <touch file="${work.dir}/.initialize-cdk"/>
           </then>
       </if>
       <if>
-          <isset property="run.dbloader.survey"/>
+          <and>
+              <isset property="run.dbloader.survey"/>
+              <not><available file="${work.dir}/.initialize-survey"/></not>
+          </and>
           <then>
               <antcall target="initialize-survey"/>
+              <touch file="${work.dir}/.initialize-survey"/>
           </then>
       </if>
       <if>
-          <isset property="run.dbloader.news"/>
+          <and>
+              <isset property="run.dbloader.news"/>
+              <not><available file="${work.dir}/.initialize-news"/></not>
+          </and>
           <then>
               <antcall target="initialize-news"/>
+              <touch file="${work.dir}/.initialize-news"/>
           </then>
       </if>
       <if>
-          <isset property="run.dbloader.classifieds"/>
+          <and>
+              <isset property="run.dbloader.classifieds"/>
+              <not><available file="${work.dir}/.initialize-classifieds"/></not>
+          </and>
           <then>
               <antcall target="initialize-classifieds"/>
+              <touch file="${work.dir}/.initialize-classifieds"/>
           </then>
       </if>
       <if>
-          <isset property="run.dbloader.calendar"/>
+          <and>
+              <isset property="run.dbloader.calendar"/>
+              <not><available file="${work.dir}/.initialize-calendar"/></not>
+          </and>
           <then>
               <antcall target="initialize-calendar"/>
+              <touch file="${work.dir}/.initialize-calendar"/>
           </then>
       </if>
       <if>
-          <isset property="run.dbloader.notes"/>
+          <and>
+              <isset property="run.dbloader.notes"/>
+              <not><available file="${work.dir}/.initialize-notes"/></not>
+          </and>
           <then>
               <antcall target="initialize-notes"/>
+              <touch file="${work.dir}/.initialize-notes"/>
           </then>
       </if>
       <if>
-          <isset property="run.dbloader.bookmarks"/>
+          <and>
+              <isset property="run.dbloader.bookmarks"/>
+              <not><available file="${work.dir}/.initialize-bookmarks"/></not>
+          </and>
           <then>
               <antcall target="initialize-bookmarks"/>
+              <touch file="${work.dir}/.initialize-bookmarks"/>
           </then>
       </if>
       <if>
-          <isset property="run.dbloader.campusannouncement"/>
+          <and>
+              <isset property="run.dbloader.campusannouncement"/>
+              <not><available file="${work.dir}/.initialize-campusannouncement"/></not>
+          </and>
           <then>
               <antcall target="initialize-campusannouncement"/>
+              <touch file="${work.dir}/.initialize-campusannouncement"/>
           </then>
       </if>
       <if>
-          <isset property="run.dbloader.cms"/>
+          <and>
+              <isset property="run.dbloader.cms"/>
+              <not><available file="${work.dir}/.initialize-cms"/></not>
+          </and>
           <then>
               <antcall target="initialize-cms"/>
+              <touch file="${work.dir}/.initialize-cms"/>
           </then>
       </if>
 
       <property name="uportal.pubchan" value="true"/>
 
       <if>
-          <isset property="run.publish.common.channels"/>
+          <and>
+              <isset property="run.publish.common.channels"/>
+              <not><available file="${work.dir}/.publish-common-channels"/></not>
+          </and>
           <then>
               <antcall target="publish-addressbook"/>
               <antcall target="publish-systray"/>
+              <touch file="${work.dir}/.publish-common-channels"/>
           </then>
       </if>
 
       <if>
-          <isset property="run.publish.briefcase.portlet"/>
+          <and>
+              <isset property="run.publish.briefcase.portlet"/>
+              <not><available file="${work.dir}/.publish-briefcase-portlet"/></not>
+          </and>
           <then>
               <antcall target="publish-briefcase-portlet"/>
+              <touch file="${work.dir}/.publish-briefcase-portlet"/>
           </then>
       </if>
       <if>
-          <isset property="run.publish.gateway.portlet"/>
+          <and>
+              <isset property="run.publish.gateway.portlet"/>
+              <not><available file="${work.dir}/.publish-gateway-portlet"/></not>
+          </and>
           <then>
               <antcall target="publish-gateway-portlet"/>
+              <touch file="${work.dir}/.publish-gateway-portlet"/>
           </then>
       </if>
       <if>
-          <isset property="run.publish.messaging.portlet"/>
+          <and>
+              <isset property="run.publish.messaging.portlet"/>
+              <not><available file="${work.dir}/.publish-messaging-portlet"/></not>
+          </and>
           <then>
               <antcall target="publish-messaging-portlet"/>
+              <touch file="${work.dir}/.publish-messaging-portlet"/>
           </then>
       </if>
       <if>
-          <isset property="run.publish.permissions.portlet"/>
+          <and>
+              <isset property="run.publish.permissions.portlet"/>
+              <not><available file="${work.dir}/.publish-permissions-portlet"/></not>
+          </and>
           <then>
               <antcall target="publish-permissions-portlet"/>
+              <touch file="${work.dir}/.publish-permissions-portlet"/>
           </then>
       </if>
       <if>
-          <isset property="run.publish.web.content.portlet"/>
+          <and>
+              <isset property="run.publish.web.content.portlet"/>
+              <not><available file="${work.dir}/.publish-web-content-portlet"/></not>
+          </and>
           <then>
               <antcall target="publish-web-content-portlet"/>
+              <touch file="${work.dir}/.publish-web-content-portlet"/>
           </then>
       </if>
       <if>
-          <isset property="run.publish.survey.channel"/>
+          <and>
+              <isset property="run.publish.survey.channel"/>
+              <not><available file="${work.dir}/.publish-survey"/></not>
+          </and>
           <then>
               <antcall target="publish-survey"/>
+              <touch file="${work.dir}/.publish-survey"/>
           </then>
       </if>
       <if>
-          <isset property="run.publish.news.channel"/>
+          <and>
+              <isset property="run.publish.news.channel"/>
+              <not><available file="${work.dir}/.publish-news"/></not>
+          </and>
           <then>
               <antcall target="publish-news"/>
+              <touch file="${work.dir}/.publish-news"/>
           </then>
       </if>
       <if>
-          <isset property="run.publish.classifieds.channel"/>
+          <and>
+              <isset property="run.publish.classifieds.channel"/>
+              <not><available file="${work.dir}/.publish-classifieds"/></not>
+          </and>
           <then>
               <antcall target="publish-classifieds"/>
+              <touch file="${work.dir}/.publish-classifieds"/>
           </then>
       </if>
       <if>
-          <isset property="run.publish.calendar.channel"/>
+          <and>
+              <isset property="run.publish.calendar.channel"/>
+              <not><available file="${work.dir}/.publish-calendar"/></not>
+          </and>
           <then>
               <antcall target="publish-calendar"/>
+              <touch file="${work.dir}/.publish-calendar"/>
           </then>
       </if>
       <if>
-          <isset property="run.publish.login.channel"/>
+          <and>
+              <isset property="run.publish.login.channel"/>
+              <not><available file="${work.dir}/.publish-login"/></not>
+          </and>
           <then>
               <antcall target="publish-login"/>
+              <touch file="${work.dir}/.publish-login"/>
           </then>
       </if>
       <if>
-          <isset property="run.publish.notes.channel"/>
+          <and>
+              <isset property="run.publish.notes.channel"/>
+              <not><available file="${work.dir}/.publish-notes"/></not>
+          </and>
           <then>
               <antcall target="publish-notes"/>
+              <touch file="${work.dir}/.publish-notes"/>
           </then>
       </if>
       <if>
-          <isset property="run.publish.bookmarks.channel"/>
+          <and>
+              <isset property="run.publish.bookmarks.channel"/>
+              <not><available file="${work.dir}/.publish-bookmarks"/></not>
+          </and>
           <then>
               <antcall target="publish-bookmarks"/>
+              <touch file="${work.dir}/.publish-bookmarks"/>
           </then>
       </if>
       <if>
-          <isset property="run.publish.campusannouncement.channel"/>
+          <and>
+              <isset property="run.publish.campusannouncement.channel"/>
+              <not><available file="${work.dir}/.publish-campusannouncement"/></not>
+          </and>
           <then>
               <antcall target="publish-campusannouncement"/>
+              <touch file="${work.dir}/.publish-campusannouncement"/>
           </then>
       </if>
       <if>
-          <isset property="run.publish.ldapchangepw.channel"/>
+          <and>
+              <isset property="run.publish.ldapchangepw.channel"/>
+              <not><available file="${work.dir}/.publish-ldapchangepw"/></not>
+          </and>
           <then>
               <antcall target="publish-ldapchangepw"/>
+              <touch file="${work.dir}/.publish-ldapchangepw"/>
           </then>
       </if>
       <if>
-          <isset property="run.publish.useradmin.channel"/>
+          <and>
+              <isset property="run.publish.useradmin.channel"/>
+              <not><available file="${work.dir}/.publish-useradmin"/></not>
+          </and>
           <then>
               <antcall target="publish-useradmin"/>
+              <touch file="${work.dir}/.publish-useradmin"/>
           </then>
       </if>
       <if>
-          <isset property="run.publish.cms.channel"/>
+          <and>
+              <isset property="run.publish.cms.channel"/>
+              <not><available file="${work.dir}/.publish-cms"/></not>
+          </and>
           <then>
               <antcall target="publish-cms"/>
+              <touch file="${work.dir}/.publish-cms"/>
           </then>
       </if>
     </target>
@@ -1765,6 +2028,21 @@ xercesImpl.version=${xercesImpl.version}
             <param name="configfile" value="${work.dir}/ldap-merge/security-context-bean-merge-configuration.xml"/>
             <param name="targetdir" value="${portal.webapp.home}"/>
         </antcall>
+    </target>
+
+    <target name="ensure-security-contexts-cached">
+        <artifact:dependencies pathId="jetspeed.pathId">
+            <dependency groupId="jetspeed" artifactId="jetspeed" version="1.5" type="jar"/>
+            <remoteRepository refid="toro.repository" />
+        </artifact:dependencies>
+
+        <java fork="true" failonerror="true" dir="${work.dir}" classname="net.unicon.toro.installer.tools.EnsureSecurityContextsHaveCaching">
+            <classpath>
+                <path refId="jetspeed.pathId"/>
+                <pathelement path="${basedir}"/>
+            </classpath>
+            <arg value="${portal.webapp.home}"/>
+        </java>
     </target>
 
     <target name="deploy-briefcase-portlet">
