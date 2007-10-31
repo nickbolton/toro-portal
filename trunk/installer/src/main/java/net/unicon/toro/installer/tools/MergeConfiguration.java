@@ -22,10 +22,9 @@
  * a copy of the text describing the FLOSS exception along with this
  * distribution.
  */
-package net.unicon.alchemist.tools;
+package net.unicon.toro.installer.tools;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -35,14 +34,12 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -126,7 +123,7 @@ public class MergeConfiguration {
     
     private void mergePropertiesChanges(Element el, File path) throws Exception {
         System.out.println("Merging properties changes to " + path.getAbsolutePath());
-        backupOriginalFile(path);
+        Utils.instance().backupFile(path, true);
         
         // create temp properties file to merge from
         Properties props = new Properties();
@@ -156,14 +153,37 @@ public class MergeConfiguration {
         }
     }
     
+    private void saveXml(Document doc, File saveTo) throws IOException {
+        String xmlEncoding = doc.getXMLEncoding();
+        OutputFormat format = new OutputFormat("    ", true, xmlEncoding);
+        format.setTrimText(true);
+        XMLWriter writer = new XMLWriter(new FileWriter(saveTo), format);
+        writer.write(doc);
+        writer.close();
+    }
+    
+    private void saveXml(Element el, File saveTo) {
+        try {
+            OutputFormat format = new OutputFormat("    ", true);
+            format.setTrimText(true);
+            XMLWriter writer = new XMLWriter(new FileWriter(saveTo), format);
+            writer.write(el);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     private void mergeXmlChanges(Element el, File path) throws Exception {
         System.out.println("Merging xml changes to " + path.getAbsolutePath());
-        backupOriginalFile(path);
+        Utils.instance().backupFile(path, true);
         
         SAXReader reader = new SAXReader();
         reader.setEntityResolver(new DTDResolver(target));
         Document doc = reader.read(new URL("file:"+path.getAbsolutePath()));
         Element source = doc.getRootElement();
+        
+        saveXml(doc, new File("/tmp/before."+path.getName()));
         
         String xmlEncoding = doc.getXMLEncoding();
         
@@ -177,15 +197,10 @@ public class MergeConfiguration {
         processElementValueReplacements(el, source);
         processNodeReplacements(el, source);
         //processAddToNodes(el, source);
-        processNodeAddOrReplace(el, source);
+        processNodeAddOrReplace(el, source, path);
         
-        //OutputFormat format = OutputFormat.createPrettyPrint();
-        //format.setEncoding(xmlEncoding);
-        OutputFormat format = new OutputFormat("    ", true, xmlEncoding);
-        format.setTrimText(true);
-        XMLWriter writer = new XMLWriter(new FileWriter(path), format);
-        writer.write(doc);
-        writer.close();
+        saveXml(doc, new File("/tmp/after."+path.getName()));
+        saveXml(doc, path);
     }
     
     private void outputElement(Element source, StringBuffer sb, int level) {
@@ -205,11 +220,13 @@ public class MergeConfiguration {
         }
     }
 
-    private void processNodeAddOrReplace(Element el, Element source) {
+    private void processNodeAddOrReplace(Element el, Element source, File path) {
         List list = el.selectNodes("add-or-replace[@where='end']");
         if (list == null) return;
 
         removeOldNodes(source);
+        
+        saveXml(source, new File("/tmp/removals."+path.getName()));
         
         Iterator itr = list.iterator();
         while (itr.hasNext()) {
@@ -222,21 +239,31 @@ public class MergeConfiguration {
 
     private void removeOldNodes(Element source) {
         // remove any previous nodes added by academus
-        ListIterator contentItr = source.content().listIterator();
+        Iterator contentItr = source.content().iterator();
         boolean sawBegin = false;
         boolean sawEnd = false;
+        
+        List<Node> removedNodes = new LinkedList<Node>();
+        
         while (!sawEnd && contentItr.hasNext()) {
             Node node = (Node)contentItr.next();
+            if (node instanceof Element) {
+                removeOldNodes((Element)node);
+            }
             
             if (!sawBegin) {
                 sawBegin = node instanceof Comment && ((Comment)node).getText().equals(CHANGE_START_COMMENT);
                 if (sawBegin) {
-	                contentItr.remove();
+                    removedNodes.add(node);
                 }
             } else {
-                contentItr.remove();
+                removedNodes.add(node);
                 sawEnd = node instanceof Comment && ((Comment)node).getText().equals(CHANGE_END_COMMENT);
             }
+        }
+        
+        for (Node n : removedNodes) {
+            source.remove(n);
         }
     }
         
@@ -265,7 +292,7 @@ public class MergeConfiguration {
         itr = sourceList.iterator();
         while (itr.hasNext()) {
             Element sourceEl = (Element)itr.next();
-            System.out.println("Appending to xpath: " + sourceEl.getPath());
+            System.out.println("Appending to xpath: " + sourceEl.getPath()); // + "newContent:\n" + newContent.asXML());
             sourceEl.appendContent(newContent);
         }
     }
@@ -355,7 +382,7 @@ public class MergeConfiguration {
     
     private void mergeWebChanges(Element el, File path) throws Exception {
         System.out.println("Merging web.xml changes to " + path.getAbsolutePath());
-        backupOriginalFile(path);
+        Utils.instance().backupFile(path, true);
         
         
         OutputFormat format = OutputFormat.createPrettyPrint();
@@ -393,27 +420,6 @@ public class MergeConfiguration {
         SAXReader reader = new SAXReader();
         Document document = reader.read(new URL("file:"+file.getAbsolutePath()));
         return document;
-    }
-    
-    
-    private void backupOriginalFile(File path) throws IOException {
-        File backupDir = new File(path.getParentFile(), "merge_backups");
-        backupDir.mkdirs();
-        File originalBackup = new File(backupDir, path.getName());
-        if (!originalBackup.exists()) {
-			// Create channel on the source
-            FileChannel srcChannel = new FileInputStream(path).getChannel();
-        
-            // Create channel on the destination
-            FileChannel dstChannel = new FileOutputStream(originalBackup).getChannel();
-        
-            // Copy file contents from source to destination
-            dstChannel.transferFrom(srcChannel, 0, srcChannel.size());
-        
-            // Close the channels
-            srcChannel.close();
-            dstChannel.close();
-        }
     }
     
     public static void main(String args[]) {

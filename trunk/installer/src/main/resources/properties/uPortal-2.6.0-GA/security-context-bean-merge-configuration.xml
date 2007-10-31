@@ -38,7 +38,7 @@
             <name>securityContextProperty.root.ldap-@ldap2.name.security@</name>
             <value>@ldap2.name.security@</value>
         </add-or-replace@ldap2.security.comment@>
-        <@@ldap3.name.security@add-or-replace>
+        <@ldap3.security.comment@add-or-replace>
             <name>root.ldap-@ldap3.name.security@</name>
             <value>org.jasig.portal.security.provider.SimpleLdapSecurityContextFactory</value>
         </add-or-replace>
@@ -49,8 +49,8 @@
         <add-or-replace>
             <name>securityContextProperty.root.ldap-@ldap3.name.security@</name>
             <value>@ldap3.name.security@</value>
-        </add-or-replace@ldap3.name.security@>
-        <@ldap4.name.security@add-or-replace>
+        </add-or-replace@ldap3.security.comment@>
+        <@ldap4.security.comment@add-or-replace>
             <name>root.ldap-@ldap4.name.security@</name>
             <value>org.jasig.portal.security.provider.SimpleLdapSecurityContextFactory</value>
         </add-or-replace>
@@ -61,6 +61,6 @@
         <add-or-replace>
             <name>securityContextProperty.root.ldap-@ldap4.name.security@</name>
             <value>@ldap4.name.security@</value>
-        </add-or-replace@@ldap4.name.security@>
+        </add-or-replace@ldap4.security.comment@>
     </file@ldap.security.comment@>
 </changes>

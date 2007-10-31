@@ -59,6 +59,10 @@ public class DbVersion {
           tempProperties.put("password", password);
           Connection conn = driver.connect(url, tempProperties);
           
+          if (conn == null) {
+              System.out.println("Failed to get a connection to db: url");
+              System.exit(-1);
+          }
           DatabaseMetaData dbMetaData = conn.getMetaData();
           String dbName = dbMetaData.getDatabaseProductName();
           String dbVersion = dbMetaData.getDatabaseProductVersion();

@@ -55,7 +55,7 @@ public class GenerateSecurityContextProperties extends Task {
       }
     }
     for (int i=scIndex; i<=4; i++) {
-      getProject().setProperty("ldap"+getIndex(scIndex)+".security.comment", "!--");
+      getProject().setProperty("ldap"+getIndex(i)+".security.comment", "!--");
     }
   }
   

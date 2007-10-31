@@ -139,30 +139,9 @@ public class EnsureSecurityContextsHaveCaching {
         return l;
     }
     
-     // Copies src file to dst file.
-    // If the dst file does not exist, it is created
-    void copy(File src, File dst) {
-        try {
-        InputStream in = new FileInputStream(src);
-        OutputStream out = new FileOutputStream(dst);
-    
-        // Transfer bytes from in to out
-        byte[] buf = new byte[1024];
-        int len;
-        while ((len = in.read(buf)) > 0) {
-            out.write(buf, 0, len);
-        }
-        in.close();
-        out.close();
-        } catch (IOException e) {
-            throw new RuntimeException("Failed copying file: " + src.getAbsolutePath() + " -> " + dst.getAbsolutePath());
-        }
-    }
-    
     private void save(Properties p, File securityContextFile) {
-        File nextBackup = getNextBackupFile(securityContextFile);
         
-        copy(securityContextFile, nextBackup);
+        Utils.instance().backupFile(securityContextFile, true);
         
         FileOutputStream os;
         try {
@@ -177,6 +156,8 @@ public class EnsureSecurityContextsHaveCaching {
             overwriter.setIncludeRoot(new File("."));
             overwriter.setVerbose(false);
             overwriter.execute();
+            
+            mergeFile.delete();
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Failed to open file: " + securityContextFile.getAbsolutePath());
@@ -185,41 +166,6 @@ public class EnsureSecurityContextsHaveCaching {
         }
     }
     
-    private File getNextBackupFile(final File f) {
-        final Pattern filenamePattern = Pattern.compile(f.getName()+"\\.([0-9]+)");
-        FileFilter filter = new FileFilter() {
-            public boolean accept(File potentialFile) {
-                Matcher m = filenamePattern.matcher(potentialFile.getName());
-                return m.find();
-            }
-        };
-        
-        File parent = f.getParentFile();
-        File backupDir = new File(parent, "toro_installer_backups");
-        backupDir.mkdir();
-        File[] backups = backupDir.listFiles(filter);
-        System.out.println("ZZZ backups.length: " + backups.length);
-        System.out.println("ZZZ backups: " + Arrays.asList(backups));
-        if (backups.length == 0) {
-        System.out.println("ZZZ hello1");
-            return new File(backupDir, f.getName()+".0");
-        }
-        System.out.println("ZZZ hello2");
-        int maxIndex = 0;
-        for (int i=0; i<backups.length; i++) {
-            Matcher m = filenamePattern.matcher(backups[i].getName());
-            if (m.find()) {
-                
-                int thisIndex = new Integer(m.group(1));
-                if (thisIndex > maxIndex) {
-                    maxIndex = thisIndex;
-                }
-            }
-        }
-        
-        return new File(backupDir, f.getName()+'.'+(maxIndex+1));
-    }
-
     public String getUPortalHome() {
         return uPortalHome;
     }

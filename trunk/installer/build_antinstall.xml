@@ -1146,17 +1146,6 @@ xercesImpl.version=${xercesImpl.version}
         </if>
 
         <if>
-            <and>
-                <isset property="run.ldap.merge"/>
-                <not><available file="${work.dir}/.ldap-merge"/></not>
-            </and>
-            <then>
-                <antcall target="ldap-merge"/>
-                <touch file="${work.dir}/.ldap-merge"/>
-            </then>
-        </if>
-
-        <if>
             <not><available file="${work.dir}/.ensure-security-contexts-cached"/></not>
             <then>
                 <antcall target="ensure-security-contexts-cached"/>
@@ -1272,6 +1261,17 @@ xercesImpl.version=${xercesImpl.version}
             <then>
                 <antcall target="deploy-cms-channel"/>
                 <touch file="${work.dir}/.deploy-cms-channel"/>
+            </then>
+        </if>
+
+        <if>
+            <and>
+                <isset property="run.ldap.merge"/>
+                <not><available file="${work.dir}/.ldap-merge"/></not>
+            </and>
+            <then>
+                <antcall target="ldap-merge"/>
+                <touch file="${work.dir}/.ldap-merge"/>
             </then>
         </if>
 
@@ -1817,10 +1817,11 @@ xercesImpl.version=${xercesImpl.version}
             <remoteRepository refid="toro.repository" />
         </artifact:dependencies>
         <echo>MergeConfiguration configfile=${configfile} targetdir=${targetdir}</echo>
-        <java failonerror="true" fork="true" dir="${basedir}" classname="net.unicon.alchemist.tools.MergeConfiguration">
+        <java failonerror="true" fork="true" dir="${basedir}" classname="net.unicon.toro.installer.tools.MergeConfiguration">
             <classpath refid="configuration.classpath"/>
             <classpath>
                 <pathelement path="${work.dir}/uportal-properties"/>
+                <pathelement path="${basedir}"/>
             </classpath>
             <arg line="${configfile} ${targetdir}"/>    
         </java>
@@ -2011,6 +2012,7 @@ xercesImpl.version=${xercesImpl.version}
 
         <taskdef name="gen-security-context-props" classname="net.unicon.toro.installer.anttask.GenerateSecurityContextProperties" classpath="${basedir}"/>
         <gen-security-context-props/>
+
         <copy filtering="on" todir="${work.dir}/ldap-merge" file="${basedir}/properties/uPortal-${uportal.version}/security-context-bean-merge-configuration.xml">
             <filterset refid="tokens"/>
             <filterset>
@@ -3583,15 +3585,33 @@ INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T
 
        <!-- constructing a dbloader.xml based on the jdbc properties -->
        <copy overwrite="true" todir="${work.dir}/uportal-properties/properties/db" file="${basedir}/properties/uPortal-${uportal.version}/dbloader.xml"/>
-        <java outputproperty="db.meta.data" fork="true" failonerror="true" dir="${basedir}" classname="net.unicon.toro.installer.dbloader.DbVersion">
-            <classpath>
-                <pathelement path="${basedir}"/>
-                <path refId="uportal.classpath"/>
-            </classpath>
-            <arg line="${jdbc.driver} ${jdbc.url} ${jdbc.user} ${jdbc.password}"/>
-        </java>
-        <echo>db.meta.data =\n${db.meta.data}</echo>
-        <copy overwrite="true" todir="${work.dir}" file="${basedir}/properties/dbloader-${db.platform}-mapping.xml">
+       <java outputproperty="db.meta.data" fork="true" failonerror="false" dir="${basedir}" classname="net.unicon.toro.installer.dbloader.DbVersion">
+           <classpath>
+               <pathelement path="${basedir}"/>
+               <path refId="uportal.classpath"/>
+           </classpath>
+           <arg line="${jdbc.driver} ${jdbc.url} ${jdbc.user} ${jdbc.password}"/>
+       </java>
+       <if>
+           <not>
+               <contains string="${db.meta.data}" substring="db-name>"/>
+           </not>
+           <then>
+               <fail>
+
+DbVersion utility failed.
+
+jdbc.driver=${jdbc.driver}
+jdbc.url=${jdbc.url}
+jdbc.user=${jdbc.user}
+jdbc.password=${jdbc.password}
+
+Message: ${db.meta.data}
+               </fail>
+           </then>
+       </if>
+       <echo>db.meta.data =\n${db.meta.data}</echo>
+       <copy overwrite="true" todir="${work.dir}" file="${basedir}/properties/dbloader-${db.platform}-mapping.xml">
            <filterset>
                <filter token="db.meta.data" value="${db.meta.data}"/>
            </filterset>

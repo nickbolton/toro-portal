@@ -6,10 +6,16 @@
             <xpath>/beans/bean[@id='mergedPersonAttributeDao']/property[@name='personAttributeDaos']/list</xpath>
             <value>
                 <ref bean="uPortalLdapAttributeSource-@ldap.name@"/>
-                <@ldap2.comment@ref bean="uPortalLdapAttributeSource-@ldap2.name@"/@ldap2.comment@>
-                <@ldap3.comment@ref bean="uPortalLdapAttributeSource-@ldap3.name@"/@ldap3.comment@>
-                <@ldap4.comment@ref bean="uPortalLdapAttributeSource-@ldap4.name@"/@ldap4.comment@>
             </value>
+            <@ldap2.comment@value>
+                <ref bean="uPortalLdapAttributeSource-@ldap2.name@"/>
+            </value@ldap2.comment@>
+            <@ldap3.comment@value>
+                <ref bean="uPortalLdapAttributeSource-@ldap3.name@"/>
+            </value@ldap3.comment@>
+            <@ldap4.comment@value>
+                <ref bean="uPortalLdapAttributeSource-@ldap4.name@"/>
+            </value@ldap4.comment@>
         </add-or-replace>
         <add-or-replace where="end">
             <xpath>/beans</xpath>
@@ -33,7 +39,7 @@
                 <entry key="@ldap.server.uid@"><value>password</value></entry>
                 <entry key="givenName"><value>firstName</value></entry>
                 <entry key="sn"><value>lastname</value></entry>
-                <entry key="userPrincipalName"><value>mail</value></entry>
+                <entry key="mail"><value>mail</value></entry>
                 <entry key="cn"><value>displayName</value></entry>
                 <entry key="destinationIndicator"><value>uPortalTemplateUserName</value></entry>
             </map>
@@ -69,7 +75,7 @@
                 <entry key="@ldap2.server.uid@"><value>password</value></entry>
                 <entry key="givenName"><value>firstName</value></entry>
                 <entry key="sn"><value>lastname</value></entry>
-                <entry key="userPrincipalName"><value>mail</value></entry>
+                <entry key="mail"><value>mail</value></entry>
                 <entry key="cn"><value>displayName</value></entry>
                 <entry key="destinationIndicator"><value>uPortalTemplateUserName</value></entry>
             </map>
@@ -105,7 +111,7 @@
                 <entry key="@ldap3.server.uid@"><value>password</value></entry>
                 <entry key="givenName"><value>firstName</value></entry>
                 <entry key="sn"><value>lastname</value></entry>
-                <entry key="userPrincipalName"><value>mail</value></entry>
+                <entry key="mail"><value>mail</value></entry>
                 <entry key="cn"><value>displayName</value></entry>
                 <entry key="destinationIndicator"><value>uPortalTemplateUserName</value></entry>
             </map>
@@ -164,7 +170,7 @@
 
     <@ldap.comment@file path="WEB-INF/classes/properties/ToroPersonDirs.xml">
         <add-or-replace where="end">
-            <xpath>/PersonDirs/PersonDirInfo</xpath>
+            <xpath>/PersonDirs</xpath>
             <value>
 <PersonDirInfo>
 
@@ -173,7 +179,7 @@
         <logonid>@ldap.server.managerdn@</logonid>
         <logonpassword>@ldap.server.manager.password@</logonpassword>
         <uidquery>(@ldap.server.uid@={0})</uidquery>
-        <searchquery>(~MATCH_ALL_OP~(@ldap.server.uid@={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(userPrincipalName={3}~WILDCARD_3~))</searchquery>
+        <searchquery>(~MATCH_ALL_OP~(@ldap.server.uid@={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(mail={3}~WILDCARD_3~))</searchquery>
         <searchquery2>(&amp;~SEARCH_QUERY~(|~USER_FILTER~))</searchquery2>
         <unionOperator>|</unionOperator>
         <intersectionOperator>&amp;</intersectionOperator>
@@ -225,7 +231,7 @@
         <logonid>@ldap2.server.managerdn@</logonid>
         <logonpassword>@ldap2.server.manager.password@</logonpassword>
         <uidquery>(@ldap2.server.uid@={0})</uidquery>
-        <searchquery>(~MATCH_ALL_OP~(@ldap2.server.uid@={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(userPrincipalName={3}~WILDCARD_3~))</searchquery>
+        <searchquery>(~MATCH_ALL_OP~(@ldap2.server.uid@={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(mail={3}~WILDCARD_3~))</searchquery>
         <searchquery2>(&amp;~SEARCH_QUERY~(|~USER_FILTER~))</searchquery2>
         <unionOperator>|</unionOperator>
         <intersectionOperator>&amp;</intersectionOperator>
@@ -276,7 +282,7 @@
         <logonid>@ldap3.server.managerdn@</logonid>
         <logonpassword>@ldap3.server.manager.password@</logonpassword>
         <uidquery>(@ldap3.server.uid@={0})</uidquery>
-        <searchquery>(~MATCH_ALL_OP~(@ldap3.server.uid@={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(userPrincipalName={3}~WILDCARD_3~))</searchquery>
+        <searchquery>(~MATCH_ALL_OP~(@ldap3.server.uid@={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(mail={3}~WILDCARD_3~))</searchquery>
         <searchquery2>(&amp;~SEARCH_QUERY~(|~USER_FILTER~))</searchquery2>
         <unionOperator>|</unionOperator>
         <intersectionOperator>&amp;</intersectionOperator>
@@ -327,7 +333,7 @@
         <logonid>@ldap4.server.managerdn@</logonid>
         <logonpassword>@ldap4.server.manager.password@</logonpassword>
         <uidquery>(@ldap4.server.uid@={0})</uidquery>
-        <searchquery>(~MATCH_ALL_OP~(@ldap4.server.uid@={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(userPrincipalName={3}~WILDCARD_3~))</searchquery>
+        <searchquery>(~MATCH_ALL_OP~(@ldap4.server.uid@={0}~WILDCARD_0~)(givenName={1}~WILDCARD_1~)(sn={2}~WILDCARD_2~)(mail={3}~WILDCARD_3~))</searchquery>
         <searchquery2>(&amp;~SEARCH_QUERY~(|~USER_FILTER~))</searchquery2>
         <unionOperator>|</unionOperator>
         <intersectionOperator>&amp;</intersectionOperator>
