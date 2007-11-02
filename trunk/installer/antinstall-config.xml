@@ -93,7 +93,6 @@
         <hidden property="portlet-api.version" value="@portlet-api.version@"/>
         <hidden property="xercesImpl.version" value="@xercesImpl.version@"/>
         <hidden property="xalan.version" value="@xalan.version@"/>
-        <hidden property="jetspeed.version" value="@jetspeed.version@"/>
         <hidden property="jaxen.version" value="@jaxen.version@"/>
         <hidden property="dom4j.version" value="@dom4j.version@"/>
         <hidden property="springframework.version" value="@springframework.version@"/>
@@ -208,7 +207,7 @@
                 overflow="true"
 			displayText="Select which version to install">
         <select
-            property="uPortal.version"
+            property="uportal.version"
             displayText="uPortal version"
             defaultValue="@uportal.version1@">
             <option text="@uportal.version1@" value="@uportal.version1@"/>
@@ -222,7 +221,7 @@
 			displayText="Select which uPortal version is installed">
         <select
             property="uportal.version"
-            displayText="uportal version"
+            displayText="uPortal version"
             defaultValue="@uportal.version1@">
             <option text="@uportal.version1@" value="@uportal.version1@"/>
         </select>

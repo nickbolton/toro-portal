@@ -105,7 +105,7 @@
                     <filter token="deploy.all" value="false"/>
                     <filter token="initialize.all" value="false"/>
                     <filter token="uportal.deploy" value="false"/>
-                    <filter token="uPortal.version1" value="2.6.0-GA"/>
+                    <filter token="uportal.version1" value="2.6.0-GA"/>
                     <filter token="portal.webapp.name" value="portal"/>
                     <filter token="portal.server.http.protocol" value="http"/>
                     <filter token="portal.server.hostname" value="localhost"/>
@@ -119,24 +119,24 @@
                     <filter token="uportal.deploy.bookmarks.portlet" value="false"/>
                     <filter token="uportal.deploy.rss.portlet" value="false"/>
                     <filter token="uportal.deploy.google.portlet" value="false"/>
-                    <filter token="briefcase-portlet.active" value="true"/>
-                    <filter token="messaging-portlet.active" value="true"/>
-                    <filter token="gateway-portlet.active" value="true"/>
-                    <filter token="web-content-portlet.active" value="true"/>
-                    <filter token="permissions-portlet.active" value="true"/>
-                    <filter token="blojsom.active" value="true"/>
-                    <filter token="addressbook.active" value="true"/>
-                    <filter token="survey.active" value="true"/>
-                    <filter token="news.active" value="true"/>
-                    <filter token="classifieds.active" value="true"/>
-                    <filter token="calendar.active" value="true"/>
-                    <filter token="notes.active" value="true"/>
-                    <filter token="bookmarks.active" value="true"/>
-                    <filter token="campusannouncement.active" value="true"/>
-                    <filter token="ldapchangepw.active" value="true"/>
-                    <filter token="login.active" value="true"/>
-                    <filter token="cms.active" value="true"/>
-                    <filter token="useradmin.active" value="true"/>
+                    <filter token="briefcase-portlet.active" value="false"/>
+                    <filter token="messaging-portlet.active" value="false"/>
+                    <filter token="gateway-portlet.active" value="false"/>
+                    <filter token="web-content-portlet.active" value="false"/>
+                    <filter token="permissions-portlet.active" value="false"/>
+                    <filter token="blojsom.active" value="false"/>
+                    <filter token="addressbook.active" value="false"/>
+                    <filter token="survey.active" value="false"/>
+                    <filter token="news.active" value="false"/>
+                    <filter token="classifieds.active" value="false"/>
+                    <filter token="calendar.active" value="false"/>
+                    <filter token="notes.active" value="false"/>
+                    <filter token="bookmarks.active" value="false"/>
+                    <filter token="campusannouncement.active" value="false"/>
+                    <filter token="ldapchangepw.active" value="false"/>
+                    <filter token="login.active" value="false"/>
+                    <filter token="cms.active" value="false"/>
+                    <filter token="useradmin.active" value="false"/>
                     <filter token="project.version1" value="1.0.0-SNAPSHOT"/>
                     <filter token="tomcat.host.conf.relative" value="conf/Catalina/localhost"/>
                     <filter token="toro.data.home" value="/toro/data"/>
@@ -171,19 +171,19 @@
                     <filter token="reddot.url" value=""/>
                     <filter token="reddot.method" value="get"/>
                     <filter token="hibernate.create.only.checkbox" value="true"/>
-                    <filter token="hibernate.alchemist" value="true"/>
-                    <filter token="hibernate.portlets-common" value="true"/>
-                    <filter token="hibernate.demetrius" value="true"/>
-                    <filter token="hibernate.mercury" value="true"/>
-                    <filter token="dbloader.cdk" value="true"/>
-                    <filter token="dbloader.toro.common" value="true"/>
-                    <filter token="dbloader.addressbook" value="true"/>
-                    <filter token="dbloader.survey" value="true"/>
-                    <filter token="dbloader.news" value="true"/>
-                    <filter token="dbloader.classifieds" value="true"/>
-                    <filter token="dbloader.notes" value="true"/>
-                    <filter token="dbloader.campusannouncement" value="true"/>
-                    <filter token="dbloader.cms" value="true"/>
+                    <filter token="hibernate.alchemist" value="false"/>
+                    <filter token="hibernate.portlets-common" value="false"/>
+                    <filter token="hibernate.demetrius" value="false"/>
+                    <filter token="hibernate.mercury" value="false"/>
+                    <filter token="dbloader.cdk" value="false"/>
+                    <filter token="dbloader.toro.common" value="false"/>
+                    <filter token="dbloader.addressbook" value="false"/>
+                    <filter token="dbloader.survey" value="false"/>
+                    <filter token="dbloader.news" value="false"/>
+                    <filter token="dbloader.classifieds" value="false"/>
+                    <filter token="dbloader.notes" value="false"/>
+                    <filter token="dbloader.campusannouncement" value="false"/>
+                    <filter token="dbloader.cms" value="false"/>
                   </filterset>
                 </copy>
               </tasks>

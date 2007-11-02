@@ -66,17 +66,23 @@
         id="central.repository"
         url="${central.remote.repo}" />
 
-    <artifact:dependencies pathId="db.classpath">
+    <property environment="env"/>
+
+    <artifact:dependencies pathId="db.classpath.minus.oracle">
         <dependency groupId="net.sourceforge.jtds" artifactId="jtds"
             version="${jtds.version}" type="jar"/>
-        <dependency groupId="mysql" artifactId="mysql-connector-java"
+        <dependency groupId="com.mysql" artifactId="mysql-connector-java"
             version="${mysql.version}" type="jar"/>
-        <dependency groupId="com.oracle" artifactId="ojdbc14"
-            version="${oracle.version}" type="jar"/>
         <dependency groupId="postgresql" artifactId="postgresql"
             version="${postgresql.version}" type="jar"/>
         <remoteRepository refid="toro.repository" />
+        <remoteRepository refid="central.repository" />
     </artifact:dependencies>
+
+    <path id="db.classpath">
+        <path refid="db.classpath.minus.oracle"/>
+        <pathelement location="${basedir}/lib/ojdbc14-10g.jar"/>
+    </path>
 
     <!--  Driver targets  -->
     <target name="clean" depends="clean-portlets">
@@ -899,7 +905,6 @@ jdbc.poolsize.web.content=${jdbc.poolsize.web.content}
 jdbc.simplesql=${jdbc.simplesql}
 jdbc.url=${jdbc.url}
 jdbc.user=${jdbc.user}
-jetspeed.version=${jetspeed.version}
 jstl.version=${jstl.version}
 jtds.version=${jtds.version}
 messaging-portlet.active=${messaging-portlet.active}
@@ -1807,13 +1812,12 @@ xercesImpl.version=${xercesImpl.version}
         <artifact:dependencies pathId="configuration.classpath">
             <dependency groupId="net.unicon.toro" artifactId="alchemist"
                 version="${project.version}" type="jar"/>
-            <dependency groupId="jetspeed" artifactId="jetspeed"
-                version="${jetspeed.version}" type="jar"/>
             <dependency groupId="jaxen" artifactId="jaxen"
                 version="${jaxen.version}" type="jar"/>
             <dependency groupId="dom4j" artifactId="dom4j"
                 version="${dom4j.version}" type="jar"/>
             <remoteRepository refid="toro.repository" />
+            <remoteRepository refid="central.repository" />
         </artifact:dependencies>
         <echo>MergeConfiguration configfile=${configfile} targetdir=${targetdir}</echo>
         <java failonerror="true" fork="true" dir="${basedir}" classname="net.unicon.toro.installer.tools.MergeConfiguration">
@@ -1836,6 +1840,7 @@ xercesImpl.version=${xercesImpl.version}
             <dependency groupId="xerces" artifactId="xercesImpl"
                 version="${xercesImpl.version}" type="jar"/>
             <remoteRepository refid="toro.repository" />
+            <remoteRepository refid="central.repository" />
         </artifact:dependencies>
         <java classname="org.hibernate.tool.hbm2ddl.SchemaExport">
             <arg line="--config=/hibernate.cfg.xml --properties=${work.dir}/hibernate.properties ${hibernate.create.only}"/>
@@ -1917,6 +1922,7 @@ xercesImpl.version=${xercesImpl.version}
             <dependency groupId="portlet-api" artifactId="portlet-api" version="${portlet-api.version}" type="jar"/>
             <dependency groupId="xerces" artifactId="xercesImpl" version="${xercesImpl.version}" type="jar"/>
             <remoteRepository refid="toro.repository" />
+            <remoteRepository refid="central.repository" />
         </artifact:dependencies>
         <delete dir="${webapp.home}/${webappName}"/>
         <delete dir="${work.dir}/${webappName}.war"/>
@@ -2032,14 +2038,8 @@ xercesImpl.version=${xercesImpl.version}
     </target>
 
     <target name="ensure-security-contexts-cached">
-        <artifact:dependencies pathId="jetspeed.pathId">
-            <dependency groupId="jetspeed" artifactId="jetspeed" version="1.5" type="jar"/>
-            <remoteRepository refid="toro.repository" />
-        </artifact:dependencies>
-
         <java fork="true" failonerror="true" dir="${work.dir}" classname="net.unicon.toro.installer.tools.EnsureSecurityContextsHaveCaching">
             <classpath>
-                <path refId="jetspeed.pathId"/>
                 <pathelement path="${basedir}"/>
             </classpath>
             <arg value="${portal.webapp.home}"/>
@@ -2955,6 +2955,20 @@ INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (7, 65536
 INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T');
            ]]>
        </sql>
+       <sql
+           driver="${jdbc.driver}"
+           url="${jdbc.url}"
+           userid="${jdbc.user}"
+           password="${jdbc.password}"
+           onerror="continue">
+           <classpath>
+               <path refId="db.classpath"/>
+           </classpath>
+
+           <![CDATA[
+INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
+           ]]>
+       </sql>
     </target>
 
     <target name="initialize-cdk">
@@ -3028,6 +3042,7 @@ INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T
             <pathelement path="${basedir}"/>
             <path refId="cmsGroupInitialization.classpath"/>
             <path refId="uportal.classpath"/>
+            <path refId="db.classpath"/>
             <fileset refId="uportal-jar.fileset"/>
           </classpath>
           <arg value="-n"/>
@@ -3055,6 +3070,7 @@ INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T
                <pathelement path="${work.dir}/uportal-properties"/>
                <fileset refId="uportal-jar.fileset"/>
                <path refId="uportal.classpath"/>
+               <path refId="db.classpath"/>
            </classpath>
 
            <arg line="-nD -nC -P -t /properties/db/tables.xml -d /properties/db/dbloader-uportal-data.xml"/>
@@ -3289,6 +3305,7 @@ INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T
             <pathelement path="${work.dir}/${upPublishArtifactId}-${project.version}"/>
             <pathelement path="${basedir}"/>
             <path refId="uportal.classpath"/>
+            <path refId="db.classpath"/>
             <fileset refId="uportal-jar.fileset"/>
           </classpath>
           <arg value="-n"/>
@@ -3302,14 +3319,6 @@ INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T
     <artifact:dependencies pathId="uportal.classpath">
       <dependency groupId="org.apache.pluto" artifactId="pluto"
         version="${pluto.version}" type="jar"/>
-      <dependency groupId="net.sourceforge.jtds" artifactId="jtds"
-        version="${jtds.version}" type="jar"/>
-      <dependency groupId="mysql" artifactId="mysql-connector-java"
-        version="${mysql.version}" type="jar"/>
-      <dependency groupId="com.oracle" artifactId="ojdbc14"
-        version="${oracle.version}" type="jar"/>
-      <dependency groupId="postgresql" artifactId="postgresql"
-        version="${postgresql.version}" type="jar"/>
       <dependency groupId="javax.servlet" artifactId="servlet-api"
         version="${servlet-api.version}" type="jar"/>
       <dependency groupId="commons-dbcp" artifactId="commons-dbcp"
@@ -3453,6 +3462,7 @@ INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T
              <dependency groupId="javax/portlet" artifactId="portlet-api"
                  version="${portlet-api.version}" type="jar"/>
              <remoteRepository refid="toro.repository" />
+             <remoteRepository refid="central.repository" />
          </artifact:dependencies>
          <copy flatten="true" todir="${tomcat.home}/shared/lib">
              <fileset refId="lib.container-shared"/>
@@ -3465,7 +3475,7 @@ INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T
          <artifact:dependencies filesetId="lib.container-common-endorsed">
              <dependency groupId="xalan" artifactId="xalan"
                  version="${xalan.version}" type="jar"/>
-             <remoteRepository refid="toro.repository" />
+             <remoteRepository refid="central.repository" />
          </artifact:dependencies>
          <copy flatten="true" todir="${tomcat.home}/common/endorsed">
              <fileset refId="lib.container-common-endorsed"/>
@@ -3480,6 +3490,7 @@ INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T
              <dependency groupId="${db.driver.groupId}" artifactId="${db.driver.artifactId}"
                  version="${db.driver.version}" type="jar"/>
              <remoteRepository refid="toro.repository" />
+             <remoteRepository refid="central.repository" />
          </artifact:dependencies>
          <copy flatten="true" todir="${tomcat.home}/common/lib">
              <fileset refId="lib.container-common"/>
@@ -3501,16 +3512,10 @@ INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T
          <copy tofile="${tomcat.host.conf}/${portal.webapp.name}.xml"
              file="${basedir}/properties/uportal-${uportal.version}/context.xml"
              overwrite="true">
-         <filterset>
-             <filter token="webappDocBase" value="${portal.webapp.name}"/>
-             <filter token="webappPath" value="/${portal.webapp.name}"/>
-             <filter token="jdbcDriver" value="${jdbc.driver}"/>
-             <filter token="jdbcUrl" value="${jdbc.url}"/>
-             <filter token="jdbcUser" value="${jdbc.user}"/>
-             <filter token="jdbcPassword" value="${jdbc.password}"/>
-             <filter token="poolPreparedStatements" value="true"/>
-         </filterset>
-         <filterset refid="tokens"/>
+             <filterset refid="tokens"/>
+             <filterset>
+                 <filter token="webappName" value="${portal.webapp.name}"/>
+             </filterset>
            </copy>
            <copy todir="${tomcat.host.conf}" file="${work.dir}/uportal-${uportal.version}/WEB-INF/classes/properties/proxyportlet.xml"/>
  
@@ -3586,6 +3591,7 @@ INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T
            <classpath>
                <pathelement path="${basedir}"/>
                <path refId="uportal.classpath"/>
+               <path refId="db.classpath"/>
            </classpath>
            <arg line="${jdbc.driver} ${jdbc.url} ${jdbc.user} ${jdbc.password}"/>
        </java>
@@ -3627,6 +3633,7 @@ Message: ${db.meta.data}
        <classpath>
          <pathelement path="${work.dir}/uportal-properties"/>
          <path refId="uportal.classpath"/>
+         <path refId="db.classpath"/>
          <fileset refId="uportal-jar.fileset"/>
        </classpath>
        <arg value="-n"/>
@@ -3650,6 +3657,7 @@ Message: ${db.meta.data}
          <pathelement path="${work.dir}/uportal-properties"/>
          <fileset refId="uportal-jar.fileset"/>
          <path refId="uportal.classpath"/>
+         <path refId="db.classpath"/>
        </classpath>
 
        <arg value="${usetable}"/>
@@ -3675,6 +3683,7 @@ Message: ${db.meta.data}
              <pathelement path="${work.dir}/uportal-properties"/>
              <fileset refId="uportal-jar.fileset"/>
              <path refId="uportal.classpath"/>
+             <path refId="db.classpath"/>
          </classpath>
      </java>
      <available file="${work.dir}/uportal-${uportal.version}/WEB-INF/classes${tempDataXML}"
@@ -3695,15 +3704,16 @@ Message: ${db.meta.data}
              <pathelement path="${work.dir}/uportal-properties"/>
              <fileset refId="uportal-jar.fileset"/>
              <path refId="uportal.classpath"/>
+             <path refId="db.classpath"/>
         </classpath>
     </java>
     <delete file="${build.home}/WEB-INF/classes/${tempDataXML}"/>
   </target>
 
    <artifact:dependencies pathId="cernunnos.classpath">
-      <dependency groupId="cernunnos" artifactId="cernunnos"
-          version="${cernunnos.version}" type="jar"/>
-      <remoteRepository refid="toro.repository" />
+       <dependency groupId="org.danann" artifactId="cernunnos"
+           version="${cernunnos.version}" type="jar"/>
+       <remoteRepository refid="toro.repository" />
    </artifact:dependencies>
 
    <target name="uportal-deploy-testsuite-portlet">
@@ -3768,6 +3778,7 @@ Message: ${db.meta.data}
          <pathelement path="${work.dir}/uportal-properties"/>
          <fileset refId="uportal-jar.fileset"/>
          <path refId="uportal.classpath"/>
+         <path refId="db.classpath"/>
          <path refId="cernunnos.classpath"/>
        </classpath>
        <arg value="classpath://org/jasig/portal/container/deploy/deploy-portlet-app.crn"/>
@@ -3785,6 +3796,7 @@ Message: ${db.meta.data}
         <pathelement path="${work.dir}/uportal-properties"/>
         <fileset refId="uportal-jar.fileset"/>
         <path refId="uportal.classpath"/>
+        <path refId="db.classpath"/>
       </classpath>
 
       <arg value="${droptables}"/>
@@ -3813,6 +3825,7 @@ Message: ${db.meta.data}
                <pathelement path="${work.dir}/uportal-properties"/>
                <fileset refId="uportal-jar.fileset"/>
                <path refId="uportal.classpath"/>
+               <path refId="db.classpath"/>
            </classpath>
 
            <arg line="${uportal.db.droptables.arg} -C -nP -t /properties/db/dbloader-tables.xml"/>
@@ -3845,6 +3858,7 @@ Message: ${db.meta.data}
                <pathelement path="${work.dir}/uportal-properties"/>
                <fileset refId="uportal-jar.fileset"/>
                <path refId="uportal.classpath"/>
+               <path refId="db.classpath"/>
            </classpath>
 
            <arg line="-nD -nC -P -t ${tables.xml} -d ${data.xml}"/>
