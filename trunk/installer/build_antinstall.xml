@@ -921,7 +921,6 @@ project.version=${project.version}
 reddot.content.path=${reddot.content.path}
 reddot.method=${reddot.method}
 reddot.url=${reddot.url}
-serializer.version=${serializer.version}
 server.base.url=${server.base.url}
 servlet-api.version=${servlet-api.version}
 smtp.server.hostname=${smtp.server.hostname}
@@ -1856,9 +1855,9 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="deploy-toro-resources">
             <param name="artifactId" value="toro-common"/>
         </antcall>
-        <copy overwrite="true" file="${basedir}/properties/uPortal-${uportal.version}/xhtml-theme.xsl"
+        <copy overwrite="true" file="${basedir}/properties/uportal-${uportal.version}/xhtml-theme.xsl"
             todir="${portal.webapp.home}/WEB-INF/classes/org/jasig/portal/layout/tab-column/xhtml-theme"/>
-        <copy overwrite="true" outputencoding="utf-8" file="${basedir}/properties/uPortal-${uportal.version}/ajax-preferences.js"
+        <copy overwrite="true" outputencoding="utf-8" file="${basedir}/properties/uportal-${uportal.version}/ajax-preferences.js"
             todir="${portal.webapp.home}/WEB-INF/classes/org/jasig/portal/layout/tab-column/xhtml-theme/common"/>
         <antcall target="common-add-uportal-configurations"/>
 
@@ -1912,7 +1911,7 @@ xercesImpl.version=${xercesImpl.version}
         <artifact:dependencies pathId="deployPortlet.classpath">
             <dependency groupId="net.unicon.toro" artifactId="${artifactId}" version="${project.version}" type="war"/>
             <dependency groupId="net.unicon.toro" artifactId="portlets-common-lib" version="${project.version}" type="jar"/>
-            <dependency groupId="uportal" artifactId="uportal" version="${uportal.version}" type="jar"/>
+            <dependency groupId="org.jasig.uportal" artifactId="uportal" version="${uportal.version}" type="jar"/>
             <dependency groupId="org.apache.pluto" artifactId="pluto" version="${pluto.version}" type="jar"/>
             <dependency groupId="commons-logging" artifactId="commons-logging" version="${commons-logging.version}" type="jar"/>
             <dependency groupId="portlet-api" artifactId="portlet-api" version="${portlet-api.version}" type="jar"/>
@@ -1984,7 +1983,7 @@ xercesImpl.version=${xercesImpl.version}
     </target>
 
     <target name="common-add-uportal-configurations">
-        <copy filtering="on" todir="${work.dir}/common-add-uportal-configurations" file="${basedir}/properties/uPortal-${uportal.version}/common-uPortalConfigurationChanges.xml">
+        <copy filtering="on" todir="${work.dir}/common-add-uportal-configurations" file="${basedir}/properties/uportal-${uportal.version}/common-uPortalConfigurationChanges.xml">
             <filterset refid="tokens"/>
         </copy>
         <antcall target="merge-configuration">
@@ -1994,7 +1993,7 @@ xercesImpl.version=${xercesImpl.version}
     </target>
 
     <target name="ldap-merge">
-        <copy filtering="on" todir="${work.dir}/ldap-merge" file="${basedir}/properties/uPortal-${uportal.version}/ldap-merge-configuration.xml">
+        <copy filtering="on" todir="${work.dir}/ldap-merge" file="${basedir}/properties/uportal-${uportal.version}/ldap-merge-configuration.xml">
             <filterset refid="tokens"/>
         </copy>
         <antcall target="merge-configuration">
@@ -2002,7 +2001,7 @@ xercesImpl.version=${xercesImpl.version}
             <param name="targetdir" value="${portal.webapp.home}"/>
         </antcall>
 
-        <copy filtering="on" todir="${work.dir}/ldap-merge" file="${basedir}/properties/uPortal-${uportal.version}/personDirectory-bean-merge-configuration.xml">
+        <copy filtering="on" todir="${work.dir}/ldap-merge" file="${basedir}/properties/uportal-${uportal.version}/personDirectory-bean-merge-configuration.xml">
             <filterset refid="tokens"/>
         </copy>
         <antcall target="merge-configuration">
@@ -2013,7 +2012,7 @@ xercesImpl.version=${xercesImpl.version}
         <taskdef name="gen-security-context-props" classname="net.unicon.toro.installer.anttask.GenerateSecurityContextProperties" classpath="${basedir}"/>
         <gen-security-context-props/>
 
-        <copy filtering="on" todir="${work.dir}/ldap-merge" file="${basedir}/properties/uPortal-${uportal.version}/security-context-bean-merge-configuration.xml">
+        <copy filtering="on" todir="${work.dir}/ldap-merge" file="${basedir}/properties/uportal-${uportal.version}/security-context-bean-merge-configuration.xml">
             <filterset refid="tokens"/>
             <filterset>
                 <filter token="ldap.security.comment" value="${ldap.security.comment}"/>
@@ -3334,7 +3333,7 @@ INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T
     </artifact:dependencies>
 
     <artifact:dependencies filesetId="uportal-jar.fileset">
-      <dependency groupId="uportal" artifactId="uportal"
+      <dependency groupId="org.jasig.uportal" artifactId="uportal"
           version="${uportal.version}" type="jar"/>
       <remoteRepository refid="uportal.repository" />
     </artifact:dependencies>
@@ -3410,7 +3409,7 @@ INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T
 
     <target name="extract-uportal-jar">
         <antcall target="extract-artifact">
-          <param name="groupId" value="uportal"/>
+          <param name="groupId" value="org.jasig.uportal"/>
           <param name="artifactId" value="uportal"/>
           <param name="version" value="${uportal.version}"/>
           <param name="target.dir" value="${work.dir}/uportal-${uportal.version}"/>
@@ -3421,8 +3420,8 @@ INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T
 
     <target name="extract-uportal-war">
         <antcall target="extract-artifact">
-          <param name="groupId" value="uportal"/>
-          <param name="artifactId" value="uportal"/>
+          <param name="groupId" value="org.jasig.uportal"/>
+          <param name="artifactId" value="uportal-war"/>
           <param name="version" value="${uportal.version}"/>
           <param name="target.dir" value="${work.dir}/uportal-${uportal.version}"/>
           <param name="archive.type" value="war"/>
@@ -3464,8 +3463,6 @@ INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T
              file="${work.dir}/uportal-${uportal.version}/WEB-INF/classes/org/jasig/portal/container/PortletServlet.class"/>
 
          <artifact:dependencies filesetId="lib.container-common-endorsed">
-             <dependency groupId="serializer" artifactId="serializer"
-                 version="${serializer.version}" type="jar"/>
              <dependency groupId="xalan" artifactId="xalan"
                  version="${xalan.version}" type="jar"/>
              <remoteRepository refid="toro.repository" />
@@ -3502,7 +3499,7 @@ INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T
                -->
  
          <copy tofile="${tomcat.host.conf}/${portal.webapp.name}.xml"
-             file="${basedir}/properties/uPortal-${uportal.version}/context.xml"
+             file="${basedir}/properties/uportal-${uportal.version}/context.xml"
              overwrite="true">
          <filterset>
              <filter token="webappDocBase" value="${portal.webapp.name}"/>
@@ -3526,13 +3523,13 @@ INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T
          </copy>
  
          <copy tofile="${portal.webapp.home}/WEB-INF/classes/log4j.properties"
-             file="${basedir}/properties/uPortal-${uportal.version}/log4j.properties"
+             file="${basedir}/properties/uportal-${uportal.version}/log4j.properties"
              overwrite="true">
              <filterset refid="tokens"/>
          </copy>
 
          <copy tofile="${portal.webapp.home}/WEB-INF/classes/properties/portal.properties"
-             file="${basedir}/properties/uPortal-${uportal.version}/portal.properties"
+             file="${basedir}/properties/uportal-${uportal.version}/portal.properties"
              overwrite="true">
              <filterset refid="tokens"/>
          </copy>
@@ -3557,7 +3554,7 @@ INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T
        <mkdir dir="${work.dir}/uportal-properties/properties/db"/>
        <mkdir dir="${work.dir}/uportal-properties/properties/chanpub"/>
        <copy overwrite="true" todir="${work.dir}/uportal-properties/org/jasig/portal/container/deploy">
-           <fileset dir="${basedir}/properties/uPortal-${uportal.version}">
+           <fileset dir="${basedir}/properties/uportal-${uportal.version}">
                <include name="*.crn"/>
            </fileset>
        </copy>
@@ -3567,24 +3564,24 @@ INSERT INTO ACCESS_TYPES (ACCESS_ENTRY_ID, ACCESS_TYPE, STATUS) VALUES (8, 1, 'T
            </fileset>
        </copy>
        <copy overwrite="true" todir="${basedir}">
-           <fileset dir="${basedir}/properties/uPortal-${uportal.version}">
+           <fileset dir="${basedir}/properties/uportal-${uportal.version}">
                <include name="*.dtd"/>
            </fileset>
        </copy>
        <copy overwrite="true" todir="${basedir}/dtd">
-           <fileset dir="${basedir}/properties/uPortal-${uportal.version}">
+           <fileset dir="${basedir}/properties/uportal-${uportal.version}">
                <include name="*.dtd"/>
            </fileset>
        </copy>
-       <copy overwrite="true" filtering="on" tofile="${work.dir}/uportal-properties/properties/rdbm.properties" file="${basedir}/properties/uPortal-${uportal.version}/rdbm.properties">
+       <copy overwrite="true" filtering="on" tofile="${work.dir}/uportal-properties/properties/rdbm.properties" file="${basedir}/properties/uportal-${uportal.version}/rdbm.properties">
            <filterset refid="tokens"/>
        </copy>
        <copy overwrite="true" todir="${work.dir}/uportal-properties/properties/chanpub">
-           <fileset dir="${basedir}/properties/uPortal-${uportal.version}/chanpub"/>
+           <fileset dir="${basedir}/properties/uportal-${uportal.version}/chanpub"/>
        </copy>
 
        <!-- constructing a dbloader.xml based on the jdbc properties -->
-       <copy overwrite="true" todir="${work.dir}/uportal-properties/properties/db" file="${basedir}/properties/uPortal-${uportal.version}/dbloader.xml"/>
+       <copy overwrite="true" todir="${work.dir}/uportal-properties/properties/db" file="${basedir}/properties/uportal-${uportal.version}/dbloader.xml"/>
        <java outputproperty="db.meta.data" fork="true" failonerror="false" dir="${basedir}" classname="net.unicon.toro.installer.dbloader.DbVersion">
            <classpath>
                <pathelement path="${basedir}"/>
@@ -3711,41 +3708,41 @@ Message: ${db.meta.data}
 
    <target name="uportal-deploy-testsuite-portlet">
        <antcall target="uportal-deploy-portlet">
-           <param name="groupId" value="uportal"/>
+           <param name="groupId" value="org.jasig.portlet"/>
            <param name="artifactId" value="testsuite"/>
-           <param name="version" value="${uportal.version}"/>
+           <param name="version" value="1.0.0-SNAPSHOT"/>
        </antcall>
    </target>
 
    <target name="uportal-deploy-proxyportlet-portlet">
        <antcall target="uportal-deploy-portlet">
-           <param name="groupId" value="uportal"/>
+           <param name="groupId" value="org.jasig.portlet"/>
            <param name="artifactId" value="proxyportlet"/>
-           <param name="version" value="${uportal.version}"/>
+           <param name="version" value="1.0.0-SNAPSHOT"/>
        </antcall>
    </target>
 
    <target name="uportal-deploy-bookmarks-portlet">
        <antcall target="uportal-deploy-portlet">
-           <param name="groupId" value="uportal"/>
+           <param name="groupId" value="org.jasig.portlet"/>
            <param name="artifactId" value="BookmarksPortlet"/>
-           <param name="version" value="${uportal.version}"/>
+           <param name="version" value="1.0.7"/>
        </antcall>
    </target>
 
    <target name="uportal-deploy-rss-portlet">
        <antcall target="uportal-deploy-portlet">
-           <param name="groupId" value="uportal"/>
+           <param name="groupId" value="org.jasig.portlet"/>
            <param name="artifactId" value="RssPortlet"/>
-           <param name="version" value="${uportal.version}"/>
+           <param name="version" value="1.0.0-SNAPSHOT"/>
        </antcall>
    </target>
 
    <target name="uportal-deploy-google-portlet">
        <antcall target="uportal-deploy-portlet">
-           <param name="groupId" value="uportal"/>
+           <param name="groupId" value="org.jasig.portlet"/>
            <param name="artifactId" value="googleportlet"/>
-           <param name="version" value="${uportal.version}"/>
+           <param name="version" value="1.0.0-SNAPSHOT"/>
        </antcall>
    </target>
 

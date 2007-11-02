@@ -88,7 +88,7 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>uportal</groupId>
+            <groupId>org.jasig.uportal</groupId>
             <artifactId>uportal</artifactId>
             <version>${uportal.version}</version>
             <scope>provided</scope>
@@ -106,25 +106,13 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>jargs</groupId>
-            <artifactId>jargs</artifactId>
-            <version>${jargs.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>xalan</groupId>
             <artifactId>xalan</artifactId>
             <version>${xalan.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>cryptowallet-mod</groupId>
-            <artifactId>cryptowallet-mod</artifactId>
-            <version>${cryptowallet-mod.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>cos</groupId>
+            <groupId>servlets.com</groupId>
             <artifactId>cos</artifactId>
             <version>${cos.version}</version>
             <scope>compile</scope>
@@ -137,8 +125,8 @@
         </dependency>
         <dependency>
             <groupId>javax.xml</groupId>
-            <artifactId>jaxrpc</artifactId>
-            <version>${jaxrpc.version}</version>
+            <artifactId>jaxrpc-api</artifactId>
+            <version>${jaxrpc-api.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

@@ -20,8 +20,8 @@
                 version="${commons-logging.version}" type="jar"/>
         <dependency groupId="commons-discovery" artifactId="commons-discovery"
                 version="${commons-discovery.version}" type="jar"/>
-        <dependency groupId="javax.xml" artifactId="jaxrpc"
-                version="${jaxrpc.version}" type="jar"/>
+        <dependency groupId="javax.xml" artifactId="jaxrpc-api"
+                version="${jaxrpc-api.version}" type="jar"/>
         <dependency groupId="wsdl4j" artifactId="wsdl4j"
                 version="${wsdl4j.version}" type="jar"/>
         <dependency groupId="javax.xml" artifactId="saaj-api"

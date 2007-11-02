@@ -17,7 +17,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>uportal</groupId>
+            <groupId>org.jasig.uportal</groupId>
             <artifactId>uportal</artifactId>
             <version>${uportal.version}</version>
             <scope>provided</scope>

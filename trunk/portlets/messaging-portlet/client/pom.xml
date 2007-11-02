@@ -80,7 +80,7 @@
                   <property name="axis.version" value="${axis.version}"/>
                   <property name="commons-logging.version" value="${commons-logging.version}"/>
                   <property name="commons-discovery.version" value="${commons-discovery.version}"/>
-                  <property name="jaxrpc.version" value="${jaxrpc.version}"/>
+                  <property name="jaxrpc-api.version" value="${jaxrpc-api.version}"/>
                   <property name="wsdl4j.version" value="${wsdl4j.version}"/>
                   <property name="saaj-api.version" value="${saaj-api.version}"/>
                   <ant antfile="${basedir}/build.xml" dir="${basedir}" target="generate-wsdl" inheritRefs="true"/>

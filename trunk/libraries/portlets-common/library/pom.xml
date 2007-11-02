@@ -90,12 +90,10 @@
                 <property name="xalan.version" value="${xalan.version}"/>
                 <property name="bcel.version" value="${bcel.version}"/>
                 <property name="regexp.version" value="${regexp.version}"/>
-                <property name="uportal.version" value="${uportal.version}"/>
                 <property name="pluto.version" value="${pluto.version}"/>
                 <property name="commons-logging.version" value="${commons-logging.version}"/>
                 <property name="portlet-api.version" value="${portlet-api.version}"/>
                 <property name="xercesImpl.version" value="${xercesImpl.version}"/>
-                <property name="jetspeed.version" value="${jetspeed.version}"/>
                 <property name="jaxen.version" value="${jaxen.version}"/>
                 <property name="dom4j.version" value="${dom4j.version}"/>
                 <ant antfile="${basedir}/build.xml" dir="${basedir}" target="build-translets" inheritRefs="true"/>

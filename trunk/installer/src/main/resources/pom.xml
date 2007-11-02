@@ -15,12 +15,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>jetspeed</groupId>
-            <artifactId>jetspeed</artifactId>
-            <version>${jetspeed.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>jaxen</groupId>
             <artifactId>jaxen</artifactId>
             <version>${jaxen.version}</version>

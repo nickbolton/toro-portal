@@ -24,12 +24,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>jetspeed</groupId>
-            <artifactId>jetspeed</artifactId>
-            <version>${jetspeed.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
             <version>${dom4j.version}</version>
@@ -48,9 +42,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>xsltc</groupId>
-            <artifactId>xsltc</artifactId>
-            <version>${xsltc.version}</version>
+            <groupId>xalan</groupId>
+            <artifactId>xalan</artifactId>
+            <version>${xalan.version}</version>
             <scope>provided</scope>
         </dependency>
 
