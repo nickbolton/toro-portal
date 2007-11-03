@@ -134,7 +134,7 @@
                     <filter token="login.active" value="false" />
                     <filter token="cms.active" value="false" />
                     <filter token="useradmin.active" value="false" />
-                    <filter token="project.version1" value="1.0.0-SNAPSHOT" />
+                    <filter token="project.version" value="${project.version}" />
                     <filter token="tomcat.host.conf.relative" value="conf/Catalina/localhost" />
                     <filter token="toro.data.home" value="/toro/data" />
                     <filter token="toro.data.home.win" value="C:\toro\data" />

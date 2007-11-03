@@ -6,7 +6,7 @@
             debug="true"
             validateConfig="true"
 			lookAndFeel="org.tp23.jgoodies.plaf.plastic.PlasticXPLookAndFeel"
-			name="Toro Portal Installer"
+            name="Toro Portal Installer version (@project.version@)"
 			windowIcon="/resources/AntInstaller.png"
 			defaultImageResource="/resources/antbar.png"
 			minJavaVersion="1.5"
@@ -16,9 +16,9 @@
 	<page
 			type="splash"
 			name="splash"
-            displayText="Toro Portal Installer version (1.0)"
+            displayText="Toro Portal Installer version (@project.version@)"
 			splashResource="/resources/antinstaller-splash.png"
-			altText="Welcome to the Toro Portal installer"/>
+            altText="Welcome to the Toro Portal installer version (@project.version@)"/>
 	<page
 			type="license"
 			name="license"
@@ -87,6 +87,7 @@
 			name="deploy-all"
 			overflow="true"
 			displayText="Deploy All">
+        <hidden property="project.version" value="@project.version@"/>
         <hidden property="pluto.version" value="@pluto.version@"/>
         <hidden property="commons-logging.version" value="@commons-logging.version@"/>
         <hidden property="servlet-api.version" value="@servlet-api.version@"/>
@@ -377,7 +378,7 @@
             defaultValue="@cms.active@"
 			force="false"/>
     </page>
-	<page
+	<!--page
 			type="input"
             name="toro version"
 			overflow="true"
@@ -388,7 +389,7 @@
             defaultValue="@project.version1@">
             <option text="@project.version1@" value="@project.version1@"/>
         </select>
-    </page>
+    </page-->
     <page
         type="input"
         overflow="true"
