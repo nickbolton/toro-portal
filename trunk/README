@@ -1,7 +1,8 @@
 Cutting a release
 
 From the root directory,
-* mvn clean install clean
+* mvn install
+* mvn clean
 * mvn --batch-mode release:prepare
 * Remove -SNAPSHOT from blojsom/ant_pom.xml, installer/src/main/resources/pom.xml
 * release:perform -DuseEditMode=true
