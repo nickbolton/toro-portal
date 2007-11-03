@@ -50,7 +50,22 @@
         <classpath refId="ant-contrib.pathId"/>
     </taskdef>
 
-    <!--taskdef name="filtered-dependencies" classname="net.unicon.toro.installer.anttask.FilteredDependenciesTask" classpath="${basedir}"/-->
+    <!-- if it's being executed from the remote configured machine, then execute away.. -->
+    <taskdef name="sethostname" classname="net.unicon.toro.installer.anttask.SetHostname" classpath="${basedir}"/>
+    <sethostname property="my.hostname"/>
+    <if>
+        <and>
+            <not><equals arg1="${portal.server.hostname}" arg2="${my.hostname}"/></not>
+            <equals arg1="${remote-config}" arg2="true"/>
+            <contains string="${remote-config-page-targets}" substring="remote-config"/>
+        </and>
+        <then>
+            <property name="run.remote.config" value="true"/>
+        </then>
+        <else>
+            <property name="run.remote.config" value="false"/>
+        </else>
+    </if>
 
     <artifact:pom id="maven.project" file="${basedir}/pom.xml" />
 
@@ -68,21 +83,27 @@
 
     <property environment="env"/>
 
-    <artifact:dependencies pathId="db.classpath.minus.oracle">
-        <dependency groupId="net.sourceforge.jtds" artifactId="jtds"
-            version="${jtds.version}" type="jar"/>
-        <dependency groupId="com.mysql" artifactId="mysql-connector-java"
-            version="${mysql.version}" type="jar"/>
-        <dependency groupId="postgresql" artifactId="postgresql"
-            version="${postgresql.version}" type="jar"/>
-        <remoteRepository refid="toro.repository" />
-        <remoteRepository refid="central.repository" />
-    </artifact:dependencies>
+    <!-- don't fetch artifacts when in remote-config mode -->
+    <if>
+        <equals arg1="${run.remote.config}" arg2="false"/>
+        <then>
+            <artifact:dependencies pathId="db.classpath.minus.oracle">
+                <dependency groupId="net.sourceforge.jtds" artifactId="jtds"
+                    version="${jtds.version}" type="jar"/>
+                <dependency groupId="com.mysql" artifactId="mysql-connector-java"
+                    version="${mysql.version}" type="jar"/>
+                <dependency groupId="postgresql" artifactId="postgresql"
+                    version="${postgresql.version}" type="jar"/>
+                <remoteRepository refid="toro.repository" />
+                <remoteRepository refid="central.repository" />
+            </artifact:dependencies>
 
-    <path id="db.classpath">
-        <path refid="db.classpath.minus.oracle"/>
-        <pathelement location="${basedir}/lib/ojdbc14-10g.jar"/>
-    </path>
+            <path id="db.classpath">
+                <path refid="db.classpath.minus.oracle"/>
+                <pathelement location="${basedir}/lib/ojdbc14-10g.jar"/>
+            </path>
+        </then>
+    </if>
 
     <!--  Driver targets  -->
     <target name="clean" depends="clean-portlets">
@@ -3316,36 +3337,44 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
     <!-- End Channel Targets -->
 
     <!-- uPortal Targets -->
-    <artifact:dependencies pathId="uportal.classpath">
-      <dependency groupId="org.apache.pluto" artifactId="pluto"
-        version="${pluto.version}" type="jar"/>
-      <dependency groupId="javax.servlet" artifactId="servlet-api"
-        version="${servlet-api.version}" type="jar"/>
-      <dependency groupId="commons-dbcp" artifactId="commons-dbcp"
-          version="${commons-dbcp.version}" type="jar"/>
-      <dependency groupId="commons-logging" artifactId="commons-logging"
-          version="${commons-logging.version}" type="jar"/>
-      <dependency groupId="org.springframework" artifactId="spring"
-          version="${springframework.version}" type="jar"/>
-      <dependency groupId="backport-util-concurrent" artifactId="backport-util-concurrent"
-          version="${backport-util-concurrent.version}" type="jar"/>
-      <dependency groupId="com.whirlycott" artifactId="whirlycache"
-          version="${whirlycache.version}" type="jar"/>
-      <dependency groupId="dom4j" artifactId="dom4j"
-          version="${dom4j.version}" type="jar"/>
-      <dependency groupId="jaxen" artifactId="jaxen"
-          version="${jaxen.version}" type="jar"/>
-      <dependency groupId="commons-jexl" artifactId="commons-jexl"
-          version="${commons-jexl.version}" type="jar"/>
-      <remoteRepository refid="toro.repository" />
-      <remoteRepository refid="central.repository" />
-    </artifact:dependencies>
 
-    <artifact:dependencies filesetId="uportal-jar.fileset">
-      <dependency groupId="org.jasig.uportal" artifactId="uportal"
-          version="${uportal.version}" type="jar"/>
-      <remoteRepository refid="uportal.repository" />
-    </artifact:dependencies>
+    <echo>run.remote.config=${run.remote.config}</echo>
+    <!-- don't fetch artifacts when in remote-config mode -->
+    <if>
+        <equals arg1="${run.remote.config}" arg2="false"/>
+        <then>
+            <artifact:dependencies pathId="uportal.classpath">
+              <dependency groupId="org.apache.pluto" artifactId="pluto"
+                version="${pluto.version}" type="jar"/>
+              <dependency groupId="javax.servlet" artifactId="servlet-api"
+                version="${servlet-api.version}" type="jar"/>
+              <dependency groupId="commons-dbcp" artifactId="commons-dbcp"
+                  version="${commons-dbcp.version}" type="jar"/>
+              <dependency groupId="commons-logging" artifactId="commons-logging"
+                  version="${commons-logging.version}" type="jar"/>
+              <dependency groupId="org.springframework" artifactId="spring"
+                  version="${springframework.version}" type="jar"/>
+              <dependency groupId="backport-util-concurrent" artifactId="backport-util-concurrent"
+                  version="${backport-util-concurrent.version}" type="jar"/>
+              <dependency groupId="com.whirlycott" artifactId="whirlycache"
+                  version="${whirlycache.version}" type="jar"/>
+              <dependency groupId="dom4j" artifactId="dom4j"
+                  version="${dom4j.version}" type="jar"/>
+              <dependency groupId="jaxen" artifactId="jaxen"
+                  version="${jaxen.version}" type="jar"/>
+              <dependency groupId="commons-jexl" artifactId="commons-jexl"
+                  version="${commons-jexl.version}" type="jar"/>
+              <remoteRepository refid="toro.repository" />
+              <remoteRepository refid="central.repository" />
+            </artifact:dependencies>
+
+            <artifact:dependencies filesetId="uportal-jar.fileset">
+              <dependency groupId="org.jasig.uportal" artifactId="uportal"
+                  version="${uportal.version}" type="jar"/>
+              <remoteRepository refid="uportal.repository" />
+            </artifact:dependencies>
+        </then>
+    </if>
 
     <target name="deploy-uportal" if="run.uportal.deploy">
         <echo>Deploying uPortal ${uportal.version}</echo>
@@ -3710,11 +3739,17 @@ Message: ${db.meta.data}
     <delete file="${build.home}/WEB-INF/classes/${tempDataXML}"/>
   </target>
 
-   <artifact:dependencies pathId="cernunnos.classpath">
-       <dependency groupId="org.danann" artifactId="cernunnos"
-           version="${cernunnos.version}" type="jar"/>
-       <remoteRepository refid="toro.repository" />
-   </artifact:dependencies>
+    <!-- don't fetch artifacts when in remote-config mode -->
+    <if>
+        <equals arg1="${run.remote.config}" arg2="false"/>
+        <then>
+            <artifact:dependencies pathId="cernunnos.classpath">
+                <dependency groupId="org.danann" artifactId="cernunnos"
+                    version="${cernunnos.version}" type="jar"/>
+                <remoteRepository refid="toro.repository" />
+            </artifact:dependencies>
+        </then>
+    </if>
 
    <target name="uportal-deploy-testsuite-portlet">
        <antcall target="uportal-deploy-portlet">
