@@ -1,0 +1,35 @@
+<HTML>
+<HEAD>
+<TITLE>uPortal 2.0.1</TITLE>
+<script language="javascript">
+
+        function imagePath(imageName) {
+			var imagePath=parent.imagePathTop;
+            image = '../../../../../'+imagePath + imageName;
+			imageFull = '<IMG src="' + image + '"align="left" border="0">';
+            document.write(imageFull);
+			}
+
+		var skinPath='../../../../../'+parent.skinPathTop;
+		var skinFull= '<link type="text/css" rel="stylesheet" href="'+skinPath+'">';			
+		//alert(skinFull);
+		document.write(skinFull);
+			
+		 
+	</script>
+</HEAD>
+<BODY class="uportal-background-content">
+<span class="uportal-channel-text">
+<ul>
+	<li><a href="resource.html">Employee Handbook</a></li>
+	<li><a href="resource.html">Security Alarm Procedures</a></li>
+	<li><a href="resource.html">Official letterhead, fax sheets, envelopes</a></li>
+	<li><a href="resource.html">Brown Bag presentations</a></li>
+	<li><a href="resource.html">Open Positions</a></li>
+	<li><a href="resource.html">Restaurant Menus</a></li>
+	<li><a href="resource.html">Company Holidays</a></li>
+	<li><a href="resource.html">PTO Request Form</a></li>
+</ul>
+</span>
+</BODY>
+</HTML>

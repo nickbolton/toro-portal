@@ -1,0 +1,3953 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema>
+<sequences>
+  <sequence>
+    <name>AUTHOR_ID_SEQ</name>
+    <start-with>1</start-with>
+    <increment-by>1</increment-by>
+  </sequence>
+  <sequence>
+    <name>ACTIVATION_SEQ</name>
+    <start-with>1</start-with>
+    <increment-by>1</increment-by>
+  </sequence>
+  <sequence>
+    <name>ASSESSMENT_RESULT_ID_SEQ</name>
+    <start-with>1</start-with>
+    <increment-by>1</increment-by>
+  </sequence>
+  <sequence>
+    <name>CURRICULUM_SEQ</name>
+    <start-with>1</start-with>
+    <increment-by>1</increment-by>
+  </sequence>
+  <sequence>
+    <name>CHANNEL_INSTANCE_SEQ</name>
+    <start-with>1</start-with>
+    <increment-by>1</increment-by>
+  </sequence>
+  <sequence>
+    <name>GRADEBOOK_FEEDBACK_SEQ</name>
+    <start-with>1</start-with>
+    <increment-by>1</increment-by>
+  </sequence>
+  <sequence>
+    <name>GRADEBOOK_ITEM_SEQ</name>
+    <start-with>1</start-with>
+    <increment-by>1</increment-by>
+  </sequence>
+  <sequence>
+    <name>GRADEBOOK_SCORE_SEQ</name>
+    <start-with>1</start-with>
+    <increment-by>1</increment-by>
+  </sequence>
+  <sequence>
+    <name>GRADEBOOK_SUBMISSION_SEQ</name>
+    <start-with>1</start-with>
+    <increment-by>1</increment-by>
+  </sequence>
+  <sequence>
+    <name>MEMBERSHIP_MEMBERSHIP_ID_SEQ</name>
+    <start-with>1</start-with>
+    <increment-by>1</increment-by>
+  </sequence>
+  <sequence>
+    <name>NOTEPAD_ID_SEQ</name>
+    <start-with>1</start-with>
+    <increment-by>1</increment-by>
+  </sequence>
+  <sequence>
+    <name>OFFERING_OFFERING_ID_SEQ</name>
+    <start-with>1</start-with>
+    <increment-by>1</increment-by>
+  </sequence>
+  <sequence>
+    <name>TOPIC_TOPIC_ID_SEQ</name>
+    <start-with>1</start-with>
+    <increment-by>1</increment-by>
+  </sequence>
+  <sequence>
+    <name>ROLE_ID_SEQ</name>
+    <start-with>9</start-with>
+    <increment-by>1</increment-by>
+  </sequence>
+</sequences>
+<tables>
+    <table>
+      <name>ACAD_DELIVERY_ASSESSMENT</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>DELIVERY_SYSTEM_ID</name>
+          <type>VARCHAR</type>
+          <param>64</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DELIVERY_CURRICULUM_ID</name>
+          <type>VARCHAR</type>
+          <param>256</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DELIVERY_ASSESSMENT_ID</name>
+          <type>VARCHAR</type>
+          <param>256</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>ASSESSMENT_TITLE</name>
+          <type>VARCHAR</type>
+          <param>512</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>ASSESSMENT_DESCRIPTION</name>
+          <type>VARCHAR</type>
+          <param>2048</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>LAST_UPDATE_DATE</name>
+          <type>DATE</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>LAST_UPDATE_TIME</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+      </columns>
+      <indexes>
+
+        <index>
+          <name>ACAD_DA_DSID_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>DELIVERY_SYSTEM_ID</column>
+          </columns>
+        </index>
+ 
+        <index>
+          <name>ACAD_DA_DCID_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>DELIVERY_CURRICULUM_ID</column>
+          </columns>
+        </index>
+ 
+        <index>
+          <name>ACAD_DA_DAID_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>DELIVERY_ASSESSMENT_ID</column>
+          </columns>
+        </index>
+  
+        <index>
+          <name>ACAD_DA_AT_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ASSESSMENT_TITLE</column>
+          </columns>
+        </index>
+   
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>ACAD_DA_DELIVERY_SYSTEM_ID_NN</name>
+          <columns>
+            <column>DELIVERY_SYSTEM_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>ACAD_DA_DELIVERY_CURRICULUM_ID_NN</name>
+          <columns>
+            <column>DELIVERY_CURRICULUM_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>ACAD_DA_DELIVERY_ASSESSMENT_ID_NN</name>
+          <columns>
+            <column>DELIVERY_ASSESSMENT_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>ACAD_DA_ASSESSMENT_TITLE_NN</name>
+          <columns>
+            <column>ASSESSMENT_TITLE</column>
+          </columns>
+        </not-null>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>ACAD_DELIVERY_CURRICULUM</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>DELIVERY_SYSTEM_ID</name>
+          <type>VARCHAR</type>
+          <param>64</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DELIVERY_CURRICULUM_ID</name>
+          <type>VARCHAR</type>
+          <param>256</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>CURRICULUM_TITLE</name>
+          <type>VARCHAR</type>
+          <param>512</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>CURRICULUM_DESCRIPTION</name>
+          <type>VARCHAR</type>
+          <param>2048</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>LAST_UPDATE_DATE</name>
+          <type>DATE</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>LAST_UPDATE_TIME</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>ACAD_DELIVERY_CURRICULUM_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>DELIVERY_SYSTEM_ID</column>
+            <column>DELIVERY_CURRICULUM_ID</column>
+          </columns>
+        </index>
+ 
+        <index>
+          <name>ACAD_DC_DCID_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>DELIVERY_CURRICULUM_ID</column>
+          </columns>
+        </index>
+     
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>ACAD_DC_DSID_NN</name>
+          <columns>
+            <column>DELIVERY_SYSTEM_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>ACAD_DC_DCID_NN</name>
+          <columns>
+            <column>DELIVERY_CURRICULUM_ID</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>ACAD_DELIVERY_CURRICULUM_PKEY</name>
+          <columns>
+            <column>DELIVERY_SYSTEM_ID</column>
+            <column>DELIVERY_CURRICULUM_ID</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>ACTIVATION</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>ACTIVATION_ID</name>
+          <type>INTEGER</type>
+	  <default>
+		  <sequence>ACTIVATION_SEQ</sequence>
+	  </default>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>OFFERING_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>TYPE</name>
+          <type>VARCHAR</type>
+          <param>35</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>STATUS</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>START_DATE</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>END_DATE</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DURATION</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>ACTIVATION_DATE</name>
+          <type>DATE</type>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>ACTIVATION_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ACTIVATION_ID</column>
+          </columns>
+        </index>
+
+        <index>
+          <name>ACTIVATION_OFF_ID_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>OFFERING_ID</column>
+          </columns>
+        </index>
+
+        <index>
+          <name>ACTIVATION_TYPE_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>TYPE</column>
+          </columns>
+        </index>
+ 
+        <index>
+          <name>ACTIVATION_STATUS_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>STATUS</column>
+          </columns>
+        </index>
+   
+        <index>
+          <name>ACTIVATION_START_DATE_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>START_DATE</column>
+          </columns>
+        </index>
+    
+        <index>
+          <name>ACTIVATION_END_DATE_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>END_DATE</column>
+          </columns>
+        </index>
+     
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>ACTIVATION_ACTIVATION_ID_NN</name>
+          <columns>
+            <column>ACTIVATION_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>ACTIVATION_OFFERING_ID_NN</name>
+          <columns>
+            <column>OFFERING_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>ACTIVATION_TYPE_NN</name>
+          <columns>
+            <column>TYPE</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>ACTIVATION_STATUS_NN</name>
+          <columns>
+            <column>STATUS</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>ACTIVATION_START_DATE_NN</name>
+          <columns>
+            <column>START_DATE</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>ACTIVATION_END_DATE_NN</name>
+          <columns>
+            <column>END_DATE</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>ACTIVATION_PKEY</name>
+          <columns>
+            <column>ACTIVATION_ID</column>
+          </columns>
+        </primary-key>
+ 
+        <foreign-key>
+          <name>ACTIVATION_OFFERING_ID_FK</name>
+          <parent-table>
+            <name>OFFERING</name>
+            <columns>
+              <key-column>OFFERING_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>OFFERING_ID</column>
+          </columns>
+        </foreign-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>ACTIVATION_PARAM</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>ACTIVATION_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>ACTIVATION_PARAM_NAME</name>
+          <type>VARCHAR</type>
+          <param>35</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>ACTIVATION_PARAM_VALUE</name>
+          <type>VARCHAR</type>
+          <param>255</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+         
+        <index>
+          <name>ACTIVATION_PARAM_AI_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ACTIVATION_ID</column>
+          </columns>
+        </index>
+         
+        <index>
+          <name>ACTIVATION_PARAM_APN_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ACTIVATION_PARAM_NAME</column>
+          </columns>
+        </index>
+         
+        <index>
+          <name>ACTIVATION_PARAM_APV_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ACTIVATION_PARAM_VALUE</column>
+          </columns>
+        </index>
+
+      </indexes>
+
+      <constraints>
+        <not-null>
+          <name>ACTIVATION_PARAM_AID_NN</name>
+          <columns>
+            <column>ACTIVATION_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>ACTIVATION_PARAM_APN_NN</name>
+          <columns>
+            <column>ACTIVATION_PARAM_NAME</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>ACTIVATION_PARAM_APV_NN</name>
+          <columns>
+            <column>ACTIVATION_PARAM_VALUE</column>
+          </columns>
+        </not-null>
+    
+        <foreign-key>
+          <name>ACT_PARAM_ACT_ID_FK</name>
+          <parent-table>
+            <name>ACTIVATION</name>
+            <columns>
+              <key-column>ACTIVATION_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>ACTIVATION_ID</column>
+          </columns>
+        </foreign-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>GBITEM_ACTIVATION</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>GRADEBOOK_ITEM_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>ACTIVATION_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+	  <name>GBITEM_ACTIVATION_GIID_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>GRADEBOOK_ITEM_ID</column>
+          </columns>
+        </index>
+
+        <index>
+          <name>GBITEM_ACTIVATION_AID_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ACTIVATION_ID</column>
+          </columns>
+        </index>
+  
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>GBITEM_ACTIVATION_GIID_NN</name>
+          <columns>
+            <column>GRADEBOOK_ITEM_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>GBITEM_ACTIVATION_AID_NN</name>
+          <columns>
+            <column>ACTIVATION_ID</column>
+          </columns>
+        </not-null>
+    
+        <foreign-key>
+          <name>GBITEM_ACT_ACT_ID_FK</name>
+          <parent-table>
+            <name>ACTIVATION</name>
+            <columns>
+              <key-column>ACTIVATION_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>ACTIVATION_ID</column>
+          </columns>
+        </foreign-key>
+    
+        <foreign-key>
+          <name>GBITEM_ACT_GBOOK_ITEM_ID_FK</name>
+          <parent-table>
+            <name>GRADEBOOK_ITEM</name>
+            <columns>
+              <key-column>GRADEBOOK_ITEM_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>GRADEBOOK_ITEM_ID</column>
+          </columns>
+        </foreign-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>USER_ACTIVATION</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>ACTIVATION_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>USER_NAME</name>
+          <type>VARCHAR</type>
+          <param>50</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+      <indexes>
+ 
+        <index>
+          <name>USER_ACTIVATION_AD_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ACTIVATION_ID</column>
+          </columns>
+        </index>
+ 
+        <index>
+          <name>USER_ACTIVATION_UN_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>USER_NAME</column>
+          </columns>
+        </index>
+ 
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>USER_ACTIVATION_ACTIVATION_ID_NN</name>
+          <columns>
+            <column>ACTIVATION_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>USER_ACTIVATION_USER_NAME_NN</name>
+          <columns>
+            <column>USER_NAME</column>
+          </columns>
+        </not-null>
+    
+        <foreign-key>
+          <name>USER_ACT_USER_NAME_FK</name>
+          <parent-table>
+            <name>UP_USER</name>
+            <columns>
+              <key-column>USER_NAME</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>USER_NAME</column>
+          </columns>
+        </foreign-key>
+    
+        <foreign-key>
+          <name>USER_ACT_ACT_ID_FK</name>
+          <parent-table>
+            <name>ACTIVATION</name>
+            <columns>
+              <key-column>ACTIVATION_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>ACTIVATION_ID</column>
+          </columns>
+        </foreign-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>ADJUNCT_OFFERING_DATA</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>OFFERING_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+        <column>
+          <name>PUBLISHED</name>
+          <type>BOOLEAN</type>
+          <desc></desc>
+        </column>
+        <column>
+          <name>HAS_BUY_NOW</name>
+          <type>BOOLEAN</type>
+          <desc></desc>
+        </column>
+    
+      </columns>
+      <indexes>
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>ADJUNCT_OFFERING_DATA_OFFERING_ID_NN</name>
+          <columns>
+            <column>OFFERING_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>ADJUNCT_OFFERING_DATA_PUBLISHED_NN</name>
+          <columns>
+            <column>PUBLISHED</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>ADJUNCT_OFFERING_DATA_HAS_BUY_NOW_NN</name>
+          <columns>
+            <column>HAS_BUY_NOW</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>ADJUNCT_OFFERING_DATA_PKEY</name>
+          <columns>
+            <column>OFFERING_ID</column>
+          </columns>
+        </primary-key>
+
+        <foreign-key>
+          <name>ADJ_OFF_DATA_OFF_ID_FK</name>
+          <parent-table>
+            <name>OFFERING</name>
+            <columns>
+              <key-column>OFFERING_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>OFFERING_ID</column>
+          </columns>
+        </foreign-key>
+      </constraints>
+    </table>
+    <table>
+      <name>ASSESSMENT</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>ID</name>
+          <type>VARCHAR</type>
+          <param>128</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>NAME</name>
+          <type>VARCHAR</type>
+          <param>256</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DESCRIPTION</name>
+          <type>VARCHAR</type>
+          <param>256</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DATA</name>
+	  <type>LONGVARCHAR</type>
+          <desc></desc>
+        </column>
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>ASSESSMENT_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ID</column>
+          </columns>
+        </index>
+
+      </indexes>
+      
+      <constraints>
+
+        <not-null>
+          <name>ASSESSMENT_ID_NN</name>
+          <columns>
+            <column>ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>ASSESSMENT_DATA_NN</name>
+          <columns>
+            <column>DATA</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>ASSESSMENT_PKEY</name>
+          <columns>
+            <column>ID</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>ASSESSMENT_QUESTION</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>ASSESSMENT_ID</name>
+          <type>VARCHAR</type>
+          <param>128</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>QUESTION_ID</name>
+          <type>VARCHAR</type>
+          <param>128</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>ASSESSMENT_QUESTION_AI_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ASSESSMENT_ID</column>
+          </columns>
+        </index>
+
+        <index>
+	  <name>ASSESSMENT_QUESTION_QI_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>QUESTION_ID</column>
+          </columns>
+        </index>
+      
+      </indexes>
+      
+      <constraints>
+
+        <not-null>
+          <name>AQ_ASSESSMENT_ID_NN</name>
+          <columns>
+            <column>ASSESSMENT_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>AQ_QUESTION_ID_NN</name>
+          <columns>
+            <column>QUESTION_ID</column>
+          </columns>
+        </not-null>
+    
+        <foreign-key>
+          <name>AQ_QUESTION_ID_FK</name>
+          <parent-table>
+            <name>QUESTION</name>
+            <columns>
+              <key-column>ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>QUESTION_ID</column>
+          </columns>
+        </foreign-key>
+    
+        <foreign-key>
+          <name>AQ_ASSESSMENT_ID_FK</name>
+          <parent-table>
+            <name>ASSESSMENT</name>
+            <columns>
+              <key-column>ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>ASSESSMENT_ID</column>
+          </columns>
+        </foreign-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>ASSESSMENT_RESULT</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+	  <name>RESULT_ID</name>	  
+          <type>INTEGER</type>
+          <default>
+		  <sequence>ASSESSMENT_RESULT_ID_SEQ</sequence>
+	  </default>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>ASSESSMENT_ID</name>
+          <type>VARCHAR</type>
+          <param>128</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>ACTIVATION_ID</name>
+          <type>INTEGER</type>
+	  <desc></desc>
+        </column>
+    
+        <column>
+          <name>USER_NAME</name>
+          <type>VARCHAR</type>
+          <param>50</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DATA</name>
+          <type>LONGVARCHAR</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>COUNT_ATTEMPT</name>
+         <type>INTEGER</type>
+	  <desc></desc>
+        </column>
+    
+        <column>
+          <name>START_TIME</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+      </columns>
+
+      <indexes>
+        <index>
+          <name>ASSESSMENT_RESULT_INDX</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ASSESSMENT_ID</column>
+            <column>ACTIVATION_ID</column>
+            <column>USER_NAME</column>
+            <column>START_TIME</column>
+          </columns>
+        </index>
+    
+        <index>
+          <name>ASSESSMENT_RESULT_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>RESULT_ID</column>
+          </columns>
+        </index>
+    
+        <index>
+          <name>ASSESSMENT_RESULT_AI_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ACTIVATION_ID</column>
+          </columns>
+        </index>
+     
+        <index>
+          <name>ASSESSMENT_RESULT_UN_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>USER_NAME</column>
+          </columns>
+        </index>
+     
+        <index>
+          <name>ASSESSMENT_RESULT_ST_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>START_TIME</column>
+          </columns>
+        </index>
+         
+        <index>
+          <name>ASSESSMENT_RESULT_CA_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>COUNT_ATTEMPT</column>
+          </columns>
+        </index>
+   
+      </indexes>
+      <constraints>
+        <not-null>
+          <name>AR_RESULT_ID_NN</name>
+          <columns>
+            <column>RESULT_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>AR_ASSESSMENT_ID_NN</name>
+          <columns>
+            <column>ASSESSMENT_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>AR_ACTIVATION_ID_NN</name>
+          <columns>
+            <column>ACTIVATION_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>AR_USER_NAME_NN</name>
+          <columns>
+            <column>USER_NAME</column>
+          </columns>
+  	</not-null>
+    
+        <not-null>
+          <name>AR_DATA_NN</name>
+          <columns>
+            <column>DATA</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>AR_COUNT_ATTEMPT_NN</name>
+          <columns>
+            <column>COUNT_ATTEMPT</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>ASSESSMENT_RESULT_PKEY</name>
+          <columns>
+            <column>RESULT_ID</column>
+          </columns>
+        </primary-key>
+    
+        <foreign-key>
+          <name>ASSESSMENT_RESULT_ID_FK</name>
+          <parent-table>
+            <name>ASSESSMENT</name>
+            <columns>
+              <key-column>ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>ASSESSMENT_ID</column>
+          </columns>
+        </foreign-key>
+
+        <foreign-key>
+          <name>ASSESSMENT_RESULT_USER_NAME_FK</name>
+          <parent-table>
+            <name>UP_USER</name>
+            <columns>
+              <key-column>USER_NAME</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>USER_NAME</column>
+          </columns>
+        </foreign-key>
+
+      </constraints>
+    </table>
+    <table>
+      <name>QUESTION</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>ID</name>
+          <type>VARCHAR</type>
+          <param>128</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>NAME</name>
+          <type>VARCHAR</type>
+          <param>256</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DESCRIPTION</name>
+          <type>VARCHAR</type>
+          <param>256</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DATA</name>
+          <type>LONGVARCHAR</type>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>QUESTION_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ID</column>
+          </columns>
+        </index>
+    
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>QUESTION_ID_NN</name>
+          <columns>
+            <column>ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>QUESTION_DATA_NN</name>
+          <columns>
+            <column>DATA</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>QUESTION_PKEY</name>
+          <columns>
+            <column>ID</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>QUESTION_RESULT</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>QUESTION_ID</name>
+          <type>VARCHAR</type>
+          <param>128</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>RESULT_ID</name>
+         <type>INTEGER</type>
+	  <desc></desc>
+        </column>
+    
+        <column>
+          <name>DATA</name>
+          <type>VARCHAR</type>
+          <param>4000</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>ORDER_NUMBER</name>
+         <type>INTEGER</type>
+	  <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+	  <name>QUESTION_RESULT_QI_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>QUESTION_ID</column>
+          </columns>
+        </index>
+
+        <index>
+          <name>QUESTION_RESULT_RI_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>RESULT_ID</column>
+          </columns>
+        </index>
+    
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>QUESTION_RESULT_QUESTION_ID_NN</name>
+          <columns>
+            <column>QUESTION_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>QUESTION_RESULT_RESULT_ID_NN</name>
+          <columns>
+            <column>RESULT_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>QUESTION_RESULT_DATA_NN</name>
+          <columns>
+            <column>DATA</column>
+          </columns>
+        </not-null>
+    
+        <foreign-key>
+          <name>RESULT_ID_FK</name>
+          <parent-table>
+            <name>ASSESSMENT_RESULT</name>
+            <columns>
+              <key-column>RESULT_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>RESULT_ID</column>
+          </columns>
+        </foreign-key>
+    
+        <foreign-key>
+          <name>QUESTION_RESULT_ID_FK</name>
+          <parent-table>
+            <name>QUESTION</name>
+            <columns>
+              <key-column>ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>QUESTION_ID</column>
+          </columns>
+        </foreign-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>CLASS_CURRICULUM</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>CLASS_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>CURRICULUM</name>
+          <type>VARCHAR</type>
+          <param>255</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>CLASS_CURRICULUM_CID_IDX</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>CLASS_ID</column>
+            <column>CURRICULUM</column>
+          </columns>
+        </index>
+            
+        <index>
+          <name>CLASS_CURRICULUM_CURR_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>CURRICULUM</column>
+          </columns>
+        </index>
+  
+      </indexes>
+
+      <constraints>
+ 
+        <not-null>
+          <name>CLASS_CURRICULUM_CURR_NN</name>
+          <columns>
+            <column>CURRICULUM</column>
+          </columns>
+        </not-null>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>CURRICULUM</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>CURRICULUM_ID</name>
+          <type>INTEGER</type>
+	  <default>
+		  <sequence>CURRICULUM_SEQ</sequence>
+	  </default>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>OFFERING_ID</name>
+         <type>INTEGER</type>
+	  <desc></desc>
+        </column>
+    
+        <column>
+          <name>NAME</name>
+          <type>VARCHAR</type>
+          <param>255</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DESCRIPTION</name>
+          <type>VARCHAR</type>
+          <param>1000</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>TYPE</name>
+          <type>VARCHAR</type>
+          <param>35</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>REFERENCE</name>
+          <type>VARCHAR</type>
+          <param>255</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>CONTENT_TYPE</name>
+          <type>VARCHAR</type>
+          <param>35</param>
+          <desc></desc>
+        </column>
+    
+    
+        <column>
+          <name>THEME</name>
+          <type>VARCHAR</type>
+          <param>80</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>STYLE</name>
+          <type>VARCHAR</type>
+          <param>80</param>
+          <desc></desc>
+        </column>
+ 
+      </columns>
+
+      <indexes>
+
+        <index>
+	  <name>QUESTION_RESULT_CI_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>CURRICULUM_ID</column>
+          </columns>
+        </index>
+
+        <index>
+	  <name>QUESTION_RESULT_OI_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>OFFERING_ID</column>
+          </columns>
+        </index>
+
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>CURRICULUM_CURRICULUM_ID_NN</name>
+          <columns>
+            <column>CURRICULUM_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>CURRICULUM_OFFERING_ID_NN</name>
+          <columns>
+            <column>OFFERING_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>CURRICULUM_NAME_NN</name>
+          <columns>
+            <column>NAME</column>
+          </columns>
+        </not-null>
+
+		<primary-key>
+		  <name>CURRICULUM_PKEY</name>
+		  <columns>
+			<column>CURRICULUM_ID</column>
+		  </columns>
+		</primary-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>CHANNEL_INSTANCE</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>CHANNEL_INSTANCE_ID</name>
+          <type>INTEGER</type>
+	  <default>
+		  <sequence>CHANNEL_INSTANCE_SEQ</sequence>
+	  </default>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>OFFERING_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>CHANNEL_HANDLE</name>
+          <type>VARCHAR</type>
+          <param>100</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>CHANNEL_INSTANCE_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>CHANNEL_INSTANCE_ID</column>
+          </columns>
+        </index>
+    
+        <index>
+          <name>CI_OFF_ID_CH_UNIQ</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>OFFERING_ID</column>
+            <column>CHANNEL_HANDLE</column>
+          </columns>
+        </index>
+   
+        <index>
+          <name>CI_CH_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>CHANNEL_HANDLE</column>
+          </columns>
+        </index>
+
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>CI_CHANNEL_INSTANCE_ID_NN</name>
+          <columns>
+            <column>CHANNEL_INSTANCE_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>CI_OFFERING_ID_NN</name>
+          <columns>
+            <column>OFFERING_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>CI_CHANNEL_HANDLE_NN</name>
+          <columns>
+            <column>CHANNEL_HANDLE</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>CHANNEL_INSTANCE_PKEY</name>
+          <columns>
+            <column>CHANNEL_INSTANCE_ID</column>
+          </columns>
+        </primary-key>
+    
+        <foreign-key>
+          <name>CHANNEL_INST_OFF_ID_FK</name>
+          <parent-table>
+            <name>OFFERING</name>
+            <columns>
+              <key-column>OFFERING_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>OFFERING_ID</column>
+          </columns>
+        </foreign-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>CLASS_FOLDERS</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>OFFERING_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>ORDERING</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>XML</name>
+          <type>VARCHAR</type>
+          <param>3000</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>CLASS_FOLDERS_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>OFFERING_ID</column>
+            <column>ORDERING</column>
+          </columns>
+        </index>
+
+        <index>
+          <name>CLASS_FOLDERS_ORDERING_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ORDERING</column>
+          </columns>
+        </index>
+      
+      </indexes>
+      
+      <constraints>
+
+        <not-null>
+          <name>CLASS_FOLDERS_OFFERING_ID_NN</name>
+          <columns>
+            <column>OFFERING_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>CLASS_FOLDERS_ORDERING_NN</name>
+          <columns>
+            <column>ORDERING</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>CLASS_FOLDERS_XML_NN</name>
+          <columns>
+            <column>XML</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>CLASS_FOLDERS_PKEY</name>
+          <columns>
+            <column>OFFERING_ID</column>
+            <column>ORDERING</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+  <table>
+    <name>CLIENT_OFFERING_KEY</name>
+    <desc></desc>
+    <columns>
+      <column> 
+	<name>CLIENT_ID</name>       
+	<type>INTEGER</type>  
+       	<desc></desc>
+      </column>
+      <column>
+	<name>EXTERNAL_ID</name>   
+	<type>VARCHAR</type>  
+	<param>50</param>
+        <desc></desc>
+      </column>
+      <column> 
+	<name>OFFERING_ID</name> 
+	<type>INTEGER</type>
+        <desc></desc>
+      </column>
+      <column>
+	<name>FOREIGN_ID</name>   
+	<type>VARCHAR</type>  
+	<param>25</param>
+        <desc></desc>
+      </column>
+    </columns>
+
+      <constraints>
+        <not-null>
+          <name>CLIENT_OFF_CLIENT_ID_NN</name>
+          <columns>
+            <column>CLIENT_ID</column>
+          </columns>
+        </not-null>
+
+        <not-null>
+          <name>CLIENT_OFF_EXT_SOURCE_NN</name>
+          <columns>
+            <column>EXTERNAL_ID</column>
+          </columns>
+        </not-null>
+
+        <not-null>
+	  <name>CLIENT_OFF_OFFERING_ID_NN</name>
+          <columns>
+            <column>OFFERING_ID</column>
+          </columns>
+        </not-null>
+
+        <primary-key>
+          <name>CLIENT_OFFERING_PKEY</name>
+          <columns>
+            <column>CLIENT_ID</column>
+            <column>EXTERNAL_ID</column>
+            <column>OFFERING_ID</column>
+          </columns>
+        </primary-key>
+      
+        <foreign-key>
+       	  <name>CLIENT_OFF_CLIENT_ID_FK</name>
+          <parent-table>
+            <name>CLIENT_ORGANIZATION</name>
+            <columns>
+              <key-column>CLIENT_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>CLIENT_ID</column>
+          </columns>
+        </foreign-key>
+    
+        <foreign-key>
+       	  <name>CLIENT_OFF_OFFERING_ID_FK</name>
+          <parent-table>
+            <name>OFFERING</name>
+            <columns>
+              <key-column>OFFERING_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>OFFERING_ID</column>
+          </columns>
+        </foreign-key>
+
+      </constraints>
+  </table>
+  <table>
+    <name>CLIENT_ROLE_KEY</name>
+    <desc></desc>
+    <columns>
+      <column> 
+	<name>CLIENT_ID</name>       
+	<type>INTEGER</type>  
+       	<desc></desc>
+      </column>
+      <column>
+	<name>EXTERNAL_ID</name>   
+	<type>VARCHAR</type>  
+	<param>50</param>
+        <desc></desc>
+      </column>
+      <column> 
+	<name>ROLE_ID</name> 
+	<type>INTEGER</type>
+        <desc></desc>
+      </column>
+      <column>
+	<name>FOREIGN_ID</name>   
+	<type>VARCHAR</type>  
+	<param>25</param>
+        <desc></desc>
+      </column>
+    </columns>
+
+      <constraints>
+        <not-null>
+          <name>CLIENT_ROLE_CLIENT_ID_NN</name>
+          <columns>
+            <column>CLIENT_ID</column>
+          </columns>
+        </not-null>
+
+        <not-null>
+          <name>CLIENT_ROLE_EXT_SOURCE_NN</name>
+          <columns>
+            <column>EXTERNAL_ID</column>
+          </columns>
+        </not-null>
+
+        <not-null>
+	  <name>CLIENT_ROLE_ROLE_ID_NN</name>
+          <columns>
+            <column>ROLE_ID</column>
+          </columns>
+        </not-null>
+
+        <primary-key>
+          <name>CLIENT_ROLE_PKEY</name>
+          <columns>
+            <column>CLIENT_ID</column>
+            <column>EXTERNAL_ID</column>
+            <column>ROLE_ID</column>
+          </columns>
+        </primary-key>
+  
+        <foreign-key>
+       	  <name>CLIENT_ROLE_CLIENT_ID_FK</name>
+          <parent-table>
+            <name>CLIENT_ORGANIZATION</name>
+            <columns>
+              <key-column>CLIENT_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>CLIENT_ID</column>
+          </columns>
+        </foreign-key>
+    
+        <foreign-key>
+       	  <name>CLIENT_ROLE_ROLE_ID_FK</name>
+          <parent-table>
+            <name>ROLE</name>
+            <columns>
+              <key-column>ROLE_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>ROLE_ID</column>
+          </columns>
+        </foreign-key>
+
+      </constraints>
+  </table>
+  <table>
+    <name>CLIENT_TOPIC_KEY</name>
+    <desc></desc>
+    <columns>
+      <column> 
+	<name>CLIENT_ID</name>       
+	<type>INTEGER</type>  
+       	<desc></desc>
+      </column>
+      <column>
+	<name>EXTERNAL_ID</name>   
+	<type>VARCHAR</type>  
+	<param>50</param>
+        <desc></desc>
+      </column>
+      <column> 
+	<name>TOPIC_ID</name> 
+	<type>INTEGER</type>
+        <desc></desc>
+      </column>
+      <column>
+	<name>FOREIGN_ID</name>   
+	<type>VARCHAR</type>  
+	<param>25</param>
+        <desc></desc>
+      </column>
+    </columns>
+
+      <constraints>
+        <not-null>
+          <name>CLIENT_TOPIC_CLIENT_ID_NN</name>
+          <columns>
+            <column>CLIENT_ID</column>
+          </columns>
+        </not-null>
+
+        <not-null>
+          <name>CLIENT_TOPIC_EXT_SOURCE_NN</name>
+          <columns>
+            <column>EXTERNAL_ID</column>
+          </columns>
+        </not-null>
+
+        <not-null>
+	  <name>CLIENT_TOPIC_TOPIC_ID_NN</name>
+          <columns>
+            <column>TOPIC_ID</column>
+          </columns>
+        </not-null>
+
+        <primary-key>
+          <name>CLIENT_TOPIC_PKEY</name>
+          <columns>
+            <column>CLIENT_ID</column>
+            <column>EXTERNAL_ID</column>
+            <column>TOPIC_ID</column>
+          </columns>
+        </primary-key>
+       
+        <foreign-key>
+       	  <name>CLIENT_TOPIC_CLIENT_ID_FK</name>
+          <parent-table>
+            <name>CLIENT_ORGANIZATION</name>
+            <columns>
+              <key-column>CLIENT_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>CLIENT_ID</column>
+          </columns>
+        </foreign-key>
+    
+        <foreign-key>
+       	  <name>CLIENT_TOPIC_TOPIC_ID_FK</name>
+          <parent-table>
+            <name>TOPIC</name>
+            <columns>
+              <key-column>TOPIC_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>TOPIC_ID</column>
+          </columns>
+        </foreign-key>
+
+      </constraints>
+  </table>
+  <table>
+    <name>COURSE</name>
+    <desc></desc>
+    <columns>
+      <column> 
+	    <name>COURSE_ID</name>       
+	    <type>INTEGER</type>  
+       	<desc></desc>
+      </column>
+      <column>
+	    <name>ACTIVE</name>   
+	    <type>BOOLEAN</type>  
+        <desc></desc>
+      </column>
+      <column> 
+	    <name>SHARED</name> 
+	    <type>BOOLEAN</type>
+        <desc></desc>
+      </column>
+      <column>
+	    <name>SHARED_CODE</name>   
+	    <type>VARCHAR</type>  
+	    <param>32</param>
+        <desc></desc>
+      </column>
+      <column> 
+	    <name>CHARITABLE</name> 
+	    <type>BOOLEAN</type>
+        <desc></desc>
+      </column>
+      <column>
+	    <name>COST</name>   
+	    <type>NUMERIC</type>  
+	    <param>9,2</param>
+        <desc></desc>
+      </column>
+      <column>
+	    <name>SUBJECT_AREA</name>   
+	    <type>VARCHAR</type>  
+	    <param>80</param>
+        <desc></desc>
+      </column>
+      <column>
+	    <name>PUBLISHER</name>   
+	    <type>VARCHAR</type>  
+	    <param>80</param>
+        <desc></desc>
+      </column>
+    </columns>
+
+      <constraints>
+        <not-null>
+          <name>COURSE_COURSE_ID_NN</name>
+          <columns>
+            <column>COURSE_ID</column>
+          </columns>
+        </not-null>
+
+        <not-null>
+          <name>COURSE_ACTIVE_NN</name>
+          <columns>
+            <column>ACTIVE</column>
+          </columns>
+        </not-null>
+
+        <not-null>
+          <name>COURSE_SHARED_NN</name>
+          <columns>
+            <column>SHARED</column>
+          </columns>
+        </not-null>
+
+        <not-null>
+          <name>COURSE_CHARITABLE_NN</name>
+          <columns>
+            <column>CHARITABLE</column>
+          </columns>
+        </not-null>
+
+        <not-null>
+          <name>COURSE_SUBJECT_AREA_NN</name>
+          <columns>
+            <column>SUBJECT_AREA</column>
+          </columns>
+        </not-null>
+
+        <not-null>
+          <name>COURSE_PUBLISHER_NN</name>
+          <columns>
+            <column>PUBLISHER</column>
+          </columns>
+        </not-null>
+
+        <primary-key>
+          <name>COURSE_PKEY</name>
+          <columns>
+            <column>COURSE_ID</column>
+          </columns>
+        </primary-key>
+       
+        <foreign-key>
+          <name>COURSE_TOPIC_ID_FK</name>
+          <parent-table>
+            <name>TOPIC</name>
+            <columns>
+              <key-column>TOPIC_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>COURSE_ID</column>
+          </columns>
+        </foreign-key>
+    
+        <indexes>
+          <index>
+            <name>COURSE_SHARED_CODE_IDX</name>
+            <unique>FALSE</unique>
+            <sort_order>ASC</sort_order>
+            <columns>
+              <column>SHARED_CODE</column>
+            </columns>
+          </index>
+        </indexes>
+
+      </constraints>
+  </table>
+  <table>
+    <name>COURSE_DETAILS</name>
+    <desc></desc>
+    <columns>
+      <column> 
+	    <name>COURSE_DETAILS_ID</name>       
+	    <type>INTEGER</type>  
+       	<desc></desc>
+      </column>
+      <column>
+	    <name>IMAGE_URL</name>   
+	    <type>VARCHAR</type>  
+	    <param>255</param>
+        <desc></desc>
+      </column>
+      <column> 
+        <name>PREREQUISITES</name> 
+	    <type>VARCHAR</type>
+	    <param>100</param>
+        <desc></desc>
+      </column>
+      <column>
+	    <name>LOCALIZATION</name>   
+	    <type>VARCHAR</type>  
+	    <param>50</param>
+        <desc></desc>
+      </column>
+      <column>
+	    <name>DELIVERY</name>   
+	    <type>VARCHAR</type>  
+	    <param>20</param>
+        <desc></desc>
+      </column>
+      <column>
+	    <name>DURATION</name>   
+	    <type>VARCHAR</type>  
+	    <param>30</param>
+        <desc></desc>
+      </column>
+      <column>
+	    <name>VERSION</name>   
+	    <type>VARCHAR</type>  
+	    <param>5</param>
+        <desc></desc>
+      </column>
+      <column>
+	    <name>MORE_INFO_URL</name>   
+	    <type>VARCHAR</type>  
+	    <param>255</param>
+        <desc></desc>
+      </column>
+      <column>
+	    <name>STUDENT_LEARNING</name>   
+	    <type>VARCHAR</type>  
+	    <param>1000</param>
+        <desc></desc>
+      </column>
+      <column>
+	    <name>BENEFITS</name>   
+	    <type>VARCHAR</type>  
+	    <param>1000</param>
+        <desc></desc>
+      </column>
+      <column>
+	    <name>BLENDED_LEARNING</name>   
+	    <type>VARCHAR</type>  
+	    <param>1000</param>
+        <desc></desc>
+      </column>
+      <column>
+	    <name>TEACHER_TRAINING</name>   
+	    <type>VARCHAR</type>  
+	    <param>1000</param>
+        <desc></desc>
+      </column>
+      <column>
+	    <name>PROGRAM_PARTNERS</name>   
+	    <type>VARCHAR</type>  
+	    <param>1000</param>
+        <desc></desc>
+      </column>
+      <column>
+	    <name>OUTLINE_URL</name>   
+	    <type>VARCHAR</type>  
+	    <param>255</param>
+        <desc></desc>
+      </column>
+      <column>
+	    <name>LICENSE_URL</name>   
+	    <type>VARCHAR</type>  
+	    <param>255</param>
+        <desc></desc>
+      </column>
+    </columns>
+
+      <constraints>
+        <not-null>
+          <name>COURSE_DETAILS_COURSE_DETAILS_ID_NN</name>
+          <columns>
+            <column>COURSE_DETAILS_ID</column>
+          </columns>
+        </not-null>
+
+        <primary-key>
+          <name>COURSE_DETAILS_PKEY</name>
+          <columns>
+            <column>COURSE_DETAILS_ID</column>
+          </columns>
+        </primary-key>
+       
+        <foreign-key>
+          <name>COURSE_DETAILS_ID_FK</name>
+          <parent-table>
+            <name>COURSE</name>
+            <columns>
+              <key-column>COURSE_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>COURSE_DETAILS_ID</column>
+          </columns>
+        </foreign-key>
+    
+      </constraints>
+  </table>
+  <table>
+    <name>REGISTRATION_CODE</name>
+    <desc></desc>
+    <columns>
+      <column> 
+	    <name>CODE</name>       
+	    <type>VARCHAR</type>  
+	    <param>32</param>
+       	<desc></desc>
+      </column>
+      <column>
+	    <name>COURSE_ID</name>   
+	    <type>INTEGER</type>  
+        <desc></desc>
+      </column>
+      <column> 
+        <name>CREATE_DATE</name> 
+	    <type>DATE</type>
+        <desc></desc>
+      </column>
+      <column>
+	    <name>USED</name>   
+	    <type>BOOLEAN</type>  
+        <desc></desc>
+      </column>
+      <column>
+	    <name>USED_DATE</name>   
+	    <type>DATE</type>  
+        <desc></desc>
+      </column>
+    </columns>
+
+      <constraints>
+        <not-null>
+          <name>REGISTRATION_CODE_CODE_NN</name>
+          <columns>
+            <column>CODE</column>
+          </columns>
+        </not-null>
+        <not-null>
+          <name>REGISTRATION_CODE_COURSE_ID_NN</name>
+          <columns>
+            <column>COURSE_ID</column>
+          </columns>
+        </not-null>
+        <not-null>
+          <name>REGISTRATION_CODE_CREATE_DATE_NN</name>
+          <columns>
+            <column>CREATE_DATE</column>
+          </columns>
+        </not-null>
+        <not-null>
+          <name>REGISTRATION_CODE_USED_NN</name>
+          <columns>
+            <column>USED</column>
+          </columns>
+        </not-null>
+
+        <primary-key>
+          <name>REGISTRATION_CODE_PKEY</name>
+          <columns>
+            <column>CODE</column>
+          </columns>
+        </primary-key>
+       
+        <foreign-key>
+          <name>REG_CODE_COURSE_ID_FK</name>
+          <parent-table>
+            <name>COURSE</name>
+            <columns>
+              <key-column>COURSE_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>COURSE_ID</column>
+          </columns>
+        </foreign-key>
+    
+        <indexes>
+          <index>
+            <name>REG_CODE_COURSE_ID_IDX</name>
+            <unique>FALSE</unique>
+            <sort_order>ASC</sort_order>
+            <columns>
+              <column>COURSE_ID</column>
+            </columns>
+          </index>
+        </indexes>
+      </constraints>
+  </table>
+  <table>
+    <name>TEXTBOOK</name>
+    <desc></desc>
+    <columns>
+      <column> 
+	    <name>TEXTBOOK_ID</name>       
+	    <type>INTEGER</type>  
+       	<desc></desc>
+      </column>
+      <column>
+	    <name>TITLE</name>   
+	    <type>VARCHAR</type>  
+	    <param>80</param>
+        <desc></desc>
+      </column>
+      <column> 
+        <name>IMAGE_URL</name> 
+	    <type>VARCHAR</type>
+	    <param>255</param>
+        <desc></desc>
+      </column>
+      <column>
+	    <name>ISBN</name>   
+	    <type>VARCHAR</type>  
+	    <param>10</param>
+        <desc></desc>
+      </column>
+      <column>
+	    <name>PURCHASE_URL</name>   
+	    <type>VARCHAR</type>  
+	    <param>255</param>
+        <desc></desc>
+      </column>
+    </columns>
+
+      <constraints>
+        <not-null>
+          <name>TEXTBOOK_TEXTBOOK_ID_NN</name>
+          <columns>
+            <column>TEXTBOOK_ID</column>
+          </columns>
+        </not-null>
+
+        <primary-key>
+          <name>TEXTBOOK_PKEY</name>
+          <columns>
+            <column>TEXTBOOK_ID</column>
+          </columns>
+        </primary-key>
+       
+        <foreign-key>
+          <name>TEXTBOOK_COURSE_ID_FK</name>
+          <parent-table>
+            <name>COURSE</name>
+            <columns>
+              <key-column>COURSE_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>TEXTBOOK_ID</column>
+          </columns>
+        </foreign-key>
+    
+      </constraints>
+  </table>
+  <table>
+    <name>TEXTBOOK_AUTHOR</name>
+    <desc></desc>
+    <columns>
+      <column> 
+	    <name>TEXTBOOK_ID</name>       
+	    <type>INTEGER</type>  
+       	<desc></desc>
+      </column>
+      <column>
+	    <name>AUTHOR_ID</name>   
+	    <type>INTEGER</type>  
+        <desc></desc>
+      </column>
+    </columns>
+
+      <constraints>
+        <not-null>
+            <name>TEXTBOOK_AUTHOR_TEXTBOOK_ID_NN</name>
+          <columns>
+            <column>TEXTBOOK_ID</column>
+          </columns>
+        </not-null>
+        <not-null>
+            <name>TEXTBOOK_AUTHOR_AUTHOR_ID_NN</name>
+          <columns>
+            <column>AUTHOR_ID</column>
+          </columns>
+        </not-null>
+
+        <primary-key>
+          <name>TEXTBOOK_AUTHOR_PKEY</name>
+          <columns>
+            <column>TEXTBOOK_ID</column>
+            <column>AUTHOR_ID</column>
+          </columns>
+        </primary-key>
+       
+        <foreign-key>
+          <name>TEXTBOOK_AUTHOR_AID_FK</name>
+          <parent-table>
+            <name>AUTHOR</name>
+            <columns>
+              <key-column>AUTHOR_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>AUTHOR_ID</column>
+          </columns>
+        </foreign-key>
+    
+        <foreign-key>
+          <name>TEXTBOOK_AUTHOR_TBOOK_ID_FK</name>
+          <parent-table>
+            <name>TEXTBOOK</name>
+            <columns>
+              <key-column>TEXTBOOK_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>TEXTBOOK_ID</column>
+          </columns>
+        </foreign-key>
+    
+      </constraints>
+  </table>
+  <table>
+    <name>AUTHOR</name>
+    <desc></desc>
+    <columns>
+      <column> 
+	    <name>AUTHOR_ID</name>       
+	    <type>INTEGER</type>  
+        <default>
+          <sequence>AUTHOR_ID_SEQ</sequence>
+        </default>
+       	<desc></desc>
+      </column>
+      <column>
+	    <name>AUTHOR_NAME</name>   
+	    <type>VARCHAR</type>  
+	    <param>50</param>  
+        <desc></desc>
+      </column>
+    </columns>
+
+      <constraints>
+        <not-null>
+            <name>AUTHOR_AUTHOR_ID_NN</name>
+          <columns>
+            <column>AUTHOR_ID</column>
+          </columns>
+        </not-null>
+
+        <primary-key>
+          <name>AUTHOR_PKEY</name>
+          <columns>
+            <column>AUTHOR_ID</column>
+          </columns>
+        </primary-key>
+       
+      </constraints>
+  </table>
+  <table>
+    <name>GRADEBOOK_FEEDBACK</name>
+    <desc>NULL</desc>
+    <columns>
+      <column>
+        <name>GRADEBOOK_FEEDBACK_ID</name>
+        <type>INTEGER</type>
+    <default>
+  	<sequence>GRADEBOOK_FEEDBACK_SEQ</sequence>
+    </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>GRADEBOOK_SCORE_ID</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>FILENAME</name>
+        <type>VARCHAR</type>
+        <param>80</param>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>FILESIZE</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>GCOMMENT</name>
+        <type>VARCHAR</type>
+        <param>256</param>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>SUBMIT_DATE</name>
+        <type>TIMESTAMP</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>CONTENT_TYPE</name>
+        <type>VARCHAR</type>
+        <param>80</param>
+        <desc></desc>
+      </column>
+  
+    </columns>
+
+    <indexes>
+         
+      <index>
+        <name>GRADEBOOK_FEED_GFID_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>GRADEBOOK_FEEDBACK_ID</column>
+        </columns>
+      </index>
+         
+      <index>
+        <name>GRADEBOOK_FEED_GSID_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>GRADEBOOK_SCORE_ID</column>
+        </columns>
+      </index>
+
+    </indexes>
+
+    <constraints>
+
+      <not-null>
+        <name>GRADEBOOK_FEED_GFID_NN</name>
+        <columns>
+          <column>GRADEBOOK_FEEDBACK_ID</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>GRADEBOOK_FEED_GSID_NN</name>
+        <columns>
+          <column>GRADEBOOK_SCORE_ID</column>
+        </columns>
+      </not-null>
+  
+  	<primary-key>
+  	  <name>GRADEBOOK_FEEDBACK_PKEY</name>
+  		<columns>
+  		  <column>GRADEBOOK_FEEDBACK_ID</column>
+  		</columns>
+  	</primary-key>
+
+    </constraints>
+  </table>
+  <table>
+    <name>GRADEBOOK_ITEM</name>
+    <desc>NULL</desc>
+    <columns>
+      <column>
+        <name>GRADEBOOK_ITEM_ID</name>
+        <type>INTEGER</type>
+    <default>
+  	  <sequence>GRADEBOOK_ITEM_SEQ</sequence>
+    </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OFFERING_ID</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>POS</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>WEIGHT</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>MAX_SCORE</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>MIN_SCORE</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>NAME</name>
+        <type>VARCHAR</type>
+        <param>255</param>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>TYPE</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>ASSOCIATION</name>
+        <type>VARCHAR</type>
+        <param>255</param>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>MEAN</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>MEDIAN</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>FEEDBACK</name>
+        <type>VARCHAR</type>
+        <param>10</param>
+        <desc></desc>
+      </column>
+  
+    </columns>
+
+    <indexes>
+
+      <index>
+        <name>GRADEBOOK_ITEM_PKEY</name>
+        <unique>TRUE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>GRADEBOOK_ITEM_ID</column>
+        </columns>
+      </index>
+
+      <index>
+        <name>GRADEBOOK_ITEM_POS_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>POS</column>
+        </columns>
+      </index>
+
+      <index>
+        <name>GRADEBOOK_ITEM_WEIGHT_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>WEIGHT</column>
+        </columns>
+      </index>
+
+      <index>
+        <name>GRADEBOOK_ITEM_TYPE_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>TYPE</column>
+        </columns>
+      </index>
+
+      <index>
+        <name>GRADEBOOK_ITEM_OFF_ID_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>OFFERING_ID</column>
+        </columns>
+      </index>
+  
+    </indexes>
+    
+    <constraints>
+
+      <not-null>
+        <name>GRADEBOOK_ITEM_GRADEBOOK_ITEM_ID_NN</name>
+        <columns>
+          <column>GRADEBOOK_ITEM_ID</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>GRADEBOOK_ITEM_POS_NN</name>
+        <columns>
+          <column>POS</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>GRADEBOOK_ITEM_WEIGHT_NN</name>
+        <columns>
+          <column>WEIGHT</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>GRADEBOOK_ITEM_NAME_NN</name>
+        <columns>
+          <column>NAME</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>GRADEBOOK_ITEM_TYPE_NN</name>
+        <columns>
+          <column>TYPE</column>
+        </columns>
+      </not-null>
+  
+      <primary-key>
+        <name>GRADEBOOK_ITEM_PKEY</name>
+        <columns>
+          <column>GRADEBOOK_ITEM_ID</column>
+        </columns>
+      </primary-key>
+  
+      <foreign-key>
+        <name>GRADEBOOK_ITEM_OFF_ID_FK</name>
+        <parent-table>
+          <name>OFFERING</name>
+          <columns>
+            <key-column>OFFERING_ID</key-column>
+          </columns>
+        </parent-table>
+        <columns>
+          <column>OFFERING_ID</column>
+        </columns>
+      </foreign-key>
+    
+    </constraints>
+  </table>
+  <table>
+    <name>GRADEBOOK_SCORE</name>
+    <desc>NULL</desc>
+    <columns>
+      <column>
+        <name>GRADEBOOK_SCORE_ID</name>
+        <type>INTEGER</type>
+    <default>
+  	  <sequence>GRADEBOOK_SCORE_SEQ</sequence>
+    </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>GRADEBOOK_ITEM_ID</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>SCORE</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>USER_NAME</name>
+        <type>VARCHAR</type>
+        <param>50</param>
+        <desc></desc>
+      </column>
+    
+      <column>
+        <name>ORIGINAL_SCORE</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+    </columns>
+    <indexes>
+      <index>
+        <name>GRADEBOOK_SCORE_UNIQUE_KEYS</name>
+        <unique>TRUE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>GRADEBOOK_ITEM_ID</column>
+          <column>USER_NAME</column>
+        </columns>
+      </index>
+  
+      <index>
+        <name>GRADEBOOK_SCORE_ID_PKEY</name>
+        <unique>TRUE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>GRADEBOOK_SCORE_ID</column>
+        </columns>
+      </index>
+  
+      <index>
+        <name>GRADEBOOK_SCORE_ID_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>GRADEBOOK_ITEM_ID</column>
+        </columns>
+      </index>
+  
+      <index>
+        <name>GRADEBOOK_SCORE_SCORE_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>SCORE</column>
+        </columns>
+      </index>
+  
+      <index>
+        <name>GRADEBOOK_SCORE_UN_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>USER_NAME</column>
+        </columns>
+      </index>
+   
+      <index>
+        <name>GRADEBOOK_SCORE_OS_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>ORIGINAL_SCORE</column>
+        </columns>
+      </index>
+    
+    </indexes>
+    <constraints>
+      <not-null>
+        <name>GRADEBOOK_SCORE_GSID_NN</name>
+        <columns>
+          <column>GRADEBOOK_SCORE_ID</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>GRADEBOOK_SCORE_GIID_NN</name>
+        <columns>
+          <column>GRADEBOOK_ITEM_ID</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>GRADEBOOK_SCORE_SCORE_NN</name>
+        <columns>
+          <column>SCORE</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>GRADEBOOK_SCORE_UN_NN</name>
+        <columns>
+          <column>USER_NAME</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>GRADEBOOK_SCORE_OSID_NN</name>
+        <columns>
+          <column>ORIGINAL_SCORE</column>
+        </columns>
+      </not-null>
+    
+      <primary-key>
+        <name>GRADEBOOK_SCORE_ID_PKEY</name>
+        <columns>
+          <column>GRADEBOOK_SCORE_ID</column>
+        </columns>
+      </primary-key>
+  
+      <foreign-key>
+        <name>GBOOK_SCORE_USER_NAME_FK</name>
+        <parent-table>
+          <name>UP_USER</name>
+          <columns>
+            <key-column>USER_NAME</key-column>
+          </columns>
+        </parent-table>
+        <columns>
+          <column>USER_NAME</column>
+        </columns>
+      </foreign-key>
+  
+      <foreign-key>
+        <name>GBOOK_SCORE_GBOOK_ITEM_ID_FK</name>
+        <parent-table>
+          <name>GRADEBOOK_ITEM</name>
+          <columns>
+            <key-column>GRADEBOOK_ITEM_ID</key-column>
+          </columns>
+        </parent-table>
+        <columns>
+          <column>GRADEBOOK_ITEM_ID</column>
+        </columns>
+      </foreign-key>
+  
+    </constraints>
+  </table>
+  <table>
+    <name>GRADEBOOK_SUBMISSION</name>
+    <desc>NULL</desc>
+    <columns>
+      <column>
+        <name>GRADEBOOK_SUBMISSION_ID</name>
+        <type>INTEGER</type>
+    <default>
+  	  <sequence>GRADEBOOK_SUBMISSION_SEQ</sequence>
+    </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>GRADEBOOK_SCORE_ID</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>FILENAME</name>
+        <type>VARCHAR</type>
+        <param>80</param>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>FILESIZE</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>GCOMMENT</name>
+        <type>VARCHAR</type>
+        <param>256</param>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>SUBMISSION_COUNT</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>SUBMIT_DATE</name>
+        <type>TIMESTAMP</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>CONTENT_TYPE</name>
+        <type>VARCHAR</type>
+        <param>80</param>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>DATA</name>
+        <type>LONGVARCHAR</type>
+        <desc></desc>
+      </column>
+  
+    </columns>
+
+    <indexes>
+         
+      <index>
+        <name>GRADEBOOK_SUB_GSUBID_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>GRADEBOOK_SUBMISSION_ID</column>
+        </columns>
+      </index>
+         
+      <index>
+        <name>GRADEBOOK_SUB_GSID_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>GRADEBOOK_SCORE_ID</column>
+        </columns>
+      </index>
+         
+      <index>
+        <name>GRADEBOOK_SUB_SC_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>SUBMISSION_COUNT</column>
+        </columns>
+      </index>
+   
+    </indexes>
+
+    <constraints>
+
+      <not-null>
+        <name>GRADEBOOK_SUB_GSID_NN</name>
+        <columns>
+          <column>GRADEBOOK_SUBMISSION_ID</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>GRADEBOOK_SUB_GSID_NN</name>
+        <columns>
+          <column>GRADEBOOK_SCORE_ID</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>GRADEBOOK_SUB_SC_NN</name>
+        <columns>
+          <column>SUBMISSION_COUNT</column>
+        </columns>
+      </not-null>
+
+  	<primary-key>
+  	  <name>GRADEBOOK_SUBMISSION_PKEY</name>
+  		<columns>
+  		  <column>GRADEBOOK_SUBMISSION_ID</column>
+  		</columns>
+  	</primary-key>
+  
+    </constraints>
+  </table>
+  <table>
+    <name>MEMBERSHIP</name>
+    <desc>NULL</desc>
+    <columns>
+      <column>
+        <name>MEMBERSHIP_ID</name>
+        <type>INTEGER</type>
+    <default>
+  	<sequence>MEMBERSHIP_MEMBERSHIP_ID_SEQ</sequence>
+    </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OFFERING_ID</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>USER_NAME</name>
+        <type>VARCHAR</type>
+        <param>50</param>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>ROLE_ID</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>HIDE_GRADEBOOK</name>
+        <type>BOOLEAN</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>ENROLLMENT_STATUS</name>
+        <type>INTEGER</type>
+        <default>
+           <integer>1</integer>
+        </default>
+        <desc></desc>
+      </column>
+  
+    </columns>
+    <indexes>
+      <index>
+        <name>MEMBERSHIP_PKEY</name>
+        <unique>TRUE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>MEMBERSHIP_ID</column>
+        </columns>
+      </index>
+  
+      <index>
+        <name>MEMBERSHIP_UNIQUE_KEYS_INDEX</name>
+        <unique>TRUE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>OFFERING_ID</column>
+          <column>USER_NAME</column>
+        </columns>
+      </index>
+                     
+      <index>
+        <name>MEMBERSHIP_USER_NAME_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>USER_NAME</column>
+        </columns>
+      </index>
+                      
+      <index>
+        <name>MEMBERSHIP_ROLE_ID_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>ROLE_ID</column>
+        </columns>
+      </index>
+  
+    </indexes>
+    <constraints>
+      <not-null>
+        <name>MEMBERSHIP_MEMBERSHIP_ID_NN</name>
+        <columns>
+          <column>MEMBERSHIP_ID</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>MEMBERSHIP_OFFERING_ID_NN</name>
+        <columns>
+          <column>OFFERING_ID</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>MEMBERSHIP_USER_NAME_NN</name>
+        <columns>
+          <column>USER_NAME</column>
+        </columns>
+      </not-null>
+  
+      <primary-key>
+        <name>MEMBERSHIP_PKEY</name>
+        <columns>
+          <column>MEMBERSHIP_ID</column>
+        </columns>
+      </primary-key>
+  
+      <foreign-key>
+        <name>MEMBERSHIP_USER_NAME_FK</name>
+        <parent-table>
+          <name>UP_USER</name>
+          <columns>
+            <key-column>USER_NAME</key-column>
+          </columns>
+        </parent-table>
+        <columns>
+          <column>USER_NAME</column>
+        </columns>
+      </foreign-key>
+  
+      <foreign-key>
+        <name>MEMBERSHIP_ROLEID_FK</name>
+        <parent-table>
+          <name>ROLE</name>
+          <columns>
+            <key-column>ROLE_ID</key-column>
+          </columns>
+        </parent-table>
+        <columns>
+          <column>ROLE_ID</column>
+        </columns>
+      </foreign-key>
+  
+      <foreign-key>
+        <name>MEMBERSHIP_OFFERING_ID_FK</name>
+        <parent-table>
+          <name>OFFERING</name>
+          <columns>
+            <key-column>OFFERING_ID</key-column>
+          </columns>
+        </parent-table>
+        <columns>
+          <column>OFFERING_ID</column>
+        </columns>
+      </foreign-key>
+  
+    </constraints>
+  </table>
+  <table>
+    <name>NOTEPAD</name>
+    <desc>NULL</desc>
+    <columns>
+      <column>
+        <name>NOTEPAD_ID</name>
+        <type>INTEGER</type>
+    <default>
+  	  <sequence>NOTEPAD_ID_SEQ</sequence>
+    </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OFFERING_ID</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>USER_NAME</name>
+        <type>VARCHAR</type>
+        <param>50</param>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>UPDATE_DATE</name>
+        <type>DATE</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>TITLE</name>
+        <type>VARCHAR</type>
+        <param>255</param>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>BODY</name>
+        <type>LONGVARCHAR</type>
+        <desc></desc>
+      </column>
+  
+    </columns>
+    <indexes>
+  
+      <index>
+        <name>NOTEPAD_PKEY</name>
+        <unique>TRUE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>NOTEPAD_ID</column>
+        </columns>
+      </index>
+
+      <index>
+        <name>NOTEPAD_UN_OFF_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>USER_NAME</column>
+          <column>OFFERING_ID</column>
+        </columns>
+      </index>
+
+      <index>
+        <name>NOTEPAD_OFFERING_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>OFFERING_ID</column>
+        </columns>
+      </index>
+
+      <index>
+        <name>NOTEPAD_UD_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>UPDATE_DATE</column>
+        </columns>
+      </index>
+  
+    </indexes>
+    <constraints>
+      <not-null>
+        <name>NOTEPAD_NOTEPAD_ID_NN</name>
+        <columns>
+          <column>NOTEPAD_ID</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>NOTEPAD_OFFERING_ID_NN</name>
+        <columns>
+          <column>OFFERING_ID</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>NOTEPAD_USER_NAME_NN</name>
+        <columns>
+          <column>USER_NAME</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>NOTEPAD_UPDATE_DATE_NN</name>
+        <columns>
+          <column>UPDATE_DATE</column>
+        </columns>
+      </not-null>
+  
+      <primary-key>
+        <name>NOTEPAD_PKEY</name>
+        <columns>
+          <column>NOTEPAD_ID</column>
+        </columns>
+      </primary-key>
+
+      <foreign-key>
+        <name>NOTEPAD_USER_NAME_FK</name>
+        <parent-table>
+          <name>UP_USER</name>
+          <columns>
+            <key-column>USER_NAME</key-column>
+          </columns>
+        </parent-table>
+        <columns>
+          <column>USER_NAME</column>
+        </columns>
+      </foreign-key>
+  
+      <foreign-key>
+        <name>NOTEPAD_OFFERING_ID_FK</name>
+        <parent-table>
+          <name>OFFERING</name>
+          <columns>
+            <key-column>OFFERING_ID</key-column>
+          </columns>
+        </parent-table>
+        <columns>
+          <column>OFFERING_ID</column>
+        </columns>
+      </foreign-key>
+  
+    </constraints>
+  </table>
+  <table>
+    <name>OFFERING</name>
+    <desc>NULL</desc>
+    <columns>
+      <column>
+        <name>OFFERING_ID</name>
+        <type>INTEGER</type>
+      <default>
+  	<sequence>OFFERING_OFFERING_ID_SEQ</sequence>
+      </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>NAME</name>
+        <type>VARCHAR</type>
+        <param>80</param>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>ENROLLMENT_MODEL</name>
+        <type>VARCHAR</type>
+        <param>256</param>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>DESCRIPTION</name>
+        <type>VARCHAR</type>
+        <param>2048</param>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>DEFAULT_ROLE_ID</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>STATUS</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OPT_OFFERINGID</name>
+        <type>VARCHAR</type>
+        <param>15</param>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OPT_OFFERINGTERM</name>
+        <type>VARCHAR</type>
+        <param>35</param>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OPT_OFFERINGMONTHSTART</name>
+        <type>INTEGER</type>
+        <default>
+           <integer>0</integer>
+        </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OPT_OFFERINGDAYSTART</name>
+        <type>INTEGER</type>
+        <default>
+           <integer>0</integer>
+        </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OPT_OFFERINGYEARSTART</name>
+        <type>INTEGER</type>
+        <default>
+          <integer>0</integer>
+        </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OPT_OFFERINGMONTHEND</name>
+        <type>INTEGER</type>
+        <default>
+           <integer>0</integer>
+        </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OPT_OFFERINGDAYEND</name>
+        <type>INTEGER</type>
+        <default>
+            <integer>0</integer>
+        </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OPT_OFFERINGYEAREND</name>
+        <type>INTEGER</type>
+        <default>
+           <integer>0</integer>
+        </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OPT_OFFERINGHOURSTART</name>
+        <type>INTEGER</type>
+        <default>
+           <integer>0</integer>
+        </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OPT_OFFERINGMINUTESTART</name>
+        <type>INTEGER</type>
+        <default>
+           <integer>0</integer>
+        </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OPT_OFFERINGAMPMSTART</name>
+        <type>INTEGER</type>
+        <default>
+           <integer>0</integer>
+        </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OPT_OFFERINGHOUREND</name>
+        <type>INTEGER</type>
+        <default>
+           <integer>0</integer>
+        </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OPT_OFFERINGMINUTEEND</name>
+        <type>INTEGER</type>
+        <default>
+           <integer>0</integer>
+        </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OPT_OFFERINGAMPMEND</name>
+        <type>INTEGER</type>
+        <default>
+           <integer>0</integer>
+        </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OPT_OFFERINGLOCATION</name>
+        <type>VARCHAR</type>
+        <param>25</param>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>GROUP_ID</name>
+    <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OPT_DAYSOFWEEK</name>
+    <type>INTEGER</type>
+        <default>
+           <integer>0</integer>
+        </default>
+        <desc></desc>
+      </column>
+ 
+    </columns>
+
+    <indexes>
+
+      <index>
+        <name>OFFERING_PKEY</name>
+        <unique>TRUE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>OFFERING_ID</column>
+        </columns>
+      </index>
+  
+      <index>
+        <name>OFFERING_NAME_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>NAME</column>
+        </columns>
+      </index>
+  
+      <index>
+        <name>OFFERING_DRID_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>DEFAULT_ROLE_ID</column>
+        </columns>
+      </index>
+
+    </indexes>
+    <constraints>
+      <not-null>
+        <name>OFFERING_OFFERING_ID_NN</name>
+        <columns>
+          <column>OFFERING_ID</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>OFFERING_NAME_NN</name>
+        <columns>
+          <column>NAME</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>OFFERING_ENROLLMENT_MODEL_NN</name>
+        <columns>
+          <column>ENROLLMENT_MODEL</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>OFFERING_DEFAULT_ROLE_ID_NN</name>
+        <columns>
+          <column>DEFAULT_ROLE_ID</column>
+        </columns>
+      </not-null>
+
+      <primary-key>
+        <name>OFFERING_PKEY</name>
+        <columns>
+          <column>OFFERING_ID</column>
+        </columns>
+      </primary-key>
+   
+    </constraints>
+  </table>
+  <table>
+    <name>TOPIC_OFFERING</name>
+    <desc></desc>
+    <columns>
+      <column> 
+	<name>TOPIC_ID</name>       
+	<type>INTEGER</type>  
+       	<desc></desc>
+      </column>
+      <column>
+	<name>OFFERING_ID</name>   
+	<type>INTEGER</type>  
+       	<desc></desc>
+      </column>
+    </columns>
+
+      <indexes>
+        <index>
+          <name>TOPIC_OFFERING_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>OFFERING_ID</column>
+            <column>TOPIC_ID</column>
+          </columns>
+        </index>
+      </indexes>
+    
+      <constraints>
+        <not-null>
+          <name>TOPIC_OFFERING_TOPIC_ID_NN</name>
+          <columns>
+            <column>TOPIC_ID</column>
+          </columns>
+        </not-null>
+
+        <not-null>
+          <name>TOPIC_OFFERING_OFFERING_ID_NN</name>
+          <columns>
+            <column>OFFERING_ID</column>
+          </columns>
+        </not-null>
+
+        <primary-key>
+          <name>TOPIC_OFFERING_PKEY</name>
+          <columns>
+            <column>OFFERING_ID</column>
+            <column>TOPIC_ID</column>
+          </columns>
+        </primary-key>
+     
+        <foreign-key>
+       	  <name>TOPIC_OFFERING_TOPIC_FK</name>
+          <parent-table>
+            <name>TOPIC</name>
+            <columns>
+              <key-column>TOPIC_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>TOPIC_ID</column>
+          </columns>
+        </foreign-key>
+    
+        <foreign-key>
+       	  <name>TOPIC_OFFERING_OFFERING_FK</name>
+          <parent-table>
+            <name>OFFERING</name>
+            <columns>
+              <key-column>OFFERING_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>OFFERING_ID</column>
+          </columns>
+        </foreign-key>
+
+      </constraints>
+  </table>
+  <table>
+    <name>ROLE</name>
+    <desc>NULL</desc>
+    <columns>
+      <column>
+        <name>ROLE_ID</name>
+        <type>INTEGER</type>
+    <default>
+  	  <sequence>ROLE_ID_SEQ</sequence>
+    </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>OFFERING_ID</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>LABEL</name>
+        <type>VARCHAR</type>
+        <param>255</param>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>TYPE</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+
+      <column>
+        <name>GROUP_ID</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+    </columns>
+
+    <indexes>
+  
+      <index>
+        <name>ROLE_PKEY</name>
+        <unique>TRUE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>ROLE_ID</column>
+        </columns>
+      </index>
+  
+      <index>
+        <name>ROLE_OFFERING_ID_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>OFFERING_ID</column>
+        </columns>
+      </index>
+   
+      <index>
+        <name>ROLE_TYPE_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>TYPE</column>
+        </columns>
+      </index>
+  
+    </indexes>
+    
+    <constraints>
+
+      <not-null>
+        <name>ROLE_ROLE_ID_NN</name>
+        <columns>
+          <column>ROLE_ID</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>ROLE_OFFERING_ID_NN</name>
+        <columns>
+          <column>OFFERING_ID</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>ROLE_LABEL_NN</name>
+        <columns>
+          <column>LABEL</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>ROLE_TYPE_NN</name>
+        <columns>
+          <column>TYPE</column>
+        </columns>
+      </not-null>
+  
+      <primary-key>
+        <name>ROLE_PKEY</name>
+        <columns>
+          <column>ROLE_ID</column>
+        </columns>
+      </primary-key>
+  
+    </constraints>
+  </table>
+  <table>
+    <name>TOPIC</name>
+    <desc>NULL</desc>
+    <columns>
+      <column>
+        <name>TOPIC_ID</name>
+        <type>INTEGER</type>
+    <default>
+  	<sequence>TOPIC_TOPIC_ID_SEQ</sequence>
+    </default>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>NAME</name>
+        <type>VARCHAR</type>
+        <param>80</param>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>PARENT_GROUP_ID</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>TYPE</name>
+        <type>VARCHAR</type>
+        <param>196</param>
+        <desc></desc>
+      </column>
+  
+      <column>
+        <name>DESCRIPTION</name>
+        <type>VARCHAR</type>
+        <param>2048</param>
+        <desc></desc>
+      </column>
+
+      <column>
+        <name>GROUP_ID</name>
+        <type>INTEGER</type>
+        <desc></desc>
+      </column>
+  
+    </columns>
+
+    <indexes>
+
+      <index>
+        <name>TOPIC_UNIQUE_KEYS_IDX</name>
+        <unique>TRUE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>NAME</column>
+          <column>PARENT_GROUP_ID</column>
+        </columns>
+      </index>
+  
+      <index>
+        <name>TOPIC_PKEY</name>
+        <unique>TRUE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>TOPIC_ID</column>
+        </columns>
+      </index>
+        
+      <index>
+        <name>TOPIC_PARENT_GROUP_ID_IDX</name>
+        <unique>FALSE</unique>
+        <sort_order>ASC</sort_order>
+        <columns>
+          <column>PARENT_GROUP_ID</column>
+        </columns>
+      </index>
+ 
+    </indexes>
+
+    <constraints>
+      <not-null>
+        <name>TOPIC_TOPIC_ID_NN</name>
+        <columns>
+          <column>TOPIC_ID</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>TOPIC_NAME_NN</name>
+        <columns>
+          <column>NAME</column>
+        </columns>
+      </not-null>
+  
+      <not-null>
+        <name>TOPIC_PARENT_TOPIC_ID_NN</name>
+        <columns>
+          <column>PARENT_GROUP_ID</column>
+        </columns>
+      </not-null>
+  
+      <primary-key>
+        <name>TOPIC_PKEY</name>
+        <columns>
+          <column>TOPIC_ID</column>
+        </columns>
+      </primary-key>
+  
+    </constraints>
+  </table>
+  <table>
+    <name>TOPIC_CONTENT</name>
+    <desc></desc>
+    <columns>
+      <column> 
+	<name>TOPIC_ID</name>       
+	<type>INTEGER</type>  
+       	<desc></desc>
+      </column>
+      <column>
+	<name>GROUP_NAME</name>   
+	<type>VARCHAR</type>  
+        <param>255</param>
+       	<desc></desc>
+      </column>
+    </columns>
+
+      <constraints>
+        <not-null>
+          <name>TOPIC_CONTENT_TOPIC_ID_NN</name>
+          <columns>
+            <column>TOPIC_ID</column>
+          </columns>
+        </not-null>
+        <not-null>
+          <name>TOPIC_CONTENT_GROUP_NAME_NN</name>
+          <columns>
+            <column>GROUP_NAME</column>
+          </columns>
+        </not-null>
+      </constraints>
+
+  </table>
+</tables>
+</schema>
