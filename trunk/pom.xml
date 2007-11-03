@@ -14,9 +14,9 @@
   </issueManagement>
 
   <scm>
-    <connection>scm:svn:https://www.ja-sig.org/svn/up3/branches/maven2-simple</connection>
-    <developerConnection>scm:svn:https://www.ja-sig.org/svn/up3/branches/maven2-simple</developerConnection>
-    <url>http://developer.ja-sig.org/source/browse/jasigsvn/up3/branches/maven2-simple</url>
+    <connection>scm:svn:https://toro-portal.googlecode.com/svn/trunk</connection>
+    <developerConnection>scm:svn:https://toro-portal.googlecode.com/svn/trunk</developerConnection>
+    <url>https://toro-portal.googlecode.com/svn/trunk</url>
   </scm>
 
    <distributionManagement> 
