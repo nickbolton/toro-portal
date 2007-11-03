@@ -1,9 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.unicon.toro</groupId>
   <artifactId>toro-main</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.0</version>
+  <version>1.0.0-SNAPSHOT</version>
   <name>toro-main</name>
   <url>http://code.google.com/p/toro/</url>
 
@@ -13,9 +14,9 @@
   </issueManagement>
 
   <scm>
-    <connection>scm:svn:https://toro-portal.googlecode.com/svn/tags/toro-portal-1.0.0</connection>
-    <developerConnection>scm:svn:https://toro-portal.googlecode.com/svn/tags/toro-portal-1.0.0</developerConnection>
-    <url>http://toro-portal.googlecode.com/svn/tags/tags/toro-portal-1.0.0</url>
+    <connection>scm:svn:https://www.ja-sig.org/svn/up3/branches/maven2-simple</connection>
+    <developerConnection>scm:svn:https://www.ja-sig.org/svn/up3/branches/maven2-simple</developerConnection>
+    <url>http://developer.ja-sig.org/source/browse/jasigsvn/up3/branches/maven2-simple</url>
   </scm>
 
    <distributionManagement> 
