@@ -5,4 +5,4 @@ From the root directory,
 * cd blojsom; mvn clean; cd -
 * mvn --batch-mode release:prepare
 * Remove -SNAPSHOT from blojsom/ant_pom.xml
-* release:perform
+* release:perform -DuseEditMode=true
