@@ -1008,6 +1008,8 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="dump-properties"/>
         <antcall target="create-uportal-properties"/>
 
+        <echo>Executing toro-installer-${project.version}...</echo>
+
         <if>
             <isset property="run.uportal.deploy"/>
             <then>
