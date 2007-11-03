@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet title="general" href="main.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet alternate="true" title="general" href="main.xsl" type="text/xsl" media="netscape"?>
+<?xml-stylesheet title="add_role" href="add.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet title="add_system_group" href="add_system_groups.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet alternate="true" title="add_role" href="add.xsl" type="text/xsl" media="netscape"?>
+<?xml-stylesheet alternate="true" title="add_system_group" href="add_system_groups.xsl" type="text/xsl" media="netscape"?>
+<?xml-stylesheet title="edit_role" href="edit_role.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet title="edit_system_group" href="edit_system_group.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet alternate="true" title="edit_system_group" href="edit_system_group.xsl" type="text/xsl" media="netscape"?>
+<?xml-stylesheet title="delete_system_group" href="delete_system_group.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet title="delete_role" href="delete_role.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet alternate="true" title="delete_system_group" href="delete_system_group.xsl" type="text/xsl" media="netscape"?>
+<?xml-stylesheet alternate="true" title="delete_role" href="delete_role.xsl" type="text/xsl" media="netscape"?>
+<?xml-stylesheet alternate="true" title="delete_system_group" href="delete_system_group.xsl" type="text/xsl" media="netscape"?>
+<?xml-stylesheet title="confirm_delete_role" href="main.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet title="confirm_delete_system_group" href="main.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet alternate="true" title="confirm_delete_role" href="main.xsl" type="text/xsl" media="netscape"?>
+<?xml-stylesheet alternate="true" title="confirm_delete_system_group" href="main.xsl" type="text/xsl" media="netscape"?>
+
+<document>
+</document>

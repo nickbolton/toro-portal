@@ -1,0 +1,52 @@
+<a name="204"></a>
+<STRONG>Import Users or Offerings : Quick Population Method</STRONG>
+<P><STRONG></STRONG>&nbsp;</P>
+<P><STRONG><SPAN class=contenttitle>Why Import?</SPAN><BR></STRONG></P>
+<P>Importing Users and Offerings is a quick way to get the system populated with your information. It is much quicker than manually creating every user and offering, one at a time. When you import a file of users, for example, you could list 100 users in 100 lines. The import time would take a couple seconds. Creating these user accounts manually could take hours.</P>
+<P>
+<TABLE width="100%" border=0>
+<TBODY>
+<TR>
+<TD><BR><SPAN class=contenttitle><STRONG>Preparing the User Import File</STRONG></SPAN><BR>
+<P>The file you import must be a text file, and it must contain the following information in this order:</P>
+<UL>
+<LI>User Name </LI>
+<LI>First Name </LI>
+<LI>Last Name </LI>
+<LI>Email Address </LI>
+<LI>User Role</LI></UL>
+<P>The file itself must contain XML tags in order for the system to read them in correctly. Here's the correct format for a file:</P>
+<P>&lt;pre&gt;<BR>&lt;userList&gt;<BR>&lt;user&gt;<BR>&lt;username&gt;<B>bob73</B>&lt;/username&gt;<BR>&lt;firstname&gt;<B>Bob</B>&lt;/firstname&gt;<BR>&lt;lastname&gt;<B>Jones</B>&lt;/lastname&gt;<BR>&lt;email&gt;<B>bob@university.edu</B>&lt;/email&gt;<BR>&lt;role&gt;<B>User</B>&lt;/role&gt;<BR>&lt;/user&gt;<BR>&lt;user&gt;<BR>&lt;username&gt;<B>soozy</B>&lt;/username&gt;<BR>&lt;firstname&gt;<B>Sue</B>&lt;/firstname&gt;<BR>&lt;lastname&gt;<B>Zagg</B>&lt;/lastname&gt;<BR>&lt;email&gt;<B>sue@university.edu</B>&lt;/email&gt;<BR>&lt;role&gt;<B>User</B>&lt;/role&gt;<BR>&lt;/user&gt;<BR>&lt;/userList&gt;<BR>&lt;/pre&gt;</P>
+<P>This file would create two users:</P>
+<UL>
+<LI>"bob73" -- Bob Jones, bob@university.edu, with a type of User </LI>
+<LI>"soozy" -- Sue Zagg, sue@university.edu, with a type of User</LI></UL></TD></TR></TBODY></TABLE>
+<TABLE width="100%" border=0>
+<TBODY>
+<TR>
+<TD><BR><SPAN class=contenttitle><STRONG>Preparing the Offering Import File</STRONG></SPAN><BR>
+<P>The file you import must be a text file, and it must contain the following information in this order:</P>
+<UL>
+<LI>Offering Name </LI>
+<LI>Offering Description </LI>
+<LI>User Enrollment Model </LI>
+<LI>Enrolled User Default Permissions</LI></UL>
+<P>The file itself must contain XML tags in order for the system to read them in correctly. Here's the correct format for a file:</P>
+<P>&lt;offeringList&gt;<BR>&lt;offering&gt;<BR>&lt;name&gt;ENG101&lt;/name&gt;<BR>&lt;description&gt;English101&lt;/description&gt;<BR>&lt;enrollmentModel&gt;Open&lt;/enrollmentModel&gt;<BR>&lt;role&gt;Member&lt;/role&gt;<BR>&lt;/offering&gt;<BR>&lt;offering&gt;<BR>&lt;name&gt;PSY101&lt;/name&gt;<BR>&lt;description&gt;Psychology101&lt;/description&gt;<BR>&lt;enrollmentModel&gt;Open&lt;/enrollmentModel&gt;<BR>&lt;role&gt;Member&lt;/role&gt;<BR>&lt;/offering&gt;<BR>&lt;/offeringList&gt;</P>
+<P>This file would create two offerings:</P>
+<UL>
+<LI>ENG101 - English 101, Open Enrollment, Members by default. </LI>
+<LI>PSY101 - Psychology 101, Open Enrollment, Members by default.</LI></UL></TD></TR></TBODY></TABLE>
+<TABLE width="100%" border=0>
+<TBODY>
+<TR>
+<TD><BR><SPAN class=contenttitle><STRONG>Importing Users or Offerings</STRONG></SPAN><BR>
+<P>Now that you have the correct file format, importing the file itself is easy.</P>
+<OL>
+<LI>In the <B>Import</B> channel, select <B>Users</B> or <B>Offerings</B> from the<B> Import Type</B> drop down. </LI>
+<LI>Click the import icon next to the <B>Import Type </B>drop down<B>.</B> </LI>
+<LI>If you know the path to the file, type it in the text field. Otherwise, click the <B>Browse</B> button to locate it on your computer. </LI>
+<LI>Once you've found the file, click the <B>Submit</B> button to import the users or offerings. </LI>
+<LI>You will get a confirmation screen showing the users or offerings successfully imported.</LI></OL>
+<P>&nbsp;</P>
+<P align=center><IMG src="screenshots/import_channel_1.gif"></P></TD></TR></TBODY></TABLE></P>
