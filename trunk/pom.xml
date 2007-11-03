@@ -13,9 +13,9 @@
   </issueManagement>
 
   <scm>
-    <connection>scm:svn:https://www.ja-sig.org/svn/up3/tags/toro-portal-1.0.0</connection>
-    <developerConnection>scm:svn:https://www.ja-sig.org/svn/up3/tags/toro-portal-1.0.0</developerConnection>
-    <url>http://developer.ja-sig.org/source/browse/jasigsvn/up3/tags/toro-portal-1.0.0</url>
+    <connection>scm:svn:https://toro-portal.googlecode.com/svn/tags/toro-portal-1.0.0</connection>
+    <developerConnection>scm:svn:https://toro-portal.googlecode.com/svn/tags/toro-portal-1.0.0</developerConnection>
+    <url>http://toro-portal.googlecode.com/svn/tags/tags/toro-portal-1.0.0</url>
   </scm>
 
    <distributionManagement> 
