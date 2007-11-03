@@ -1,3 +1,8 @@
 Cutting a release
 
-* From the root directory, run mvn release:prepare release:perform
+From the root directory,
+* mvn install
+* cd blojsom; mvn clean; cd -
+* mvn release:prepare
+* Remove -SNAPSHOT from blojsom/ant_pom.xml
+* release:perform
