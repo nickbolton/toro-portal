@@ -1,0 +1,1668 @@
+/* Any style declaration within an element that has an underscore "_" prefix (e.g. _width: 100%) is Microsoft IE specific. MSIE will process the underscore as valid CSS syntax even though it is not valid. All other browsers will ignore it. Thus, using the underscore can send MSIE specific style information that other browsers will ignore. */
+
+/* GLOBALS */
+/*--------------------------------------------------------------------------------------*/
+/* Main (x)html tag formatting and global classes. */
+
+html, body, form {
+margin: 0px; 
+padding: 0px;
+}
+
+body {
+font-family: verdana, arial, sans-serif; 
+font-size: 7pt;
+background-color: #FFF;
+color: #666;
+}
+
+a, a:link, a:visited {
+color: #2348AB;
+text-decoration: none;
+}
+
+a:hover {
+color: #FF6300;
+}
+
+table {
+font-size: 8pt;
+}
+
+form {
+}
+
+input, select, textarea {
+font-family: verdana, arial, sans-serif;
+font-size: 8pt;
+}
+
+input {
+margin: 0px 3px;
+padding: 0px 2px;
+}
+
+input:focus {
+/* background-color: #FEFFC3; */
+}
+
+input[type="file"] {
+text-align: left; /* Fix bug in Mozilla that shifts widget on Browse */
+}
+
+textarea {
+margin-left: 5px;
+}
+
+caption {
+font-size: 10pt;
+}
+
+/* ((((( Global Classes ))))) */
+
+.form-button, .uportal-button { /*includes uPortal class overwrite*/
+/* background: #DAE3EC;
+color: #2E4378;
+border-top: 1px solid #FFF;
+border-right: 1px solid #46494D;
+border-bottom: 1px solid #46494D;
+border-left: 1px solid #FFF; */
+font-family: verdana, arial, san-serif;
+font-size: 9pt;
+}
+
+input.text {
+padding-left: 5px;
+}
+
+input.text-disabled {
+padding-left: 5px;
+}
+
+input.radio {
+}
+
+input.image {
+background: transparent;
+border: 0px;
+}
+
+.hide {
+position: absolute;
+left: -5000px;
+}
+
+.show-block {
+display: block;
+}
+
+.float-left {
+float: left;
+}
+
+.margin-left {
+margin-left: 10px;
+}
+
+.uportal-input-text { /* uPortal class overwrite */
+background: #fff;
+color: #000;
+}
+
+.alert {
+color: #FF6600;
+}
+
+.note {
+padding: 10px 20px 20px 20px;
+background-color: #FFFFFF;
+color: #666;
+border: 1px solid #CCC;
+}
+
+.hide-popup {
+display: none;
+}
+
+.show-popup {
+display: normal;
+}
+
+
+/* LAYOUT */
+/*--------------------------------------------------------------------------------------*/
+/* Main page layout.  Outer containing box (bodyContent), with three subsections (header, contet, footer).  Optional rendering paths can be used for specific conditions (focused view [focused], preferences [prefs], login page [login]). */
+
+#bodyContent {
+height: 100%;
+_height: 101%; /* To fix IE ghost scrollbar issue. Note this causes a vertical scrollbar to appear on every page in IE, regardless of the actual content height. */
+width: 100%;
+margin: 0px; 
+padding: 0px;
+font-size: 7pt;
+line-height: 1.2em;
+}
+
+#header, #headerFocused, #headerPrefs, #headerLogin, #headerDetached {
+margin: 0px; 
+padding: 0px;
+height: 136px;
+background: #7BADDD url("../images/brand/header_tile.gif") repeat-x;
+color: #2348AB;
+font-size: 7pt;
+font-weight: bold;
+position: relative;
+}
+
+#headerFocused, #headerPrefs, #headerDetached {
+height: 45px;
+background: #7BADDD url("../images/brand/header_focused_tile.gif") repeat-x;
+}
+
+#content {
+width: 100%;
+}
+
+#footer, #footerFocused, #footerPrefs, #footerLogin {
+margin: 0px;
+padding: 0px;
+height: 30px;
+color: #999;
+font-size: 7pt;
+clear: both;
+}
+
+.layout-width-spacer {
+}
+
+
+/* ACCESSIBLITY */
+/*--------------------------------------------------------------------------------------*/
+/* Options for displaying accessiblity components (specifically for screen readers). */
+
+#skipNav, .accessibility {
+display: none;
+}
+
+.screen-reader-hide {
+font-weight: normal;
+}
+
+/* LOGIN */
+/*--------------------------------------------------------------------------------------*/
+/* Login form; inputs, login button, and login alerts */
+
+#leftNav #loginContainer {
+background: #7BADDD url("../images/navigation/login_top.gif") no-repeat top left;
+}
+
+#leftNav #login {
+margin: 0px;
+padding: 5px 10px 15px 10px;
+background: url("../images/navigation/login_bottom.gif") no-repeat bottom left;
+}
+
+#leftNav #login label {
+display: block;
+margin: 3px 0px;
+color: #FFF;
+font-size: 8pt;
+font-weight: bold;
+}
+
+#leftNav #loginSubmit {
+margin-top: 5px;
+}
+
+#leftNav .login-alert {
+margin-top: 10px;
+padding: 5px;
+background: #FFF;
+color: #FF6300;
+border: 2px solid #FF6300;
+}
+
+#leftNav .login-alert h3 {
+margin: 0px;
+padding: 0px;
+font-size: 10pt;
+}
+
+#header #loginContainer {
+	float: right;
+	text-align: right;
+}
+
+
+/* SITEMAP */
+/*--------------------------------------------------------------------------------------*/
+/*  */
+
+#sitemap-container {
+display: block;
+margin: 0px;
+padding: 0px;
+font-size: 8pt;
+}
+
+.sitemap-tab-left {
+display: block;
+width: 50%;
+float: left;
+margin: 0px;
+padding: 0px;
+}
+
+.sitemap-tab-right {
+display: block;
+width: 50%;
+float: right;
+margin: 0px;
+padding: 0px;
+}
+
+.sitemap-tab-header {
+display: block;
+margin: 10px;
+vertical-align: middle;
+padding: 0px;
+font-weight: bold;
+text-decoration: none; 
+}
+
+.sitemap-tab-header a:link, .sitemap-tab-header a:visited {
+display: block;
+margin: 0px;
+padding: 5px;
+color: #000;
+font-size: 11pt;
+text-decoration: none;
+/* background-color: #8AADC9; */
+border-bottom: 1px solid #CCC;
+}
+
+.sitemap-tab-header a:hover {
+text-decoration: underline;
+}
+
+.sitemap-column-label {
+display: none;
+}
+
+.sitemap-column-list {
+margin-top: 0px;
+}
+
+.sitemap-column-list-item a:link, .sitemap-column-list-item a:visited {
+margin: 0px;
+padding: 0px;
+font-size: 10pt;
+text-decoration: none;
+color: #003399;
+}
+
+.sitemap-column-list-item a:hover {
+text-decoration: underline;
+}
+
+.sitemap-tab-body {
+display: block;
+margin: 0px 10px 10px 10px;
+padding: 10px 0px 5px 0px;
+/* border-left: 1px solid #4578A5;
+border-bottom: 1px solid #4578A5;
+border-right: 1px solid #4578A5; */
+}
+
+.sitemap-clear {
+clear: both;
+}
+
+
+/* HEADER ELEMENTS */
+/*--------------------------------------------------------------------------------------*/
+/* Header section.  Main and secondary branding.  Optional rendering paths can be used for specific conditions (focused view [focused], preferences [prefs], login page [login]). */
+
+#header h1, #header h2, #headerFocused h1, #headerFocused h2, #headerDetached h1, #headerDetached h2, #headerPrefs h1, #headerPrefs h2, #headerLogin h1, #headerLogin h2 {
+margin: 0px; 
+padding: 0px;
+}
+
+#header #mainlogo, #headerLogin #mainlogo {
+background: url("../images/brand/main_logo.gif") no-repeat;
+position: absolute;
+top: 23px;
+left: 18px;
+z-index: 5;
+}
+
+#header #mainlogo a, #headerLogin #mainlogo a {
+display: block;
+height: 29px;
+width: 252px;
+}
+
+#headerFocused #mainlogo, #headerPrefs #mainlogo, #headerDetached #mainlogo {
+width: 126px;
+margin: 0px; 
+padding: 0px;
+background: url("../images/brand/focused_logo.gif") no-repeat top right;
+position: absolute;
+top: 11px;
+right: 24px;
+z-index: 5;
+}
+
+#headerFocused #mainlogo a, #headerPrefs #mainlogo a, #headerDetached #mainlogo a {
+display: block;
+height: 14px;
+width: 126px;
+}
+
+#header #related1, #headerLogin #related1 {
+display: block;
+height: 110px;
+width: 800px;
+background: url("../images/brand/header_background.gif") no-repeat;
+position: absolute;
+top: 0px;
+left: 0px;
+z-index: 2;
+}
+
+#header #related2, #headerLogin #related2 {
+display: block;
+height: 24px;
+width: 93px;
+background: url("../images/brand/powered_by_unicon.gif") no-repeat;
+position: absolute;
+top: 74px;
+right: 14px;
+z-index: 3;
+}
+
+#headerFocused #related1, #headerPrefs #related1, #headerDetached #related1 {
+height: 7px;
+width: 800px;
+background: url("../images/brand/header_focused_gradient.gif") no-repeat;
+position: absolute;
+top: 38px;
+right: 0px;
+z-index: 3;
+}
+
+#headerFocused #related2, #headerPrefs #related2, #headerDetached #related2 {
+display: none;
+}
+
+#mainlogo a span, #related1 span, #related2 span {
+display: none;
+}
+
+#userIdentification {
+margin-top: 20px;
+padding-left: 3px;
+color: #000;
+white-space: nowrap;
+font-size: 7pt;
+font-weight: normal;
+text-align: left;
+}
+
+#logout {
+padding-left: 5px;
+}
+
+#logout a {
+color: #2348AB;
+text-decoration: underline;
+}
+
+#logout a:hover {
+}
+
+/* ((((( Persistent Navigation ))))) */
+
+#header #persistent-navcontainer {
+margin: 0px; 
+padding: 0px;
+text-align: right;
+position: absolute;
+top: 10px;
+right: 0px;
+font-size: 7pt;
+z-index: 10;
+}
+
+#headerFocused #persistent-navcontainer, #headerPrefs #persistent-navcontainer, #headerDetached #persistent-navcontainer {
+margin: 0px; 
+padding: 0px;
+color: #FFF;
+text-align: right;
+position: absolute;
+top: 14px;
+left: 24px;
+font-size: 7pt;
+z-index: 10;
+}
+
+#persistent-nav {
+margin: 0px; 
+padding: 0px 10px 0px 0px;
+white-space: nowrap;
+}
+
+#persistent-nav li {
+display: inline;
+list-style-type: none;
+margin-left: 4px;
+}
+
+#persistent-nav a:link, #persistent-nav a:visited {
+color: #2348AB;
+text-decoration: underline;
+}
+
+#persistent-nav a:hover {
+color: #2348AB;
+text-decoration: underline;
+}
+
+#headerFocused #persistent-nav a:link, #headerFocused #persistent-nav a:visited, #headerFocused #persistent-nav a:hover, #headerDetached #persistent-nav a:link, #headerDetached #persistent-nav a:visited, #headerDetached #persistent-nav a:hover, #headerPrefs #persistent-nav a:link, #headerPrefs #persistent-nav a:visited, #headerPrefs #persistent-nav a:hover {
+color: #FFF;
+}
+
+.persistent-nav-pipe {
+padding-left: 4px;
+}
+
+#header .persistent-nav-pipe {
+color: #AAA;
+}
+
+#headerFocused .persistent-nav-pipe, #headerDetached .persistent-nav-pipe {
+color: #FFF;
+}
+
+#pnav-home-focused {
+padding-left: 12px;
+background: url("../images/icons/left_double_arrow.gif") no-repeat;
+background-position: 0px 2px;
+}
+
+#datedisplay {
+position: absolute;
+top: 120px;
+right: 10px;
+text-align: right;
+color: #999;
+z-index: 5;
+}
+
+/* ((((( Web Search Form ))))) */
+
+#webSearchFormContainer{
+background: #7BADDD url("../images/navigation/login_top.gif") no-repeat top left;
+margin-bottom: 2px;
+line-height: 1.2em;
+}
+
+#webSearchForm {
+margin: 0px;
+padding: 5px 10px 5px 10px;
+background: url("../images/navigation/login_bottom.gif") no-repeat bottom left;
+}
+
+#webSearchForm label {
+display: block;
+margin-bottom: 8px;
+color: #FFF;
+font-weight: bold;
+}
+
+#webSearchForm input, #webSearchForm select {
+margin: 0px;
+margin-bottom: 8px;
+}
+
+/* ((((( Web Search Results ))))) */
+
+#webSearchContainer {
+width: 600px;
+background: #CCC;
+border: 1px solid #999;
+position: absolute;
+top: 50px;
+left: 20px;
+}
+
+#searchContent #webSearchForm {
+margin: 10px;
+padding: 0px;
+position: static;
+text-align: left;
+}
+
+#searchContent #webSearchForm label {
+visibility: visible;
+font-size: 10pt;
+position: relative;
+top: 20px;
+}
+
+#searchContent #webSearchForm #webSearchInput {
+position: relative;
+top: 20px;
+}
+
+#webSearchCategories {
+display: block;
+position: relative;
+top: -20px;
+}
+
+.websearch-subcat-container {
+}
+
+#webSearchSubcats {
+margin: 0px;
+padding: 0px;
+list-style-type: none;
+position: absolute;
+top: 32px;
+left: 195px;
+}
+
+.websearch-subcat-li {
+display: inline;
+margin-left: 10px;
+}
+
+
+/* CONTENT ELEMENTS */
+/*--------------------------------------------------------------------------------------*/
+/* Content section.  Content area format.  Portlet/channel containers, titles, options.  Optional rendering paths can be used for specific conditions (focused view [focused], preferences [prefs], login page [login]) or emphasis ([borderless], [highlight], [callout] on channels). */
+
+#contentTable {
+margin: 0px 10px 10px 10px;
+padding: 0px;
+background: #FFF;
+clear: both;
+}
+
+#contentFocused #contentTable {
+width: 100%;
+margin: 12px 0px 30px 0px;
+}
+
+#detachedChannelContainer {
+margin-top: 20px;
+}
+
+/* used for Spell Check link */
+.spellcheck {
+white-space: nowrap;
+}
+
+/* used with the Research page  */
+#searchContent {
+height: 47px;
+width: 100%;
+background: #F5F5F6 url("../images/brand/background_tile2.gif");
+}
+
+#leftNav {
+/* background: #7BADDD url("../images/brand/gradient_with_rounded_left.gif") no-repeat left top; */
+}
+
+#leftNavCol {
+height: 100%;
+width: 180px;
+padding-top: 12px;
+/* background: url("../images/brand/rounded_right.gif") no-repeat right top; */
+}
+
+#content #contentInfo, #contentLogin #contentInfo {
+height: 33px;
+}
+
+/* ((((( Columns ))))) */
+
+.column-content {
+margin: 0px 0px 20px 0px;
+}
+
+.col1, .col2-left-narrow, .col2-left-wide, .col2-left-even, .col2-right-narrow, .col2-right-wide, .col2-right-even, .col3-left-narrow, .col3-left-wide, .col3-left-even, .col3-center-even, .col3-center-wide, .col3-right-narrow, .col3-right-wide, .col3-right-even {
+vertical-align: top;
+}
+
+td.col1 div.column-content, td.col2-left-narrow div.column-content, td.col2-left-wide div.column-content, td.col2-left-even div.column-content, td.col3-center-wide div.column-content, td.col3-center-even div.column-content {
+margin: 0px 10px;
+}
+
+/* ((((( Portlet/Channel Container ))))) */
+
+.portlet-container, .portlet-container-minimized, .portlet-container-borderless, .portlet-container-highlight, .portlet-container-callout { 
+/* margin-top: 10px; needed for Opera to render correctly */
+margin: 0px 0px 10px 0px;
+}
+
+.portlet-container-minimized {
+}
+
+.portlet-container-borderless, .portlet-container-borderless .portlet-container-content {
+border: none;
+}
+
+.portlet-container-superchannel { /* No visual rendering of the CMS superchannel container, i.e. make it appear to not exist  */
+border: none;
+padding: 0px;
+}
+
+.portlet-container-header-superchannel, .portlet-container-footer-superchannel { /* No rendering of the CMS superchannel header or footer  */
+display: none;
+}
+
+.portlet-container-superchannel .portlet-container-content { /* No visual rendering of the CMS superchannel container, i.e. make it appear to not exist  */
+border: none;
+padding: 0px;
+}
+
+.portlet-focused-container {
+margin: 0px 20px;
+}
+
+.portlet-container-header {
+height: 21px;
+margin-bottom: 2px;
+background: #7BADDD;
+}
+
+/* Hide from IE.  Needed to fix Safari bug */
+div.portlet-container > table.portlet-container-header {
+width: 100%;
+}
+
+/* ((((( Channel Titlebar Layout ))))) */
+
+.portlet-container-header-shader {
+background: url("../images/brand/channel_title_bar_left.gif") no-repeat top left;
+}
+
+.portlet-container-header-title {
+width: 100%;
+}
+
+.portlet-container-header-options {
+background: url("../images/brand/channel_title_bar_right.gif") no-repeat top right;
+}
+
+
+/* ((((( Channel Minimize/Maximize ))))) */
+
+.portlet-container-header a.minimize, .portlet-container-header a.maximize {
+display: block;
+margin-left: 3px;
+line-height: 17px;
+width: 17px;
+height: 17px;
+}
+
+.portlet-container-header a.maximize {
+background: url("../images/icons/control-maximize.gif") no-repeat top;
+}
+
+.portlet-container-header a.minimize {
+background: url("../images/icons/control-minimize.gif") no-repeat;
+}
+
+.portlet-container-header a.minimize span, .portlet-container-header a.maximize span {
+display: none;
+}
+
+.portlet-container-header a.minimize:hover, .portlet-container-header a.maximize:hover {
+background-position: 0px -17px;
+}
+
+/* ((((( Channel Title ))))) */
+.portlet-container-title {
+margin: 0px;
+color: #FFF;
+font-size: 8pt;
+font-weight: bold;
+white-space: nowrap;
+}
+
+.portlet-focused-title {
+margin: 5px 0px 20px 0px;
+padding: 0px;
+color: #000;
+font-weight: normal;
+}
+
+.portlet-container-header h2 {
+margin-left: 6px;
+}
+
+.portlet-container-header h2 a:link, .portlet-container-header h2 a:visited {
+color: #FFF;
+font-size: 8pt;
+font-weight: bold;
+text-decoration: none;
+white-space: nowrap;
+}
+
+.portlet-container-header h2 a:hover {
+color: #FFF;
+text-decoration: underline;
+}
+
+/* ((((( Channel Options ))))) */
+
+.portlet-options-container {
+text-align: right;
+}
+
+.portlet-options-link {
+}
+
+a.portlet-options-link:link, a.portlet-options-link:visited {
+display: block;
+width: 26px;
+height: 21px;
+}
+
+a.portlet-options-link:hover {
+background-position: 0px -21px;
+}
+
+.portlet-options-link-label {
+display: none;
+}
+
+.portlet-options {
+height: 21px;
+margin-right: 3px;
+padding: 0px;
+}
+
+.portlet-options a {
+display: block;
+line-height: 17px;
+width: 17px;
+height: 17px;
+margin-left: 1px;
+}
+
+.portlet-options a.about {
+background: url("../images/icons/control-about.gif") no-repeat;
+}
+
+.portlet-options a.detach {
+background: url("../images/icons/control-detach.gif") no-repeat;
+}
+
+.portlet-options a.focus {
+background: url("../images/icons/control-focus.gif") no-repeat;
+}
+
+.portlet-options a.edit {
+background: url("../images/icons/control-edit.gif") no-repeat;
+}
+.portlet-options a.help {
+background: url("../images/icons/control-help.gif") no-repeat;
+}
+
+.portlet-options a.print {
+background: url("../images/icons/control-print.gif") no-repeat;
+}
+
+.portlet-options a.remove {
+background: url("../images/icons/control-remove.gif") no-repeat;
+}
+
+.portlet-options a span {
+display: none;
+}
+
+.portlet-options a:hover {
+background-position: 0px -17px;
+}
+
+
+/* ((((( Channel Content ))))) */
+
+.portlet-container-content {
+width: 100%;
+background: #FFF;
+}
+
+.portlet-container-highlight .portlet-container-content {
+background: #FFFF00;
+}
+
+.portlet-container-callout .portlet-container-content {
+background: #0000FF;
+}
+
+.portlet-container-content-preferences {
+_width:100%;
+margin: 20px;
+padding: 1px;
+background: #FFF;
+border: 1px solid #666;
+clear: both;
+float: none;
+}
+
+/* Fix? for Classifieds Channel where table align="left" was causing content to act like float was on. */
+div.portlet-container-content table {
+clear: both;
+float: none;
+}
+
+.portlet-container-minimized .portlet-container-content {
+display: none;
+}
+
+/* ((((( Channel Footer ))))) */
+
+.portlet-container-footer {
+}
+
+.portlet-container-minimized .portlet-container-footer {
+}
+
+
+
+/*  CHANNEL TOOLBAR ELEMENTS */
+/*------------------------------------------------*/
+.portlet-toolbar-container {
+line-height: normal;
+background: url("../images/navigation/page_nav_bg.jpg") repeat-x;
+color : #505050;
+height: 35px;
+padding-left: 0px;
+}
+
+.tool {
+margin: 5px 0 5px 5px;
+float: left;
+}
+
+.tool-right {
+margin: 0 5px 5px 5px;
+float: right;
+position: relative;
+}
+
+.tool-tab-body {
+font-size: 10pt;
+font-family: verdana, arial;
+font-weight: bold;
+padding: 5px 10px 5px 10px;
+}
+
+.tool-tab-right {
+background: url("../images/navigation/calendar_nav_right.gif") no-repeat top left;
+}
+
+.tool-tab-left {
+background: url("../images/navigation/calendar_nav_left.gif") no-repeat top right;
+}
+
+.tool a, .tool a:hover, .tool a:visited{
+color: #333333;
+text-decoration: none;
+}
+
+.selected-tool {
+background-color: #AFAFAF;
+color: #FFFFFF;
+}
+
+a.selected-tab-link, a.selected-tab-link:link, a.selected-tab-link:visited, a.selected-tab-link:hover {
+    color: #FFF;
+}
+
+.tool2 {
+padding: 2px 8px;
+float: left;
+font-size: 9px;
+font-family: verdana, arial;
+font-weight: bold;
+height: 18px;
+}
+
+.tool3 {
+margin: 2px 5px 5px 5px;
+float: left;
+}
+
+.tool3 a, .tool3 a:hover, .tool3 a:visited{
+text-decoration: none;
+}
+
+.tool-divider {
+float: left;
+}
+
+.selected-group {
+background-color: #efefef;
+border-bottom: #e1e1e1;
+padding: 2px;
+}
+
+.page-title {
+margin: 10px 10px 15px 10px;
+font-size: 18pt;
+font-weight: normal;
+font-family: arial;
+color: #333333;
+}
+
+.page-subtitle {
+font-weight: bold;
+margin: 10px 10px 0 10px;
+}
+
+.page-toolbar-container {
+margin: 0;
+padding: 2px;
+border-bottom: 1px solid #CCCCCC;
+font-size: 10pt;
+height: 18px;
+_width: 100%;
+}
+
+.toolbar-img {
+margin: 0px 4px 0px 4px;
+}
+
+.toolbar-table {
+font-size: 7pt;
+}
+
+.bounding-box1 {
+margin: 0 0 15px 0;
+_width: 100%;
+padding: 0px;
+}
+
+.bounding-box2 {
+padding: 3px;
+margin: 10px;
+background-color: #FFFFFF;
+border: 1px solid #EAEAEA;
+text-align: center;
+_width: 100%;
+}
+
+.bounding-box-right {
+margin: 15px;
+padding: 3px;
+background-color: #FFFFFF;
+border: 1px solid #E3E3E3;
+float: right;
+}
+
+.bounding-box3 {
+padding: 5px;
+margin: 0 0 0 0;
+background-color: #F5F5F5;
+_width: 100%;
+}
+
+.bounding-box4 {
+padding: 4px;
+margin: 0;
+background-color: #BBBBBB;
+border-bottom: 1px solid #E3E3E3;
+color: white;
+font-weight: bold;
+_width:100%;
+}
+
+.bounding-box5 {
+padding: 5px;
+margin: 0 5px 0 5px;
+background-color: #FAFAFA;
+border: 1px solid #E3E3E3;
+_width:100%;
+}
+
+.bounding-box6 {
+padding: 5px;
+margin: 5px 10px;
+_width:100%;
+}
+
+.bounding-box7 {
+padding: 5px;
+margin: 10px 30px;
+_width:100%;
+}
+
+#forum-searchbox {
+float:right;
+}
+
+.forum-list {
+margin: 5px 15px 15px 15px;
+background-color: #FAFAFA;
+border: 1px solid #afafaf;
+}
+
+
+.border-left {
+border-left: 1px solid #E3E3E3;
+}
+
+a.whitetext {
+color: #FFFFFF;
+font-weight: bold;
+text-decoration: none;
+}
+
+
+
+/* FOOTER ELEMENTS */
+/*--------------------------------------------------------------------------------------*/
+/* Footer section.  Optional contact information, links, and secondary branding.  Optional rendering paths can be used for specific conditions (focused view [focused], preferences [prefs], login page [login]). */
+
+#footerlinks {
+}
+
+#footerlinks li {
+}
+
+.footerlinks-pipe {
+}
+
+#institution {
+}
+
+#legal {
+margin: 10px 0px 0px 10px;
+}
+
+#footerFocused #legal, #footerPrefs #legal {
+margin: 10px 0px 0px 10px;
+}
+
+#legal p {
+margin: 0;
+padding: 0;
+font-size: 8pt;
+}
+
+#legal a, #institution a {
+color: #999;
+}
+
+#legal a:hover, #institution a:hover {
+color: #333;
+}
+
+p#copyright, p#legalStatement {
+display: inline;
+}
+
+p#legalStatement {
+padding-left: 5px;
+}
+
+p#legalDescription {
+margin-top: 3px;
+}
+
+#sponsor {
+}
+
+#sponsor a {
+}
+
+#sponsor a span {
+}
+#version {
+	margin: 10px;
+}
+
+
+
+/* CHANNEL ELEMENTS */
+/*-----------------------------------------------------------*/
+/* Channel section. Elements which define channel-specific styles.  */
+
+/* Common */
+
+.indent {
+margin-left: 10px;
+}
+
+.nopad {
+padding: 0px;
+margin: 0px;
+}
+
+.gradient-page-title {
+background: url("../images/brand/gradient_title_bg.gif") repeat-x;
+font-size: 14px;
+color: #477BAD;
+padding: 5px 0 2px 10px;
+font-family: arial;
+margin-bottom: 10px;
+}
+
+.submit-container {
+text-align: center;
+border: 1px solid #7BADDD;
+background-color: #F0F5FB;
+width:350px;
+padding: 5px;
+margin: 15px;
+}
+
+.submit-comments {
+color: #477BAD;
+margin: 5px 0 10px 0;
+}
+
+.top-bottom-space {
+margin: 10px 0 30px 0;
+}
+
+.small-pad-tb {
+padding: 3px 0 3px 0;
+}
+
+.whitelink a:link, .whitelink a:visited, .whitelink a:hover {
+color: #FFFFFF;
+font-weight: bold;
+text-decoration: underline;
+}
+
+/* Survey */
+
+.survey-toolbar-container {
+margin: 0 0 0 0;
+padding: 3px;
+background-color: #DDDDDD;
+border-bottom: 1px solid #CCCCCC;
+font-size: 10pt;
+height: 18px;
+_width: 100%;
+}
+
+.survey-subquestion-container {
+margin: 0 0 0 0;
+padding: 3px;
+background-color: #EEEEEE;
+font-size: 10pt;
+height: 18px;
+_width: 100%;
+}
+
+.survey-page-title {
+padding-left: 10px;
+color:#477BAD;
+font-size: 14pt;
+font-family: arial;
+}
+
+.survey-content-left {
+padding: 2px 2px 2px 15px;
+}
+
+.survey-content-right {
+padding: 2px 15px 2px 2px;
+}
+
+.survey-line {
+margin: 10px 0 10px 0;
+border-bottom: 1px solid #7BADDD;
+}
+
+.survey-form-td {
+background-color: #477BAD;
+color: #FFFFFF;
+font-weight: bold;
+padding: 5px 15px 5px 15px;
+}
+
+.survey-survey-td {
+padding: 5px 15px 5px 15px;
+border-right: 1px solid #477BAD;
+width: 20%;
+}
+
+.survey-survey-td div {
+font-size: 10pt;
+font-family: verdana;
+}
+
+.survey-survey-td-col1 {
+border-right: 1px solid #477BAD;
+border-left: 1px solid #477BAD;
+padding-left: 15px;
+width: 40%;
+}
+
+.survey-survey-td-bottom {
+padding: 5px 15px 5px 15px;
+border-right: 1px solid #477BAD;
+border-left: 1px solid #477BAD;
+border-bottom: 1px solid #477BAD;
+}
+
+.survey-button {
+background-color: #666666;
+border: 1px solid #FFFFFF;
+color: #FFFFFF;
+font-weight: bold;
+font-size: 10pt;
+text-decoration: none;
+cursor: hand;
+cursor: pointer;
+}
+
+.survey-step1-subtitle {
+padding: 10px;
+font-size: 14pt;
+}
+
+.edit-survey-table {
+font-size: 9pt;
+}
+
+.edit-survey-table .td-left {
+width: 100px;
+padding: 5px;
+}
+
+.edit-survey-table .td-right {
+padding: 5px;
+}
+
+.edit-survey-table select {
+margin-left: 3px;
+}
+
+.survey-editor-subtitle {
+color: #477BAD;
+border-bottom: 1px solid #477BAD;
+padding: 10px 0 3px 5px;
+font-weight: bold;
+margin-bottom: 10px;
+}
+
+.survey-tab-container {
+border-bottom: 7px solid #477BAD;
+height: 23px;
+}
+
+.survey-tab {
+float: left;
+border: 1px solid #477BAD;
+_top: 2px;
+padding: 6px;
+width: 130;
+font-weight: bold;
+text-align: center;
+margin-right: 4px;
+position: relative;
+}
+
+.survey-tab-selected {
+float: left;
+background-color: #477BAD;
+_top: 2px;
+padding: 6px;
+width: 130;
+color: #FFFFFF;
+font-weight: bold;
+text-align: center;
+margin-right: 4px;
+position: relative;
+}
+
+.survey-tab-subtitle {
+height: 40px;
+background-color: #F0F0F0;
+text-align: right;
+padding: 7px 20px 7px 10px;
+vertical-align: middle;
+}
+
+.survey-peephole-container {
+text-align: center;
+margin: 10px;
+}
+
+.personal-container {
+width: 150px;
+padding: 6px;
+background-repeat: no-repeat;
+text-align: center;
+}
+
+.personal-container a:link, .personal-container a:visited, .personal-container a:hover{
+font-weight: bold;
+padding-left: 3px;
+}
+
+.survey-spacer {
+margin:5px;
+}
+
+.survey-peephole-text {
+margin-top: 14px;
+font-size: 10pt;
+}
+
+.survey-form-links {
+padding: 8px;
+background-color: #6194C3;
+float: right;
+}
+
+/* ADDRESS BOOK SERVANT */
+
+.addr-tab-container {
+background-color: #F1F1F1;
+border-bottom: 1px solid #cccccc;
+height: 30px;
+padding-left: 10px;
+}
+
+.addr-tab-left {
+background: #999999 url("../images/navigation/rounded_tab_left.gif") no-repeat top left;
+padding-left: 4px;
+float: left;
+margin: 6px 2px 0 0;
+position: relative;
+_top: 1px;
+}
+
+.addr-tab-right {
+background: url("../images/navigation/rounded_tab_right.gif") no-repeat top right;
+padding-right: 4px;
+}
+
+.addr-tab {
+padding: 4px;
+font-family: arial;
+font-size: 11px;
+font-weight: bold;
+}
+
+.addr-tab input {
+color: #FFFFFF;
+font-family: arial;
+font-size: 11px;
+font-weight: bold;
+text-decoration: underline;
+cursor: pointer;
+cursor: hand;
+}
+
+.addr-tab-selected-shell {
+background-color: #FFFFFF;
+color: #666666;
+}
+
+.addr-tab-selected {
+padding: 5px;
+font-family: arial;
+font-size: 11px;
+font-weight: bold;
+border-top: 1px solid #CCCCCC;
+position: relative;
+}
+
+.select-container {
+padding-bottom: 0px;
+padding-top: 10px;
+}
+
+.addr-browse-header {
+background-color: #CCCCCC;
+color: #FFFFFF;
+padding: 5px;
+font-weight: bold;
+}
+
+.addr-selected-header {
+background-color: #477BAD;
+color: #FFFFFF;
+padding: 5px;
+font-weight: bold;
+}
+
+.addr-group-selected {
+background-color: #DCE9F6;
+}
+
+/* CAMPUS NEWS */
+.areabox1 {
+    margin: 10px;
+    padding:40px 20px;
+    text-align:center;
+    background-color:#E8E8E8;
+    border: 2px solid #999;
+}
+
+.areabox2 {
+    margin: 10px;
+    padding:20px;
+    text-align:center;
+    background-color:#F8F8F8;
+    border: 2px solid #CCC;
+}
+
+.areabox3 {
+    margin: 10px;
+    padding:20px;
+    text-align:left;
+    background-color:#F8F8F8;
+    border: 2px solid #CCC;
+}
+
+ul.news-topic-list {
+    list-style-image: url(../../../../../com/interactivebusiness/news/newspaper_12.gif);
+}
+
+ul.news-topic-list li {
+    margin-top:5px;
+}
+
+ul.news-topic-list p {
+    margin:0px;
+    padding:0px;
+}
+
+ul.news-topic-list span {
+    font-weight: bold;
+    margin-left:5px;
+}
+
+ul.news-article-list {
+    list-style-image: none;
+    list-style-type: disc;
+}
+
+div.show-abstract-toggle {
+    margin: 10px 0px 20px 10px;
+}
+
+.CampusNewsChannel_News_Main h2.page-title {
+    margin-bottom: 20px;
+}
+
+.empty-message-box {
+    border:1px solid;
+    padding:5px;
+    text-align:center;
+}
+
+/*
+div.areabox1 a, div.areabox1 a:link, div.areabox1 a:visited, div.areabox1 a:hover, div.areabox2 a, div.areabox2 a:link, div.areabox2 a:visited, div.areabox2 a:hover,  {
+    text-decoration: underline;
+    font-weight: bold;
+}
+*/
+
+.alt-row-even {
+}
+
+.alt-row-odd {
+    background-color:#E8E8E8;
+}
+
+
+/**************************************/
+/*********  SURVEY STYLING  ************/
+.custom {
+}
+.custom .survey-title {
+	font-size: 11pt;
+}
+.custom .question-title {
+	margin-top: 15px;
+}
+.custom .question-title span{
+	font-size: 13pt;
+	line-height: 15pt;
+	margin-right: 15px;
+	color: #333333;
+	font-family: georgia, times new roman;
+}
+.custom .question-list {
+	list-style: none;
+	margin: 10px 0 5px 10px;
+	padding: 0;
+}
+.custom .question-list li {
+	padding: 3px 15px;
+}
+.custom .question-item input{
+	padding: 3px;
+}
+.custom .question-list .survey-item-row {
+	display: inline;
+}
+.custom .subquestion-title {
+	padding-bottom: 3px;
+	margin-bottom: 5px;
+}
+.custom .summary-table {
+	margin-left: 10px;
+}
+.custom .summary-table td {
+	padding: 4px;
+}
+.custom .summary-table input {
+	padding: 0;
+	margin: 0 5px 0 0;
+}
+.custom .stats-container {
+	width: 100px;
+	border: 1px solid #BBBBBB;
+	background-color: #DFDFDF;
+	float: left;
+	margin-right: 5px;
+}
+.custom .stats {
+	background-color: #99FF66;
+	height: 12px;
+	border-right: 1px solid #BBBBBB;
+}
+.results-number {
+	border: 1px solid #CCCCCC;
+	background: #FFFFCC;
+	padding: 4px 10px;
+	
+}
+
+.blocks .survey-table td {
+	padding: 3px;
+	line-height: 16px;
+}
+.blocks .summary-table {
+	margin-left: 10px;
+}
+.blocks .summary-table td {
+	padding: 4px;
+}
+.blocks .summary-table input {
+	padding: 0;
+	margin: 0 5px 0 0;
+}
+.blocks .stats-container {
+	width: 100px;
+	border: 1px solid #BBBBBB;
+	background-color: #DFDFDF;
+	float: left;
+	margin-right: 5px;
+}
+.blocks .stats {
+	background-color: #99FF66;
+	height: 12px;
+	border-right: 1px solid #BBBBBB;
+}
+
+
+.simple .survey-table td {
+	padding: 3px;
+	line-height: 16px;
+}
+.simple .summary-table {
+	margin-left: 10px;
+}
+.simple .summary-table td {
+	padding: 4px;
+}
+.simple .summary-table input {
+	padding: 0;
+	margin: 0 5px 0 0;
+}
+.simple .stats-container {
+	width: 100px;
+	border: 1px solid #BBBBBB;
+	background-color: #DFDFDF;
+	float: left;
+	margin-right: 5px;
+}
+.simple .stats {
+	background-color: #99FF66;
+	height: 12px;
+	border-right: 1px solid #BBBBBB;
+}
+
+
+.centered .survey-table td {
+	padding: 3px;
+	line-height: 16px;
+}
+.centered .summary-table {
+	margin-left: 10px;
+}
+.centered .summary-table td {
+	padding: 4px;
+}
+.centered .summary-table input {
+	padding: 0;
+	margin: 0 5px 0 0;
+}
+.centered .stats-container {
+	width: 100px;
+	border: 1px solid #BBBBBB;
+	background-color: #DFDFDF;
+	float: left;
+	margin-right: 5px;
+}
+.centered .stats {
+	background-color: #99FF66;
+	height: 12px;
+	border-right: 1px solid #BBBBBB;
+}
