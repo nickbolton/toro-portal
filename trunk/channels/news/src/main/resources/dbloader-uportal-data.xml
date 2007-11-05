@@ -13,4 +13,12 @@
       </row>
     </rows>
   </table>
+  <table>
+    <name>UPC_PERM_MGR</name>
+    <rows>
+      <row>
+        <column><name>IPERMISSIBLE_CLASS</name><value>com.interactivebusiness.news.channel.CNews</value></column>
+      </row>
+    </rows>
+  </table>
 </data>

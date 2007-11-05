@@ -45,4 +45,12 @@
       </row>
     </rows>
   </table>
+  <table>
+    <name>UPC_PERM_MGR</name>
+    <rows>
+      <row>
+        <column><name>IPERMISSIBLE_CLASS</name><value>net.unicon.portal.channels.campusannouncement.CampusAnnouncementChannel</value></column>
+      </row>
+    </rows>
+  </table>
 </data>
