@@ -2,7 +2,7 @@ Cutting a release
 
 From the root directory,
 * Remove -SNAPSHOT from version in blojsom/ant_pom.xml, installer/src/main/resources/pom.xml
-* checkin installer/src/main/resources/pom.xml
+* checkin blojsom/ant_pom.xml, installer/src/main/resources/pom.xml
 * mvn clean
 * mvn install
 * mvn clean
