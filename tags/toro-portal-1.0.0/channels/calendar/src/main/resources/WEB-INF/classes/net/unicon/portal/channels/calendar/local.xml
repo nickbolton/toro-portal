@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local>
+	<text id="COPYRIGHT">Copyright (c) 2002, Dan Phong Ltd (IBS-DP). All Rights Reserved.</text>
+	<text id="LOGO">ibs-dp.gif</text>
+	<text id="PRODUCT_DESC"/>
+	<text id="ERROR_NO_USER">Error identifying calendar server user.</text>
+	<text id="ERROR_NO_CALENDAR_NAME">Please specify the calendar name.</text>
+	<text id="ERROR_NO_EVENT_TITLE">Please specify the event title.</text>
+	<text id="ERROR_NO_TODO_TITLE">Please specify the task title.</text>
+	<text id="ERROR_FAILED_TO_DELETE">Calendar server error deleting {0,choice,0#invitation|1#event|2#todo} "{1}".</text>
+	<text id="MSG_DELETE_DELETED">{0,choice,0#Invitation|1#Event|2#Todo} "{1}" deleted.</text>
+	<text id="ERROR_INPUT_UNTILDATE">The "repeating until" date must not be earlier than the date of the event or task.</text>
+	<text id="ERROR_INPUT_LENGTH">Length of event must not be zero.</text>
+	<text id="ERROR_INPUT_NUMBER">The specified choice for repeating is invalid.</text>
+	<text id="ERROR_FAILED_TO_CREATE">Calendar server error creating event "{0}".</text>
+	<text id="ERROR_FAILED_TO_UPDATE">Calendar server error updating event "{0}".</text>
+	<text id="MSG_EVENT_ADDED">Event "{0}" added to calendar.</text>
+	<text id="MSG_EVENT_UPDATED">Event "{0}" updated.</text>
+	<text id="ERROR_TODO_FAILED_TO_CREATE">Calendar server error creating task "{0}".</text>
+	<text id="ERROR_TODO_FAILED_TO_UPDATE">Calendar server error updating task "{0}".</text>
+	<text id="MSG_TODO_ADDED">Task "{0}" added to calendar.</text>
+	<text id="MSG_TODO_UPDATED">Task "{0}" updated.</text>
+	<text id="MSG_PEEPHOLE_NO_CALENDAR">Calendar "{0}" no longer exists.</text>
+	<text id="MSG_PEEPHOLE_NOTFOUND_TODO">Task "{0}" no longer exists.</text>
+	<text id="ERROR_PERSONAL_CALENDAR_NOT_FOUND">Calendar server error locating your personal calendar.</text>
+	<text id="ERROR_INVITATION_NOT_FOUND">Invitation no longer exists.</text>
+	<text id="ERROR_EVENTS_NOT_SORTED">Internal error.</text>
+	<text id="ERROR_INPUT_REPEAT">The specified number choice for repeating is invalid.</text>
+	<!-- New texts -->
+	<text id="ERROR_NOTIFICATION_INVITATION_NOT_FOUND">Invitation no longer exists.</text>
+	<text id="ERROR_NOTIFICATION_INVALID_PARAMS">Internal error.</text>
+	<text id="MSG_CONFIRM_DELETE_CALENDAR">Are you sure you wish to delete calendar "{0}"?</text>
+	<text id="MSG_INVALID_USERS_ATTENDEE">Some of your selection are not acceptable.</text>
+	<text id="MSG_EVENT_DELETED">Event deleted/decline.</text>
+	<text id="MSG_INVALID_USERS_ADD">Some of your selection are not acceptable.</text>
+	<text id="MSG_NO_DELETE_DELETED">No event deleted.</text>
+	<text id="MSG_NOTIFICATION_CANCELED">Event "{0}" has been canceled.</text>
+	<text id="MSG_INVITATION_DECLINED">Invitation declined.</text>
+	<text id="MSG_EVENT_DELETED">Event deleted/decline.</text>
+	<text id="MSG_INVITAITON_UPDATE">Event on Calendar has been Updated for {0}.</text>
+	<text id="MSG_NOTIFICATION_TITLE_CANCELED">Event deleted from Calendar for {0}.</text>
+  <!-- Tien 0116 -->
+	<text id="MSG_CALENDAR_NOTFOUND">Calendar {0} deleted/unshared.</text>
+	<!-- WCAP errors -->
+	<text id="ERR_UNKNOWN">[WCAP] Unknown error.</text>
+	<text id="ERR_UNKNOWN_HOST">[WCAP] Unknown host.</text>
+	<text id="ERR_CONNECT_FAILED">[WCAP] Connection failed.</text>
+	<text id="ERR_LOGIN_FAILED">[WCAP] login failed.</text>
+	<!-- Security table error-->
+	<text id="ERROR_SECURITY_NOMAP">Not found calendar principal map for current user.</text>
+	<!-- Email -->
+	<text id="MSG_EMAIL_LCAL_BODY_ADD">
+Topic: {0}
+Offering: {1}
+Event Title: {2}
+Event Date: {3} {7,choice,0#|1#[Recurring Event]}
+Event Time: {4}
+Event Location: {5}
+Notes: {6}
+</text>
+	<text id="MSG_EMAIL_PCAL_BODY_ADD">
+Event Title: {0}
+Invited By: {1}
+Event Date: {2} {6,choice,0#|1#[Recurring Event]}
+Event Time: {3}
+Event Location: {4}
+Notes: {5}.
+</text>
+	<text id="MSG_EMAIL_LCAL_BODY_UPDATE">
+Topic: {0}
+Offering: {1}
+Event Title: {2}
+Event Date: {3} {11,choice,0#|1#[Recurring Event]}
+Event Time: {4}
+Event Location: {5}
+Notes: {6}
+
+Previous Event Title: {7}
+Previous Event Date: {8}
+Previous Event Time: {9}
+Previous Event Location:{10}
+</text>
+	<text id="MSG_EMAIL_PCAL_BODY_UPDATE">
+Event Title: {0}
+Invited By: {1}
+Event Date: {2} {10,choice,0#|1#[Recurring Event]}
+Event Time: {3}
+Event Location: {4}
+Notes: {5}
+
+Previous Event Title: {6}
+Previous Event Date: {7}
+Previous Event Time: {8}
+Previous Event Location:{9}
+</text>
+<text id="MSG_EMAIL_LCAL_BODY_DELETE">
+Topic: {0}
+Offering: {1}
+Deleted Event Title: {2}
+Deleted Event Date: {3}
+Deleted Event Time: {4}
+Notes: {5}
+</text>
+<text id="MSG_EMAIL_PCAL_BODY_DELETE">
+Calendar: {0}
+Deleted Event Title: {1}
+Deleted Event Date: {2}
+Deleted Event Time: {3}
+Notes: {4}
+</text>
+	<!-- Notification -->
+	<text id="MSG_NOTIFICATION_PCAL_ADD">Event added to Calendar {0}.</text>
+	<text id="MSG_NOTIFICATION_LCAL_ADD">Event added to Calendar {0} - {1}.</text>
+	<text id="MSG_NOTIFICATION_PCAL_UPDATE">Event on Calendar has been Updated for {0}.</text>
+	<text id="MSG_NOTIFICATION_LCAL_UPDATE">Event on Calendar has been Updated for {0} - {1}.</text>
+	<text id="MSG_NOTIFICATION_LCAL_DELETE">Event deleted from Calendar for {0} - {1}.</text>
+        <text id="MSG_NOTIFICATION_PCAL_DELETE">Event deleted from Calendar for {0}.</text>
+</local>

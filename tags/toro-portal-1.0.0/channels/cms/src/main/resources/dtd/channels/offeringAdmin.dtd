@@ -1,0 +1,43 @@
+<!--
+****************************************************************************
+Offering Admin Channel DTD
+****************************************************************************
+-->
+
+<?xml version='1.0' encoding='ISO-8859-1' >
+<!ENTITY % channel-common-dtd SYSTEM "portalCommon.dtd" >
+%channel-common-dtd;
+
+<!ELEMENT offeringAdmin (offering*) >
+
+<!ELEMENT optionalOfferingId (#PCDATA)>
+<!ELEMENT optionalOfferingTerm (#PCDATA)>
+<!ELEMENT optionalOfferingStartDate (MonthStart?,DayStart?,YearStart?)>
+<!ELEMENT MonthStart (#PCDATA)>
+<!ELEMENT DayStart (#PCDATA)>
+<!ELEMENT YearStart (#PCDATA)>
+<!ELEMENT optionalOfferingEndDate (MonthEnd?,DayEnd?,AmPmEnd?)>
+<!ELEMENT MonthEnd (#PCDATA)>
+<!ELEMENT DayEnd (#PCDATA)>
+<!ELEMENT YearEnd (#PCDATA)>
+<!ELEMENT optionalOfferingMeetingDays (MeetsMonday?,MeetsTuesday?,
+                                       MeetsWednesday?,MeetsThursday?,
+                                       MeetsFriday?,MeetsSaturday?,
+                                       MeetsSunday?)>
+<!ELEMENT MeetsMonday (#PCDATA)>
+<!ELEMENT MeetsTuesday (#PCDATA)>
+<!ELEMENT MeetsWednesday (#PCDATA)>
+<!ELEMENT MeetsThursday (#PCDATA)>
+<!ELEMENT MeetsFriday (#PCDATA)>
+<!ELEMENT MeetsSaturday (#PCDATA)>
+<!ELEMENT MeetsSunday (#PCDATA)>
+<!ELEMENT optionalOfferingStartTime (HourStart?,MinuteStart?,AmPmStart?)>
+<!ELEMENT HourStart (#PCDATA)>
+<!ELEMENT MinuteStart (#PCDATA)>
+<!ELEMENT AmPmStart (#PCDATA)>
+<!ELEMENT optionalOfferingEndTime (HourEnd?,MinuteEnd?,AmPmEnd?)>
+<!ELEMENT HourEnd (#PCDATA)>
+<!ELEMENT MinuteEnd (#PCDATA)>
+<!ELEMENT AmPmEnd (#PCDATA)>
+<!ELEMENT optionalOfferingLocation (#PCDATA)>
+
