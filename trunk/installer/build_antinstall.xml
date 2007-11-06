@@ -999,6 +999,7 @@ xercesImpl.version=${xercesImpl.version}
             </then>
             <else>
                 <echo>The installer was run in remote-config mode.  If you wish to run the installer with the configuration in ant.install.properties, edit it and set remote-config = false.</echo>
+                <touch file="${work.dir}/.successful"/>
             </else>
         </if>
     </target>
@@ -3196,6 +3197,12 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-campusannouncement-channel"/>
             <param name="version" value="${project.version}"/>
+        </antcall>
+        <antcall target="uportal-dbloader-tables">
+            <param name="groupId" value="net.unicon.toro"/>
+            <param name="artifactId" value="toro-campusannouncement-channel"/>
+            <param name="version" value="${project.version}"/>
+            <param name="data.xml" value="/properties/db/dbloader-uportal-data.xml"/>
         </antcall>
     </target>
 
