@@ -1,0 +1,932 @@
+<?xml version="1.0" ?>
+<!--
+  Copyright (C) 2007 Unicon, Inc.
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this distribution.  It is also available here:
+  http://www.fsf.org/licensing/licenses/gpl.html
+
+  As a special exception to the terms and conditions of version 
+  2 of the GPL, you may redistribute this Program in connection 
+  with Free/Libre and Open Source Software ("FLOSS") applications 
+  as described in the GPL FLOSS exception.  You should have received
+  a copy of the text describing the FLOSS exception along with this
+  distribution.
+-->
+<!-- Message Types: move_ok, copy_ok, delete_ok, addfiles_ok, addfolder_ok, sharing_ok, editfile_ok, editfolder_ok -->
+<!-- Error Types: delete_fail_sharing -->
+<!-- Will display only <message></message> or <error></error>  elements, not both -->
+<!--
+<state>
+    <settings>
+        <sharing disabled="false"></sharing>
+        <upload-limit>2.8 MB</upload-limit>
+    </settings>
+    <status>
+        <available-space>50.2 MB</available-space>
+        <total-shared>12</total-shared>
+        <error type="delete_fail_sharing">
+        </error>
+        <error type="other">
+            <problem>Something else happened.</problem>
+            <solution>To fix it, try it again later.  If it still happens, contact the Portal support.</solution>
+        </error>
+    </status>
+
+   <navigation hasBack="true">
+      <drive id="personal" class-large="largePersonal" class-opened="folderopen" class-closed="folderclosed">
+         <label>Personal Folder</label>
+         <description>Your Personal Folder is where you can store your documents, notes, photos, and more.</description>
+         <folder id="" name="c:/temp" shared="no">
+            <folder id="c:/temp/" name="AccessId" shared="no">
+            </folder>
+
+            <folder id="c:/temp/" name="briefcase" shared="no">
+            </folder>
+
+            <folder id="c:/temp/" name="briefcaseNew" shared="yes">
+                <folder id="c:/temp/briefcaseNew/factory1/" name="factory1" shared="no">
+               </folder>
+
+               <folder id="c:/temp/briefcaseNew/factory2/" name="factory2" shared="yes">
+               </folder>
+            </folder>
+
+            <folder id="c:/temp/" name="BriefcaseNew1" shared="no">
+            </folder>
+
+            <folder id="c:/temp/" name="forums" shared="no">
+            </folder>
+
+            <folder id="c:/temp/" name="survey" shared="no">
+            </folder>
+         </folder>
+      </drive>
+
+      <drive id="shared" class-large="largeShared" class-opened="sharedfolderopen" class-closed="sharedfolderclosed">
+        <label>Shared Folders</label>
+        <description>Access other files that have been shared with you.</description>
+      </drive>
+
+      <drive id="fdrive" class-large="largeNetwork" class-opened="networkfolderopen" class-closed="networkfolderclosed">
+        <label>F Drive</label>
+        <description>The F Drive contain common folders that you and others on the Campus can access.</description>
+      </drive>
+
+      <drive id="idrive" class-large="largeNetwork" class-opened="networkfolderopen" class-closed="networkfolderclosed">
+        <label>I Drive</label>
+        <description>The I Drive contain common folders that you and others on the Campus can access.</description>
+        <folder id="i:/" name="I Drive">
+        </folder>
+      </drive>
+
+   </navigation>
+
+   <location>
+      <current id="c:/temp/briefcaseNew/factory1/" type="folder" isOpen="true|false">
+         <name>briefcaseNew</name>
+
+         <path>c:/temp/</path>
+
+         <accesstype>View</accesstype>
+
+         <accesstype>Add</accesstype>
+
+         <accesstype>Delete</accesstype>
+      </current>
+
+      <previous id="path" type="folder">
+         <name>
+         </name>
+
+         <path>
+         </path>
+
+         <accesstype>View</accesstype>
+
+         <accesstype>Add</accesstype>
+
+         <accesstype>Delete</accesstype>
+      </previous>
+   </location>
+
+   <contents currentpage="5" perpage="5" totalpages="5" firstdisplayed="6" lastdisplayed="10" totalitems="27">
+      <resource id="c:/temp/briefcaseNew/factory1/" name="factory1" shared="yes">
+         <mimetype>Folder</mimetype>
+
+         <type>Folder</type>
+
+         <lastmod>Sep 7, 2004 1:30:09 PM</lastmod>
+
+         <size>0</size>
+      </resource>
+
+      <resource id="c:/temp/briefcaseNew/factory2/" name="factory2" shared="no">
+         <mimetype>Folder</mimetype>
+
+         <type>Folder</type>
+
+         <lastmod>Aug 20, 2004 9:48:41 AM</lastmod>
+
+         <size>0</size>
+      </resource>
+
+      <resource id="c:/temp/briefcaseNew/Shortcut to temp.txt.lnk" name="Shortcut to temp.txt.lnk" shared="no">
+         <mimetype>.lnk</mimetype>
+
+         <type>File</type>
+
+         <url>http://www.unicon.net</url>
+
+         <lastmod>Sep 7, 2004 5:18:38 PM</lastmod>
+
+         <size>553</size>
+      </resource>
+
+      <resource id="c:/temp/briefcaseNew/temp.txt" name="temp.txt" shared="no">
+         <mimetype>.txt</mimetype>
+
+         <type>File</type>
+
+         <url>http://www.yahoo.com</url>
+
+         <lastmod>Aug 4, 2004 4:40:51 PM</lastmod>
+
+         <size>0</size>
+      </resource>
+   </contents>
+</state>
+-->
+<screen handle="folderview">
+   <layout>
+   	  <layout-context class="BriefcasePortlet BriefcasePortlet_folderview" />
+        <!-- DEBUG to show state XML -->
+        <!--
+        <textarea>
+            <call-template handle="showStateXMLElement" select="/" ></call-template>
+        </textarea>
+        -->
+      <section type="header" cols="2">
+          <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+              <tr>
+	               <td class="title2" style="text-align:left;">
+                       <call-template handle="nowViewing" select="/state/navigation//*[@id = /state/location/current/@id]" ></call-template>
+	               </td>
+	               <if test="{/state/status/available-space}" against="" condition="equals">
+	                 <false>
+	               	   <call-template handle="availableDiskSpace" select="*[boolean(/state/status) and /state/location/current/@type != 'drive']" ></call-template>
+	               	 </false>
+	               </if>
+              </tr>
+           </table>
+      </section>
+
+      <section type="content">
+      <section type="secondary">
+         <navbar>
+            <choice-collection handle="changeFolderLocation">
+               <location-nav>
+                   <select-one type="dropdown" title="Select a different location to view.">
+                      <choice handle="goLocation" min-selections="1" max-selections="1">
+                         <call-template handle="addressOptions" select="//state/navigation/drive" />
+
+                          <action handle="briefcaseLocationGoTo" impl="net.unicon.academus.apps.briefcase.engine.GoToFolderAction" inpt="changeFolderLocation">
+                              <label>Go</label>
+
+                              <description>To go to the selected level within the Briefcase.</description>
+                          </action>
+                      </choice>
+                   </select-one>
+
+                   <button-group>
+                       <if test="{/state/navigation/@hasBack}" against="true" condition="equals" >
+                           <true>
+                               <link class="back-button">
+                               <action handle="briefcaseBack" impl="net.unicon.academus.apps.briefcase.engine.GoBackFolderAction">
+                                      <label><span class="hide">Back</span></label>
+
+                                  <description>To go back to the previous location within the Briefcase.</description>
+                               </action>
+                               </link>
+                           </true>
+                           <false>
+                               <span class="back-button-disabled"><span class="hide">Back</span></span>
+                           </false>
+                       </if>
+                   </button-group>
+               </location-nav>
+            </choice-collection>
+         </navbar>
+
+         <navtree opened-class="folderopen" closed-class="folderclosed" current-id="{/state/location/current/@id}">
+            <choice-collection handle="leftNavForm">
+               <choice handle="goLocation" min-selections="0" max-selections="1">
+                  <ul>
+                     <li>
+                        <link class="welcomelink">
+                           <action handle="briefcaseNavigateToWelcome" impl="net.unicon.academus.apps.briefcase.engine.WelcomePageAction" to-screen="welcome">
+                              <label>Welcome Page</label>
+                              <description>To return to the Welcome Page of the Briefcase.</description>
+                           </action>
+
+                        </link>
+
+                        <ul>
+                           <call-template handle="drive" select="//state/navigation/drive" />
+                        </ul>
+                     </li>
+                  </ul>
+               </choice>
+            </choice-collection>
+         </navtree>
+      </section>
+
+      <section type="main" cols="2">
+         <choice-collection handle="mainFolderForm">
+            <toolbar class="toolbar-alternate">
+			<hbox>
+
+                <call-template handle="AddPermitted" select="/state[/state/location/current/@type != 'drive' and count(/state/location/current/accesstype[text() = 'ADD']) &gt; 0]" ></call-template>
+                <call-template handle="AddNotPermitted" select="/state[not(/state/location/current/@type != 'drive' and count(/state/location/current/accesstype[text() = 'ADD']) &gt; 0)]" ></call-template>
+
+                <call-template handle="MovePermitted" select="/state[/state/location/current/@type != 'drive' and count(/state/location/current/accesstype[text() = 'DELETE']) &gt; 0]" ></call-template>
+                <call-template handle="MoveNotPermitted" select="/state[not(/state/location/current/@type != 'drive' and count(/state/location/current/accesstype[text() = 'DELETE']) &gt; 0)]" ></call-template>
+
+                <call-template handle="CopyPermitted" select="/state[/state/location/current/@type != 'drive']" ></call-template>
+                <call-template handle="CopyNotPermitted" select="/state[not(/state/location/current/@type != 'drive')]" ></call-template>
+
+                <call-template handle="DeletePermitted" select="/state[/state/location/current/@type != 'drive' and count(/state/location/current/accesstype[text() = 'DELETE']) &gt; 0]" ></call-template>
+                <call-template handle="DeleteNotPermitted" select="/state[not(/state/location/current/@type != 'drive' and count(/state/location/current/accesstype[text() = 'DELETE']) &gt; 0)]" ></call-template>
+
+                <call-template handle="ShareFolderPermitted" select="/state[/state/location/current/@type != 'drive' and /state/settings/sharing/@disabled != 'true' and count(/state/location/current/accesstype[text() = 'SHARE']) &gt; 0]" ></call-template>
+
+
+			</hbox>
+			</toolbar>
+
+            <section type="main-content">
+
+<!-- SUCCESS MESSAGE -->
+            <if test="{count(/state/status/message)}" against="0" condition="gt">
+               <true>
+                  <call-template handle="messages" select="/state/status/message">
+                  </call-template>
+               </true>
+            </if>
+
+<!-- ERROR MESSAGE -->
+            <if test="{count(/state/status/error)}" against="0" condition="gt">
+               <true>
+                  <call-template handle="errors" select="/state/status/error">
+                  </call-template>
+               </true>
+            </if>
+
+
+            <table even-row-class="portlet-section-body evenrow" odd-row-class="portlet-section-alternate oddrow" cellpadding="0" cellspacing="0" border="0" class="main-content-table">
+               <call-template handle="selectColumn" select="self::node()[/state/location/current/@type != 'drive']" ></call-template>
+
+               <col>
+                  <th class="portlet-section-header th-button th-button-name">
+                     <sort-column>
+                        <choice handle="nameSortDirection" min-selections="0" max-selections="1">
+                           <label>Name Sort Direction</label>
+
+                           <option handle="asc" complement-type="net.unicon.penelope.complement.TypeNone">
+                              <label>Sort Names in ascending order</label>
+                           </option>
+
+                           <option handle="des" complement-type="net.unicon.penelope.complement.TypeNone">
+                              <label>Sort Names in descending order</label>
+                           </option>
+                        </choice>
+
+                        <action handle="briefcaseSortName" impl="net.unicon.academus.apps.briefcase.engine.ChangeFolderSortAction" mode="name">
+                           <label>Name</label>
+                        </action>
+                     </sort-column>
+                  </th>
+
+                  <choice handle="goLocation" min-selections="0" max-selections="1">
+                     <call-template handle="rowName" select="//state/contents/resource" />
+                  </choice>
+               </col>
+
+               <col>
+                  <th class="portlet-section-header th-button th-button-size">
+                     <sort-column>
+                        <choice handle="sizeSortDirection" min-selections="0" max-selections="1">
+                           <label>Size Sort Direction</label>
+
+                           <option handle="asc" complement-type="net.unicon.penelope.complement.TypeNone">
+                              <label>Sort Sizes in ascending order</label>
+                           </option>
+
+                           <option handle="des" complement-type="net.unicon.penelope.complement.TypeNone">
+                              <label>Sort Sizes in descending order</label>
+                           </option>
+                        </choice>
+
+                        <action handle="briefcaseSortSize" impl="net.unicon.academus.apps.briefcase.engine.ChangeFolderSortAction" mode="size">
+                           <label>Size</label>
+                        </action>
+                     </sort-column>
+                  </th>
+
+                  <call-template handle="rowSize" select="//state/contents/resource" />
+               </col>
+
+               <col>
+                  <th class="portlet-section-header th-button th-button-type">
+                     <sort-column>
+                        <choice handle="typeSortDirection" min-selections="0" max-selections="1">
+                           <label>Type Sort Direction</label>
+
+                           <option handle="asc" complement-type="net.unicon.penelope.complement.TypeNone">
+                              <label>Sort Types in ascending order</label>
+                           </option>
+
+                           <option handle="des" complement-type="net.unicon.penelope.complement.TypeNone">
+                              <label>Sort Types in descending order</label>
+                           </option>
+                        </choice>
+
+                        <action handle="briefcaseSortType" impl="net.unicon.academus.apps.briefcase.engine.ChangeFolderSortAction" mode="type">
+                           <label>Type</label>
+                        </action>
+                     </sort-column>
+                  </th>
+
+                  <call-template handle="rowType" select="//state/contents/resource" />
+               </col>
+
+               <col>
+                  <th class="portlet-section-header th-button th-button-lastmod">
+                     <sort-column>
+                        <choice handle="dateSortDirection" min-selections="0" max-selections="1">
+                           <label>Last Modified Sort Direction</label>
+
+                           <option handle="asc" complement-type="net.unicon.penelope.complement.TypeNone">
+                              <label>Sort Last Modified times in ascending order</label>
+                           </option>
+
+                           <option handle="des" complement-type="net.unicon.penelope.complement.TypeNone">
+                              <label>Sort Last Modified times in descending order</label>
+                           </option>
+                        </choice>
+
+                        <action handle="briefcaseSortLastMod" impl="net.unicon.academus.apps.briefcase.engine.ChangeFolderSortAction" mode="date">
+                           <label>Last Modified</label>
+                        </action>
+                     </sort-column>
+                  </th>
+
+                  <call-template handle="rowLastMod" select="//state/contents/resource" />
+               </col>
+
+               <call-template handle="editColumn" select="self::node()[/state/location/current/@type != 'drive']" ></call-template>
+
+               <if test="{count(//state/contents/resource)}" against="0" condition="equals" >
+                   <true>
+                       <tr>
+                           <td colspan="6"><span class="emptytable">There are currently no files or folders within this directory.</span></td>
+                       </tr>
+                   </true>
+               </if>
+
+            </table>
+
+            <paging>
+               <display-per-page>
+                  <select-one type="dropdown" title="Select the number of items to display per page.">
+                     <choice handle="chooseDisplayNumber" min-selections="0" max-selections="1">
+                        <label>Display</label>
+
+                        <option handle="5" complement-type="net.unicon.penelope.complement.TypeNone">
+                           <label>5</label>
+                        </option>
+
+                        <option handle="10" complement-type="net.unicon.penelope.complement.TypeNone">
+                           <label>10</label>
+                        </option>
+
+                        <option handle="20" complement-type="net.unicon.penelope.complement.TypeNone">
+                           <label>20</label>
+                        </option>
+
+                        <option handle="50" complement-type="net.unicon.penelope.complement.TypeNone">
+                           <label>50</label>
+                        </option>
+
+                        <option handle="0" complement-type="net.unicon.penelope.complement.TypeNone">
+                           <label>All</label>
+                        </option>
+
+                       <action handle="setDisplay" impl="net.unicon.academus.apps.briefcase.engine.SetFolderItemsPerPageAction" inpt="mainFolderForm">
+                          <label>Set</label>
+                          <description>To set the number of displayed items, per page.</description>
+                       </action>
+                     </choice>
+                  </select-one>
+
+                  <text>Per Page</text>
+               </display-per-page>
+
+               <paging-controls currentpage="{//state/contents/@currentpage}" perpage="{//state/contents/@perpage}" totalpages="{//state/contents/@totalpages}" firstdisplayed="{//state/contents/@firstdisplayed}" lastdisplayed="{//state/contents/@lastdisplayed}" totalitems="{//state/contents/@totalitems}">
+<!--                              <label><value-of select="//state/contents/firstdisplayed" />-<value-of select="//state/contents/lastdisplayed" /> of <value-of select="//state/contents/totalitems" /></label>
+ -->
+                  <first>
+                     <link>
+                        <action handle="goToFirstPage" impl="net.unicon.academus.apps.briefcase.engine.ChangeFolderPageAction" move="first">
+                           <label>First</label>
+			               <description >To go to the first page of the results.</description>
+                        </action>
+                     </link>
+                  </first>
+
+                  <prev>
+                     <link>
+                        <action handle="goToPrevPage" impl="net.unicon.academus.apps.briefcase.engine.ChangeFolderPageAction" move="previous">
+                           <label>Prev</label>
+			               <description >To go to the previous page of the results.</description>
+                        </action>
+                     </link>
+                  </prev>
+
+                  <next>
+                     <link>
+                        <action handle="goToNextPage" impl="net.unicon.academus.apps.briefcase.engine.ChangeFolderPageAction" move="next">
+                           <label>Next</label>
+			               <description >To go to the next page of the results.</description>
+                        </action>
+                     </link>
+                  </next>
+
+                  <last>
+                     <link>
+                        <action handle="goToLastPage" impl="net.unicon.academus.apps.briefcase.engine.ChangeFolderPageAction" move="last">
+                           <label>Last</label>
+			               <description >To go to the last page of the results.</description>
+                        </action>
+                     </link>
+                  </last>
+               </paging-controls>
+            </paging>
+
+            </section>
+         </choice-collection>
+      </section>
+      </section>
+   </layout>
+
+   <!-- <template handle="nowViewing" >
+        <h2>Now Viewing <value-of select="ancestor-or-self::drive/label" ></value-of></h2>
+   </template> -->
+   
+   <template handle="nowViewing" >
+        <h2>Now Viewing <value-of select="/state/location/current/name" ></value-of></h2>
+   </template>
+
+   <template handle="availableDiskSpace" >
+      <td class="header-status-container">
+          <table cellpadding="0" cellspacing="0" border="0" class="header-status">
+             <tr>
+                <th nowrap="nowrap">Available Disk Space</th>
+
+                <td nowrap="nowrap">
+                   <value-of select="/state/status/available-space" />
+                </td>
+             </tr>
+          </table>
+      </td>
+   </template>
+
+   <template handle="addressOptions">
+      <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+         <label><value-of select="label" /></label>
+      </option>
+
+      <call-template handle="addressOptionsOpenFolders" select="descendant::folder[descendant::folder/@id = /state/location/current/@id or @id = /state/location/current/@id]" />
+   </template>
+
+   <template handle="addressOptionsOpenFolders">
+      <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+         <label>
+            <call-template handle="optionSpace" select="ancestor-or-self::folder" />
+
+            <value-of select="@name" />
+         </label>
+      </option>
+   </template>
+
+   <template handle="optionSpace">
+<!--&#160;&#160;&#160;&#160; -->&#160;&#160;&#160;&#160;
+   </template>
+
+   <template handle="folderTree">
+      <li>
+        <call-template handle="folderTreeShared" select="self::node()[@shared='yes']" />
+        <call-template handle="folderTreeNormal" select="self::node()[@shared!='yes' or not(@shared)]" />
+        <call-template handle="folderTreeList" select="self::node()[count(folder) &gt; 0]" />
+      </li>
+   </template>
+
+   <template handle="folderTreeList">
+         <ul>
+             <call-template handle="folderTree" select="folder" />
+         </ul>
+   </template>
+   
+   <template handle="folderTreeNormal">
+    <call-template handle="folderTreeNormalSelectedClosed" select="self::node()[@id=/state/location/current/@id and /state/location/current/@isOpen = 'false']" />
+    <call-template handle="folderTreeNormalSelectedOpened" select="self::node()[@id=/state/location/current/@id and not(/state/location/current/@isOpen = 'false')]" />
+    <call-template handle="folderTreeNormalNotSelected" select="self::node()[not(@id=/state/location/current/@id)]" />
+   </template>
+
+   <template handle="folderTreeNormalSelectedOpened">
+     <link id="{@id}" class="folderopen cell-selected">
+        <call-template handle="navigateFolderAction" select="." />
+     </link>
+   </template>
+
+   <template handle="folderTreeNormalSelectedClosed">
+     <link id="{@id}" class="folderclosed cell-selected">
+        <call-template handle="navigateFolderAction" select="." />
+     </link>
+   </template>
+
+   <template handle="folderTreeNormalNotSelected">
+     <link id="{@id}">
+        <call-template handle="navigateFolderAction" select="." />
+     </link>
+   </template>
+
+   <template handle="folderTreeShared">
+    <call-template handle="folderTreeSharedSelected" select="self::node()[@id=/state/location/current/@id]" />
+    <call-template handle="folderTreeSharedNotSelected" select="self::node()[not(@id=/state/location/current/@id)]" />
+   </template>
+
+   <template handle="folderTreeSharedSelected">
+     <link id="{@id}" class="sharedfolderopen cell-selected">
+        <call-template handle="navigateFolderAction" select="." />
+     </link>
+   </template>
+
+   <template handle="folderTreeSharedNotSelected">
+     <link opened-class="sharedfolderopen" closed-class="sharedfolderclosed" id="{@id}">
+        <call-template handle="navigateFolderAction" select="." />
+     </link>
+   </template>
+
+   <template handle="navigateFolderAction" >
+            <action handle="briefcaseNavigateToFolder" impl="net.unicon.academus.apps.briefcase.engine.GoToFolderAction" inpt="leftNavForm">
+               <label><value-of select="@name" /></label>
+               <description >To view the contents of <value-of select="@name" />.</description>
+
+               <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+               </option>
+            </action>
+   </template>
+
+   <template handle="driveAction">
+	    <action handle="briefcaseNavigateToDrive" impl="net.unicon.academus.apps.briefcase.engine.GoToFolderAction" inpt="leftNavForm">
+	       <label><value-of select="label" ></value-of></label>
+	
+	       <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+	       </option>
+	       <description>To view the contents of your <value-of select="label" ></value-of>.</description>
+	    </action>
+   </template>
+
+   <template handle="drive">
+      <li>
+		 <call-template handle="driveSelected" select="self::node()[@id=/state/location/current/@id]" />
+   		 <call-template handle="driveNotSelected" select="self::node()[not(@id=/state/location/current/@id)]" />
+         <call-template handle="folderList" select="self::node()[count(folder) &gt; 0]" />
+      </li>
+   </template>
+
+   <template handle="folderList">
+         <ul>
+            <call-template handle="folderTree" select="folder" />
+         </ul>
+   </template>
+   
+   <template handle="driveSelected">
+     <link class="{concat(@class-opened,' ','cell-selected')}" opened-class="{@class-opened}" closed-class="{@class-closed}">
+         <call-template handle="driveAction" select="." />
+     </link>
+   </template>
+
+   <template handle="driveNotSelected">
+     <link opened-class="{@class-opened}" closed-class="{@class-closed}">
+        <call-template handle="driveAction" select="." />
+     </link>
+   </template>
+
+   <template handle="AddPermitted" >
+        <call-template handle="AddFileAction" select="." ></call-template>
+        <call-template handle="AddFolderAction" select="." ></call-template>
+   </template>
+
+   <template handle="AddNotPermitted" >
+       <disabled title="Not permitted to add files here.">
+           <call-template handle="AddFileAction" select="." ></call-template>
+       </disabled>
+
+       <disabled title="Not permitted to add folders here.">
+           <call-template handle="AddFolderAction" select="." ></call-template>
+       </disabled>
+   </template>
+
+   <template handle="AddFileAction" >
+       <action handle="briefcaseAddFile" impl="net.unicon.academus.apps.briefcase.engine.CheckPermissionAction" to-screen="addfile">
+          <label>Add File(s)</label>
+          <description>To add a file within this folder.</description>
+       </action>
+   </template>
+
+   <template handle="AddFolderAction" >
+       <action handle="briefcaseNewFolder" impl="net.unicon.academus.apps.briefcase.engine.CheckPermissionAction" to-screen="addedit_folder">
+          <label>Create Folder</label>
+          <description>To add a folder within this folder.</description>
+       </action>
+   </template>
+
+   <template handle="MovePermitted" >
+       <call-template handle="MoveAction" select="." ></call-template>
+   </template>
+
+   <template handle="MoveNotPermitted" >
+       <disabled title="Not permitted to move items from here.">
+           <call-template handle="MoveAction" select="." ></call-template>
+       </disabled>
+   </template>
+
+   <template handle="MoveAction" >
+       <action handle="briefcaseMove" impl="net.unicon.academus.apps.briefcase.engine.SelectDestinationAction" inpt="mainFolderForm" mode="move" class="extraPad">
+          <label>Move</label>
+          <description>To move this folder, or the selected files and folders, to another location within the Briefcase.</description>
+       </action>
+   </template>
+
+   <template handle="CopyPermitted" >
+       <call-template handle="CopyAction" select="." ></call-template>
+   </template>
+
+   <template handle="CopyNotPermitted" >
+       <disabled title="Not permitted to copy items from here.">
+           <call-template handle="CopyAction" select="." ></call-template>
+       </disabled>
+   </template>
+
+   <template handle="CopyAction" >
+       <action handle="briefcaseCopy" impl="net.unicon.academus.apps.briefcase.engine.SelectDestinationAction" inpt="mainFolderForm" mode="copy">
+          <label>Copy</label>
+          <description>To copy this folder, or the selected files and folders, to a location within the Briefcase.</description>
+       </action>
+   </template>
+
+   <template handle="DeletePermitted" >
+       <call-template handle="DeleteAction" select="." ></call-template>
+   </template>
+
+   <template handle="DeleteNotPermitted" >
+       <disabled title="Not permitted to delete items from here.">
+           <call-template handle="DeleteAction" select="." ></call-template>
+       </disabled>
+   </template>
+
+   <template handle="DeleteAction" >
+       <action handle="briefcaseDelete" impl="net.unicon.academus.apps.briefcase.engine.ConfirmDeleteAction" inpt="mainFolderForm">
+          <label>Delete</label>
+          <description>To delete this folder, or the selected files and folders, from the Briefcase.</description>
+       </action>
+   </template>
+
+   <template handle="ShareFolderPermitted" >
+       <action handle="briefcaseShareFolder" impl="net.unicon.academus.apps.briefcase.engine.EditPermissionAction" to-screen="edit_permissions" inpt="mainFolderForm" class="extraPad">
+          <label>Share Folder</label>
+          <description>To share this folder, or the selected folders, with other people.</description>
+       </action>
+   </template>
+
+   <template handle="selectColumn" >
+       <col>
+          <th class="portlet-section-header th-button th-button-select">
+             <select-toggle targetname="selectedItems" title="To select or de-select all items" class="select-toggle">Select</select-toggle>
+          </th>
+
+          <choice handle="selectedItems" min-selections="0" max-selections="0">
+             <call-template handle="rowSelect" select="//state/contents/resource" />
+          </choice>
+       </col>
+   </template>
+
+   <template handle="rowSelect">
+      <td class="cell-emphasis select-cell">
+         <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>To select / de-select <value-of select="@name" /> for a subsequent action.</label>
+         </option>
+      </td>
+   </template>
+
+   <template handle="rowName">
+      <td>
+         <call-template handle="rowNameFile" select="self::node()[type/text()='File']" ></call-template>
+         <call-template handle="rowNameFolder" select="self::node()[type/text()!='File' and @shared!='yes']" ></call-template>
+         <call-template handle="rowNameSharedFolder" select="self::node()[type/text()!='File' and @shared='yes']" ></call-template>
+      </td>
+   </template>
+
+   <template handle="rowNameFile">
+        <a class="li-image file-icon" href="{url}" target="hidden_download" title="View / Download this file"><value-of select="@name" /></a>
+   </template>
+
+   <template handle="rowNameFolder">
+         <link class="li-image folder-icon">
+            <call-template handle="rowNameFolderAction" select="." ></call-template>
+         </link>
+   </template>
+
+   <template handle="rowNameSharedFolder">
+         <link class="li-image sharedfolder-icon">
+            <call-template handle="rowNameFolderAction" select="." ></call-template>
+         </link>
+   </template>
+
+   <template handle="rowNameFolderAction" >
+        <action handle="briefcaseNavigateTo" impl="net.unicon.academus.apps.briefcase.engine.GoToFolderAction" inpt="mainFolderForm">
+           <label><value-of select="@name" /></label>
+           <description >To view the contents <value-of select="@name" />.</description>
+
+           <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+           </option>
+        </action>
+   </template>
+
+   <template handle="rowType">
+      <td>
+         <value-of select="mimetype" />
+      </td>
+   </template>
+
+   <template handle="rowSize">
+      <td>
+         <value-of select="size" />
+      </td>
+   </template>
+
+   <template handle="rowLastMod">
+      <td>
+         <value-of select="lastmod" />
+      </td>
+   </template>
+
+   <template handle="editColumn" >
+       <col>
+          <th class="portlet-section-header th-column-edit">Edit</th>
+
+          <choice handle="editResource" min-selections="0" max-selections="1">
+             <call-template handle="rowEdit" select="//state/contents/resource" />
+          </choice>
+       </col>
+   </template>
+
+   <template handle="rowEdit">
+      <td>
+         <link class="li-image edit-icon">
+            <action handle="briefcaseEditFolder" impl="net.unicon.academus.apps.briefcase.engine.EditResourceAction" inpt="mainFolderForm">
+               <label><span class="hide">Edit</span></label>
+	           <description >To edit the properties of <value-of select="@name" />.</description>
+	           
+               <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+               </option>
+            </action>
+         </link>
+      </td>
+   </template>
+
+   <template handle="messages">
+      <removable>
+         <section type="message">
+            <h4 class="inline">SUCCESS:</h4>
+
+            <if test="{@type}" against="move_ok" condition="equals">
+               <true>
+                  <p>The items have been moved</p>
+               </true>
+            </if>
+
+            <if test="{@type}" against="copy_ok" condition="equals">
+               <true>
+                  <p>The items have been copied</p>
+               </true>
+            </if>
+
+            <if test="{@type}" against="delete_ok" condition="equals">
+               <true>
+                  <p>The items have been deleted</p>
+               </true>
+            </if>
+
+            <if test="{@type}" against="addfiles_ok" condition="equals">
+               <true>
+                  <p>The file(s) have been added</p>
+               </true>
+            </if>
+
+            <if test="{@type}" against="addfolder_ok" condition="equals">
+               <true>
+                  <p>The folder have been added</p>
+               </true>
+            </if>
+         </section>
+      </removable>
+   </template>
+
+   <template handle="errors">
+      <section type="error">
+         <if test="{@type}" against="delete_fail_sharing" condition="equals">
+            <true>
+               <section type="portlet-msg-error problem">
+                  <h4 class="inline">PROBLEM:</h4>
+
+                  <p>You cannot delete folders that are actively being shared.</p>
+               </section>
+
+               <section type="portlet-msg-info solution">
+                  <h4 class="inline">SOLUTION:</h4>
+
+                  <p>To resolve this problem, click edit folder properties and set folder to
+                  <strong>Stop Sharing</strong>.</p>
+               </section>
+            </true>
+         </if>
+         <if test="{@type}" against="other" condition="equals">
+            <true>
+               <section type="portlet-msg-error problem">
+                  <h4 class="inline">PROBLEM:</h4>
+
+                  <p><value-of select="problem" /></p>
+               </section>
+
+               <section type="portlet-msg-info solution">
+                  <h4 class="inline">SOLUTION:</h4>
+
+                  <p><value-of select="solution" /></p>
+               </section>
+            </true>
+         </if>
+         <!-- If not any of the above types,  then give generic error message (SHOULD NEVER BE SEEN) -->
+         <if test="{boolean(@type!='other' and @type!='delete_fail_sharing')}" against="true" condition="equals">
+            <true>
+               <section type="portlet-msg-error problem">
+                  <h4 class="inline">PROBLEM:</h4>
+
+                  <p>The channel has experienced an unclassified problem.</p>
+               </section>
+
+               <section type="portlet-msg-info solution">
+                  <h4 class="inline">SOLUTION:</h4>
+
+                  <p>Please notify the Portal Administrator of the problem.</p>
+               </section>
+            </true>
+         </if>
+      </section>
+   </template>
+
+   <!-- DEBUG Templates to show STATE XML -->
+   <template handle="showStateXMLElement" >
+        <element name="{name(.)}">
+            <call-template handle="showStateXMLAttribute" select="@*" ></call-template>
+            <call-template handle="showStateXMLElement" select="*" ></call-template>
+        </element>
+
+   </template>
+
+   <template handle="showStateXMLAttribute" >
+        <attribute name="{name(.)}" value="{.}" />
+   </template>
+
+    <!--<decisions>
+      <decision-collection choice-collection="mainFolderForm">
+         <decision choice="typeSortDirection">
+            <selection option="des"></selection>
+         </decision>
+
+      </decision-collection>
+   </decisions> -->
+</screen>
+
