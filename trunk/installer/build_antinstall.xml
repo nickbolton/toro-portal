@@ -999,6 +999,7 @@ xercesImpl.version=${xercesImpl.version}
             </then>
             <else>
                 <echo>The installer was run in remote-config mode.  If you wish to run the installer with the configuration in ant.install.properties, edit it and set remote-config = false.</echo>
+                <mkdir dir="${work.dir}"/>
                 <touch file="${work.dir}/.successful"/>
             </else>
         </if>
