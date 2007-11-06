@@ -1,0 +1,92 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <parent>
+        <groupId>net.unicon.toro</groupId>
+        <artifactId>messaging</artifactId>
+        <version>1.0.2</version> 
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>messaging-portlet-client</artifactId>
+    <packaging>jar</packaging>
+
+    <name>Messaging Portlet Client</name>
+
+    <dependencies>
+        <!-- ===== Compile Time Dependencies ============================== -->
+        <dependency>
+            <groupId>net.unicon.toro</groupId>
+            <artifactId>academus-api</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.unicon.toro</groupId>
+            <artifactId>messaging-lib</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.unicon.toro</groupId>
+            <artifactId>portlets-common-lib</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.unicon.toro</groupId>
+            <artifactId>alchemist</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.unicon.toro</groupId>
+            <artifactId>mercury</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>${dom4j.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>axis</groupId>
+            <artifactId>axis</artifactId>
+            <version>${axis.version}</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>compile</id>
+              <phase>compile</phase>
+              <goals>
+                <goal>run</goal>
+              </goals>
+              <configuration>
+                <tasks>
+                  <property name="java.source.version" value="${java.source.version}" />
+                  <property name="project.version" value="${project.version}" />
+                  <property name="axis.version" value="${axis.version}" />
+                  <property name="commons-logging.version" value="${commons-logging.version}" />
+                  <property name="commons-discovery.version" value="${commons-discovery.version}" />
+                  <property name="jaxrpc-api.version" value="${jaxrpc-api.version}" />
+                  <property name="wsdl4j.version" value="${wsdl4j.version}" />
+                  <property name="saaj-api.version" value="${saaj-api.version}" />
+                  <ant antfile="${basedir}/build.xml" dir="${basedir}" target="generate-wsdl" inheritRefs="true" />
+                </tasks>
+              </configuration>
+            </execution>
+           </executions>
+        </plugin>
+      </plugins>
+    </build>
+
+</project>
