@@ -7,5 +7,5 @@ From the root directory,
 * Remove -SNAPSHOT from version in blojsom/ant_pom.xml, installer/src/main/resources/pom.xml
 * checkin blojsom/ant_pom.xml, installer/src/main/resources/pom.xml
 * mvn --batch-mode release:prepare -DpreparationGoals="clean install"
-* release:perform -DuseEditMode=true
+* release:perform -DuseReleaseProfile=false
 * Add -SNAPSHOT to version in blojsom/ant_pom.xml, installer/src/main/resources/pom.xml
