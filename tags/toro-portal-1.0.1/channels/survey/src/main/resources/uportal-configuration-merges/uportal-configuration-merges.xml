@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<changes>
-    <file path="WEB-INF/classes/properties/worker.properties">
-        <add-or-replace>
-            <name>xml</name>
-            <value>net.unicon.portal.channels.survey.surveyauthor.PrintReadyWorker</value>
-        </add-or-replace>
-    </file>
-</changes>

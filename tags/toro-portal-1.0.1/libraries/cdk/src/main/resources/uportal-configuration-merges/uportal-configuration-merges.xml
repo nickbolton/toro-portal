@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<changes>
-    <file path="WEB-INF/classes/properties/worker.properties">
-        <add-or-replace>
-            <name>cscr</name>
-            <value>net.unicon.portal.common.ChannelRendererWorker</value>
-        </add-or-replace>
-    </file>
-</changes>
