@@ -1,0 +1,572 @@
+
+
+/* CHANNEL ELEMENTS */
+/*-----------------------------------------------------------*/
+/* Channel section. Elements which define channel-specific styles.  */
+
+/* Common */
+
+.indent {
+margin-left: 10px;
+}
+
+.nopad {
+padding: 0px;
+margin: 0px;
+}
+
+.gradient-page-title {
+background: url("../images/brand/gradient_title_bg.gif") repeat-x;
+font-size: 14px;
+color: #477BAD;
+padding: 5px 0 2px 10px;
+font-family: arial;
+margin-bottom: 10px;
+}
+
+.submit-container {
+text-align: center;
+border: 1px solid #7BADDD;
+background-color: #F0F5FB;
+width:350px;
+padding: 5px;
+margin: 15px;
+}
+
+.submit-comments {
+color: #477BAD;
+margin: 5px 0 10px 0;
+}
+
+.top-bottom-space {
+margin: 10px 0 30px 0;
+}
+
+.small-pad-tb {
+padding: 3px 0 3px 0;
+}
+
+.whitelink a:link, .whitelink a:visited, .whitelink a:hover {
+color: #FFFFFF;
+font-weight: bold;
+text-decoration: underline;
+}
+
+/* Survey */
+
+.survey-toolbar-container {
+margin: 0 0 0 0;
+padding: 3px;
+background-color: #DDDDDD;
+border-bottom: 1px solid #CCCCCC;
+font-size: 10pt;
+height: 18px;
+_width: 100%;
+}
+
+.survey-subquestion-container {
+margin: 0 0 0 0;
+padding: 3px;
+background-color: #EEEEEE;
+font-size: 10pt;
+height: 18px;
+_width: 100%;
+}
+
+.survey-page-title {
+padding-left: 10px;
+color:#477BAD;
+font-size: 14pt;
+font-family: arial;
+}
+
+.survey-content-left {
+padding: 2px 2px 2px 15px;
+}
+
+.survey-content-right {
+padding: 2px 15px 2px 2px;
+}
+
+.survey-line {
+margin: 10px 0 10px 0;
+border-bottom: 1px solid #7BADDD;
+}
+
+.survey-form-td {
+background-color: #477BAD;
+color: #FFFFFF;
+font-weight: bold;
+padding: 5px 15px 5px 15px;
+}
+
+.survey-survey-td {
+padding: 5px 15px 5px 15px;
+border-right: 1px solid #477BAD;
+width: 20%;
+}
+
+.survey-survey-td div {
+font-size: 10pt;
+font-family: verdana;
+}
+
+.survey-survey-td-col1 {
+border-right: 1px solid #477BAD;
+border-left: 1px solid #477BAD;
+padding-left: 15px;
+width: 40%;
+}
+
+.survey-survey-td-bottom {
+padding: 5px 15px 5px 15px;
+border-right: 1px solid #477BAD;
+border-left: 1px solid #477BAD;
+border-bottom: 1px solid #477BAD;
+}
+
+.survey-button {
+background-color: #666666;
+border: 1px solid #FFFFFF;
+color: #FFFFFF;
+font-weight: bold;
+font-size: 10pt;
+text-decoration: none;
+cursor: hand;
+cursor: pointer;
+}
+
+.survey-step1-subtitle {
+padding: 10px;
+font-size: 14pt;
+}
+
+.edit-survey-table {
+font-size: 9pt;
+}
+
+.edit-survey-table .td-left {
+width: 100px;
+padding: 5px;
+}
+
+.edit-survey-table .td-right {
+padding: 5px;
+}
+
+.edit-survey-table select {
+margin-left: 3px;
+}
+
+.survey-editor-subtitle {
+color: #477BAD;
+border-bottom: 1px solid #477BAD;
+padding: 10px 0 3px 5px;
+font-weight: bold;
+margin-bottom: 10px;
+}
+
+.survey-tab-container {
+border-bottom: 7px solid #477BAD;
+height: 23px;
+}
+
+.survey-tab {
+float: left;
+border: 1px solid #477BAD;
+_top: 2px;
+padding: 6px;
+width: 130;
+font-weight: bold;
+text-align: center;
+margin-right: 4px;
+position: relative;
+}
+
+.survey-tab-selected {
+float: left;
+background-color: #477BAD;
+_top: 2px;
+padding: 6px;
+width: 130;
+color: #FFFFFF;
+font-weight: bold;
+text-align: center;
+margin-right: 4px;
+position: relative;
+}
+
+.survey-tab-subtitle {
+height: 40px;
+background-color: #F0F0F0;
+text-align: right;
+padding: 7px 20px 7px 10px;
+vertical-align: middle;
+}
+
+.survey-peephole-container {
+text-align: center;
+margin: 10px;
+}
+
+.personal-container {
+width: 150px;
+padding: 6px;
+background-repeat: no-repeat;
+text-align: center;
+}
+
+.personal-container a:link, .personal-container a:visited, .personal-container a:hover{
+font-weight: bold;
+padding-left: 3px;
+}
+
+.survey-spacer {
+margin:5px;
+}
+
+.survey-peephole-text {
+margin-top: 14px;
+font-size: 10pt;
+}
+
+.survey-form-links {
+padding: 8px;
+background-color: #6194C3;
+float: right;
+}
+
+.bounding-box1 td {
+	padding: 3px 0;
+	margin: 0;
+}
+
+/* ADDRESS BOOK SERVANT */
+
+.addr-tab-container {
+background-color: #F1F1F1;
+border-bottom: 1px solid #cccccc;
+height: 30px;
+padding-left: 10px;
+}
+
+.addr-tab-left {
+background: #999999 url("../images/navigation/rounded_tab_left.gif") no-repeat top left;
+padding-left: 4px;
+float: left;
+margin: 6px 2px 0 0;
+position: relative;
+_top: 1px;
+}
+
+.addr-tab-right {
+background: url("../images/navigation/rounded_tab_right.gif") no-repeat top right;
+padding-right: 4px;
+}
+
+.addr-tab {
+padding: 4px;
+font-family: arial;
+font-size: 11px;
+font-weight: bold;
+}
+
+.addr-tab input {
+color: #FFFFFF;
+font-family: arial;
+font-size: 11px;
+font-weight: bold;
+text-decoration: underline;
+cursor: pointer;
+cursor: hand;
+}
+
+.addr-tab-selected-shell {
+background-color: #FFFFFF;
+color: #666666;
+}
+
+.addr-tab-selected {
+padding: 5px;
+font-family: arial;
+font-size: 11px;
+font-weight: bold;
+border-top: 1px solid #CCCCCC;
+position: relative;
+}
+
+.select-container {
+padding-bottom: 0px;
+padding-top: 10px;
+}
+
+.addr-browse-header {
+background-color: #CCCCCC;
+color: #FFFFFF;
+padding: 5px;
+font-weight: bold;
+}
+
+.addr-selected-header {
+background-color: #477BAD;
+color: #FFFFFF;
+padding: 5px;
+font-weight: bold;
+}
+
+.addr-group-selected {
+background-color: #DCE9F6;
+}
+
+/* CAMPUS NEWS */
+.areabox1 {
+    margin: 10px;
+    padding:40px 20px;
+    text-align:center;
+    background-color:#E8E8E8;
+    border: 2px solid #999;
+}
+
+.areabox2 {
+    margin: 10px;
+    padding:20px;
+    text-align:center;
+    background-color:#F8F8F8;
+    border: 2px solid #CCC;
+}
+
+.areabox3 {
+    margin: 10px;
+    padding:20px;
+    text-align:left;
+    background-color:#F8F8F8;
+    border: 2px solid #CCC;
+}
+
+ul.news-topic-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul.news-topic-list li {
+    margin: 3px 0;
+    padding: 0;
+}
+
+ul.news-topic-list p {
+    margin:0px;
+    padding:0px;
+}
+
+ul.news-topic-list span {
+    font-weight: bold;
+}
+
+ul.news-article-list {
+    list-style-image: none;
+    list-style-type: disc;
+}
+
+div.show-abstract-toggle {
+    display: none;
+}
+
+.CampusNewsChannel_News_Main h2.page-title {
+    margin-bottom: 20px;
+}
+
+.empty-message-box {
+    border:1px solid;
+    padding:5px;
+    text-align:center;
+}
+
+/*
+div.areabox1 a, div.areabox1 a:link, div.areabox1 a:visited, div.areabox1 a:hover, div.areabox2 a, div.areabox2 a:link, div.areabox2 a:visited, div.areabox2 a:hover,  {
+    text-decoration: underline;
+    font-weight: bold;
+}
+*/
+
+.alt-row-even {
+}
+
+.alt-row-odd {
+    background-color:#E8E8E8;
+}
+
+
+/**************************************/
+/*********  SURVEY STYLING  ************/
+.custom {
+}
+.custom .survey-title {
+	font-size: 9pt;
+}
+.custom .question-title {
+	margin-top: 15px;
+}
+.custom .question-title span{
+	font-size: 18pt;
+	line-height: 15pt;
+	margin-right: 5px;
+	color: #000000;
+	font-family: georgia, times new roman, serif;
+}
+.custom .question-list {
+	list-style: none;
+	margin: 5px 0 5px 0px;
+	padding: 0;
+}
+.custom .question-list li {
+	padding: 3px 0px;
+}
+.custom .question-item input{
+	padding-right: 3px;
+}
+.custom .question-list .survey-item-row {
+	display: inline;
+}
+.custom .subquestion-title {
+	padding-bottom: 3px;
+	margin-bottom: 5px;
+}
+.custom .summary-table {
+	margin-left: 10px;
+}
+.custom .summary-table td {
+	padding: 4px;
+}
+.custom .summary-table input {
+	padding: 0;
+	margin: 0 5px 0 0;
+}
+.custom .stats-container {
+	width: 100px;
+	border: 1px solid #BBBBBB;
+	background-color: #DFDFDF;
+	float: left;
+	margin-right: 5px;
+}
+.custom .stats {
+	background-color: #99FF66;
+	height: 12px;
+	border-right: 1px solid #BBBBBB;
+}
+.results-number {
+	border: 1px solid #CCCCCC;
+	background: #FFFFCC;
+	padding: 4px 10px;
+	
+}
+
+.blocks .survey-table td {
+	padding: 3px;
+	line-height: 16px;
+}
+.blocks .summary-table {
+	margin-left: 10px;
+}
+.blocks .summary-table td {
+	padding: 4px;
+}
+.blocks .summary-table input {
+	padding: 0;
+	margin: 0 5px 0 0;
+}
+.blocks .stats-container {
+	width: 100px;
+	border: 1px solid #BBBBBB;
+	background-color: #DFDFDF;
+	float: left;
+	margin-right: 5px;
+}
+.blocks .stats {
+	background-color: #99FF66;
+	height: 12px;
+	border-right: 1px solid #BBBBBB;
+}
+
+
+.simple .survey-table td {
+	padding: 3px;
+	line-height: 16px;
+}
+.simple .summary-table {
+	margin-left: 10px;
+}
+.simple .summary-table td {
+	padding: 4px;
+}
+.simple .summary-table input {
+	padding: 0;
+	margin: 0 5px 0 0;
+}
+.simple .stats-container {
+	width: 100px;
+	border: 1px solid #BBBBBB;
+	background-color: #DFDFDF;
+	float: left;
+	margin-right: 5px;
+}
+.simple .stats {
+	background-color: #99FF66;
+	height: 12px;
+	border-right: 1px solid #BBBBBB;
+}
+
+
+.centered .survey-table td {
+	padding: 3px;
+	line-height: 16px;
+}
+.centered .summary-table {
+	margin-left: 10px;
+}
+.centered .summary-table td {
+	padding: 4px;
+}
+.centered .summary-table input {
+	padding: 0;
+	margin: 0 5px 0 0;
+}
+.centered .stats-container {
+	width: 100px;
+	border: 1px solid #BBBBBB;
+	background-color: #DFDFDF;
+	float: left;
+	margin-right: 5px;
+}
+.centered .stats {
+	background-color: #99FF66;
+	height: 12px;
+	border-right: 1px solid #BBBBBB;
+}
+
+
+.announcement {
+	margin-top: 10px;
+}
+.announcement h4 {
+	margin: 3px 0;
+	padding: 4px 0;
+	border-bottom: 1px solid #CCCCCC;
+	border-top: 1px solid #CCCCCC;
+}
+.announcement-body {
+	color: #575757;
+}
+.campus-news-title h4 {
+	margin: 3px 0;
+	padding: 2px 0;
+	border-bottom: 1px solid #BBBBBB;
+}
+.campus-news-title div {
+	color: #888888;
+	font-style: italic;
+}
+
+.poll-others-label, .poll-others, .poll-results, .poll-others-submit  {
+	display: none;
+}

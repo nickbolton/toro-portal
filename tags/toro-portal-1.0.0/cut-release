@@ -1,0 +1,29 @@
+#!/bin/bash
+
+mvn clean
+mvn install
+mvn clean
+
+prevSnapshot=$(fgrep -- '-SNAPSHOT</version>' pom.xml | sed -e 's~^.*<version>~~' -e 's~</version>.*$~~')
+
+sed -e 's~-SNAPSHOT</version>~</version>~' blojsom/ant_pom.xml > blojsom/ant_pom.xml.tmp
+mv blojsom/ant_pom.xml.tmp blojsom/ant_pom.xml
+
+sed -e 's~-SNAPSHOT</version>~</version>~' installer/src/main/resources/pom.xml > installer/src/main/resources/pom.xml.tmp
+mv installer/src/main/resources/pom.xml.tmp installer/src/main/resources/pom.xml
+
+svn commit -m 'cutting release' blojsom/ant_pom.xml installer/src/main/resources/pom.xml
+
+mvn --batch-mode release:prepare -DpreparationGoals="clean install"
+
+mvn release:perform -DuseReleaseProfile=false
+
+nextSnapshot=$(fgrep -- '-SNAPSHOT</version>' pom.xml | sed -e 's~^.*<version>~~' -e 's~</version>.*$~~')
+
+sed -e "s~<version>$prevSnapshot</version>~<version>$nextSnapshot</version>~" blojsom/ant_pom.xml > blojsom/ant_pom.xml.tmp
+mv blojsom/ant_pom.xml.tmp blojsom/ant_pom.xml
+
+sed -e "s~<version>$prevSnapshot</version>~<version>$nextSnapshot</version>~" installer/src/main/resources/pom.xml > installer/src/main/resources/pom.xml.tmp
+mv installer/src/main/resources/pom.xml.tmp installer/src/main/resources/pom.xml
+
+svn commit -m "adding next snapshot version ($nextSnapshot) after release ($prevSnapshot)" blojsom/ant_pom.xml installer/src/main/resources/pom.xml
