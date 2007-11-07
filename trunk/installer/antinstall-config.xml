@@ -87,7 +87,6 @@
 			name="deploy-all"
 			overflow="true"
 			displayText="Deploy All">
-        <hidden property="project.version" value="@project.version@"/>
         <hidden property="pluto.version" value="@pluto.version@"/>
         <hidden property="commons-logging.version" value="@commons-logging.version@"/>
         <hidden property="servlet-api.version" value="@servlet-api.version@"/>
