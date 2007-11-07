@@ -943,7 +943,7 @@ portal.webapp.home=${portal.webapp.home}
 portal.webapp.name=${portal.webapp.name}
 portlet-api.version=${portlet-api.version}
 postgresql.version=${postgresql.version}
-project.version=${project.version}
+maven.project.version=${maven.project.version}
 reddot.content.path=${reddot.content.path}
 reddot.method=${reddot.method}
 reddot.url=${reddot.url}
@@ -1010,7 +1010,7 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="dump-properties"/>
         <antcall target="create-uportal-properties"/>
 
-        <echo>Executing toro-installer-${project.version}...</echo>
+        <echo>Executing toro-installer-${maven.project.version}...</echo>
 
         <if>
             <isset property="run.uportal.deploy"/>
@@ -1788,7 +1788,7 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="deploy-jar">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="${artifactId}"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
             <param name="todir" value="${todir}"/>
             <param name="exclusions" value="${exclusions}"/>
         </antcall>
@@ -1809,7 +1809,7 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="deploy-war">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="${artifactId}"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
             <param name="webappName" value="${webappName}"/>
             <param name="maven.repo" value="toro.repository"/>
         </antcall>
@@ -1818,16 +1818,16 @@ xercesImpl.version=${xercesImpl.version}
     <target name="deploy-war">
         <artifact:dependencies pathId="${artifactId}.war">
             <dependency groupId="${groupId}" artifactId="${artifactId}"
-                version="${project.version}" type="war"/>
+                version="${maven.project.version}" type="war"/>
             <remoteRepository refid="${maven.repo}" />
         </artifact:dependencies>
         <antcall target="deploy-filtered">
             <param name="groupId" value="${groupId}"/>
             <param name="artifactId" value="${artifactId}"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
             <param name="archive.type" value="war"/>
             <param name="dest" value="${webapp.home}/${webappName}"/>
-            <param name="tmpdir" value="${work.dir}/${artifactId}-${project.version}"/>
+            <param name="tmpdir" value="${work.dir}/${artifactId}-${maven.project.version}"/>
             <param name="webappName" value="${webappName}"/>
             <param name="remote.repository" value="toro.repository"/>
         </antcall>
@@ -1836,7 +1836,7 @@ xercesImpl.version=${xercesImpl.version}
     <target name="merge-configuration">
         <artifact:dependencies pathId="configuration.classpath">
             <dependency groupId="net.unicon.toro" artifactId="alchemist"
-                version="${project.version}" type="jar"/>
+                version="${maven.project.version}" type="jar"/>
             <dependency groupId="jaxen" artifactId="jaxen"
                 version="${jaxen.version}" type="jar"/>
             <dependency groupId="dom4j" artifactId="dom4j"
@@ -1921,7 +1921,7 @@ xercesImpl.version=${xercesImpl.version}
             <param name="exclusions" value="&lt;exclusions>&lt;exclusion>&lt;groupId>uportal&lt;/groupId>&lt;artifactId>uportal&lt;/artifactId>&lt;/exclusion>&lt;/exclusions>"/>
         </antcall>
         <artifact:dependencies filesetId="messaging-portlet.fileset">
-            <dependency groupId="net.unicon.toro" artifactId="messaging-portlet" version="${project.version}" type="war"/>
+            <dependency groupId="net.unicon.toro" artifactId="messaging-portlet" version="${maven.project.version}" type="war"/>
             <remoteRepository refid="toro.repository" />
         </artifact:dependencies>
         <unjar dest="${work.dir}/toro-portlets-common">
@@ -1937,10 +1937,10 @@ xercesImpl.version=${xercesImpl.version}
     </target> 
 
     <target name="deploy-portlet">
-        <echo>Deploying maven artifact net.unicon.toro:${artifactId}:${project.version}:war to ${webapp.home}/${webappName}</echo>
+        <echo>Deploying maven artifact net.unicon.toro:${artifactId}:${maven.project.version}:war to ${webapp.home}/${webappName}</echo>
         <artifact:dependencies pathId="deployPortlet.classpath">
-            <dependency groupId="net.unicon.toro" artifactId="${artifactId}" version="${project.version}" type="war"/>
-            <dependency groupId="net.unicon.toro" artifactId="portlets-common-lib" version="${project.version}" type="jar"/>
+            <dependency groupId="net.unicon.toro" artifactId="${artifactId}" version="${maven.project.version}" type="war"/>
+            <dependency groupId="net.unicon.toro" artifactId="portlets-common-lib" version="${maven.project.version}" type="jar"/>
             <dependency groupId="org.jasig.uportal" artifactId="uportal" version="${uportal.version}" type="jar"/>
             <dependency groupId="org.apache.pluto" artifactId="pluto" version="${pluto.version}" type="jar"/>
             <dependency groupId="commons-logging" artifactId="commons-logging" version="${commons-logging.version}" type="jar"/>
@@ -1954,11 +1954,11 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="copy-maven-artifact-to-file">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="${artifactId}"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
             <param name="archive.type" value="war"/>
             <param name="tofile" value="${work.dir}/${webappName}.war"/>
         </antcall>
-        <echo message="war: ${work.dir}/${webappName}-${project.version}.war"/>
+        <echo message="war: ${work.dir}/${webappName}-${maven.project.version}.war"/>
         <java fork="true" failonerror="true" dir="${basedir}" classname="org.jasig.portal.container.deploy.Deployer">
             <classpath refid="deployPortlet.classpath" />
             <arg value="${work.dir}"/>
@@ -1966,7 +1966,7 @@ xercesImpl.version=${xercesImpl.version}
         </java>
         <artifact:dependencies filesetId="portlets-common-rendering.filesetId">
             <dependency groupId="net.unicon.toro" artifactId="portlets-common-lib"
-                version="${project.version}" type="jar"/>
+                version="${maven.project.version}" type="jar"/>
             <remoteRepository refid="toro.repository" />
         </artifact:dependencies>
         <unjar dest="${work.dir}/${webappName}">
@@ -2237,7 +2237,7 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="run-hbm2dll">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="alchemist"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
         </antcall>
     </target>
 
@@ -2246,7 +2246,7 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="run-hbm2dll">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="demetrius"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
         </antcall>
     </target>
 
@@ -2255,7 +2255,7 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="run-hbm2dll">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="mercury"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
         </antcall>
     </target>
 
@@ -2264,7 +2264,7 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="run-hbm2dll">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="portlets-common-lib"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
         </antcall>
     </target>
     <!-- End Portlet Targets -->
@@ -2285,7 +2285,7 @@ xercesImpl.version=${xercesImpl.version}
 
     <target name="merge-uportal-configurations">
         <artifact:dependencies filesetId="merge-uportal-configurations.filesetId">
-            <dependency groupId="net.unicon.toro" artifactId="${artifactId}" version="${project.version}" type="jar"/>
+            <dependency groupId="net.unicon.toro" artifactId="${artifactId}" version="${maven.project.version}" type="jar"/>
             <remoteRepository refid="toro.repository" />
         </artifact:dependencies>
         <unjar dest="${work.dir}/${artifactId}-uportal-configurations">
@@ -2347,7 +2347,7 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="extract-artifact">
           <param name="groupId" value="net.unicon.toro"/>
           <param name="artifactId" value="${artifactId}"/>
-          <param name="version" value="${project.version}"/>
+          <param name="version" value="${maven.project.version}"/>
           <param name="target.dir" value="${work.dir}/${artifactId}-resources"/>
           <param name="archive.type" value="jar"/>
           <param name="remote.repository" value="uportal.repository"/>
@@ -2493,12 +2493,12 @@ xercesImpl.version=${xercesImpl.version}
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-common"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
         </antcall>
         <antcall target="uportal-dbloader-data">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-common"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
             <param name="tables.xml" value="/properties/db/dbloader-tables.xml"/>
         </antcall>
     </target>
@@ -3001,18 +3001,18 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="cdk"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
         </antcall>
         <antcall target="uportal-dbloader-data">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="cdk"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
             <param name="tables.xml" value="/properties/db/dbloader-tables.xml"/>
         </antcall>
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-addressbook-channel"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
         </antcall>
     </target>
 
@@ -3021,12 +3021,12 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-cms-channel"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
         </antcall>
 
         <artifact:dependencies fileSetId="cdk.filesetId">
             <dependency groupId="net.unicon.toro" artifactId="cdk"
-                        version="${project.version}" type="jar"/>
+                        version="${maven.project.version}" type="jar"/>
             <remoteRepository refid="toro.repository" />
         </artifact:dependencies>
         <unjar dest="${work.dir}/uportal-properties/properties">
@@ -3058,7 +3058,7 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
 
         <artifact:dependencies pathId="cmsGroupInitialization.classpath">
             <dependency groupId="net.unicon.toro" artifactId="cdk"
-                version="${project.version}" type="jar"/>
+                version="${maven.project.version}" type="jar"/>
             <remoteRepository refid="toro.repository" />
         </artifact:dependencies>
         <java fork="true" failonerror="true" dir="${work.dir}" classname="net.unicon.toro.installer.tools.CmsGroupInitialization">
@@ -3076,7 +3076,7 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
 
         <artifact:dependencies fileSetId="data.loader.file">
            <dependency groupId="net.unicon.toro" artifactId="toro-cms-channel"
-                       version="${project.version}" type="jar"/>
+                       version="${maven.project.version}" type="jar"/>
             <remoteRepository refid="toro.repository" />
        </artifact:dependencies>
        <unjar dest="${work.dir}">
@@ -3107,12 +3107,12 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-survey-channel"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
         </antcall>
         <antcall target="uportal-dbloader-data">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-survey-channel"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
             <param name="data.xml" value="/properties/db/dbloader-uportal-data.xml"/>
         </antcall>
     </target>
@@ -3122,18 +3122,18 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-news-channel"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
         </antcall>
         <antcall target="uportal-dbloader-data">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-news-channel"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
             <param name="data.xml" value="/properties/db/dbloader-uportal-data.xml"/>
         </antcall>
         <antcall target="uportal-dbloader-data">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-news-channel"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
             <param name="tables.xml" value="/properties/db/dbloader-tables.xml"/>
         </antcall>
     </target>
@@ -3143,18 +3143,18 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-classifieds-channel"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
         </antcall>
         <antcall target="uportal-dbloader-data">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-classifieds-channel"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
             <param name="data.xml" value="/properties/db/dbloader-uportal-data.xml"/>
         </antcall>
         <antcall target="uportal-dbloader-data">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-classifieds-channel"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
             <param name="tables.xml" value="/properties/db/dbloader-tables.xml"/>
         </antcall>
     </target>
@@ -3164,12 +3164,12 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-calendar-channel"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
         </antcall>
         <antcall target="uportal-dbloader-data">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-calendar-channel"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
             <param name="data.xml" value="/properties/db/dbloader-uportal-data.xml"/>
         </antcall>
     </target>
@@ -3179,7 +3179,7 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-notes-channel"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
         </antcall>
     </target>
 
@@ -3188,7 +3188,7 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-bookmarks-channel"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
         </antcall>
     </target>
 
@@ -3197,12 +3197,12 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-campusannouncement-channel"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
         </antcall>
         <antcall target="uportal-dbloader-tables">
             <param name="groupId" value="net.unicon.toro"/>
             <param name="artifactId" value="toro-campusannouncement-channel"/>
-            <param name="version" value="${project.version}"/>
+            <param name="version" value="${maven.project.version}"/>
             <param name="data.xml" value="/properties/db/dbloader-uportal-data.xml"/>
         </antcall>
     </target>
@@ -3323,17 +3323,17 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
     </target>
 
     <target name="publish-toro-channel">
-        <echo>Publishing channel net.unicon.toro:${artifactId}:${project.version}:jar</echo>
+        <echo>Publishing channel net.unicon.toro:${artifactId}:${maven.project.version}:jar</echo>
         <artifact:dependencies pathId="publish-toro-channel.classpath">
             <dependency groupId="net.unicon.toro" artifactId="${artifactId}"
-                version="${project.version}" type="jar"/>
+                version="${maven.project.version}" type="jar"/>
             <remoteRepository refid="toro.repository" />
         </artifact:dependencies>
         <java fork="true" failonerror="true" dir="${basedir}" classname="org.jasig.portal.tools.chanpub.ChannelPublisher">
           <classpath>
             <path refId="publish-toro-channel.classpath"/>
             <pathelement path="${work.dir}/uportal-properties"/>
-            <pathelement path="${work.dir}/${upPublishArtifactId}-${project.version}"/>
+            <pathelement path="${work.dir}/${upPublishArtifactId}-${maven.project.version}"/>
             <pathelement path="${basedir}"/>
             <path refId="uportal.classpath"/>
             <path refId="db.classpath"/>
