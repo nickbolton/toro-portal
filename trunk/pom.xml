@@ -3,7 +3,7 @@
   <groupId>net.unicon.toro</groupId>
   <artifactId>toro-portal</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.0-rc-1-SNAPSHOT</version>
+  <version>1.0.0-rc-1</version>
   <name>toro-portal</name>
   <url>http://code.google.com/p/toro/</url>
 
@@ -13,9 +13,9 @@
   </issueManagement>
 
   <scm>
-    <connection>scm:svn:https://toro-portal.googlecode.com/svn/trunk</connection>
-    <developerConnection>scm:svn:https://toro-portal.googlecode.com/svn/trunk</developerConnection>
-    <url>https://toro-portal.googlecode.com/svn/trunk</url>
+    <connection>scm:svn:https://toro-portal.googlecode.com/svn/tags/toro-portal-1.0.0-rc-1</connection>
+    <developerConnection>scm:svn:https://toro-portal.googlecode.com/svn/tags/toro-portal-1.0.0-rc-1</developerConnection>
+    <url>https://toro-portal.googlecode.com/svn/tags/toro-portal-1.0.0-rc-1</url>
   </scm>
 
    <distributionManagement> 
