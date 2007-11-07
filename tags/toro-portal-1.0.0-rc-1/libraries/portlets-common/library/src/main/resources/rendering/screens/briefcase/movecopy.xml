@@ -1,0 +1,421 @@
+<?xml version="1.0" ?>
+<!--
+  Copyright (C) 2007 Unicon, Inc.
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this distribution.  It is also available here:
+  http://www.fsf.org/licensing/licenses/gpl.html
+
+  As a special exception to the terms and conditions of version 
+  2 of the GPL, you may redistribute this Program in connection 
+  with Free/Libre and Open Source Software ("FLOSS") applications 
+  as described in the GPL FLOSS exception.  You should have received
+  a copy of the text describing the FLOSS exception along with this
+  distribution.
+-->
+<!-- 
+<state>
+   <status>
+      <error type="delete_fail_sharing">
+      </error>
+		<error type="other">
+			<problem>Something else happened.</problem>
+			<solution>To fix it, try it again later.  If it still happens, contact the Portal support.</solution>
+		</error>
+   </status>
+
+   <location>
+      <current id="FSA://net.unicon.demetrius.fac.webdav.WebdavResourceFactory/[WebDAV Root:0]/http://unifile1.unicon.net/shared_drive/Users/bszabo/public?username=zIPtuP10HvQ=&amp;password=IJoqpz4E9+mzvhhqArO+Vg==////" type="folder" isOpen="true">
+         <drive id="webdav" />
+         
+         <name>briefcaseNew</name>
+
+         <path>c:/temp/</path>
+
+         <accesstype>View</accesstype>
+
+         <accesstype>Add</accesstype>
+
+         <accesstype>Delete</accesstype>
+      </current>
+  </location>
+  <select mode="copy">
+    <targets>
+      <resource name="Better_B uilds_with_Maven2.pdf">
+        <mimetype>File</mimetype>
+      </resource>
+    </targets>
+    <destinations>
+      <drive class-closed="folderclosed" class-large="largePersonal" class-opened="folderopen" id="personal">
+        <label>Personal Folders</label>
+        <description>Your Personal Folders are where you can store your documents, notes, photos, a nd more.</description>
+      </drive>
+      <drive class-closed="sharedfolderclosed" class-large="largeShared" class-opened="sharedfolderopen" id="shared">
+        <label>Shared  Folders</label>
+        <description>Access other files that have been shared with you.</description>
+      </drive>
+      <drive class-closed="networkfolderclosed" class-large="largeNetwork" class-opened="networkfolderopen" id="webdav">
+        <label>WebDAV Unicon</label>
+        <description>The WebDAV Folders contain common folders that you and others on the Campus can access.</description>
+        <folder id="FSA://net.unicon.demetrius.fac.webdav.WebdavResourceFactory/[WebDAV Root:0]/http://unifile1.unicon.net/shared_drive/Users/bszabo/public?username=zIPtuP10HvQ=&amp;password=IJoqpz4E9+mzvhhqArO+Vg==////" name="WebDAV Root" shared="no">
+          <folder id="FSA://net.unicon.demetrius.fac.webdav.WebdavResourceFactory/[WebDAV Root:0]/http://unifile1.unicon.net/shared_drive/Users/bszabo/public?username =zIPtuP10HvQ=&amp;password=IJoqpz4E9+mzvhhqArO+Vg==/////test1" name="test1" shared="no"></folder>
+          <folder id="FSA://net.unicon.demetrius.fac.webdav.WebdavResourceFactory/[WebDAV Root:0]/http://unifile1.unicon.net/shared_drive/Users/bszabo/public?username=zIPtuP10HvQ=&amp;password=IJoqpz4E9+mzvhhqArO+Vg==//// /test2" name="test2" shared="no"></folder>
+        </folder>
+      </drive>
+    </destinations>
+  </select>
+</state>
+-->
+<screen handle="movecopy">
+   <layout>
+   	  <layout-context class="BriefcasePortlet BriefcasePortlet_movecopy" />
+      	<!-- DEBUG to show state XML -->
+      	<!--<form>
+      	<textarea>
+      		<call-template handle="showStateXMLElement" select="/state" ></call-template>
+      	</textarea>
+      	</form> -->
+        <section type="header" cols="1">
+          <section type="title">
+             <if test="{/state/select/@mode}" against="copy" condition="equals">
+                <true>
+                   <h2>Copy Items to a Folder</h2>
+                </true>
+    
+                <false>
+                   <h2>Move Items to a Different Folder</h2>
+                </false>
+             </if>
+          </section>
+        </section>
+
+<!-- ERROR MESSAGE -->
+        <section type="content">
+           <section type="main" cols="1" class="padding">
+          <if test="{count(/state/status/error)}" against="0" condition="gt">
+             <true>
+                <call-template handle="errors" select="/state/status/error">
+                </call-template>
+             </true>
+          </if>
+          
+          <choice-collection handle="folderInfoForm">
+            <!--<call-template handle="pageToolbar" select="." /> -->
+            
+            <section type="content2">
+                <section type="secondary" class="secondary2 padding">
+                   <section type="sidebox">
+                      <h4>Items You Have Selected:</h4>
+    
+                      <ul class="no-bullet">
+                         <call-template handle="target" select="//state/select/targets/resource" />
+                      </ul>
+                   </section>
+                </section>
+    
+                <section type="main" cols="2" class="main-content padding">
+                   <if test="{/state/select/@mode}" against="copy" condition="equals">
+                      <true>
+                         <h4 class="content-title">Choose a Folder to Copy Items to</h4>
+                      </true>
+    
+                      <false>
+                         <h4 class="content-title">Choose a Folder to Move Items to</h4>
+                      </false>
+                   </if>
+    
+                   <table even-row-class="nohoverhighlight" odd-row-class="nohoverhighlight" selected-row-class="row-selected" selected-row-id="{/state/location/current/@id}" border="0" cellspacing="0" cellpadding="0" class="highlightAndSelectOnClick">
+                   <col>
+	                   <select-one type="radio">
+	                      <choice handle="chooseDestination" min-selections="0" max-selections="1">
+	                          <call-template handle="driveTreeListSelect" select="/state/select/destinations" />
+	                      </choice>
+		               </select-one>
+                   </col>
+                   <col>
+                   	   <navtree opened-class="folderopen" closed-class="folderclosed" current-id="{/state/location/current/@id}">
+	                   <!--<select-tree opened-class="folderopen" closed-class="folderclosed" current-id="{/state/location/current/@id}"> -->
+		                   <select-one type="link">
+		                      <choice handle="chooseNavigate" min-selections="0" max-selections="1">
+		                          <call-template handle="drive" select="/state/select/destinations/drive" />
+		                      </choice>
+		                   </select-one>
+	                   <!--</select-tree> -->
+	                   </navtree>
+                   </col>
+                   </table>
+                   <attach-behaviors>
+                   		<behavior ref-css="highlightAndSelectOnClick" type="highlightAndSelectOnClick" />
+                   		<behavior ref-css="highlightAndSelectOnClick" type="highlightOnRollover" />
+                   		<!--<behavior ref-css="highlightAndSelectOnClick" type="scrollToSelected" /> -->
+                   </attach-behaviors>
+                </section>
+             </section>  
+    
+                <call-template handle="pageToolbar" select="." />
+             </choice-collection>
+             
+           </section>
+        </section>
+   </layout>
+
+   <template handle="pageToolbar">
+      <toolbar>
+         <if test="{/state/select/@mode}" against="copy" condition="equals">
+            <true>
+               <action handle="briefcaseSubmitCopy" impl="net.unicon.academus.apps.briefcase.engine.CopyResourcesAction" inpt="folderInfoForm" class="form-button-emphasis">
+                  <label>Confirm Copy</label>
+
+                  <description>To complete the Copy of the selected Items, into the desired location.</description>
+               </action>
+            </true>
+
+            <false>
+               <action handle="briefcaseSubmitMove" impl="net.unicon.academus.apps.briefcase.engine.MoveResourcesAction" inpt="folderInfoForm" class="form-button-emphasis">
+                  <label>Confirm Move</label>
+
+                  <description>To complete the Move of the selected Items, into the desired location</description>
+               </action>
+            </false>
+         </if>
+
+         <action handle="briefcaseCancel" impl="net.unicon.academus.apps.briefcase.engine.ShowFolderAction">
+            <label>Cancel</label>
+
+            <description>To cancel and return to the previous view.</description>
+         </action>
+      </toolbar>
+   </template>
+
+   <template handle="target">
+      <if test="{mimetype}" against="Folder" condition="equals" >
+	      <true>
+		      <li class="li-image folder-icon">
+		         <call-template handle="targetName" select="." />
+		      </li>
+	      </true>
+	      <false>
+		      <li class="li-image file-icon">
+		         <call-template handle="targetName" select="." />
+		      </li>
+	      </false>
+      </if>
+   </template>
+   
+   <template handle="targetName" >
+      <if test="{count(@name)}" against="0" condition="gt" >
+	      <true><value-of select="@name" /></true>
+	      <false><value-of select="." /></false>
+      </if>
+   </template>   
+
+
+<!-- TREE NAVIGATE -->
+
+   <template handle="drive">
+      <!--<li> -->
+		 <td>
+			<rank level="0" children="{count(folder)}">
+				<call-template handle="driveSelected" select="self::node()[@id=/state/location/current/@id]" />
+				<call-template handle="driveNotSelected" select="self::node()[not(@id=/state/location/current/@id)]" />
+			</rank>
+		 </td>
+         <call-template handle="folderList" select="self::node()[count(folder) &gt; 0]" />
+      <!--</li> -->
+   </template>
+
+   <template handle="folderList">
+         <!--<ul> -->
+            <call-template handle="folderTree" select="folder" />
+         <!--</ul> -->
+   </template>
+   
+   <template handle="driveSelected">
+	     <link class="{@class-opened}" opened-class="{@class-opened}" closed-class="{@class-closed}">
+	         <call-template handle="driveAction" select="." />
+	     </link>
+   </template>
+
+   <template handle="driveNotSelected">
+	     <link opened-class="{@class-opened}" closed-class="{@class-closed}">
+	        <call-template handle="driveAction" select="." />
+	     </link>
+   </template>
+
+   <template handle="folderTree">
+      <!--<li> -->
+        <td>
+			<rank level="{count(ancestor::node()[name(.)='folder' or name(.)='drive'])}" children="{count(folder)}">
+				<call-template handle="folderTreeShared" select="self::node()[@shared='yes']" />
+				<call-template handle="folderTreeNormal" select="self::node()[@shared!='yes' or not(@shared)]" />
+			</rank>
+        </td>
+        <call-template handle="folderTreeList" select="self::node()[count(folder) &gt; 0]" />
+      <!--</li> -->
+   </template>
+
+   <template handle="folderTreeList">
+         <!--<ul> -->
+             <call-template handle="folderTree" select="folder" />
+         <!--</ul> -->
+   </template>
+   
+   <template handle="folderTreeNormal">
+	    <call-template handle="folderTreeNormalSelectedClosed" select="self::node()[@id=/state/location/current/@id and /state/location/current/@isOpen = 'false']" />
+	    <call-template handle="folderTreeNormalSelectedOpened" select="self::node()[@id=/state/location/current/@id and not(/state/location/current/@isOpen = 'false')]" />
+	    <call-template handle="folderTreeNormalNotSelected" select="self::node()[not(@id=/state/location/current/@id)]" />
+   </template>
+
+   <template handle="folderTreeNormalSelectedOpened">
+	     <link id="{@id}" class="folderopen">
+	        <call-template handle="navigateFolderAction" select="." />
+	     </link>
+   </template>
+
+   <template handle="folderTreeNormalSelectedClosed">
+	     <link id="{@id}" class="folderclosed">
+	        <call-template handle="navigateFolderAction" select="." />
+	     </link>
+   </template>
+
+   <template handle="folderTreeNormalNotSelected">
+	     <link id="{@id}">
+	        <call-template handle="navigateFolderAction" select="." />
+	     </link>
+   </template>
+
+   <template handle="folderTreeShared">
+	    <call-template handle="folderTreeSharedSelected" select="self::node()[@id=/state/location/current/@id]" />
+	    <call-template handle="folderTreeSharedNotSelected" select="self::node()[not(@id=/state/location/current/@id)]" />
+   </template>
+
+   <template handle="folderTreeSharedSelected">
+	     <link id="{@id}" class="sharedfolderopen">
+	        <call-template handle="navigateFolderAction" select="." />
+	     </link>
+   </template>
+
+   <template handle="folderTreeSharedNotSelected">
+	     <link opened-class="sharedfolderopen" closed-class="sharedfolderclosed" id="{@id}">
+	        <call-template handle="navigateFolderAction" select="." />
+	     </link>
+   </template>
+
+   <template handle="navigateFolderAction" >
+        <action handle="navigateToFolder" impl="net.unicon.academus.apps.briefcase.engine.NavigateToDestinationAction" inpt="folderInfoForm">
+           <label><value-of select="@name" /></label>
+           <description >To view the subfolders of <value-of select="@name" />.</description>
+
+           <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+           </option>
+        </action>
+   </template>
+
+   <template handle="driveAction">
+	    <action handle="navigateToDrive" impl="net.unicon.academus.apps.briefcase.engine.NavigateToDestinationAction" inpt="folderInfoForm">
+	       <label><value-of select="label" ></value-of></label>
+	
+	       <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+	       </option>
+	       <description>To view the contents of your <value-of select="label" ></value-of>.</description>
+	    </action>
+   </template>
+
+
+<!-- TREE SELECT -->
+   <template handle="driveTreeListSelect">
+        <call-template handle="driveTreeSelect" select="drive" />
+   </template>
+
+   <template handle="driveTreeSelect">
+		<td style="width:20px;"><input type="radio" disabled="disabled" class="disabled" /></td>
+			
+		<call-template handle="folderTreeListSelect" select="self::node()[count(folder) &gt; 0]" />
+   </template>
+
+   <template handle="folderTreeListSelect">
+	    <call-template handle="folderTreeSelect" select="folder" />
+   </template>
+
+   <template handle="folderTreeSelect">
+		<td style="width:20px;">
+			<call-template handle="selectedRow" select="self::node()[@id = /state/location/current/@id]" ></call-template>
+			<option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+			</option>
+		</td>
+			
+		<call-template handle="folderTreeListSelect" select="self::node()[count(folder) &gt; 0]" />
+   </template>
+   
+   <!-- Used to trigger selected-row-class on table -->
+   <template handle="selectedRow" ><select-row id="{@id}" /></template>
+   
+   <template handle="errors">
+      <section type="error">
+         <if test="{@type}" against="other" condition="equals">
+            <true>
+               <section type="portlet-msg-error problem">
+                  <h4 class="inline">PROBLEM:</h4>
+
+                  <p><value-of select="problem" /></p>
+               </section>
+
+               <section type="portlet-msg-info solution">
+                  <h4 class="inline">SOLUTION:</h4>
+
+                  <p><value-of select="solution" /></p>
+               </section>
+            </true>
+         </if>
+         <!-- If not any of the above types,  then give generic error message (SHOULD NEVER BE SEEN) -->
+         <if test="{boolean(@type!='other')}" against="true" condition="equals">
+            <true>
+               <section type="portlet-msg-error problem">
+                  <h4 class="inline">PROBLEM:</h4>
+
+                  <p>The channel has experienced an unclassified problem.</p>
+               </section>
+
+               <section type="portlet-msg-info solution">
+                  <h4 class="inline">SOLUTION:</h4>
+
+                  <p>Please notify the Portal Administrator of the problem.</p>
+               </section>
+            </true>
+         </if>
+      </section>
+   </template>
+
+   <!-- DEBUG Templates to show STATE XML -->
+   <template handle="showStateXMLElement" >
+		<element name="{name(.)}">
+			<call-template handle="showStateXMLAttribute" select="@*" ></call-template>
+			<call-template handle="showStateXMLElement" select="*" ></call-template>
+		</element>
+	
+   </template>
+
+   <template handle="showStateXMLAttribute" >
+		<attribute name="{name(.)}" value="{.}" />
+   </template>
+
+    <!--<decisions>
+      <decision-collection choice-collection="folderInfoForm">
+         <decision choice="chooseDestination">
+            <selection option="c:/temp/briefcaseNew/factory2"></selection>
+         </decision>
+      </decision-collection>
+   </decisions> -->
+
+</screen>
+
