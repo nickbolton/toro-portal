@@ -1851,7 +1851,8 @@ xercesImpl.version=${xercesImpl.version}
                 <pathelement path="${work.dir}/uportal-properties"/>
                 <pathelement path="${basedir}"/>
             </classpath>
-            <arg line="${configfile} ${targetdir}"/>    
+            <arg value="${configfile}"/>
+            <arg value="${targetdir}"/>    
         </java>
     </target>
 
