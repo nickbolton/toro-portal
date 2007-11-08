@@ -183,7 +183,7 @@ public class MergeConfiguration {
         Document doc = reader.read(new URL("file:"+path.getAbsolutePath()));
         Element source = doc.getRootElement();
         
-        saveXml(doc, new File("/tmp/before."+path.getName()));
+        //saveXml(doc, new File("/tmp/before."+path.getName()));
         
         String xmlEncoding = doc.getXMLEncoding();
         
@@ -199,7 +199,7 @@ public class MergeConfiguration {
         //processAddToNodes(el, source);
         processNodeAddOrReplace(el, source, path);
         
-        saveXml(doc, new File("/tmp/after."+path.getName()));
+        //saveXml(doc, new File("/tmp/after."+path.getName()));
         saveXml(doc, path);
     }
     
@@ -226,7 +226,7 @@ public class MergeConfiguration {
 
         removeOldNodes(source);
         
-        saveXml(source, new File("/tmp/removals."+path.getName()));
+        //saveXml(source, new File("/tmp/removals."+path.getName()));
         
         Iterator itr = list.iterator();
         while (itr.hasNext()) {
