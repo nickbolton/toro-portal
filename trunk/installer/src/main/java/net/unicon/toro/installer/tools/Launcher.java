@@ -33,11 +33,18 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.tp23.antinstaller.InstallException;
 import org.tp23.antinstaller.runtime.ExecInstall;
 import org.tp23.antinstaller.runtime.exe.FilterChain;
 import org.tp23.antinstaller.runtime.exe.FilterFactory;
 import org.tp23.antinstaller.selfextract.SelfExtractor;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class Launcher {
 
@@ -154,8 +161,37 @@ public class Launcher {
             extractDir = new File(tempDir, "antinstall" + (idx++));
         }
         
-        return previousInstall;
+        try {
+            File pom = new File(previousInstall, "pom.xml");
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder parser = builderFactory.newDocumentBuilder();
+            Document doc = parser.parse(pom);
+            Element root = doc.getDocumentElement();
+            NodeList nl = root.getElementsByTagName("version");
+            
+            if (nl.getLength() > 0) {
+                String version = getElementText((Element)nl.item(0));
+                if (System.getProperty("java.class.path").indexOf("toro-installer-"+version+".jar") > 0) {
+                    return previousInstall;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
+    
+    private static String getElementText(Element e) {
+        String val = "";
+        for (Node n = e.getFirstChild(); n != null; n = n.getNextSibling()) {
+          if (n.getNodeType() == Node.TEXT_NODE) {
+            val = n.getNodeValue();
+            break;
+          }
+        }
+        return val;
+      }
 
     private static String parseInstallerJar() {
         String classpathSep = System.getProperty("path.separator");
