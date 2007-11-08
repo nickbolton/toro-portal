@@ -1,0 +1,129 @@
+#set($mediaPath = "media/net/unicon")
+#* 
+ These help properties should match the same variables used in the institution_vars.xsl
+ for consistency.
+*#
+#set($helpUrlPrefix = "help_frameset.jsp?helpUrl=html/help/academus/")
+#set($helpTargetName = "HelpWindow")
+#set($helpWindowProperties = "location=yes,menubar=yes,scrollbars=yes,status=yes,toolbar=yes,resizable=yes,location=no,height=600,width=800")
+#*
+ Set default baseHelpUrl value for Help (in the event no matching helpHandle is found)
+ Then go through a large if-elseif construct to map the baseHelpUrl to the correct
+ help file depending on the helpHandle.
+*#
+#set($baseHelpUrl = "help_Introduction_to_Groupware_Administration_Channels.html#213")
+#if($helpHandle=="NavigationChannel")
+    #set($baseHelpUrl = "help_211.html")
+#elseif($helpHandle=="SubscriptionChannel")
+    #set($baseHelpUrl = "help_Offering_Subscription_Channel.html")
+#elseif($helpHandle=="AnnouncementProducer")
+    #set($baseHelpUrl = "help_Groupware_Announcements_Channel.html")
+#elseif($helpHandle=="ClassFolderChannel")
+    #set($baseHelpUrl = "help_Folders_Channel.html")
+#elseif($helpHandle=="CurriculumUsabilityChannel")
+    #set($baseHelpUrl = "help_Curriculum_Content_Channel.html")
+#elseif($helpHandle=="GradebookChannel")
+    #set($baseHelpUrl = "help_Gradebook_Channel.html")
+#elseif($helpHandle=="CCalendarUnicon")
+    #set($baseHelpUrl = "help_Groupware_Calendar_Channel.html")
+#elseif($helpHandle=="RosterChannel")
+    #set($baseHelpUrl = "help_Roster_Channel.html")
+#elseif($helpHandle=="IRCChannel")
+    #set($baseHelpUrl = "help_Groupware_Chat_Channel.html")
+#elseif($helpHandle=="CForumsUnicon")
+    #set($baseHelpUrl = "help_Groupware_Forums_Channel.html")
+#elseif($helpHandle=="NotepadChannel")
+    #set($baseHelpUrl = "help_Notepad_Channel.html")
+#elseif($helpHandle=="UserAdminProducer")
+    #set($baseHelpUrl = "help_Groupware_User_Administration.html")
+#elseif($helpHandle=="TopicAdminChannel")
+    #set($baseHelpUrl = "help_Topic_Administration_Channel.html")
+#elseif($helpHandle=="PermissionsChannel")
+    #set($baseHelpUrl = "help_Role_Administration_Channel.html")
+#elseif($helpHandle=="OfferingAdminChannel")
+    #set($baseHelpUrl = "help_Offering_Administration_Channel.html")
+#elseif($helpHandle=="ImportChannel")
+    #set($baseHelpUrl = "help_Import_Channel.html")
+#end
+#*
+ Need to add support for a nextSubId and nextChannelName.  These are for ADA improvements.
+*#
+#if($isBlank=="false")
+    #if($subId==$nextSubId)
+    	<a class="hide" name="${subId}" href="#pageTop">Skip ${title} Channel and go to top of page"</a>
+    #else
+    	<a class="hide" name="${subId}" href="#${nextSubId}">Skip ${title} Channel and go to ${nextChannelTitle} Channel</a>
+    #end
+#end
+#if($minimized=="true")
+	<div class="portlet-container-minimized">
+#elseif($focused=="true")
+    #* Rewrite Focused Return Home and Help links to function like channel outside of Superchannel*#
+    <script type="text/javascript" language="JavaScript">
+        var helplink = document.getElementById("pnav-help-link");
+        if(helplink.href)
+        {
+            helplink.href = "${helpUrlPrefix}${baseHelpUrl}";
+        }
+        var returnLink = document.getElementById("pnav-home-link");
+        if(returnLink.href)
+        {
+            returnLink.href = "${baseActionURL}?uP_root=root";
+        }
+    </script>
+    
+    <div class="portlet-focused-container"><h2 class="portlet-focused-title">${title}</h2>	
+#else
+	<div class="portlet-container">
+#end
+
+#if($focused!="true")
+        <table cellpadding="0" cellspacing="0" border="0" class="portlet-container-header">
+            <tr>
+                <td class="portlet-container-header-shader">
+                    #if($focused=="true")
+                        &#160;
+                    #elseif($minimized=="true")
+            		    <a class="maximize flyout-menu-option parent-menu_subnavcontainer${subId}" title="Maximize" href="${baseActionURL}?uP_tcattr=minimized&amp;minimized_channelId=${subId}&amp;minimized_${subId}_value=false"><span>Maximize</span></a>
+            		#else
+                        <a class="minimize flyout-menu-option parent-menu_subnavcontainer${subId}" title="Minimize" href="${baseActionURL}?uP_tcattr=minimized&amp;minimized_channelId=${subId}&amp;minimized_${subId}_value=true"><span>Minimize</span></a>
+            		#end
+                </td>
+                <td class="portlet-container-header-title">
+                    <!-- Clicking the portlet title will focus the portlet. -->
+                    #if($focused=="true")
+                    <h2 class="portlet-container-title">
+                            <a href="${baseActionURL}?uP_root=root">${title}</a>
+            		</h2>
+            		#else
+                        <h2 class="portlet-container-title">
+                            <a href="${baseActionURL}?uP_root=me&amp;focusedChannel=${subId}">${title}</a>
+                        </h2>
+            		#end
+                </td>
+                <td class="portlet-container-header-options">
+                    <div class="portlet-options-container">
+                        <table class="portlet-options" cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                                <td><a class="help" title="Help" href="${helpUrlPrefix}${baseHelpUrl}" target="${helpTargetName}" onclick="window.open('','${helpTargetName}','${helpWindowProperties}')"><span>Help</span></a>
+                                </td>
+                                <td><a class="focus" title="Focus" href="${baseActionURL}?uP_root=me&amp;focusedChannel=${subId}"><span>Focus</span></a>
+                                </td>
+                                <td><a class="detach" title="Detach" href="javascript:openBrWindow('${baseActionURL}?uP_root=me&amp;focusedChannel=${subId}','detachedChannel','toolbar=yes,location=yes,status=yes,menubar=yes,scrollbars=yes,resizable=yes,width=640,height=480')"><span>Detach</span></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+#end
+    
+	<div class="portlet-container-content" id="HTMLBody_${subId}">
+        <!-- Comment to Fix Serializer Bug? -->
+        ${CHANNEL}
+	</div>
+	<div class="portlet-container-footer">
+	</div>
+</div>
+<hr class="hide" />

@@ -1,0 +1,61 @@
+<!--
+  Copyright (C) 2007 Unicon, Inc.
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this distribution.  It is also available here:
+  http://www.fsf.org/licensing/licenses/gpl.html
+
+  As a special exception to the terms and conditions of version 
+  2 of the GPL, you may redistribute this Program in connection 
+  with Free/Libre and Open Source Software ("FLOSS") applications 
+  as described in the GPL FLOSS exception.  You should have received
+  a copy of the text describing the FLOSS exception along with this
+  distribution.
+-->
+<encryption-services>
+
+    <!--
+       The <encryption-service> element defines an instance of the encryption
+       service with a given <name> and <key>. The encryption can be made into
+       a no-op by setting the attribute 'encrypt' to "false".
+      -->
+    <encryption-instance encrypt="true">
+        <!--
+            The name of the encryption instance. This is defined by the
+            application utilizing the service.
+           -->
+        <name>monkey</name>
+
+        <!--
+            <key> must contain an 8 character string that will act as the key
+            for the encryption. A longer string can be given, but only the
+            first 8 characters will be used.
+           -->
+        <key>cafebabe</key>
+    </encryption-instance>
+
+    <encryption-instance encrypt="true">
+        <!--
+            The name of the encryption instance. This is defined by the
+            application utilizing the service.
+           -->
+        <name>cromagnum</name>
+        <!--
+            <key> must contain an 8 character string that will act as the key
+            for the encryption. A longer string can be given, but only the
+            first 8 characters will be used.
+           -->
+        <key>bigbones</key>
+    </encryption-instance>
+    
+</encryption-services>

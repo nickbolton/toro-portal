@@ -1,0 +1,35 @@
+﻿
+
+#sidenavcontainer {
+margin: 2px 0px 0px 0px;
+padding-top: 13px;
+background: #d6e3eb url("../images/navigation/casSidenav_top.gif") no-repeat top left;
+}
+
+#sidenav {
+margin: 0px;
+padding: 0px;
+padding-bottom: 13px;
+background: url("../images/navigation/casSidenav_bottom.gif") no-repeat bottom left;
+list-style: none;
+}
+
+#sidenav li {
+}
+
+.sidenav-link:link, .sidenav-link:visited {
+display: block;
+margin-bottom: 1px;
+padding: 2px 10px 2px 16px;
+background: #d6e3eb url("../images/navigation/sidenav_arrow.gif") no-repeat;
+background-position: 3px 2px;
+color: #3f4129;
+font-size: 8pt;
+text-decoration: none;
+}
+
+.sidenav-link:hover {
+background-color: #a9c2d1;
+color: #333;
+}
+

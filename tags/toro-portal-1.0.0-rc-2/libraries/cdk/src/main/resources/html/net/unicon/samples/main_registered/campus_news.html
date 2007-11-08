@@ -1,0 +1,40 @@
+<HTML>
+<HEAD>
+<TITLE>uPortal 2.0.1</TITLE>
+<script language="javascript">
+
+        function imagePath(imageName) {
+			var imagePath=parent.imagePathTop;
+            image = '../../../../../'+imagePath + imageName;
+			imageFull = '<IMG src="' + image + '"align="left" border="0">';
+            document.write(imageFull);
+			}
+
+		var skinPath='../../../../../'+parent.skinPathTop;
+		var skinFull= '<link type="text/css" rel="stylesheet" href="'+skinPath+'">';			
+		//alert(skinFull);
+		document.write(skinFull);
+			
+		 
+	</script>
+</HEAD>
+<BODY class="uportal-background-content">
+
+   	<table width "100%" cellpadding="0" cellspacing="0" border="0">
+   		<tr valign="top">
+			<td><span class="uportal-channel-subtitle">News and Happenings on <em>Your</em> Campus</span><br/>
+			<span class="uportal-text">
+			<ul type="square">
+				<li><a href="http://www.unicon.net">Dr. Klentan awarded Regents Merit Award</a></li>
+				<li><a href="http://www.unicon.net">Summertime campus construction on schedule for 2004</a></li>
+				<li><a href="http://www.unicon.net">Campus Youth group aids summer camp</a></li>
+				<li><a href="http://www.unicon.net">Sign up for walk to raise funds for Cancer Research</a></li>
+				</ul>
+				<em><a href="http://www.unicon.net">more news about your campus</a></em>
+			</span>
+   			</td>
+   		</tr>
+   	</table>
+
+</BODY>
+</HTML>
