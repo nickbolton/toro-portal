@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema>
+<tables>
+    <table>
+      <name>CLASSIFIED_ICONS</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>ICON_ID</name>
+          <type>VARCHAR</type>
+          <param>48</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>ICON_NAME</name>
+          <type>VARCHAR</type>
+          <param>60</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>ICON_MIME_TYPE</name>
+          <type>VARCHAR</type>
+          <param>80</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>CLASSIFIED_ICONS_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ICON_ID</column>
+          </columns>
+        </index>
+ 
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>CLASSIFIED_ICONS_ICON_ID_NN</name>
+          <columns>
+            <column>ICON_ID</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>CLASSIFIED_ICONS_PKEY</name>
+          <columns>
+            <column>ICON_ID</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>CLASSIFIED_ID</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>ID_NAME</name>
+          <type>VARCHAR</type>
+          <param>50</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>ID_VALUE</name>
+          <type>VARCHAR</type>
+          <param>50</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>CLASSIFIED_ID_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ID_NAME</column>
+          </columns>
+        </index>
+    
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>CLASSIFIED_ID_ID_NAME_NN</name>
+          <columns>
+            <column>ID_NAME</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>CLASSIFIED_ID_PKEY</name>
+          <columns>
+            <column>ID_NAME</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>CLASSIFIED_ITEM</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>ITEM_ID</name>
+          <type>VARCHAR</type>
+          <param>48</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>TOPIC_ID</name>
+          <type>VARCHAR</type>
+          <param>48</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>AUTHOR_ID</name>
+          <type>VARCHAR</type>
+          <param>16</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>CONTENT</name>
+          <type>VARCHAR</type>
+          <param>2500</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>EMAIL</name>
+          <type>VARCHAR</type>
+          <param>70</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>PHONE</name>
+          <type>VARCHAR</type>
+          <param>20</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>COST</name>
+          <type>VARCHAR</type>
+          <param>15</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>MESSAGE</name>
+          <type>VARCHAR</type>
+          <param>200</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>CREATE_DATE</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>EXPIRE_DATE</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>APPROVED</name>
+          <type>CHAR</type>
+          <param>1</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>APPROVED_BY</name>
+          <type>VARCHAR</type>
+          <param>16</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>APPROVED_DATE</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>CONTACT_NAME</name>
+          <type>VARCHAR</type>
+          <param>80</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>IMAGE</name>
+          <type>VARCHAR</type>
+          <param>80</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>IMAGE_MIME_TYPE</name>
+          <type>VARCHAR</type>
+          <param>50</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+      <indexes>
+        <index>
+          <name>CLASSIFIED_ITEM_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ITEM_ID</column>
+          </columns>
+        </index>
+
+        <index>
+          <name>CLASSIFIED_ITEM_TID_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>TOPIC_ID</column>
+          </columns>
+        </index>
+
+        <index>
+          <name>CLASSIFIED_ITEM_COMP_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>AUTHOR_ID</column>
+            <column>MESSAGE</column>
+          </columns>
+        </index>
+ 
+        <index>
+          <name>CLASSIFIED_ITEM_PHONE_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>PHONE</column>
+          </columns>
+        </index>
+  
+        <index>
+          <name>CLASSIFIED_ITEM_CD_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>CREATE_DATE</column>
+          </columns>
+        </index>
+   
+        <index>
+          <name>CLASSIFIED_ITEM_ED_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>EXPIRE_DATE</column>
+          </columns>
+        </index>
+     
+      </indexes>
+      <constraints>
+        <not-null>
+          <name>CLASSIFIED_ITEM_ITEM_ID_NN</name>
+          <columns>
+            <column>ITEM_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>CLASSIFIED_ITEM_TOPIC_ID_NN</name>
+          <columns>
+            <column>TOPIC_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>CLASSIFIED_ITEM_AUTHOR_ID_NN</name>
+          <columns>
+            <column>AUTHOR_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>CLASSIFIED_ITEM_CONTENT_NN</name>
+          <columns>
+            <column>CONTENT</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>CLASSIFIED_ITEM_CREATE_DATE_NN</name>
+          <columns>
+            <column>CREATE_DATE</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>CLASSIFIED_ITEM_EXPIRE_DATE_NN</name>
+          <columns>
+            <column>EXPIRE_DATE</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>CLASSIFIED_ITEM_PKEY</name>
+          <columns>
+            <column>ITEM_ID</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>CLASSIFIED_TOPIC_APPROVER</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>TOPIC_ID</name>
+          <type>VARCHAR</type>
+          <param>48</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>GROUP_ID</name>
+          <type>VARCHAR</type>
+          <param>48</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>OWNER_ID</name>
+          <type>VARCHAR</type>
+          <param>16</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>GROUP_ENTITY_TYPE</name>
+          <type>VARCHAR</type>
+          <param>16</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>CLASSIFIED_TOPIC_APPROVER_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>TOPIC_ID</column>
+            <column>GROUP_ID</column>
+            <column>GROUP_ENTITY_TYPE</column>
+          </columns>
+        </index>
+
+        <index>
+	  <name>CTA_GID_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>GROUP_ID</column>
+          </columns>
+        </index>
+
+        <index>
+	  <name>CTA_GET_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>GROUP_ENTITY_TYPE</column>
+          </columns>
+        </index>
+     
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>CTA_TOPIC_ID_NN</name>
+          <columns>
+            <column>TOPIC_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>CTA_GROUP_ID_NN</name>
+          <columns>
+            <column>GROUP_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>CTA_GROUP_ENTITY_TYPE_NN</name>
+          <columns>
+            <column>GROUP_ENTITY_TYPE</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>CLASSIFIED_TOPIC_APPROVER_PKEY</name>
+          <columns>
+            <column>TOPIC_ID</column>
+            <column>GROUP_ID</column>
+            <column>GROUP_ENTITY_TYPE</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>CLASSIFIED_TOPIC</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>TOPIC_ID</name>
+          <type>VARCHAR</type>
+          <param>48</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>NAME</name>
+          <type>VARCHAR</type>
+          <param>25</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DESCRIPTION</name>
+          <type>VARCHAR</type>
+          <param>150</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>CREATE_DATE</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>IMAGE</name>
+          <type>VARCHAR</type>
+          <param>80</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>IMAGE_MIME_TYPE</name>
+          <type>VARCHAR</type>
+          <param>50</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>CLASSIFIED_TOPIC_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>TOPIC_ID</column>
+          </columns>
+        </index>
+
+        <index>
+          <name>CLASSIFIED_TOPIC_NAME_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>NAME</column>
+          </columns>
+        </index>
+   
+        <index>
+          <name>CLASSIFIED_TOPIC_CD_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>CREATE_DATE</column>
+          </columns>
+        </index>
+ 
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>CLASSIFIED_TOPIC_TOPIC_ID_NN</name>
+          <columns>
+            <column>TOPIC_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>CLASSIFIED_TOPIC_NAME_NN</name>
+          <columns>
+            <column>NAME</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>CLASSIFIED_TOPIC_CD_NN</name>
+          <columns>
+            <column>CREATE_DATE</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>CLASSIFIED_TOPIC_PKEY</name>
+          <columns>
+            <column>TOPIC_ID</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+</tables>
+</schema>

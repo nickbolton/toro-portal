@@ -1,0 +1,48 @@
+
+/* Needed to override the .portlet styles that may filter down */
+.MessagingPortlet, 
+.BriefcasePortlet, 
+.ContentPortlet, 
+.GatewayPortlet, 
+.SelectorServant, 
+.PermissionsPortlet {border:none; margin: 0px; padding: 0px;}
+
+.BriefcasePortlet .portlet-section-header, 
+.MessagingPortlet .portlet-section-header, 
+.SelectorServant .portlet-section-header, 
+.PermissionsPortlet .portlet-section-header {font-weight: bold; color: #FFF; background: #477BAD;}
+
+.MessagingPortlet .portlet-menu-item-selected, 
+.SelectorServant .portlet-menu-item-selected, 
+.PermissionsPortlet .portlet-menu-item-selected  {
+	background-color: #FFF;
+    border-top: 1px solid #7BADDD;
+    border-left: 1px solid #7BADDD;
+    border-right: 1px solid #7BADDD;
+    border-bottom: 1px solid #FFF;
+	color: #000;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.MessagingPortlet .portlet-menu-item,  
+.SelectorServant .portlet-menu-item, 
+.PermissionsPortlet .portlet-menu-item {
+	background-color: #477BAD;
+    border: 1px solid #7BADDD;
+    font-weight: bold;
+    color: #FFF;
+}
+
+.MessagingPortlet .tabs, 
+.SelectorServant .tabs, 
+.PermissionsPortlet tabs {padding-bottom: 0px;}
+
+.th-button-name, .th-button-subject {width:auto;}
+
+.BriefcasePortlet .form-button-emphasis, 
+.SelectorServant .form-button-emphasis, 
+.PermissionsPortlet .form-button-emphasis, 
+.GatewayPortlet .form-button-emphasis, 
+.MessagingPortlet .form-button-emphasis {color: #646464;}
+
