@@ -832,6 +832,16 @@
             defaultValue="@jdbc.poolsize.blojsom@"
             displayText="Blojsom jdbc poolsize"
             regex="^[0-9]+$"/>
+
+        <!-- conditional here so they will be processed after the page is processed in runtime -->
+        <conditional ifProperty="(true=true)">
+            <hidden property="portal.webapp.home" value="${tomcat.home}/webapps/${portal.webapp.name}"/>
+            <hidden property="server.base.url" value="${portal.server.http.protocol}://${portal.server.hostname}${portal.server.port}"/>
+            <hidden property="portal.base.url" value="${portal.server.http.protocol}://${portal.server.hostname}${portal.server.port}/${portal.webapp.name}"/>
+        </conditional>
+        <conditional ifProperty="(${cms.active}!=true)">
+            <hidden property="cms.active" value="false"/>
+        </conditional>
     </page>
 	<page
             ifProperty="(${initialize.all}!=true)"
@@ -916,16 +926,6 @@
 			property="dbloader.cms"
             defaultValue="@dbloader.cms@"
 			force="false"/>
-
-        <!-- conditional here so they will be processed after the page is processed in runtime -->
-        <conditional ifProperty="(true=true)">
-            <hidden property="portal.webapp.home" value="${tomcat.home}/webapps/${portal.webapp.name}"/>
-            <hidden property="server.base.url" value="${portal.server.http.protocol}://${portal.server.hostname}${portal.server.port}"/>
-            <hidden property="portal.base.url" value="${portal.server.http.protocol}://${portal.server.hostname}${portal.server.port}/${portal.webapp.name}"/>
-        </conditional>
-        <conditional ifProperty="(${cms.active}!=true)">
-            <hidden property="cms.active" value="false"/>
-        </conditional>
     </page>
 	<page
         ifProperty="(${initialize.all}=true) OR (${hibernate.alchemist}=true) OR (${hibernate.portlets-common}=true) OR (${hibernate.demetrius}=true) OR (${hibernate.mercury}=true) OR (${uportal.db}=true) OR (${uportal.i18n.db}=true) OR (${dbloader.cdk}=true) OR (${dbloader.survey}=true) OR (${dbloader.news}=true) OR (${dbloader.classifieds}=true) OR (${dbloader.calendar}=true) OR (${dbloader.notes}=true) OR (${dbloader.bookmarks}=true) OR (${dbloader.campusannouncement}=true) OR (${dbloader.addressbook}=true) OR (${dbloader.cms}=true) OR (${dbloader.toro.common}=true)"
