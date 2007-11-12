@@ -1,0 +1,16 @@
+#set($mediaPath = "media/net/unicon")
+<script language="JavaScript" src="javascript/common/validation.js"></script>
+#if($layout=="default")
+    <table id="content-table-superchannel" width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+        <td class="col2-left-even"><div class="column-content">${COL1_CHANNELS}</div></td>
+        <td class="col2-right-even"><div class="column-content">${COL2_CHANNELS}</div></td>
+    </tr>
+    </table>
+#else
+    <table id="content-table-superchannel" width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+        <td class="col1"><div class="column-content">${COL1_CHANNELS}</div></td>
+    </tr>
+    </table>
+#end

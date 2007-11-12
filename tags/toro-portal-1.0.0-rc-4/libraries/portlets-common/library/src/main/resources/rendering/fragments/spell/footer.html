@@ -1,0 +1,31 @@
+            var wordWindowObj = new wordWindow();
+            wordWindowObj.originalSpellings = words;
+            wordWindowObj.suggestions = suggs;
+            wordWindowObj.textInputs = textinputs;
+
+
+            function init_spell() {
+                // check if any error occured during server-side processing
+                if( error ) {
+                    alert( error );
+                } else {
+                    // call the init_spell() function in the parent frameset
+                    if (parent.frames.length) {
+                        parent.init_spell( wordWindowObj );
+                    } else {
+                        error = "This page was loaded outside of a frameset. ";
+                        error += "It might not display properly";
+                        alert( error );
+                    }
+                }
+            }
+        </script>
+    </head>
+    <body onLoad="init_spell();">
+
+        <script type="text/javascript">
+            wordWindowObj.writeBody();
+        </script>
+
+    </body>
+</html>
