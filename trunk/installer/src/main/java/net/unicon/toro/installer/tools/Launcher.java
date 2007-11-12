@@ -161,6 +161,8 @@ public class Launcher {
             extractDir = new File(tempDir, "antinstall" + (idx++));
         }
         
+        if (previousInstall == null) return null;
+
         try {
             File pom = new File(previousInstall, "pom.xml");
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
