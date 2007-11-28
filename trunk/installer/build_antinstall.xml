@@ -83,25 +83,92 @@
 
     <property environment="env"/>
 
+    <condition property="postgres.platform" value="true">
+        <contains string="${jdbc.driver}" substring="postgres"/>
+    </condition>
+    <condition property="oracle.platform" value="true">
+        <contains string="${jdbc.driver}" substring="oracle"/>
+    </condition>
+    <condition property="sqlserver.platform" value="true">
+        <or>
+            <contains string="${jdbc.driver}" substring="jtds"/>
+            <contains string="${jdbc.driver}" substring="jnetdirect"/>
+        </or>
+    </condition>
+    <condition property="mysql.platform" value="true">
+        <contains string="${jdbc.driver}" substring="mysql"/>
+    </condition>
+
     <!-- don't fetch artifacts when in remote-config mode -->
     <if>
-        <equals arg1="${run.remote.config}" arg2="false"/>
+        <and>
+            <equals arg1="${run.remote.config}" arg2="false"/>
+            <isset property="postgres.platform"/>
+        </and>
         <then>
-            <artifact:dependencies pathId="db.classpath.minus.oracle">
-                <dependency groupId="net.sourceforge.jtds" artifactId="jtds"
-                    version="${jtds.version}" type="jar"/>
-                <dependency groupId="com.mysql" artifactId="mysql-connector-java"
-                    version="${mysql.version}" type="jar"/>
+            <artifact:dependencies pathId="db.classpath">
                 <dependency groupId="postgresql" artifactId="postgresql"
                     version="${postgresql.version}" type="jar"/>
-                <remoteRepository refid="toro.repository" />
                 <remoteRepository refid="central.repository" />
             </artifact:dependencies>
+            <artifact:dependencies filesetId="db.fileset">
+                <dependency groupId="postgresql" artifactId="postgresql"
+                    version="${postgresql.version}" type="jar"/>
+                <remoteRepository refid="central.repository" />
+            </artifact:dependencies>
+            <property name="jdbc.url" value="jdbc:postgresql://${jdbc.hostname}:${jdbc.port}/${jdbc.database.name}"/>
+        </then>
+    </if>
 
+    <if>
+        <and>
+            <equals arg1="${run.remote.config}" arg2="false"/>
+            <contains string="${jdbc.driver}" substring="jtds"/>
+        </and>
+        <then>
+            <artifact:dependencies pathId="db.classpath">
+                <dependency groupId="net.sourceforge.jtds" artifactId="jtds"
+                    version="${jtds.version}" type="jar"/>
+                <remoteRepository refid="central.repository" />
+            </artifact:dependencies>
+            <artifact:dependencies filesetId="db.fileset">
+                <dependency groupId="net.sourceforge.jtds" artifactId="jtds"
+                    version="${jtds.version}" type="jar"/>
+                <remoteRepository refid="central.repository" />
+            </artifact:dependencies>
+            <property name="jdbc.url" value="jdbc:jtds:sqlserver://${jdbc.hostname}:${jdbc.port};DatabaseName=${jdbc.database.name}"/>
+        </then>
+    </if>
+
+    <if>
+        <and>
+            <equals arg1="${run.remote.config}" arg2="false"/>
+            <isset property="mysql.platform"/>
+        </and>
+        <then>
             <path id="db.classpath">
-                <path refid="db.classpath.minus.oracle"/>
+                <pathelement location="${basedir}/lib/mysql-connector-java-5.1.5-bin.jar"/>
+            </path>
+            <fileset id="db.fileset" dir="${basedir}/lib">
+                <pathelement location="mysql-connector-java-5.1.5-bin.jar"/>
+            </fileset>
+            <property name="jdbc.url" value="jdbc:mysql://${jdbc.hostname}:${jdbc.port}/${jdbc.database.name}?relaxAutoCommit=true"/>
+        </then>
+    </if>
+
+    <if>
+        <and>
+            <equals arg1="${run.remote.config}" arg2="false"/>
+            <isset property="oracle.platform"/>
+        </and>
+        <then>
+            <path id="db.classpath">
                 <pathelement location="${basedir}/lib/ojdbc14-10g.jar"/>
             </path>
+            <fileset id="db.fileset" dir="${basedir}/lib">
+                <include name="ojdbc14-10g.jar"/>
+            </fileset>
+            <property name="jdbc.url" value="jdbc:oracle:thin:@${jdbc.hostname}:${jdbc.port}:${jdbc.database.name}"/>
         </then>
     </if>
 
@@ -575,22 +642,6 @@
         <condition property="uportal.db.droptables.arg" value=" ">
             <not><equals arg1="${hibernate.create.only.checkbox}" arg2="true"/></not>
         </condition>
-
-        <condition property="postgres.platform" value="true">
-            <contains string="${jdbc.driver}" substring="postgres"/>
-        </condition>
-        <condition property="oracle.platform" value="true">
-            <contains string="${jdbc.driver}" substring="oracle"/>
-        </condition>
-        <condition property="sqlserver.platform" value="true">
-            <or>
-                <contains string="${jdbc.driver}" substring="jtds"/>
-                <contains string="${jdbc.driver}" substring="jnetdirect"/>
-            </or>
-        </condition>
-        <condition property="mysql.platform" value="true">
-            <contains string="${jdbc.driver}" substring="mysql"/>
-        </condition>
     </target>
 
     <target name="set-resource-tokens">
@@ -739,10 +790,11 @@
             <filter token="ldap4.comment" value="${ldap4.comment}"/>
             <filter token="ldap4.protocol" value="${ldap4.protocol}"/>
             <filter token="ldap4.protocol.prefix" value="${ldap4.protocol.prefix}"/>
+            <filter token="jdbc.url" value="${jdbc.url}"/>
         </filterset>
     </target>
 
-    <target name="set-postgres-platform-specific-properties">
+    <target name="set-db-properties">
         <if>
             <isset property="postgres.platform"/>
             <then>
@@ -755,11 +807,8 @@
                 <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
             </then>
         </if>
-    </target>
-
-    <target name="set-oracle-platform-specific-properties">
         <if>
-            <isset property="postgres.platform"/>
+            <isset property="oracle.platform"/>
             <then>
                 <echo>Setting oracle specific properties...</echo>
                 <property name="db.platform" value="oracle"/>
@@ -770,11 +819,8 @@
                 <property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect"/>
             </then>
         </if>
-    </target>
-
-    <target name="set-sqlserver-platform-specific-properties">
         <if>
-            <isset property="postgres.platform"/>
+            <isset property="sqlserver.platform"/>
             <then>
                 <echo>Setting sqlserver specific properties...</echo>
                 <property name="db.platform" value="sqlserver"/>
@@ -785,11 +831,8 @@
                 <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
             </then>
         </if>
-    </target>
-
-    <target name="set-mysql-platform-specific-properties">
         <if>
-            <isset property="postgres.platform"/>
+            <isset property="mysql.platform"/>
             <then>
                 <echo>Setting mysql specific properties...</echo>
                 <property name="db.platform" value="mysql"/>
@@ -914,6 +957,7 @@ hibernate.version=${hibernate.version}
 initialize.all=${initialize.all}
 jaxen.version=${jaxen.version}
 jdbc.driver=${jdbc.driver}
+jdbc.url=${jdbc.url}
 jdbc.password=${jdbc.password}
 jdbc.password.confirm=${jdbc.password.confirm}
 jdbc.poolsize.blojsom=${jdbc.poolsize.blojsom}
@@ -924,7 +968,6 @@ jdbc.poolsize.permissions=${jdbc.poolsize.permissions}
 jdbc.poolsize.uportal=${jdbc.poolsize.uportal}
 jdbc.poolsize.web.content=${jdbc.poolsize.web.content}
 jdbc.simplesql=${jdbc.simplesql}
-jdbc.url=${jdbc.url}
 jdbc.user=${jdbc.user}
 jstl.version=${jstl.version}
 jtds.version=${jtds.version}
@@ -1005,7 +1048,7 @@ xercesImpl.version=${xercesImpl.version}
         </if>
     </target>
 
-    <target name="driver" depends="initialize-run-targets, set-resource-tokens, set-postgres-platform-specific-properties, set-oracle-platform-specific-properties, set-sqlserver-platform-specific-properties, set-mysql-platform-specific-properties">
+    <target name="driver" depends="initialize-run-targets, set-resource-tokens, set-db-properties">
         <antcall target="check-java-version"/>
         <antcall target="dump-properties"/>
         <antcall target="create-uportal-properties"/>
@@ -3404,56 +3447,7 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
         <condition property="jnetdirect.driver">
             <contains string="${jdbc.driver}" substring="jnetdirect"/>
         </condition>
-        <antcall target="execute-deploy-uportal-with-postgres"/>
-        <antcall target="execute-deploy-uportal-with-oracle"/>
-        <antcall target="execute-deploy-uportal-with-mysql"/>
-        <antcall target="execute-deploy-uportal-with-jtds"/>
-        <antcall target="execute-deploy-uportal-with-jnetdirect"/>
-    </target>
-
-    <target name="execute-deploy-uportal-with-postgres" if="postgres.driver">
-        <echo message="setting postgres db properties..."/>
-        <antcall target="execute-deploy-uportal">
-            <param name="db.driver.groupId" value="postgresql"/>
-            <param name="db.driver.artifactId" value="postgresql"/>
-            <param name="db.driver.version" value="${postgresql.version}"/>
-        </antcall>
-    </target>
-
-    <target name="execute-deploy-uportal-with-oracle" if="oracle.driver">
-        <echo message="setting oracle db properties..."/>
-        <antcall target="execute-deploy-uportal">
-            <param name="db.driver.groupId" value="com.oracle"/>
-            <param name="db.driver.artifactId" value="ojdbc14"/>
-            <param name="db.driver.version" value="${oracle.version}"/>
-        </antcall>
-    </target>
-
-    <target name="execute-deploy-uportal-with-mysql" if="mysql.driver">
-        <echo message="setting mysql db properties..."/>
-        <antcall target="execute-deploy-uportal">
-            <param name="db.driver.groupId" value="mysql"/>
-            <param name="db.driver.artifactId" value="mysql-connector-java"/>
-            <param name="db.driver.version" value="${mysql.version}"/>
-        </antcall>
-    </target>
-
-    <target name="execute-deploy-uportal-with-jtds" if="jtds.driver">
-        <echo message="setting jtds db properties..."/>
-        <antcall target="execute-deploy-uportal">
-            <param name="db.driver.groupId" value="net.sourceforge"/>
-            <param name="db.driver.artifactId" value="jtds"/>
-            <param name="db.driver.version" value="${jtds.version}"/>
-        </antcall>
-    </target>
-
-    <target name="execute-deploy-uportal-with-jnetdirect" if="jnetdirect.driver">
-        <echo message="setting jnetdirect db properties..."/>
-        <antcall target="execute-deploy-uportal">
-            <param name="db.driver.groupId" value="jnetdirect"/>
-            <param name="db.driver.artifactId" value="jnetdirect"/>
-            <param name="db.driver.version" value="${jnetdirect.version}"/>
-        </antcall>
+        <antcall target="execute-deploy-uportal"/>
     </target>
 
     <target name="extract-uportal-jar">
@@ -3526,14 +3520,8 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
              </fileset>
          </delete>
            
-         <artifact:dependencies filesetId="lib.container-common">
-             <dependency groupId="${db.driver.groupId}" artifactId="${db.driver.artifactId}"
-                 version="${db.driver.version}" type="jar"/>
-             <remoteRepository refid="toro.repository" />
-             <remoteRepository refid="central.repository" />
-         </artifact:dependencies>
          <copy flatten="true" todir="${tomcat.home}/common/lib">
-             <fileset refId="lib.container-common"/>
+             <fileset refId="db.fileset"/>
          </copy>
  
          <!-- This is Tomcat-specific and server name-specific!
