@@ -775,21 +775,29 @@
             <option text="@jdbc.driver1.text@" value="@jdbc.driver1@"/>
             <option text="@jdbc.driver2.text@" value="@jdbc.driver2@"/>
             <option text="@jdbc.driver3.text@" value="@jdbc.driver3@"/>
-            <option text="@jdbc.driver4.text@" value="@jdbc.driver4@"/>
         </select>
         <text
-            property="jdbc.url"
-            defaultValue="@jdbc.url@"
-            displayText="JDBC Url"/>
+            property="jdbc.hostname"
+            defaultValue=""
+            displayText="DB Hostname"/>
+		<validated
+			property="jdbc.port"
+            defaultValue=""
+            regex="^[0-9]+$|^$"
+            displayText="DB port"/>
+        <text
+            property="jdbc.database.name"
+            defaultValue=""
+            displayText="DB Name/SID"/>
         <text
             property="jdbc.user"
-            defaultValue="@jdbc.user@"
-            displayText="JDBC User"/>
+            defaultValue=""
+            displayText="DB User"/>
         <validated
             property="jdbc.password"
-            defaultValue="@jdbc.password@"
+            defaultValue=""
             regex="^$|^[a-zA-Z_0-9]+$"
-            displayText="JDBC User"/>
+            displayText="DB Password"/>
         <!--password-confirm
             property="jdbc.password.confirm"
             origField="jdbc.password"
