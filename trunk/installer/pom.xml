@@ -152,11 +152,6 @@
                     <filter token="jdbc.driver2.text" value="Oracle" />
                     <filter token="jdbc.driver3" value="net.sourceforge.jtds.jdbc.Driver" />
                     <filter token="jdbc.driver3.text" value="Sql Server (jtds)" />
-                    <filter token="jdbc.driver4" value="com.jnetdirect.jsql.JSQLDriver" />
-                    <filter token="jdbc.driver4.text" value="Sql Server (jnetdirect)" />
-                    <filter token="jdbc.url" value="jdbc:postgresql://localhost:5432/aos" />
-                    <filter token="jdbc.user" value="uni" />
-                    <filter token="jdbc.password" value="uni" />
                     <filter token="jdbc.poolsize.uportal" value="100" />
                     <filter token="jdbc.poolsize.briefcase" value="25" />
                     <filter token="jdbc.poolsize.gateway" value="25" />
