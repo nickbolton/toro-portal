@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+
+<!--
+ 
+ Copyright (c) 2002, Interactive Business Solutions, Inc. All Rights Reserved.
+ This software is the confidential and proprietary information of
+ Interactive Business Solutions, Inc.(IBS)  ("Confidential Information").
+ You shall not disclose such Confidential Information and shall use
+ it only in accordance with the terms of the license agreement you
+ entered into with IBS.
+ 
+ IBS MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF THE
+ SOFTWARE, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ PURPOSE, OR NON-INFRINGEMENT. IBS SHALL NOT BE LIABLE FOR ANY DAMAGES
+ SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
+ THIS SOFTWARE OR ITS DERIVATIVES.
+
+ $Log: 
+  2    Channels  1.1         4/26/2002 5:34:28 PM Freddy Lopez    fixed UI and
+       fixed bugs found during testing phase, this is a release point
+  1    Channels  1.0         4/1/2002 11:35:59 AM Freddy Lopez    
+ $
+ 
+-->
+
+
+<!-- Topics Administration -->
+
+<?xml-stylesheet title="TopicsMenu" href="NewsAdmin/NewsAdmin_TopicsMenu.xsl" type="text/xsl" media="explorer"?>
+
+<?xml-stylesheet title="CreateTopic" href="NewsAdmin/NewsAdmin_CreateTopic.xsl" type="text/xsl" media="explorer"?>
+
+<?xml-stylesheet title="SelectGroup" href="NewsAdmin/NewsAdmin_SelectGroup.xsl" type="text/xsl" media="explorer"?>
+
+<?xml-stylesheet title="PreviewTopic" href="NewsAdmin/NewsAdmin_PreviewTopic.xsl" type="text/xsl" media="explorer"?>
+
+<?xml-stylesheet title="SaveTopic" href="NewsAdmin/NewsAdmin_SaveTopic.xsl" type="text/xsl" media="explorer"?>
+
+<?xml-stylesheet title="DeleteTopic" href="NewsAdmin/NewsAdmin_DeleteTopic.xsl" type="text/xsl" media="explorer"?>
+
+<?xml-stylesheet title="DeleteTopicError" href="NewsAdmin/NewsAdmin_DeleteTopicError.xsl" type="text/xsl" media="explorer"?>
+
+<!-- End Topics Administration -->
+
+<!-- Articles Administration -->
+
+<?xml-stylesheet title="ArticlesMenu" href="NewsAdmin/NewsAdmin_ArticlesMenu.xsl" type="text/xsl" media="explorer"?>
+
+<?xml-stylesheet title="CreateArticle" href="NewsAdmin/NewsAdmin_CreateArticle.xsl" type="text/xsl" media="explorer"?>
+
+<?xml-stylesheet title="CreateStory" href="NewsAdmin/NewsAdmin_CreateStory.xsl" type="text/xsl" media="explorer"?>
+
+<?xml-stylesheet title="PreviewArticle" href="NewsAdmin/NewsAdmin_PreviewArticle.xsl" type="text/xsl" media="explorer"?>
+
+<?xml-stylesheet title="SaveArticle" href="NewsAdmin/NewsAdmin_SaveArticle.xsl" type="text/xsl" media="explorer"?>
+
+<?xml-stylesheet title="DeleteArticle" href="NewsAdmin/NewsAdmin_DeleteArticle.xsl" type="text/xsl" media="explorer"?>
+
+<?xml-stylesheet title="DeleteArticleError" href="NewsAdmin/NewsAdmin_DeleteArticleError.xsl" type="text/xsl" media="explorer"?>
+
+<!-- End Articles Administration -->
+
+
+<document>
+</document>

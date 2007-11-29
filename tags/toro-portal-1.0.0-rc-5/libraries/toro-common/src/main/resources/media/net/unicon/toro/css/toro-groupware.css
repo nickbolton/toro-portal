@@ -1,0 +1,213 @@
+
+/* Can be limited to #content-table-superchannel (theme independent) */
+/* Or, .Groupware in default DLM theme with Groupware set as the functional name */
+
+.hide {
+position: absolute;
+left: -5000px;
+}
+
+/* ((((( Columns ))))) */
+
+.column-content {
+margin: 0px 0px 20px 0px;
+}
+
+.col1, .col2-left-narrow, .col2-left-wide, .col2-left-even, .col2-right-narrow, .col2-right-wide, .col2-right-even, .col3-left-narrow, .col3-left-wide, .col3-left-even, .col3-center-even, .col3-center-wide, .col3-right-narrow, .col3-right-wide, .col3-right-even {
+vertical-align: top;
+}
+
+td.col1 div.column-content, td.col2-left-narrow div.column-content, td.col2-left-wide div.column-content, td.col2-left-even div.column-content, td.col3-center-wide div.column-content, td.col3-center-even div.column-content {
+margin: 0px 10px;
+}
+
+/* ((((( Portlet/Channel Container ))))) */
+
+.portlet-container, .portlet-container-minimized, .portlet-container-borderless, .portlet-container-highlight, .portlet-container-callout { 
+/* margin-top: 10px; needed for Opera to render correctly */
+margin: 0px 0px 10px 0px;
+}
+
+.portlet-container-minimized {
+}
+
+.portlet-container-borderless, .portlet-container-borderless .portlet-container-content {
+border: none;
+}
+
+.portlet-container-superchannel { /* No visual rendering of the CMS superchannel container, i.e. make it appear to not exist  */
+border: none;
+padding: 0px;
+}
+
+.portlet-container-header-superchannel, .portlet-container-footer-superchannel { /* No rendering of the CMS superchannel header or footer  */
+display: none;
+}
+
+.portlet-container-superchannel .portlet-container-content { /* No visual rendering of the CMS superchannel container, i.e. make it appear to not exist  */
+border: none;
+padding: 0px;
+}
+
+.portlet-focused-container {
+margin: 0px 20px;
+}
+
+.portlet-container-header {
+height: 21px;
+margin-bottom: 2px;
+background: #7BADDD;
+}
+
+/* Hide from IE.  Needed to fix Safari bug */
+div.portlet-container > table.portlet-container-header {
+width: 100%;
+}
+
+/* ((((( Channel Titlebar Layout ))))) */
+
+.portlet-container-header-shader {
+background: url("../images/brand/channel_title_bar_left.gif") no-repeat top left;
+}
+
+.portlet-container-header-title {
+width: 100%;
+}
+
+.portlet-container-header-options {
+background: url("../images/brand/channel_title_bar_right.gif") no-repeat top right;
+}
+
+
+/* ((((( Channel Minimize/Maximize ))))) */
+
+.portlet-container-header a.minimize, .portlet-container-header a.maximize {
+display: block;
+margin-left: 3px;
+line-height: 17px;
+width: 17px;
+height: 17px;
+}
+
+.portlet-container-header a.maximize {
+background: url("../images/icons/control-maximize.gif") no-repeat top;
+}
+
+.portlet-container-header a.minimize {
+background: url("../images/icons/control-minimize.gif") no-repeat;
+}
+
+.portlet-container-header a.minimize span, .portlet-container-header a.maximize span {
+display: none;
+}
+
+.portlet-container-header a.minimize:hover, .portlet-container-header a.maximize:hover {
+background-position: 0px -17px;
+}
+
+/* ((((( Channel Title ))))) */
+.portlet-container-title {
+margin: 0px;
+color: #FFF;
+font-size: 8pt;
+font-weight: bold;
+white-space: nowrap;
+}
+
+.portlet-focused-title {
+margin: 5px 0px 20px 0px;
+padding: 0px;
+color: #000;
+font-weight: normal;
+}
+
+.portlet-container-header h2 {
+margin-left: 6px;
+}
+
+.portlet-container-header h2 a:link, .portlet-container-header h2 a:visited {
+color: #FFF;
+font-size: 8pt;
+font-weight: bold;
+text-decoration: none;
+white-space: nowrap;
+}
+
+.portlet-container-header h2 a:hover {
+color: #FFF;
+text-decoration: underline;
+}
+
+
+/* ((((( Channel Options ))))) */
+
+.portlet-options-container {
+text-align: right;
+}
+
+.portlet-options-link {
+}
+
+a.portlet-options-link:link, a.portlet-options-link:visited {
+display: block;
+width: 26px;
+height: 21px;
+}
+
+a.portlet-options-link:hover {
+background-position: 0px -21px;
+}
+
+.portlet-options-link-label {
+display: none;
+}
+
+.portlet-options {
+height: 21px;
+margin-right: 3px;
+padding: 0px;
+}
+
+.portlet-options a {
+display: block;
+line-height: 17px;
+width: 17px;
+height: 17px;
+margin-left: 1px;
+}
+
+.portlet-options a.about {
+background: url("../images/icons/control-about.gif") no-repeat;
+}
+
+.portlet-options a.detach {
+background: url("../images/icons/control-detach.gif") no-repeat;
+}
+
+.portlet-options a.focus {
+background: url("../images/icons/control-focus.gif") no-repeat;
+}
+
+.portlet-options a.edit {
+background: url("../images/icons/control-edit.gif") no-repeat;
+}
+.portlet-options a.help {
+background: url("../images/icons/control-help.gif") no-repeat;
+}
+
+.portlet-options a.print {
+background: url("../images/icons/control-print.gif") no-repeat;
+}
+
+.portlet-options a.remove {
+background: url("../images/icons/control-remove.gif") no-repeat;
+}
+
+.portlet-options a span {
+display: none;
+}
+
+.portlet-options a:hover {
+background-position: 0px -17px;
+}
+

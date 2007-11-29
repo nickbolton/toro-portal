@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema>
+<sequences>
+    <sequence>
+        <name>NOTES_SEQ</name>
+        <start-with>1</start-with>
+        <increment-by>1</increment-by>
+    </sequence>
+</sequences>
+<tables>
+    <table>
+      <name>NOTES</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>NOTE_ID</name>
+          <type>INTEGER</type>
+	      <default>
+	    	<sequence>NOTES_SEQ</sequence>
+	      </default>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>USER_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>BODY</name>
+          <type>LONGVARCHAR</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>UPDATE_DATE</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>NOTES_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>NOTE_ID</column>
+          </columns>
+        </index>
+          
+        <index>
+          <name>NOTES_USER_ID_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>USER_ID</column>
+          </columns>
+        </index>
+           
+        <index>
+          <name>NOTES_UPDATE_DATE_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>UPDATE_DATE</column>
+          </columns>
+        </index>
+      
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>NOTES_NOTE_ID_NN</name>
+          <columns>
+            <column>NOTE_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>NOTES_USER_ID_NN</name>
+          <columns>
+            <column>USER_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>NOTES_UPDATE_DATE_NN</name>
+          <columns>
+            <column>UPDATE_DATE</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>NOTES_PKEY</name>
+          <columns>
+            <column>NOTE_ID</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+</tables>
+</schema>

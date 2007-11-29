@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet title="main" href="announcement/main.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet alternate="true" title="main" href="announcement/main.xsl" type="text/xsl" media="netscape"?>
+
+<?xml-stylesheet title="add" href="announcement/add_announcement.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet alternate="true" title="add" href="announcement/add_announcement.xsl" type="text/xsl" media="netscape"?>
+
+<?xml-stylesheet title="edit" href="announcement/edit_announcement.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet alternate="true" title="edit" href="announcement/edit_announcement.xsl" type="text/xsl" media="netscape"?>
+<?xml-stylesheet title="delete" href="announcement/delete_announcement.xsl" type="text/xsl" media="explorer"?>
+
+<?xml-stylesheet title="empty" href="announcement/empty.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet alternate="true" title="empty" href="announcement/empty.xsl" type="text/xsl" media="netscape"?>
+<?xml-stylesheet title="inactive" href="../global/inactive.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet alternate="true" title="inactive" href="../global/inactive.xsl" type="text/xsl" media="netscape"?>
+
+<document>
+</document>
