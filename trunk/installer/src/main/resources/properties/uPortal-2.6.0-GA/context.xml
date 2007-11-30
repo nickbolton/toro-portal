@@ -74,7 +74,7 @@
                                   : are causing timed out resources, for example.
                                     
     -->
-    <Resource name="jdbc/@datasource@" auth="Container" type="javax.sql.DataSource"
+    <Resource name="@datasource@" auth="Container" type="javax.sql.DataSource"
 
 	factory="net.unicon.resource.ResourceDataSourceFactory"
 	driver="@jdbc.driver@"
