@@ -157,7 +157,16 @@ You can still use the user-entered-credentials features of Gateway SSO Portlet w
 
 You can use the Gateway SSO Portlet without caching any credentials at all if the workflows you are implementing do not involve authentication or if authentication can be transparently achieved by such means of [http://www.ja-sig.org/products/cas/ Central Authentication Service] single sign on or PubCookie single sign on.
 
+=== Making the Gateway SSO Portlet aware of the username ===
 
- 
- 
+The Gateway SSO Portlet relies on a user attribute named "user.login.id" to understand the logged in user's username.  This user attribute must be configured in uPortal's Person Directory subsystem so that it exists at all, and it must be provisioned into instances of the Gateway SSO Portlet via the portlet's portlet.xml portlet deployment descriptor.  Typically, the portlet.xml that came with your Gateway SSO Portlet is already configured to do this.  Recent versions of uPortal also have the necessary "user.login.id" person attribute configuration already applied, but slightly older releases did not include this required configuration.
+
+==== For uPortal 2.5.3 (or Earlier) and 2.6.0 RC1 ====
+
+You will need to configure Person Attributes to support the *user.login.id* attribute.  Toro-portlets requires it.
+
+Note that recent versions of uPortal allow configuration of user attributes via either or both of a legacy domain-specific properties file (PersonDirs.xml) and a more recent domain-general Spring configuration file (personDirectory.xml).  Changes to PersonDirs.xml in uPortal 2.6 will by default have no effect unless personDirectory.xml is edited to enable parsing and using the legacy configuration format.
+
+  * [https://www.ja-sig.org/svn/up2/branches/rel-2-5-3-patches/properties/PersonDirs.xml See here] for an example in uPortal 2.5.3 or earlier
+  * [https://www.ja-sig.org/svn/up2/tags/rel-2-6-1-GA/properties/personDirectory.xml See here] for an example in uPortal 2.6.0 RC1
  
