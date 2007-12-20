@@ -70,7 +70,7 @@
 				uses. HTTP-Basic would be in the form of:
 				http://{auth.username}:{auth.password}@mysite.com/
 			-->
-            <url>@WEBSERVER_IS_SSL@://@WEBSERVER_HOST_NAME@@WEBSERVER_FULLHTTPPORT@/AcademusApps/rendering/jsp/sso-test.jsp</url>
+            <url>@portal.server.http.protocol@://@portal.server.hostname@@portal.server.port@/toro-gateway-portlet/rendering/jsp/sso-test.jsp</url>
 			<method>get</method>
 			<parameter name="portalUsername"><value>{user.login.id}</value></parameter>
 			<parameter name="portalPassword"><value>{password}</value></parameter>
@@ -84,7 +84,7 @@
 				uses. HTTP-Basic would be in the form of:
 				http://{auth.username}:{auth.password}@mysite.com/
 			-->
-			<url>@WEBSERVER_IS_SSL@://@WEBSERVER_HOST_NAME@@WEBSERVER_FULLHTTPPORT@/AcademusApps/rendering/jsp/sso-test.jsp</url>
+            <url>@portal.server.http.protocol@://@portal.server.hostname@@portal.server.port@/toro-gateway-portlet/rendering/jsp/sso-test.jsp</url>
 			<method>post</method>
 			<!--
 				If this module were to require additional parameters, they
@@ -101,7 +101,7 @@
 			<parameter name="someString"><value>This is my username: {user.login.id}</value></parameter>
 		</target>
 		<target handle="newvals">
-			<url>@WEBSERVER_IS_SSL@://@WEBSERVER_HOST_NAME@@WEBSERVER_FULLHTTPPORT@/AcademusApps/rendering/jsp/sso-test.jsp</url>
+            <url>@portal.server.http.protocol@://@portal.server.hostname@@portal.server.port@/toro-gateway-portlet/rendering/jsp/sso-test.jsp</url>
 			<method>post</method>
 			<parameter name="myNewParameter"><value>Some value</value></parameter>
 		</target>
