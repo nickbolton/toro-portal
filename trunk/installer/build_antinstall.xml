@@ -41,6 +41,10 @@
         </classpath>
     </typedef>
 
+    <taskdef name="copyWithAllPropertiesFilter" classname="net.unicon.toro.installer.anttask.CopyWithAllPropertiesFilter" classpath="${basedir}"/>
+    <taskdef name="moveWithAllPropertiesFilter" classname="net.unicon.toro.installer.anttask.MoveWithAllPropertiesFilter" classpath="${basedir}"/>
+    <taskdef name="dumpproperties" classname="net.unicon.toro.installer.anttask.DumpProperties" classpath="${basedir}"/>
+
     <artifact:dependencies pathId="ant-contrib.pathId">
         <dependency groupId="ant-contrib" artifactId="ant-contrib"
             version="${ant-contrib.version}" type="jar"/>
@@ -846,179 +850,8 @@
     </target>
 
     <target name="dump-properties">
-        <echo>
-Executing with properties:
-
-Runtime properties:
-run.uportal.deploy=${run.uportal.deploy}
-run.deploy.briefcase.portlet=${run.deploy.briefcase.portlet}
-run.deploy.messaging.portlet=${run.deploy.messaging.portlet}
-run.deploy.permissions.portlet=${run.deploy.permissions.portlet}
-run.deploy.gateway.portlet=${run.deploy.gateway.portlet}
-run.deploy.web.content.portlet=${run.deploy.web.content.portlet}
-run.deploy.blojsom.portlet=${run.deploy.blojsom.portlet}
-run.deploy.cms.channel=${run.deploy.cms.channel}
-run.deploy.survey.channel=${run.deploy.survey.channel}
-run.deploy.news.channel=${run.deploy.news.channel}
-run.deploy.classifieds.channel=${run.deploy.classifieds.channel}
-run.deploy.calendar.channel=${run.deploy.calendar.channel}
-run.deploy.notes.channel=${run.deploy.notes.channel}
-run.deploy.bookmarks.channel=${run.deploy.bookmarks.channel}
-run.deploy.campusannouncement.channel=${run.deploy.campusannouncement.channel}
-run.deploy.ldapchangepw.channel=${run.deploy.ldapchangepw.channel}
-run.deploy.login.channel=${run.deploy.login.channel}
-run.deploy.useradmin.channel=${run.deploy.useradmin.channel}
-run.ldap.merge=${run.ldap.merge}
-run.publish.briefcase.portlet=${run.publish.briefcase.portlet}
-run.publish.gateway.portlet=${run.publish.gateway.portlet}
-run.publish.messaging.portlet=${run.publish.messaging.portlet}
-run.publish.permissions.portlet=${run.publish.permissions.portlet}
-run.publish.web.content.portlet=${run.publish.web.content.portlet}
-run.publish.cms.channel=${run.publish.cms.channel}
-run.publish.survey.channel=${run.publish.survey.channel}
-run.publish.news.channel=${run.publish.news.channel}
-run.publish.classifieds.channel=${run.publish.classifieds.channel}
-run.publish.calendar.channel=${run.publish.calendar.channel}
-run.publish.notes.channel=${run.publish.notes.channel}
-run.publish.bookmarks.channel=${run.publish.bookmarks.channel}
-run.publish.campusannouncement.channel=${run.publish.campusannouncement.channel}
-run.publish.ldapchangepw.channel=${run.publish.ldapchangepw.channel}
-run.publish.login.channel=${run.publish.login.channel}
-run.publish.useradmin.channel=${run.publish.useradmin.channel}
-run.uportal.db=${run.uportal.db}
-run.uportal.pubchan=${run.uportal.pubchan}
-run.uportal.i18n.db=${run.uportal.i18n.db}
-run.uportal.pubfragments=${run.uportal.pubfragments}
-run.uportal.deploy.testsuite.portlet=${run.uportal.deploy.testsuite.portlet}
-run.uportal.deploy.proxyportlet.portlet=${run.uportal.deploy.proxyportlet.portlet}
-run.uportal.deploy.bookmarks.portlet=${run.uportal.deploy.bookmarks.portlet}
-run.uportal.deploy.rss.portlet=${run.uportal.deploy.rss.portlet}
-run.uportal.deploy.google.portlet=${run.uportal.deploy.google.portlet}
-run.hibernate.alchemist=${run.hibernate.alchemist}
-run.hibernate.demetrius=${run.hibernate.demetrius}
-run.hibernate.mercury=${run.hibernate.mercury}
-run.hibernate.portlets-common=${run.hibernate.portlets-common}
-run.dbloader.cdk=${run.dbloader.cdk}
-run.dbloader.toro.common=${run.dbloader.toro.common}
-run.dbloader.cms=${run.dbloader.cms}
-run.dbloader.survey=${run.dbloader.survey}
-run.dbloader.news=${run.dbloader.news}
-run.dbloader.classifieds=${run.dbloader.classifieds}
-run.dbloader.calendar=${run.dbloader.calendar}
-run.dbloader.notes=${run.dbloader.notes}
-run.dbloader.bookmarks=${run.dbloader.bookmarks}
-run.dbloader.campusannouncement=${run.dbloader.campusannouncement}
-hibernate.create.only=${hibernate.create.only}
-uportal.db.droptables.arg=${uportal.db.droptables.arg}
-db.platform=${db.platform}
-jdbc.simplesql=${jdbc.simplesql}
-db.time.impl=${db.time.impl}
-db.sqlconcat=${db.sqlconcat}
-db.length=${db.length}
-multibox.configuration=${multibox.configuration}
-multibox.comment=${multibox.comment}
-dirty.cache.request.handler=${dirty.cache.request.handler}
-ldap.protocol=${ldap.protocol}
-ldap.comment=${ldap.comment}
-ldap.protocol=${ldap.protocol}
-ldap2.comment=${ldap2.comment}
-ldap2.protocol=${ldap2.protocol}
-ldap3.comment=${ldap3.comment}
-ldap3.protocol=${ldap3.protocol}
-ldap4.comment=${ldap4.comment}
-ldap4.protocol=${ldap4.protocol}
-
-Given Properties:
-uportal.remote.repo=${uportal.remote.repo}
-toro.remote.repo=${toro.remote.repo}
-spell.executable.path=${aspell.executable.path}
-backport-util-concurrent.version=${backport-util-concurrent.version}
-blojsom.active=${blojsom.active}
-briefcase-portlet.active=${briefcase-portlet.active}
-briefcase-portlet.publish=${briefcase-portlet.publish}
-common.libraries=${common.libraries}
-common.portlets.webapp=${common.portlets.webapp}
-commons-dbcp.version=${commons-dbcp.version}
-commons-logging.version=${commons-logging.version}
-datasource=${datasource}
-db.platform=${db.platform}
-deploy.all=${deploy.all}
-dom4j.version=${dom4j.version}
-gateway-portlet.active=${gateway-portlet.active}
-gateway-portlet.publish=${gateway-portlet.publish}
-hibernate.alchemist=${hibernate.alchemist}
-hibernate.cdk=${hibernate.cdk}
-hibernate.create.only=${hibernate.create.only}
-hibernate.create.only.checkbox=${hibernate.create.only.checkbox}
-hibernate.demetrius=${hibernate.demetrius}
-hibernate.mercury=${hibernate.mercury}
-hibernate.portlets-common=${hibernate.portlets-common}
-hibernate.version=${hibernate.version}
-initialize.all=${initialize.all}
-jaxen.version=${jaxen.version}
-jdbc.driver=${jdbc.driver}
-jdbc.url=${jdbc.url}
-jdbc.password=${jdbc.password}
-jdbc.password.confirm=${jdbc.password.confirm}
-jdbc.poolsize.blojsom=${jdbc.poolsize.blojsom}
-jdbc.poolsize.briefcase=${jdbc.poolsize.briefcase}
-jdbc.poolsize.gateway=${jdbc.poolsize.gateway}
-jdbc.poolsize.messaging=${jdbc.poolsize.messaging}
-jdbc.poolsize.permissions=${jdbc.poolsize.permissions}
-jdbc.poolsize.uportal=${jdbc.poolsize.uportal}
-jdbc.poolsize.web.content=${jdbc.poolsize.web.content}
-jdbc.simplesql=${jdbc.simplesql}
-jdbc.user=${jdbc.user}
-jstl.version=${jstl.version}
-jtds.version=${jtds.version}
-messaging-portlet.active=${messaging-portlet.active}
-messaging-portlet.publish=${messaging-portlet.publish}
-mysql.version=${mysql.version}
-oracle.version=${oracle.version}
-permissions-portlet.active=${permissions-portlet.active}
-permissions-portlet.publish=${permissions-portlet.publish}
-pluto.version=${pluto.version}
-portal.base.url=${portal.base.url}
-portal.server.hostname=${portal.server.hostname}
-portal.server.http.protocol=${portal.server.http.protocol}
-portal.server.port=${portal.server.port}
-portal.webapp.home=${portal.webapp.home}
-portal.webapp.name=${portal.webapp.name}
-portlet-api.version=${portlet-api.version}
-postgresql.version=${postgresql.version}
-maven.project.version=${maven.project.version}
-reddot.content.path=${reddot.content.path}
-reddot.method=${reddot.method}
-reddot.url=${reddot.url}
-server.base.url=${server.base.url}
-servlet-api.version=${servlet-api.version}
-smtp.server.hostname=${smtp.server.hostname}
-smtp.server.password=${smtp.server.password}
-smtp.server.password.confirm=${smtp.server.password.confirm}
-smtp.server.port=${smtp.server.port}
-smtp.server.username=${smtp.server.username}
-springframework.version=${springframework.version}
-standard.version=${standard.version}
-tomcat.home=${tomcat.home}
-tomcat.host.conf=${tomcat.host.conf}
-toro.data.home=${toro.data.home}
-uportal.db=${uportal.db}
-uportal.db.droptables.arg=${uportal.db.droptables.arg}
-uportal.deploy=${uportal.deploy}
-uportal.deploy.testsuite.portlet=${uportal.deploy.testsuite.portlet}
-uportal.deploy.proxyportlet.portlet=${uportal.deploy.proxyportlet.portlet}
-uportal.deploy.bookmarks.portlet=${uportal.deploy.bookmarks.portlet}
-uportal.deploy.rss.portlet=${uportal.deploy.rss.portlet}
-uportal.deploy.google.portlet=${uportal.deploy.google.portlet}
-uportal.i18n.db=${uportal.i18n.db}
-uportal.pubchan=${uportal.pubchan}
-uportal.pubfragments=${uportal.pubfragments}
-uportal.version=${uportal.version}
-web-content-portlet.active=${web-content-portlet.active}
-web-content-portlet.publish=${web-content-portlet.publish}
-xalan.version=${xalan.version}
-xercesImpl.version=${xercesImpl.version}
-        </echo>
+        <echo>Executing with properties:</echo>
+        <dumpproperties/>
     </target>
 
     <target name="check-java-version">
@@ -1354,12 +1187,13 @@ xercesImpl.version=${xercesImpl.version}
 
 
    <target name="initialize">
-      <copy file="${basedir}/properties/hibernate.properties" todir="${work.dir}" filtering="on">
+      <!--copy file="${basedir}/properties/hibernate.properties" todir="${work.dir}" filtering="on">
         <filterset refId="tokens"/>
         <filterset>
           <filter token="hibernate.dialect" value="${hibernate.dialect}"/>
         </filterset>
-      </copy>
+      </copy-->
+      <copyWithAllPropertiesFilter file="${basedir}/properties/hibernate.properties" todir="${work.dir}" filtering="on"/>
 
       <if>
           <and>
@@ -1974,10 +1808,9 @@ xercesImpl.version=${xercesImpl.version}
                 <include name="WEB-INF/classes/config/messaging-portlet.xml"/>
             </patternset>
         </unjar>
-        <copy overwrite="yes" filtering="on" todir="${tomcat.home}/webapps/toro-portlets-common">
+        <copyWithAllPropertiesFilter overwrite="yes" filtering="on" todir="${tomcat.home}/webapps/toro-portlets-common">
             <fileset dir="${work.dir}/toro-portlets-common"/>
-            <filterset refid="tokens"/>
-        </copy>
+        </copyWithAllPropertiesFilter>
     </target> 
 
     <target name="deploy-portlet">
@@ -2058,9 +1891,7 @@ xercesImpl.version=${xercesImpl.version}
     </target>
 
     <target name="common-add-uportal-configurations">
-        <copy filtering="on" todir="${work.dir}/common-add-uportal-configurations" file="${basedir}/properties/uPortal-${uportal.version}/common-uPortalConfigurationChanges.xml">
-            <filterset refid="tokens"/>
-        </copy>
+        <copyWithAllPropertiesFilter filtering="on" todir="${work.dir}/common-add-uportal-configurations" file="${basedir}/properties/uPortal-${uportal.version}/common-uPortalConfigurationChanges.xml"/>
         <antcall target="merge-configuration">
             <param name="configfile" value="${work.dir}/common-add-uportal-configurations/common-uPortalConfigurationChanges.xml"/>
             <param name="targetdir" value="${portal.webapp.home}"/>
@@ -2068,17 +1899,13 @@ xercesImpl.version=${xercesImpl.version}
     </target>
 
     <target name="ldap-merge">
-        <copy filtering="on" todir="${work.dir}/ldap-merge" file="${basedir}/properties/uPortal-${uportal.version}/ldap-merge-configuration.xml">
-            <filterset refid="tokens"/>
-        </copy>
+        <copyWithAllPropertiesFilter filtering="on" todir="${work.dir}/ldap-merge" file="${basedir}/properties/uPortal-${uportal.version}/ldap-merge-configuration.xml"/>
         <antcall target="merge-configuration">
             <param name="configfile" value="${work.dir}/ldap-merge/ldap-merge-configuration.xml"/>
             <param name="targetdir" value="${portal.webapp.home}"/>
         </antcall>
 
-        <copy filtering="on" todir="${work.dir}/ldap-merge" file="${basedir}/properties/uPortal-${uportal.version}/personDirectory-bean-merge-configuration.xml">
-            <filterset refid="tokens"/>
-        </copy>
+        <copyWithAllPropertiesFilter filtering="on" todir="${work.dir}/ldap-merge" file="${basedir}/properties/uPortal-${uportal.version}/personDirectory-bean-merge-configuration.xml"/>
         <antcall target="merge-configuration">
             <param name="configfile" value="${work.dir}/ldap-merge/personDirectory-bean-merge-configuration.xml"/>
             <param name="targetdir" value="${portal.webapp.home}"/>
@@ -2087,19 +1914,7 @@ xercesImpl.version=${xercesImpl.version}
         <taskdef name="gen-security-context-props" classname="net.unicon.toro.installer.anttask.GenerateSecurityContextProperties" classpath="${basedir}"/>
         <gen-security-context-props/>
 
-        <copy filtering="on" todir="${work.dir}/ldap-merge" file="${basedir}/properties/uPortal-${uportal.version}/security-context-bean-merge-configuration.xml">
-            <filterset refid="tokens"/>
-            <filterset>
-                <filter token="ldap.security.comment" value="${ldap.security.comment}"/>
-                <filter token="ldap2.security.comment" value="${ldap2.security.comment}"/>
-                <filter token="ldap3.security.comment" value="${ldap3.security.comment}"/>
-                <filter token="ldap4.security.comment" value="${ldap4.security.comment}"/>
-                <filter token="ldap.name.security" value="${ldap.name.security}"/>
-                <filter token="ldap2.name.security" value="${ldap2.name.security}"/>
-                <filter token="ldap3.name.security" value="${ldap3.name.security}"/>
-                <filter token="ldap4.name.security" value="${ldap4.name.security}"/>
-            </filterset>
-        </copy>
+        <copyWithAllPropertiesFilter filtering="on" todir="${work.dir}/ldap-merge" file="${basedir}/properties/uPortal-${uportal.version}/security-context-bean-merge-configuration.xml"/>
         <antcall target="merge-configuration">
             <param name="configfile" value="${work.dir}/ldap-merge/security-context-bean-merge-configuration.xml"/>
             <param name="targetdir" value="${portal.webapp.home}"/>
@@ -2193,12 +2008,11 @@ xercesImpl.version=${xercesImpl.version}
         </antcall>
         <property name="gateway-portlet.active" value="yes"/>
         <antcall target="deploy-gateway-portlet"/>
-        <copy tofile="${tomcat.host.conf}/toro-blojsom.xml" file="properties/toro-blojsom.xml">
-            <filterset refid="tokens"/>
+        <copyWithAllPropertiesFilter tofile="${tomcat.host.conf}/toro-blojsom.xml" file="properties/toro-blojsom.xml">
             <filterset>
                 <filter token="webappName" value="toro-blojsom"/>
             </filterset>
-        </copy>
+        </copyWithAllPropertiesFilter>
     </target>
 
     <target name="clean-blojsom" if="blojsom.active">
@@ -3086,7 +2900,7 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
                 <include name="**/common-factory.properties"/>
             </patternset>
         </unjar>
-        <move filtering="on" todir="${work.dir}/uportal-properties/properties">
+        <moveWithAllPropertiesFilter filtering="on" todir="${work.dir}/uportal-properties/properties">
             <fileset dir="${work.dir}/uportal-properties/properties/WEB-INF/classes/properties">
                 <include name="academus-apps-lms.properties"/>
                 <include name="academus-apps.properties"/>
@@ -3097,9 +2911,7 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
                 <include name="academus-portal.properties"/>
                 <include name="common-factory.properties"/>
             </fileset>
-            <filterset refid="tokens"/>
-        </move>
-
+        </moveWithAllPropertiesFilter>
         <artifact:dependencies pathId="cmsGroupInitialization.classpath">
             <dependency groupId="net.unicon.toro" artifactId="cdk"
                 version="${maven.project.version}" type="jar"/>
@@ -3537,14 +3349,13 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
                     In the "dist" target, the .war produced includes this context declaration in its /META-INF/.
                -->
  
-         <copy tofile="${tomcat.host.conf}/${portal.webapp.name}.xml"
-             file="${basedir}/properties/uPortal-${uportal.version}/context.xml"
-             overwrite="true">
-             <filterset refid="tokens"/>
-             <filterset>
-                 <filter token="webappName" value="${portal.webapp.name}"/>
-             </filterset>
-           </copy>
+           <copyWithAllPropertiesFilter tofile="${tomcat.host.conf}/${portal.webapp.name}.xml"
+               file="${basedir}/properties/uPortal-${uportal.version}/context.xml"
+               overwrite="true">
+               <filterset>
+                   <filter token="webappName" value="${portal.webapp.name}"/>
+               </filterset>
+           </copyWithAllPropertiesFilter>
            <copy todir="${tomcat.host.conf}" file="${work.dir}/uportal-${uportal.version}/WEB-INF/classes/properties/proxyportlet.xml"/>
  
              <!-- Deploy classes to support the modified version of WSRP4J's proxyportlet.
@@ -3555,17 +3366,13 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
              <fileset dir="${work.dir}/uportal-${uportal.version}/WEB-INF/classes/org/jasig/portal/wsrp/consumer/portlet"/>
          </copy>
  
-         <copy tofile="${portal.webapp.home}/WEB-INF/classes/log4j.properties"
-             file="${basedir}/properties/uPortal-${uportal.version}/log4j.properties"
-             overwrite="true">
-             <filterset refid="tokens"/>
-         </copy>
+       <copyWithAllPropertiesFilter tofile="${portal.webapp.home}/WEB-INF/classes/log4j.properties"
+           file="${basedir}/properties/uPortal-${uportal.version}/log4j.properties"
+           overwrite="true"/>
 
-         <copy tofile="${portal.webapp.home}/WEB-INF/classes/properties/portal.properties"
-             file="${basedir}/properties/uPortal-${uportal.version}/portal.properties"
-             overwrite="true">
-             <filterset refid="tokens"/>
-         </copy>
+       <copyWithAllPropertiesFilter tofile="${portal.webapp.home}/WEB-INF/classes/properties/portal.properties"
+           file="${basedir}/properties/uPortal-${uportal.version}/portal.properties"
+           overwrite="true"/>
    </target>
 
    <target name="uportal-add-additional-constraints">
@@ -3606,9 +3413,7 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
                <include name="*.dtd"/>
            </fileset>
        </copy>
-       <copy overwrite="true" filtering="on" tofile="${work.dir}/uportal-properties/properties/rdbm.properties" file="${basedir}/properties/uPortal-${uportal.version}/rdbm.properties">
-           <filterset refid="tokens"/>
-       </copy>
+       <copyWithAllPropertiesFilter overwrite="true" filtering="on" tofile="${work.dir}/uportal-properties/properties/rdbm.properties" file="${basedir}/properties/uPortal-${uportal.version}/rdbm.properties"/>
        <copy overwrite="true" todir="${work.dir}/uportal-properties/properties/chanpub">
            <fileset dir="${basedir}/properties/uPortal-${uportal.version}/chanpub"/>
        </copy>
