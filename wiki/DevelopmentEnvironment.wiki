@@ -1,14 +1,17 @@
-#summary One-sentence summary of this page.
+This page describes how to build and deploy the components in Toro Portal.
 
-= Introduction =
+# Check out the desired version. For the trunk, svn checkout https://toro-portal.googlecode.com/svn/trunk/ toro-portal --username username
 
-Add your content here.
+# Perform an initial maven install from the root directory.
+toro-portal> mvn install
 
+# Use the installer to initially deploy all the components and initialize the database.
+(See [http://www.unicon.net/node/821])
 
-= Details =
+# Modify source code or resources, then deploy that component. The ant script at the root directory handles deploying all the subcomponents. Type 'ant' at the root directory to get a list of all the available targets.
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+e.g.
 
+toro-portal> vi channels/channels/survey/src/main/java/net/unicon/portal/channels/survey/survey/CSurvey.java
+
+toro-portal> ant survey
