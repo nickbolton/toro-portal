@@ -1,3 +1,4 @@
+#labels Phase-Implementation,Phase-Deploy
 This page describes how to build and deploy the components in Toro Portal.
 
   # Check out the desired version. For the trunk, svn checkout https://toro-portal.googlecode.com/svn/trunk/ toro-portal --username username
