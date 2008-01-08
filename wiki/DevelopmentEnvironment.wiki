@@ -76,9 +76,6 @@ Trying to override old definition of task copyWithAllPropertiesFilter
 Trying to override old definition of task moveWithAllPropertiesFilter
 
 merge-configuration:
-     [echo] maven.project.version: 1.0.0-rc-6-SNAPSHOT
-     [echo] jaxen.version: 1.1
-     [echo] dom4j.version: 1.6.1
      [echo] MergeConfiguration configfile=channels/survey/target/classes/uportal-configuration-merges/uportal-configuration-merges.xml targetdir=/common/dev/src/unicon/toro/tomcat/webapps/portal
      [java] Merging properties changes to /common/dev/src/unicon/toro/tomcat/webapps/portal/WEB-INF/classes/properties/worker.properties
 
