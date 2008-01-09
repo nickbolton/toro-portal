@@ -83,9 +83,13 @@ public class EnsureSecurityContextsHaveCaching {
             
             if ("org.jasig.portal.security.provider.CacheSecurityContextFactory".equals(root)) return;
             
-            if ("org.jasig.portal.security.provider.SimpleSecurityContextFactory".equals(root)) {
-                p.setProperty("root", "org.jasig.portal.security.provider.CacheSecurityContextFactory");
-                save(p, securityContextFile);
+            if ("org.jasig.portal.security.provider.SimpleSecurityContextFactory".equals(root) ||
+                "org.jasig.portal.security.provider.SimpleLdapSecurityContextFactory".equals(root) ||
+                "edu.columbia.ais.portal.security.provider.CasSecurityContextFactory".equals(root)) {
+                
+                if (processSubContexts("root", p)) {
+                    save(p, securityContextFile);
+                }
                 return;
             }
             
@@ -98,20 +102,7 @@ public class EnsureSecurityContextsHaveCaching {
                         "org.jasig.portal.security.provider.SimpleLdapSecurityContextFactory".equals(p.getProperty(name)) ||
                         "edu.columbia.ais.portal.security.provider.CasSecurityContextFactory".equals(p.getProperty(name))) {
                         
-                        List<String> l = getSubContexts(name, p);
-                        Iterator<String> itr = l.iterator();
-                        boolean isCached = false;
-                        while (!isCached && itr.hasNext()) {
-                            isCached = "org.jasig.portal.security.provider.CacheSecurityContextFactory".equals(p.getProperty(itr.next()));
-                        }
-                        if (!isCached) {
-                            if (p.getProperty(name+".cache") == null) {
-                                p.setProperty(name+".cache", "org.jasig.portal.security.provider.CacheSecurityContextFactory");
-                            } else {
-                                p.setProperty(name+".toro_cache", "org.jasig.portal.security.provider.CacheSecurityContextFactory");
-                            }
-                            saveFile = true;
-                        }
+                        saveFile = processSubContexts(name, p) || saveFile;
                     }
                 }
             }
@@ -125,6 +116,25 @@ public class EnsureSecurityContextsHaveCaching {
         } catch (IOException e) {
             throw new RuntimeException("Failed reading file: " + uPortalHome, e);
         }
+    }
+    
+    private boolean processSubContexts(String name, Properties p) {
+        boolean saveFile = false;
+        List<String> l = getSubContexts(name, p);
+        Iterator<String> itr = l.iterator();
+        boolean isCached = false;
+        while (!isCached && itr.hasNext()) {
+            isCached = "org.jasig.portal.security.provider.CacheSecurityContextFactory".equals(p.getProperty(itr.next()));
+        }
+        if (!isCached) {
+            if (p.getProperty(name+".cache") == null) {
+                p.setProperty(name+".cache", "org.jasig.portal.security.provider.CacheSecurityContextFactory");
+            } else {
+                p.setProperty(name+".toro_cache", "org.jasig.portal.security.provider.CacheSecurityContextFactory");
+            }
+            saveFile = true;
+        }
+        return saveFile;
     }
     
     private List<String> getSubContexts(String context, Properties p) {
