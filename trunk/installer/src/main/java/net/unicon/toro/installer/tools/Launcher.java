@@ -26,6 +26,7 @@ package net.unicon.toro.installer.tools;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
@@ -130,23 +131,45 @@ public class Launcher {
         
         // delegate stdout/stdin from process.
         if (pb != null) {
+            Writer writer = null;
+            StandardInputWorker stdinWorker = null;
+            PrintWriter logger = null;
+            BufferedReader reader = null;
             try {
                 pb.redirectErrorStream(true);
                 Process p = pb.start();
                 if (!guiMode) {
-                    Writer writer = new OutputStreamWriter(p.getOutputStream());
-                    StandardInputWorker stdinWorker = new StandardInputWorker(writer);
+                    writer = new OutputStreamWriter(p.getOutputStream());
+                    stdinWorker = new StandardInputWorker(writer);
                     Thread stdinThread = new Thread(stdinWorker);
                     stdinThread.start();
                     String line;
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                    logger = new PrintWriter(new FileWriter("installer.log"));
+                    reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
                     while ((line = reader.readLine()) != null) {
-                      System.out.println(line);
+                        System.out.println(line);
+                        logger.println(line);
                     }
-                    stdinWorker.stop();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                if (writer != null) {
+                    try { writer.close(); } catch (IOException ioe) {}
+                    writer = null;
+                }
+                if (stdinWorker != null) {
+                    stdinWorker.stop();
+                }
+                if (logger != null) {
+                    logger.flush();
+                    logger.close();
+                    logger = null;
+                }
+                if (reader != null) {
+                    try { reader.close(); } catch (IOException ioe) {}
+                    reader = null;
+                }
             }
         }
     }
