@@ -1,0 +1,548 @@
+<!--
+  Copyright (C) 2007 Unicon, Inc.
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this distribution.  It is also available here:
+  http://www.fsf.org/licensing/licenses/gpl.html
+
+  As a special exception to the terms and conditions of version 
+  2 of the GPL, you may redistribute this Program in connection 
+  with Free/Libre and Open Source Software ("FLOSS") applications 
+  as described in the GPL FLOSS exception.  You should have received
+  a copy of the text describing the FLOSS exception along with this
+  distribution.
+-->
+<project name="toro" default="help" basedir="." xmlns:artifact="urn:maven-artifact-ant">
+
+    <typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="urn:maven-artifact-ant">
+        <classpath>
+            <pathelement location="dependencies/maven-ant-tasks-2.0.7.jar"/>
+        </classpath>
+    </typedef>
+
+    <artifact:pom id="maven.project" file="${basedir}/pom.xml" />
+
+    <artifact:remoteRepository
+        id="uportal.repository"
+        url="${uportal.remote.repo}" />
+
+    <artifact:remoteRepository
+        id="toro.repository"
+        url="${toro.remote.repo}" />
+
+    <artifact:remoteRepository
+        id="central.repository"
+        url="${central.remote.repo}" />
+
+    <import file="installer/build_common.xml"/>
+
+    <target name="init">
+        <artifact:dependencies pathId="toro-installer.classpath">
+            <dependency groupId="net.unicon.toro" artifactId="toro-installer"
+                version="${maven.project.version}" type="jar"/>
+        </artifact:dependencies>
+        <taskdef name="copyWithAllPropertiesFilter" classname="net.unicon.toro.installer.anttask.CopyWithAllPropertiesFilter" classpathref="toro-installer.classpath"/>
+        <taskdef name="moveWithAllPropertiesFilter" classname="net.unicon.toro.installer.anttask.MoveWithAllPropertiesFilter" classpathref="toro-installer.classpath"/>
+        <taskdef name="dumpproperties" classname="net.unicon.toro.installer.anttask.DumpProperties" classpathref="toro-installer.classpath"/>
+        <dumpproperties/>
+        <mkdir dir="webpages/WEB-INF/tld"/>
+        <copy todir="webpages/WEB-INF/tld" file="installer/src/main/resources/webpages/WEB-INF/tld/portlet.tld"/>
+    </target>
+
+    <target name="help">
+        <echo>
+The following is a list of the available targets.  Each one deploys a component into the portal currently configured at ${tomcat.home}. So to deploy a component, just type ant &lt;component name> .. e.g. ant demetrius - this will deploy the demetrius library to every other dependent component.
+
+blojsom
+addressbook
+bookmarks
+calendar
+campusannouncements
+classifieds
+cms
+ldapchangepw
+login
+news
+notes
+survey
+systray
+useradmin
+academus-api
+alchemist
+cdk
+civis
+demetrius
+jgrapht
+mercury
+penelope
+portlets-common
+resource-pool
+sdk
+sso-auth-cache
+toro-common
+uportal-academus-api
+warlock
+briefcase
+gateway
+messaging
+permissions
+web-content
+    </echo>
+    </target>
+
+    <target name="blojsom" depends="init, set-resource-tokens, set-db-properties">
+        <ant dir="blojsom" antfile="build.xml" target="install"/>
+        <antcall inheritRefs="true" target="deploy-toro-war">
+            <param name="webappName" value="toro-blojsom"/>
+            <param name="artifactId" value="blojsom"/>
+        </antcall>
+    </target>
+
+    <target name="addressbook" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="channels/addressbook" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="channels/addressbook/target/toro-addressbook-channel-${maven.project.version}.jar"/>
+        <antcall target="copy-local-resources-filtered">
+            <param name="resources.dir" value="channels/addressbook/target/classes"/>
+            <param name="target.dir" value="${portal.webapp.home}"/>
+        </antcall>
+    </target>
+
+    <target name="bookmarks" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="channels/bookmarks" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="channels/bookmarks/target/toro-bookmarks-channel-${maven.project.version}.jar"/>
+        <antcall target="copy-local-resources-filtered">
+            <param name="resources.dir" value="channels/bookmarks/target/classes"/>
+            <param name="target.dir" value="${portal.webapp.home}"/>
+        </antcall>
+    </target>
+
+    <target name="calendar" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="channels/calendar" />
+            <param name="goal" value="install" />
+        </antcall>
+        <antcall target="copy-local-resources-filtered">
+            <param name="resources.dir" value="channels/calendar/target/classes"/>
+            <param name="target.dir" value="${portal.webapp.home}"/>
+        </antcall>
+    </target>
+
+    <target name="campusannouncements" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="channels/campusannouncement" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="channels/campusannouncement/target/toro-campusannouncement-channel-${maven.project.version}.jar"/>
+        <antcall target="copy-local-resources-filtered">
+            <param name="resources.dir" value="channels/campusannouncement/target/classes"/>
+            <param name="target.dir" value="${portal.webapp.home}"/>
+        </antcall>
+    </target>
+
+    <target name="classifieds" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="channels/classifieds" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="channels/classifieds/target/toro-classifieds-channel-${maven.project.version}.jar"/>
+        <antcall target="copy-local-resources-filtered">
+            <param name="resources.dir" value="channels/classifieds/target/classes"/>
+            <param name="target.dir" value="${portal.webapp.home}"/>
+        </antcall>
+    </target>
+
+    <target name="cms" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="channels/cms" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="channels/cms/target/toro-cms-channel-${maven.project.version}.jar"/>
+        <antcall target="copy-local-resources-filtered">
+            <param name="resources.dir" value="channels/cms/target/classes"/>
+            <param name="target.dir" value="${portal.webapp.home}"/>
+        </antcall>
+    </target>
+
+    <target name="ldapchangepw" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="channels/ldapchangepw" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="channels/ldapchangepw/target/toro-ldapchangepw-channel-${maven.project.version}.jar"/>
+        <antcall target="copy-local-resources-filtered">
+            <param name="resources.dir" value="channels/ldapchangepw/target/classes"/>
+            <param name="target.dir" value="${portal.webapp.home}"/>
+        </antcall>
+    </target>
+
+    <target name="login" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="channels/login" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="channels/login/target/toro-login-channel-${maven.project.version}.jar"/>
+        <antcall target="copy-local-resources-filtered">
+            <param name="resources.dir" value="channels/login/target/classes"/>
+            <param name="target.dir" value="${portal.webapp.home}"/>
+        </antcall>
+    </target>
+
+    <target name="news" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="channels/news" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="channels/news/target/toro-news-channel-${maven.project.version}.jar"/>
+        <antcall target="copy-local-resources-filtered">
+            <param name="resources.dir" value="channels/news/target/classes"/>
+            <param name="target.dir" value="${portal.webapp.home}"/>
+        </antcall>
+    </target>
+
+    <target name="notes" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="channels/notes" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="channels/notes/target/toro-notes-channel-${maven.project.version}.jar"/>
+        <antcall target="copy-local-resources-filtered">
+            <param name="resources.dir" value="channels/notes/target/classes"/>
+            <param name="target.dir" value="${portal.webapp.home}"/>
+        </antcall>
+    </target>
+
+    <target name="survey" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="channels/survey" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="channels/survey/target/toro-survey-channel-${maven.project.version}.jar"/>
+        <antcall target="copy-local-resources-filtered">
+            <param name="resources.dir" value="channels/survey/target/classes"/>
+            <param name="target.dir" value="${portal.webapp.home}"/>
+        </antcall>
+        <mkdir dir="${toro.data.home}/survey"/>
+        <antcall target="merge-configuration">
+            <param name="configfile" value="channels/survey/target/classes/uportal-configuration-merges/uportal-configuration-merges.xml"/>
+            <param name="targetdir" value="${portal.webapp.home}"/>
+        </antcall>
+    </target>
+
+    <target name="systray" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="channels/systray" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="channels/systray/target/toro-systray-channel-${maven.project.version}.jar"/>
+        <antcall target="copy-local-resources-filtered">
+            <param name="resources.dir" value="channels/systray/target/classes"/>
+            <param name="target.dir" value="${portal.webapp.home}"/>
+        </antcall>
+    </target>
+
+    <target name="useradmin" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="channels/useradmin" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="channels/useradmin/target/toro-useradmin-channel-${maven.project.version}.jar"/>
+        <antcall target="copy-local-resources-filtered">
+            <param name="resources.dir" value="channels/useradmin/target/classes"/>
+            <param name="target.dir" value="${portal.webapp.home}"/>
+        </antcall>
+    </target>
+
+    <target name="academus-api" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="libraries/academus-api" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${tomcat.home}/shared/lib" file="libraries/academus-api/target/academus-api-${maven.project.version}.jar"/>
+    </target>
+
+    <target name="alchemist" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="libraries/alchemist" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="libraries/alchemist/target/alchemist-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-blojsom/WEB-INF/lib" file="libraries/alchemist/target/alchemist-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-briefcase-portlet/WEB-INF/lib" file="libraries/alchemist/target/alchemist-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-gateway-portlet/WEB-INF/lib" file="libraries/alchemist/target/alchemist-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-messaging-portlet/WEB-INF/lib" file="libraries/alchemist/target/alchemist-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-permissions-portlet/WEB-INF/lib" file="libraries/alchemist/target/alchemist-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-portlets-common/WEB-INF/lib" file="libraries/alchemist/target/alchemist-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-web-content-portlet/WEB-INF/lib" file="libraries/alchemist/target/alchemist-${maven.project.version}.jar"/>
+    </target>
+
+    <target name="cdk" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="libraries/cdk" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="libraries/cdk/target/cdk-${maven.project.version}.jar"/>
+        <antcall target="merge-configuration">
+            <param name="configfile" value="libraries/cdk/target/classes/uportal-configuration-merges/uportal-configuration-merges.xml"/>
+            <param name="targetdir" value="${portal.webapp.home}"/>
+        </antcall>
+    </target>
+
+    <target name="civis" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="libraries/civis" />
+            <param name="goal" value="install" />
+        </antcall>
+        <antcall target="mvn">
+            <param name="dir" value="libraries/civis-selector" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="libraries/civis/target/civis-${maven.project.version}.jar"/>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="libraries/civis-selector/target/civis-selector-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-briefcase-portlet/WEB-INF/lib" file="libraries/civis/target/civis-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-briefcase-portlet/WEB-INF/lib" file="libraries/civis-selector/target/civis-selector-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-gateway-portlet/WEB-INF/lib" file="libraries/civis/target/civis-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-gateway-portlet/WEB-INF/lib" file="libraries/civis-selector/target/civis-selector-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-messaging-portlet/WEB-INF/lib" file="libraries/civis/target/civis-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-messaging-portlet/WEB-INF/lib" file="libraries/civis-selector/target/civis-selector-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-permissions-portlet/WEB-INF/lib" file="libraries/civis/target/civis-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-permissions-portlet/WEB-INF/lib" file="libraries/civis-selector/target/civis-selector-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-web-content-portlet/WEB-INF/lib" file="libraries/civis/target/civis-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-web-content-portlet/WEB-INF/lib" file="libraries/civis-selector/target/civis-selector-${maven.project.version}.jar"/>
+
+        <copy todir="${tomcat.home}/webapps/toro-portlets-common/WEB-INF/lib" file="libraries/civis/target/civis-${maven.project.version}.jar"/>
+    </target>
+
+    <target name="demetrius" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="libraries/demetrius" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${tomcat.home}/webapps/toro-briefcase-portlet/WEB-INF/lib" file="libraries/demetrius/target/demetrius-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-permissions-portlet/WEB-INF/lib" file="libraries/demetrius/target/demetrius-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-portlets-common/WEB-INF/lib" file="libraries/demetrius/target/demetrius-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-web-content-portlet/WEB-INF/lib" file="libraries/demetrius/target/demetrius-${maven.project.version}.jar"/>
+    </target>
+
+    <target name="jgrapht" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="libraries/jgrapht" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="libraries/jgrapht/target/jgrapht-${maven.project.version}.jar"/>
+    </target>
+
+    <target name="mercury" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="libraries/mercury" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="libraries/mercury/target/mercury-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-messaging-portlet/WEB-INF/lib" file="libraries/mercury/target/mercury-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-permissions-portlet/WEB-INF/lib" file="libraries/mercury/target/mercury-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-portlets-common/WEB-INF/lib" file="libraries/mercury/target/mercury-${maven.project.version}.jar"/>
+    </target>
+
+    <target name="penelope" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="libraries/penelope" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="libraries/penelope/target/penelope-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-briefcase-portlet/WEB-INF/lib" file="libraries/penelope/target/penelope-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-gateway-portlet/WEB-INF/lib" file="libraries/penelope/target/penelope-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-messaging-portlet/WEB-INF/lib" file="libraries/penelope/target/penelope-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-permissions-portlet/WEB-INF/lib" file="libraries/penelope/target/penelope-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-portlets-common/WEB-INF/lib" file="libraries/penelope/target/penelope-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-web-content-portlet/WEB-INF/lib" file="libraries/penelope/target/penelope-${maven.project.version}.jar"/>
+    </target>
+
+    <target name="portlets-common" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="libraries/portlets-common" />
+            <param name="goal" value="install" />
+        </antcall>
+        <antcall target="deploy-toro-war">
+            <param name="webappName" value="toro-portlets-common"/>
+            <param name="artifactId" value="portlets-common-webapp"/>
+        </antcall>
+    </target>
+
+    <target name="resource-pool" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="libraries/resource-pool" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${tomcat.home}/shared/lib" file="libraries/resource-pool/target/resource-pool-${maven.project.version}.jar"/>
+    </target>
+
+    <target name="sdk" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="libraries/sdk" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="libraries/sdk/target/sdk-${maven.project.version}.jar"/>
+    </target>
+
+    <target name="sso-auth-cache" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="libraries/sso-authentication-cache" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${tomcat.home}/shared/lib" file="libraries/sso-authentication-cache/target/sso-authentication-cache-${maven.project.version}.jar"/>
+    </target>
+
+    <target name="toro-common" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="libraries/toro-common" />
+            <param name="goal" value="install" />
+        </antcall>
+        <antcall target="copy-local-resources-filtered">
+            <param name="resources.dir" value="libraries/toro-common/target/classes"/>
+            <param name="target.dir" value="${portal.webapp.home}"/>
+        </antcall>
+    </target>
+
+    <target name="uportal-academus-api" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="libraries/uportal-academus-api" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="libraries/uportal-academus-api/target/uportal-academus-api-${maven.project.version}.jar"/>
+    </target>
+
+    <target name="warlock" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="libraries/warlock" />
+            <param name="goal" value="install" />
+        </antcall>
+        <copy todir="${tomcat.home}/webapps/toro-briefcase-portlet/WEB-INF/lib" file="libraries/warlock/target/warlock-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-gateway-portlet/WEB-INF/lib" file="libraries/warlock/target/warlock-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-messaging-portlet/WEB-INF/lib" file="libraries/warlock/target/warlock-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-permissions-portlet/WEB-INF/lib" file="libraries/warlock/target/warlock-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-portlets-common/WEB-INF/lib" file="libraries/warlock/target/warlock-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-web-content-portlet/WEB-INF/lib" file="libraries/warlock/target/warlock-${maven.project.version}.jar"/>
+    </target>
+
+    <target name="briefcase" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="portlets/briefcase-portlet" />
+            <param name="goal" value="install" />
+        </antcall>
+        <antcall target="deploy-portlet">
+            <param name="artifactId" value="briefcase-portlet"/>
+            <param name="webappName" value="toro-briefcase-portlet"/>
+            <param name="webContextBaseDir" value="installer/src/main/resources"/>
+        </antcall>
+        <copy todir="${tomcat.home}/webapps/toro-permissions-portlet/WEB-INF/lib" file="portlets/briefcase-portlet/library/target/briefcase-lib-${maven.project.version}.jar"/>
+    </target>
+
+    <target name="gateway" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="portlets/gateway-portlet" />
+            <param name="goal" value="install" />
+        </antcall>
+        <antcall target="deploy-portlet">
+            <param name="artifactId" value="gateway-portlet"/>
+            <param name="webappName" value="toro-gateway-portlet"/>
+            <param name="webContextBaseDir" value="installer/src/main/resources"/>
+        </antcall>
+        <copy todir="${tomcat.home}/webapps/toro-permissions-portlet/WEB-INF/lib" file="portlets/gateway-portlet/library/target/gateway-lib-${maven.project.version}.jar"/>
+    </target>
+
+    <target name="messaging" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="portlets/messaging-portlet" />
+            <param name="goal" value="install" />
+        </antcall>
+        <antcall target="deploy-portlet">
+            <param name="artifactId" value="messaging-portlet"/>
+            <param name="webappName" value="toro-messaging-portlet"/>
+            <param name="webContextBaseDir" value="installer/src/main/resources"/>
+        </antcall>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="portlets/messaging-portlet/library/target/messaging-lib-${maven.project.version}.jar"/>
+        <copy todir="${portal.webapp.home}/WEB-INF/lib" file="portlets/messaging-portlet/client/target/messaging-portlet-client-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-messaging-portlet/WEB-INF/lib" file="portlets/messaging-portlet/library/target/messaging-lib-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-permissions-portlet/WEB-INF/lib" file="portlets/messaging-portlet/library/target/messaging-lib-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-portlets-common/WEB-INF/lib" file="portlets/messaging-portlet/library/target/messaging-lib-${maven.project.version}.jar"/>
+        <copy todir="${tomcat.home}/webapps/toro-portlets-common/WEB-INF/lib" file="portlets/messaging-portlet/client/target/messaging-portlet-client-${maven.project.version}.jar"/>
+        <artifact:dependencies filesetId="messaging-portlet.fileset">
+            <dependency groupId="net.unicon.toro" artifactId="messaging-portlet" version="${maven.project.version}" type="war"/>
+        </artifact:dependencies>
+        <unjar dest="${work.dir}/toro-portlets-common">
+            <fileset refid="messaging-portlet.fileset"/>
+            <patternset>
+            </patternset>
+        </unjar>
+        <copyWithAllPropertiesFilter overwrite="yes" filtering="on" todir="${tomcat.home}/webapps/toro-portlets-common">
+            <fileset dir="${work.dir}/toro-portlets-common"/>
+        </copyWithAllPropertiesFilter>
+    </target>
+
+    <target name="permissions" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="portlets/permissions-portlet" />
+            <param name="goal" value="install" />
+        </antcall>
+        <antcall target="deploy-portlet">
+            <param name="artifactId" value="permissions-portlet"/>
+            <param name="webappName" value="toro-permissions-portlet"/>
+            <param name="webContextBaseDir" value="installer/src/main/resources"/>
+        </antcall>
+
+        <!-- add the descriptor for each deployed portlet -->
+        <available file="${webapp.home}/toro-briefcase-portlet/WEB-INF/classes/config/permissions-portlet-fragment.xml" property="toro-briefcase-portlet.present"/>
+        <antcall target="merge-permissions-descriptor-for-briefcase"/>
+        <available file="${webapp.home}/toro-messaging-portlet/WEB-INF/classes/config/permissions-portlet-fragment.xml" property="toro-messaging-portlet.present"/>
+        <antcall target="merge-permissions-descriptor-for-messaging"/>
+        <available file="${webapp.home}/toro-gateway-portlet/WEB-INF/classes/config/permissions-portlet-fragment.xml" property="toro-gateway-portlet.present"/>
+        <antcall target="merge-permissions-descriptor-for-gateway"/>
+        <available file="${webapp.home}/toro-web-content-portlet/WEB-INF/classes/config/permissions-portlet-fragment.xml" property="toro-web-content-portlet.present"/>
+        <antcall target="merge-permissions-descriptor-for-web-content"/>
+    </target>
+
+    <target name="web-content" depends="init, set-resource-tokens, set-db-properties">
+        <antcall target="mvn">
+            <param name="dir" value="portlets/web-content-portlet" />
+            <param name="goal" value="install" />
+        </antcall>
+        <antcall target="deploy-portlet">
+            <param name="artifactId" value="web-content-portlet"/>
+            <param name="webappName" value="toro-web-content-portlet"/>
+            <param name="webContextBaseDir" value="installer/src/main/resources"/>
+        </antcall>
+        <copy todir="${tomcat.home}/webapps/toro-permissions-portlet/WEB-INF/lib" file="portlets/web-content-portlet/library/target/web-content-lib-${maven.project.version}.jar"/>
+    </target>
+
+   <target name="mvn">
+        <property name="goal" value="" />
+        <if>
+            <os family="windows" />
+            <then>
+                <property name="mvnExecutable" value="mvn.bat" />
+            </then>
+            <else>
+                <property name="mvnExecutable" value="mvn" />
+            </else>
+        </if>
+        <exec executable="${mvnExecutable}" dir="${dir}" vmlauncher="true" resolveexecutable="true" searchpath="true" failonerror="true">
+            <arg value="${goal}" />
+        </exec>
+   </target>
+
+</project>

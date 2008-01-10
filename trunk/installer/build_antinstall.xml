@@ -25,34 +25,27 @@
 <project name="toro-deployment" default="driver" basedir="${basedir}"
     xmlns:artifact="urn:maven-artifact-ant">
 
-    <property file="build.properties"/>
-    <property file="ant.install.properties"/>
-    <property name="tomcat.home" value="[SET IN BUILD.PROPERTIES!]" />
-    <property name="portal.webapp.home" value="[SET IN BUILD.PROPERTIES!]" />
-    <property name="work.dir" value="${basedir}/work"/>
-    <property name="minJavaVersion" value="1.5"/>
-
-    <property name="webapp.home" value="${tomcat.home}/webapps" />
-    <property name="db.driver.version" value=""/>
-
     <typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="urn:maven-artifact-ant">
         <classpath>
             <pathelement path="${basedir}"/>
         </classpath>
     </typedef>
 
-    <taskdef name="copyWithAllPropertiesFilter" classname="net.unicon.toro.installer.anttask.CopyWithAllPropertiesFilter" classpath="${basedir}"/>
-    <taskdef name="moveWithAllPropertiesFilter" classname="net.unicon.toro.installer.anttask.MoveWithAllPropertiesFilter" classpath="${basedir}"/>
-    <taskdef name="dumpproperties" classname="net.unicon.toro.installer.anttask.DumpProperties" classpath="${basedir}"/>
+    <artifact:pom id="maven.project" file="${basedir}/pom.xml" />
 
-    <artifact:dependencies pathId="ant-contrib.pathId">
-        <dependency groupId="ant-contrib" artifactId="ant-contrib"
-            version="${ant-contrib.version}" type="jar"/>
-        <remoteRepository refid="toro.repository" />
-    </artifact:dependencies>
-    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
-        <classpath refId="ant-contrib.pathId"/>
-    </taskdef>
+    <artifact:remoteRepository
+        id="uportal.repository"
+        url="${uportal.remote.repo}" />
+
+    <artifact:remoteRepository
+        id="toro.repository"
+        url="${toro.remote.repo}" />
+
+    <artifact:remoteRepository
+        id="central.repository"
+        url="${central.remote.repo}" />
+
+    <import file="./build_common.xml"/>
 
     <!-- if it's being executed from the remote configured machine, then execute away.. -->
     <taskdef name="sethostname" classname="net.unicon.toro.installer.anttask.SetHostname" classpath="${basedir}"/>
@@ -70,38 +63,6 @@
             <property name="run.remote.config" value="false"/>
         </else>
     </if>
-
-    <artifact:pom id="maven.project" file="${basedir}/pom.xml" />
-
-    <artifact:remoteRepository
-        id="uportal.repository"
-        url="${uportal.remote.repo}" />
-
-    <artifact:remoteRepository
-        id="toro.repository"
-        url="${toro.remote.repo}" />
-
-    <artifact:remoteRepository
-        id="central.repository"
-        url="${central.remote.repo}" />
-
-    <property environment="env"/>
-
-    <condition property="postgres.platform" value="true">
-        <contains string="${jdbc.driver}" substring="postgres"/>
-    </condition>
-    <condition property="oracle.platform" value="true">
-        <contains string="${jdbc.driver}" substring="oracle"/>
-    </condition>
-    <condition property="sqlserver.platform" value="true">
-        <or>
-            <contains string="${jdbc.driver}" substring="jtds"/>
-            <contains string="${jdbc.driver}" substring="jnetdirect"/>
-        </or>
-    </condition>
-    <condition property="mysql.platform" value="true">
-        <contains string="${jdbc.driver}" substring="mysql"/>
-    </condition>
 
     <!-- don't fetch artifacts when in remote-config mode -->
     <if>
@@ -648,207 +609,6 @@
         </condition>
     </target>
 
-    <target name="set-resource-tokens">
-        <if>
-            <equals arg1="${multibox.configuration}" arg2="true"/>
-            <then>
-                <property name="multibox.comment" value=""/>
-                <property name="dirty.cache.request.handler" value="net.unicon.portal.cache.jms.JMSDirtyCacheRequestHandlerImpl"/>
-            </then>
-            <else>
-                <property name="multibox.comment" value="!--"/>
-                <property name="dirty.cache.request.handler" value="net.unicon.portal.cache.SBDirtyCacheRequestHandlerImpl"/>
-            </else>
-        </if>
-        <if>
-            <equals arg1="${ldap.checkbox}" arg2="true"/>
-            <then>
-                <property name="ldap.comment" value=""/>
-                <if>
-                    <equals arg1="${ldap.protocol.checkbox}" arg2="true"/>
-                    <then>
-                        <property name="ldap.protocol" value="ssl"/>
-                        <property name="ldap.protocol.prefix" value="ldaps"/>
-                    </then>
-                    <else>
-                        <property name="ldap.protocol" value=""/>
-                        <property name="ldap.protocol.prefix" value="ldap"/>
-                    </else>
-                </if>
-            </then>
-            <else>
-                <property name="ldap.comment" value="!--"/>
-            </else>
-        </if>
-        <if>
-            <and>
-                <equals arg1="${ldap2.checkbox}" arg2="true"/>
-            </and>
-            <then>
-                <property name="ldap2.comment" value=""/>
-                <if>
-                    <equals arg1="${ldap2.protocol.checkbox}" arg2="true"/>
-                    <then>
-                        <property name="ldap2.protocol" value="ssl"/>
-                        <property name="ldap2.protocol.prefix" value="ldaps"/>
-                    </then>
-                    <else>
-                        <property name="ldap2.protocol" value=""/>
-                        <property name="ldap2.protocol.prefix" value="ldap"/>
-                    </else>
-                </if>
-            </then>
-            <else>
-                <if>
-                    <equals arg1="${ldap.checkbox}" arg2="true"/>
-                    <then>
-                        <property name="ldap2.comment" value="!--"/>
-                    </then>
-                    <else>
-                        <property name="ldap2.comment" value=""/>
-                    </else>
-                </if>
-            </else>
-        </if>
-        <if>
-            <and>
-                <equals arg1="${ldap3.checkbox}" arg2="true"/>
-            </and>
-            <then>
-                <property name="ldap3.comment" value=""/>
-                <if>
-                    <equals arg1="${ldap3.protocol.checkbox}" arg2="true"/>
-                    <then>
-                        <property name="ldap3.protocol" value="ssl"/>
-                        <property name="ldap3.protocol.prefix" value="ldaps"/>
-                    </then>
-                    <else>
-                        <property name="ldap3.protocol" value=""/>
-                        <property name="ldap3.protocol.prefix" value="ldap"/>
-                    </else>
-                </if>
-            </then>
-            <else>
-                <if>
-                    <equals arg1="${ldap.checkbox}" arg2="true"/>
-                    <then>
-                        <property name="ldap3.comment" value="!--"/>
-                    </then>
-                    <else>
-                        <property name="ldap3.comment" value=""/>
-                    </else>
-                </if>
-            </else>
-        </if>
-        <if>
-            <and>
-                <equals arg1="${ldap4.checkbox}" arg2="true"/>
-            </and>
-            <then>
-                <property name="ldap4.comment" value=""/>
-                <if>
-                    <equals arg1="${ldap4.protocol.checkbox}" arg2="true"/>
-                    <then>
-                        <property name="ldap4.protocol" value="ssl"/>
-                        <property name="ldap4.protocol.prefix" value="ldaps"/>
-                    </then>
-                    <else>
-                        <property name="ldap4.protocol" value=""/>
-                        <property name="ldap4.protocol.prefix" value="ldap"/>
-                    </else>
-                </if>
-            </then>
-            <else>
-                <if>
-                    <equals arg1="${ldap.checkbox}" arg2="true"/>
-                    <then>
-                        <property name="ldap4.comment" value="!--"/>
-                    </then>
-                    <else>
-                        <property name="ldap4.comment" value=""/>
-                    </else>
-                </if>
-            </else>
-        </if>
-        <filterset id="tokens">
-            <filtersfile file="${basedir}/build.properties"/>
-            <filtersfile file="${basedir}/ant.install.properties"/>
-            <filter token="db.platform" value="${db.platform}"/>
-            <filter token="jdbc.simplesql" value="${jdbc.simplesql}"/>
-            <filter token="db.time.impl" value="${db.time.impl}"/>
-            <filter token="db.sqlconcat" value="${db.sqlconcat}"/>
-            <filter token="db.length" value="${db.length}"/>
-            <filter token="cms.enabled" value="${run.deploy.cms.channel}"/>
-            <filter token="multibox.configuration" value="${multibox.configuration}"/>
-            <filter token="multibox.comment" value="${multibox.comment}"/>
-            <filter token="dirty.cache.request.handler" value="${dirty.cache.request.handler}"/>
-            <filter token="ldap.comment" value="${ldap.comment}"/>
-            <filter token="ldap.protocol" value="${ldap.protocol}"/>
-            <filter token="ldap.protocol.prefix" value="${ldap.protocol.prefix}"/>
-            <filter token="ldap2.comment" value="${ldap2.comment}"/>
-            <filter token="ldap2.protocol" value="${ldap2.protocol}"/>
-            <filter token="ldap2.protocol.prefix" value="${ldap2.protocol.prefix}"/>
-            <filter token="ldap3.comment" value="${ldap3.comment}"/>
-            <filter token="ldap3.protocol" value="${ldap3.protocol}"/>
-            <filter token="ldap3.protocol.prefix" value="${ldap3.protocol.prefix}"/>
-            <filter token="ldap4.comment" value="${ldap4.comment}"/>
-            <filter token="ldap4.protocol" value="${ldap4.protocol}"/>
-            <filter token="ldap4.protocol.prefix" value="${ldap4.protocol.prefix}"/>
-            <filter token="jdbc.url" value="${jdbc.url}"/>
-        </filterset>
-    </target>
-
-    <target name="set-db-properties">
-        <if>
-            <isset property="postgres.platform"/>
-            <then>
-                <echo>Setting postgres specific properties...</echo>
-                <property name="db.platform" value="postgres"/>
-                <property name="jdbc.simplesql" value="select 1"/>
-                <property name="db.time.impl" value="net.unicon.portal.util.PostgresTimeServiceImpl"/>
-                <property name="db.sqlconcat" value="||"/>
-                <property name="db.length" value="length"/>
-                <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-            </then>
-        </if>
-        <if>
-            <isset property="oracle.platform"/>
-            <then>
-                <echo>Setting oracle specific properties...</echo>
-                <property name="db.platform" value="oracle"/>
-                <property name="jdbc.simplesql" value="select 1 from dual"/>
-                <property name="db.time.impl" value="net.unicon.portal.util.OracleTimeServiceImpl"/>
-                <property name="db.sqlconcat" value="||"/>
-                <property name="db.length" value="length"/>
-                <property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect"/>
-            </then>
-        </if>
-        <if>
-            <isset property="sqlserver.platform"/>
-            <then>
-                <echo>Setting sqlserver specific properties...</echo>
-                <property name="db.platform" value="sqlserver"/>
-                <property name="jdbc.simplesql" value="select 1"/>
-                <property name="db.time.impl" value="net.unicon.portal.util.SqlServerTimeServiceImpl"/>
-                <property name="db.sqlconcat" value="+"/>
-                <property name="db.length" value="datalength"/>
-                <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
-            </then>
-        </if>
-        <if>
-            <isset property="mysql.platform"/>
-            <then>
-                <echo>Setting mysql specific properties...</echo>
-                <property name="db.platform" value="mysql"/>
-                <property name="jdbc.simplesql" value="select 1"/>
-                <property name="db.time.impl" value="net.unicon.portal.util.MySqlTimeServiceImpl"/>
-                <property name="db.sqlconcat" value="||"/>
-                <property name="db.length" value="length"/>
-                <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
-            </then>
-        </if>
-    </target>
-
     <target name="dump-properties">
         <echo>Executing with properties:</echo>
         <dumpproperties/>
@@ -882,6 +642,10 @@
     </target>
 
     <target name="driver" depends="initialize-run-targets, set-resource-tokens, set-db-properties">
+        <taskdef name="copyWithAllPropertiesFilter" classname="net.unicon.toro.installer.anttask.CopyWithAllPropertiesFilter" classpath="${basedir}"/>
+        <taskdef name="moveWithAllPropertiesFilter" classname="net.unicon.toro.installer.anttask.MoveWithAllPropertiesFilter" classpath="${basedir}"/>
+        <taskdef name="dumpproperties" classname="net.unicon.toro.installer.anttask.DumpProperties" classpath="${basedir}"/>
+
         <antcall target="check-java-version"/>
         <antcall target="dump-properties"/>
         <antcall target="create-uportal-properties"/>
@@ -1187,12 +951,6 @@
 
 
    <target name="initialize">
-      <!--copy file="${basedir}/properties/hibernate.properties" todir="${work.dir}" filtering="on">
-        <filterset refId="tokens"/>
-        <filterset>
-          <filter token="hibernate.dialect" value="${hibernate.dialect}"/>
-        </filterset>
-      </copy-->
       <copyWithAllPropertiesFilter file="${basedir}/properties/hibernate.properties" todir="${work.dir}" filtering="on"/>
 
       <if>
@@ -1576,18 +1334,6 @@
     <!--  End Driver targets  -->
 
     <!-- Maven Utilities -->
-    <target name="copy-maven-artifact-to-file">
-        <echo>Copying maven artifact ${groupId}:${artifactId}:${version}:${archive.type} to ${tofile}</echo>
-        <artifact:dependencies filesetId="copy-maven-artifact.filesetId">
-            <dependency groupId="${groupId}" artifactId="${artifactId}"
-                version="${version}" type="${archive.type}"/>
-            <remoteRepository refid="toro.repository" />
-        </artifact:dependencies>
-        <copy tofile="${tofile}">
-            <fileset refId="copy-maven-artifact.filesetId"/>
-        </copy>
-    </target>
-
     <target name="copy-maven-artifact-to-dir">
         <echo>Copying maven artifact ${groupId}:${artifactId}:${version}:${archive.type} to ${todir}</echo>
         <artifact:dependencies filesetId="copy-maven-artifact.filesetId">
@@ -1599,68 +1345,9 @@
             <fileset refId="copy-maven-artifact.filesetId"/>
         </copy>
     </target>
-
-   <target name="extract-artifact">
-       <available property="artifact.exists" file="${artifact.path}"/>
-       <condition property="ok.to.extract.artifact">
-           <or>
-               <contains string="${version}" substring="SNAPSHOT"/>
-               <not><available file="${target.dir}/.artifact_extracted"/></not>
-           </or>
-       </condition>
-       <antcall target="extract-artifact-task">
-           <param name="groupId" value="${groupId}"/>
-           <param name="artifactId" value="${artifactId}"/>
-           <param name="version" value="${version}"/>
-           <param name="target.dir" value="${target.dir}"/>
-           <param name="archive.type" value="${archive.type}"/>
-           <param name="remote.repository" value="${remote.repository}"/>
-       </antcall>
-       <touch file="${target.dir}/.artifact_extracted"/>
-   </target>
-
-   <target name="extract-artifact-task" if="ok.to.extract.artifact">
-        <echo>Extracting maven artifact ${groupId}:${artifactId}:${version}:${archive.type} to ${target.dir}</echo>
-       <artifact:dependencies filesetId="extract-artifact-task.filesetId">
-           <dependency groupId="${groupId}" artifactId="${artifactId}"
-               version="${version}" type="${archive.type}"/>
-           <remoteRepository refid="${remote.repository}" />
-           <!--include name="**/${artifactId}-${version}.${archive.type}"/-->
-       </artifact:dependencies>
-       <unjar dest="${target.dir}">
-           <fileset refId="extract-artifact-task.filesetId"/>
-       </unjar>
-   </target>
     <!-- End Maven Utilities -->
 
     <!-- Common Utilities -->
-    <target name="deploy-filtered">
-        <antcall target="extract-artifact">
-          <param name="groupId" value="${groupId}"/>
-          <param name="artifactId" value="${artifactId}"/>
-          <param name="version" value="${version}"/>
-          <param name="target.dir" value="${tmpdir}"/>
-          <param name="archive.type" value="${archive.type}"/>
-          <param name="remote.repository" value="${remote.repository}"/>
-        </antcall>
-        <copy todir="${dest}" filtering="on">
-            <fileset dir="${tmpdir}">
-                <include name="**/*.xml"/>
-                <include name="**/*.properties"/>
-            </fileset>
-            <filterset refid="tokens"/>
-            <filterset>
-                <filter token="webappName" value="${webappName}"/>
-            </filterset>
-        </copy>
-        <copy todir="${dest}">
-            <fileset dir="${tmpdir}">
-                <exclude name="**/*.xml"/>
-                <exclude name="**/*.properties"/>
-            </fileset>
-        </copy>
-    </target>
-
     <target name="deploy-toro-jar">
         <antcall target="deploy-jar">
             <param name="groupId" value="net.unicon.toro"/>
@@ -1680,57 +1367,6 @@
             <param name="todir" value="${todir}"/>
             <param name="exclusions" value="${exclusions}"/>
         </antcall>
-    </target>
-
-    <target name="deploy-toro-war">
-        <antcall target="deploy-war">
-            <param name="groupId" value="net.unicon.toro"/>
-            <param name="artifactId" value="${artifactId}"/>
-            <param name="version" value="${maven.project.version}"/>
-            <param name="webappName" value="${webappName}"/>
-            <param name="maven.repo" value="toro.repository"/>
-        </antcall>
-    </target>
-
-    <target name="deploy-war">
-        <artifact:dependencies pathId="${artifactId}.war">
-            <dependency groupId="${groupId}" artifactId="${artifactId}"
-                version="${maven.project.version}" type="war"/>
-            <remoteRepository refid="${maven.repo}" />
-        </artifact:dependencies>
-        <antcall target="deploy-filtered">
-            <param name="groupId" value="${groupId}"/>
-            <param name="artifactId" value="${artifactId}"/>
-            <param name="version" value="${maven.project.version}"/>
-            <param name="archive.type" value="war"/>
-            <param name="dest" value="${webapp.home}/${webappName}"/>
-            <param name="tmpdir" value="${work.dir}/${artifactId}-${maven.project.version}"/>
-            <param name="webappName" value="${webappName}"/>
-            <param name="remote.repository" value="toro.repository"/>
-        </antcall>
-    </target>
-
-    <target name="merge-configuration">
-        <artifact:dependencies pathId="configuration.classpath">
-            <dependency groupId="net.unicon.toro" artifactId="alchemist"
-                version="${maven.project.version}" type="jar"/>
-            <dependency groupId="jaxen" artifactId="jaxen"
-                version="${jaxen.version}" type="jar"/>
-            <dependency groupId="dom4j" artifactId="dom4j"
-                version="${dom4j.version}" type="jar"/>
-            <remoteRepository refid="toro.repository" />
-            <remoteRepository refid="central.repository" />
-        </artifact:dependencies>
-        <echo>MergeConfiguration configfile=${configfile} targetdir=${targetdir}</echo>
-        <java failonerror="true" fork="true" dir="${basedir}" classname="net.unicon.toro.installer.tools.MergeConfiguration">
-            <classpath refid="configuration.classpath"/>
-            <classpath>
-                <pathelement path="${work.dir}/uportal-properties"/>
-                <pathelement path="${basedir}"/>
-            </classpath>
-            <arg value="${configfile}"/>
-            <arg value="${targetdir}"/>    
-        </java>
     </target>
 
     <target name="run-hbm2dll">
@@ -1812,67 +1448,6 @@
             <fileset dir="${work.dir}/toro-portlets-common"/>
         </copyWithAllPropertiesFilter>
     </target> 
-
-    <target name="deploy-portlet">
-        <echo>Deploying maven artifact net.unicon.toro:${artifactId}:${maven.project.version}:war to ${webapp.home}/${webappName}</echo>
-        <artifact:dependencies pathId="deployPortlet.classpath">
-            <dependency groupId="net.unicon.toro" artifactId="${artifactId}" version="${maven.project.version}" type="war"/>
-            <dependency groupId="net.unicon.toro" artifactId="portlets-common-lib" version="${maven.project.version}" type="jar"/>
-            <dependency groupId="org.jasig.uportal" artifactId="uportal" version="${uportal.version}" type="jar"/>
-            <dependency groupId="org.apache.pluto" artifactId="pluto" version="${pluto.version}" type="jar"/>
-            <dependency groupId="commons-logging" artifactId="commons-logging" version="${commons-logging.version}" type="jar"/>
-            <dependency groupId="portlet-api" artifactId="portlet-api" version="${portlet-api.version}" type="jar"/>
-            <dependency groupId="xerces" artifactId="xercesImpl" version="${xercesImpl.version}" type="jar"/>
-            <remoteRepository refid="toro.repository" />
-            <remoteRepository refid="central.repository" />
-        </artifact:dependencies>
-        <delete dir="${webapp.home}/${webappName}"/>
-        <delete dir="${work.dir}/${webappName}.war"/>
-        <antcall target="copy-maven-artifact-to-file">
-            <param name="groupId" value="net.unicon.toro"/>
-            <param name="artifactId" value="${artifactId}"/>
-            <param name="version" value="${maven.project.version}"/>
-            <param name="archive.type" value="war"/>
-            <param name="tofile" value="${work.dir}/${webappName}.war"/>
-        </antcall>
-        <echo message="war: ${work.dir}/${webappName}-${maven.project.version}.war"/>
-        <java fork="true" failonerror="true" dir="${basedir}" classname="org.jasig.portal.container.deploy.Deployer">
-            <classpath refid="deployPortlet.classpath" />
-            <arg value="${work.dir}"/>
-            <arg value="${work.dir}/${webappName}.war"/>
-        </java>
-        <artifact:dependencies filesetId="portlets-common-rendering.filesetId">
-            <dependency groupId="net.unicon.toro" artifactId="portlets-common-lib"
-                version="${maven.project.version}" type="jar"/>
-            <remoteRepository refid="toro.repository" />
-        </artifact:dependencies>
-        <unjar dest="${work.dir}/${webappName}">
-            <fileset refId="portlets-common-rendering.filesetId"/>
-            <patternset>
-                <include name="rendering/**"/>
-            </patternset>
-        </unjar>
-        <copy todir="${webapp.home}/${webappName}" filtering="on">
-            <fileset dir="${work.dir}/${webappName}">
-                <include name="**/*.xml"/>
-                <include name="**/*.properties"/>
-            </fileset>
-            <filterset refid="tokens"/>
-        </copy>
-        <copy todir="${webapp.home}/${webappName}" filtering="off">
-            <fileset dir="${work.dir}/${webappName}">
-                <exclude name="**/*.xml"/>
-                <exclude name="**/*.properties"/>
-            </fileset>
-        </copy>
-        <copy tofile="${tomcat.host.conf}/${webappName}.xml" file="properties/${webappName}.xml">
-            <filterset refid="tokens"/>
-            <filterset>
-                <filter token="webappName" value="${webappName}"/>
-            </filterset>
-        </copy>
-    </target>
-
 
     <target name="clean-portlets" depends="
         clean-briefcase-portlet,
@@ -2020,30 +1595,6 @@
         <delete dir="${webapp.home}/toro-blojsom"/>
         <property name="gateway-portlet.active" value="yes"/>
         <antcall target="clean-gateway-portlet"/>
-    </target>
-
-    <target name="merge-permissions-descriptor-for-briefcase" if="toro-briefcase-portlet.present">
-        <echo>Merging permissions descriptor for briefcase</echo>
-        <loadfile property="replaceValue" srcFile="${webapp.home}/toro-briefcase-portlet/WEB-INF/classes/config/permissions-portlet-fragment.xml"/>
-        <replace file="${webapp.home}/toro-permissions-portlet/WEB-INF/classes/config/permissions-portlet.xml" token="briefcase-portlet-section-->" value="${replaceValue}"/>
-    </target>
-
-    <target name="merge-permissions-descriptor-for-messaging" if="toro-messaging-portlet.present">
-        <echo>Merging permissions descriptor for messaging</echo>
-        <loadfile property="replaceValue" srcFile="${webapp.home}/toro-messaging-portlet/WEB-INF/classes/config/permissions-portlet-fragment.xml"/>
-        <replace file="${webapp.home}/toro-permissions-portlet/WEB-INF/classes/config/permissions-portlet.xml" token="messaging-portlet-section-->" value="${replaceValue}"/>
-    </target>
-
-    <target name="merge-permissions-descriptor-for-gateway" if="toro-gateway-portlet.present">
-        <echo>Merging permissions descriptor for gateway</echo>
-        <loadfile property="replaceValue" srcFile="${webapp.home}/toro-gateway-portlet/WEB-INF/classes/config/permissions-portlet-fragment.xml"/>
-        <replace file="${webapp.home}/toro-permissions-portlet/WEB-INF/classes/config/permissions-portlet.xml" token="gateway-portlet-section-->" value="${replaceValue}"/>
-    </target>
-
-    <target name="merge-permissions-descriptor-for-web-content" if="toro-web-content-portlet.present">
-        <echo>Merging permissions descriptor for web content</echo>
-        <loadfile property="replaceValue" srcFile="${webapp.home}/toro-web-content-portlet/WEB-INF/classes/config/permissions-portlet-fragment.xml"/>
-        <replace file="${webapp.home}/toro-permissions-portlet/WEB-INF/classes/config/permissions-portlet.xml" token="web-content-portlet-section-->" value="${replaceValue}"/>
     </target>
 
     <target name="clean-permissions-portlet" if="permissions-portlet.active">
@@ -2210,28 +1761,10 @@
           <param name="archive.type" value="jar"/>
           <param name="remote.repository" value="uportal.repository"/>
         </antcall>
-        <copy overwrite="true" todir="${portal.webapp.home}">
-            <fileset dir="${work.dir}/${artifactId}-resources">
-                 <patternset>
-                     <include name="media/**"/>
-                 </patternset>
-             </fileset>
-        </copy>
-        <copy filtering="on" overwrite="true" todir="${portal.webapp.home}">
-            <fileset dir="${work.dir}/${artifactId}-resources">
-                 <patternset>
-                     <include name="*.jsp"/>
-                     <include name="*.html"/>
-                     <include name="*.html"/>
-                     <include name="WEB-INF/**"/>
-                     <include name="html/**"/>
-                     <include name="templates/**"/>
-                     <include name="wml/**"/>
-                     <include name="javascript/**"/>
-                 </patternset>
-             </fileset>
-            <filterset refid="tokens"/>
-        </copy>
+        <antcall target="copy-local-resources-filtered">
+            <param name="resources.dir" value="${work.dir}/${artifactId}-resources"/>
+            <param name="target.dir" value="${portal.webapp.home}"/>
+        </antcall>
     </target>
 
     <target name="deploy-survey-channel">
@@ -2256,6 +1789,36 @@
         <antcall target="deploy-toro-resources">
             <param name="artifactId" value="toro-cms-channel"/>
         </antcall>
+        <artifact:dependencies fileSetId="cdk.filesetId">
+            <dependency groupId="net.unicon.toro" artifactId="cdk"
+                        version="${maven.project.version}" type="jar"/>
+            <remoteRepository refid="toro.repository" />
+        </artifact:dependencies>
+        <unjar dest="${work.dir}/uportal-properties/properties">
+            <fileset refId="cdk.filesetId"/>
+            <patternset>
+                <include name="**/academus-apps-lms.properties"/>
+                <include name="**/academus-apps.properties"/>
+                <include name="**/academus-lms.properties"/>
+                <include name="**/factoryImpl.properties"/>
+                <include name="**/ToroPersonDirs.xml"/>
+                <include name="**/unicon-service.properties"/>
+                <include name="**/academus-portal.properties"/>
+                <include name="**/common-factory.properties"/>
+            </patternset>
+        </unjar>
+        <moveWithAllPropertiesFilter filtering="on" todir="${work.dir}/uportal-properties/properties">
+            <fileset dir="${work.dir}/uportal-properties/properties/WEB-INF/classes/properties">
+                <include name="academus-apps-lms.properties"/>
+                <include name="academus-apps.properties"/>
+                <include name="academus-lms.properties"/>
+                <include name="factoryImpl.properties"/>
+                <include name="ToroPersonDirs.xml"/>
+                <include name="unicon-service.properties"/>
+                <include name="academus-portal.properties"/>
+                <include name="common-factory.properties"/>
+            </fileset>
+        </moveWithAllPropertiesFilter>
     </target>
 
     <target name="deploy-news-channel">
@@ -2882,36 +2445,6 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
             <param name="version" value="${maven.project.version}"/>
         </antcall>
 
-        <artifact:dependencies fileSetId="cdk.filesetId">
-            <dependency groupId="net.unicon.toro" artifactId="cdk"
-                        version="${maven.project.version}" type="jar"/>
-            <remoteRepository refid="toro.repository" />
-        </artifact:dependencies>
-        <unjar dest="${work.dir}/uportal-properties/properties">
-            <fileset refId="cdk.filesetId"/>
-            <patternset>
-                <include name="**/academus-apps-lms.properties"/>
-                <include name="**/academus-apps.properties"/>
-                <include name="**/academus-lms.properties"/>
-                <include name="**/factoryImpl.properties"/>
-                <include name="**/ToroPersonDirs.xml"/>
-                <include name="**/unicon-service.properties"/>
-                <include name="**/academus-portal.properties"/>
-                <include name="**/common-factory.properties"/>
-            </patternset>
-        </unjar>
-        <moveWithAllPropertiesFilter filtering="on" todir="${work.dir}/uportal-properties/properties">
-            <fileset dir="${work.dir}/uportal-properties/properties/WEB-INF/classes/properties">
-                <include name="academus-apps-lms.properties"/>
-                <include name="academus-apps.properties"/>
-                <include name="academus-lms.properties"/>
-                <include name="factoryImpl.properties"/>
-                <include name="ToroPersonDirs.xml"/>
-                <include name="unicon-service.properties"/>
-                <include name="academus-portal.properties"/>
-                <include name="common-factory.properties"/>
-            </fileset>
-        </moveWithAllPropertiesFilter>
         <artifact:dependencies pathId="cmsGroupInitialization.classpath">
             <dependency groupId="net.unicon.toro" artifactId="cdk"
                 version="${maven.project.version}" type="jar"/>

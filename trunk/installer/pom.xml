@@ -69,6 +69,7 @@
             <configuration>
               <tasks>
                 <copy file="build_antinstall.xml" tofile="target/classes/build.xml" filtering="on" />
+                <copy file="build_common.xml" todir="target/classes" filtering="on" />
                 <copy file="antinstall-config.xml" todir="target/classes" filtering="on">
                   <filterset>
                     <filter token="uportal.remote.repo" value="http://developer.ja-sig.org/maven2/" />

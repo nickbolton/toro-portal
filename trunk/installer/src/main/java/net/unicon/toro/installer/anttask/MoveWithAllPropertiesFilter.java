@@ -28,14 +28,14 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 import org.apache.tools.ant.Project;
-import org.apache.tools.ant.taskdefs.Copy;
+import org.apache.tools.ant.taskdefs.Move;
 import org.apache.tools.ant.types.FilterSet;
 
 /**
  * SetHostname is an Ant task for setting the current hostname where ant is
  * being executed.
  */
-public class MoveWithAllPropertiesFilter extends Copy {
+public class MoveWithAllPropertiesFilter extends Move {
 
     /**
      * Constructor of the JavaVersionTask class.
@@ -53,6 +53,7 @@ public class MoveWithAllPropertiesFilter extends Copy {
         Iterator itr = h.keySet().iterator();
         while (itr.hasNext()) {
             String name = (String) itr.next();
+            System.out.println("ZZZ setting filter token: " + name + "=" + (String) h.get(name));
             allPropertiesFilterSet.addFilter(name, (String) h.get(name));
         }
         super.getFilterSets().add(allPropertiesFilterSet);
