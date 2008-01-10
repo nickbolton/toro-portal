@@ -1,0 +1,465 @@
+/* Any style declaration within an element that has an underscore "_" prefix (e.g. _width: 100%) is Microsoft IE specific. MSIE will process the underscore as valid CSS syntax even though it is not valid. All other browsers will ignore it. Thus, using the underscore can send MSIE specific style information that other browsers will ignore. */
+
+/* GLOBALS */
+/*--------------------------------------------------------------------------------------*/
+/* Main (x)html tag formatting and global classes. */
+
+html, body, form {
+margin: 0px; 
+padding: 0px;
+}
+
+body {
+font-family: arial, verdana, sans-serif; 
+font-size: 8pt;
+background-color: #37342F;
+color: #000;
+}
+
+a, a:link, a:visited {
+color: #0066CC;
+text-decoration: none;
+}
+
+a:hover {
+color: #2348AB;
+}
+
+input {
+margin: 0px 3px;
+padding: 0px 2px;
+}
+
+input[type="file"] {
+text-align: left; /* Fix bug in Mozilla that shifts widget on Browse */
+}
+
+textarea {
+margin-left: 5px;
+}
+
+caption {
+font-size: 10pt;
+}
+
+/* ((((( Global Classes ))))) */
+
+input.text {
+padding-left: 5px;
+}
+
+input.text-disabled {
+padding-left: 5px;
+}
+
+input.radio {
+}
+
+input.image {
+background: transparent;
+border: 0px;
+}
+
+.hide {
+display: none;
+}
+
+.show-block {
+display: block;
+}
+
+.float-left {
+float: left;
+}
+
+.margin-left {
+margin-left: 10px;
+}
+
+.uportal-input-text { /* uPortal class overwrite */
+background: #fff;
+color: #000;
+}
+
+.alert {
+color: #FF6600;
+}
+
+.note {
+padding: 10px 30px 20px 40px;
+background: #FFF url("../images/icons/icon_note.gif") no-repeat;
+background-position: 5px 5px;
+color: #666;
+border: 1px solid #CCC;
+}
+
+.hide-popup {
+display: none;
+}
+
+.show-popup {
+display: normal;
+}
+
+
+/*  MOBILE HEADER - Unauthenicated */
+.mobile-guest {
+	background-color: #37342F;
+}
+.mobile-guest .mobile-header {
+	padding-top: 10px;	
+}
+.mobile-guest .mobile-header h4 {
+	font-size: 8pt;
+	color: #FFFFFF;
+	padding: 0 0 0 20px;
+	margin: 5px 0 10px 0;
+}
+.mobile-guest .mobile-login {
+	margin: 0 20px;
+}
+
+/*  MOBILE HEADER - Authenticated */
+.mobile {
+	background-color: #FFFFFF;
+}
+.mobile .mobile-logo {
+	background-color: #37342F;
+	padding: 5px 0;
+}
+.mobile .mobile-authenticated {
+	padding: 5px 0 0 10px;
+	font-weight: bold;
+}
+.mobile-authenticated a, .mobile-authenticated a:link, .mobile-authenticated a:visited {
+	color: #0066CC;
+	margin-left: 5px;
+	font-weight: normal;
+}
+
+/*  MOBILE HEADER - Focused */
+.mobile-focused {
+	background-color: #FFFFFF;
+}
+.mobile-focused .mobile-header {
+	background-color: #37342F;
+}
+.mobile-focused .mobile-header-table {
+	width: 100%;
+}
+.mobile-focused .mobile-logo {
+	text-align: right;
+}
+.mobile-focused .mobile-header h2 {
+	margin: 0 0 0 0;
+	padding: 7px 0 0 10px;
+	font-size: 9pt;
+	color: #FFFFFF;
+}
+.mobile-focused .mobile-authenticated {
+	padding: 5px;
+}
+.mobile-focused .mobile-authenticated a img {
+	padding-right: 4px;
+}
+
+/* LOGIN */
+/*--------------------------------------------------------------------------------------*/
+/* Login form; inputs, login button, and login alerts */
+
+#loginContainer {
+background: #FFFFFF;
+}
+
+#login {
+margin: 0px;
+padding: 5px 10px 15px 10px;
+}
+
+#login label {
+display: block;
+margin: 3px;
+}
+
+#loginSubmit {
+margin-top: 5px;
+display: block;
+}
+
+.login-alert {
+margin-top: 10px;
+padding: 5px;
+background: #FFF;
+color: #FF6300;
+border: 1px solid #FF6300;
+}
+
+.login-alert h3 {
+margin: 0px;
+padding: 0px;
+font-size: 10pt;
+}
+
+.mobile-cas {
+	padding: 25px 0;
+}
+.mobile-cas input {
+	margin: 0;
+}
+
+/* MOBILE CONTENT */
+/*--------------------------------------*/
+.mobile-content{
+	margin: 5px;
+	background-color: #FFFFFF;
+	min-height: 150px;
+}
+.mobile-select-nav {
+	background-color: #DFDFDF;
+	padding: 5px;
+}
+.mobile-content h2.mobile-nav-tab {
+	font-size: 8pt;
+	padding: 3px 5px;
+	margin: 5px 0 0 0;
+	background: url('../images/brand/mobile_tab_bg.gif') 0 0 repeat-y;
+}
+.mobile-content ul.mobile-nav-link-container {
+	margin: 0 0 10px 0;
+	padding: 0;
+}
+.mobile-content li.mobile-nav-link {
+	list-style: none;
+	padding: 1px 5px;
+	border-bottom: 1px solid #DBDBDB;
+}
+.mobile-nav-select {
+	font-size: 9pt;
+}
+.mobile-focused .mobile-content {
+	margin: 0 10px;
+}	
+
+/* FOOTER ELEMENTS */
+/*--------------------------------------------------------------------------------------*/
+/* Footer section.  Optional contact information, links, and secondary branding.  Optional rendering paths can be used for specific conditions (focused view [focused], preferences [prefs], login page [login]). */
+.mobile-footer {
+	padding: 5px 10px;
+	background-color: #37342F;
+}
+.mobile-guest .mobile-footer {
+	padding: 5px 22px;
+}
+.mobile-footer a, .mobile-footer a:link, .mobile-footer a:visited {
+	color: #AEAAA2;
+	font-size: 7pt;
+}
+.mobile-guest .mobile-footer a:hover {
+	color: #FFFFFF;
+}
+
+
+
+
+
+
+/*  CHANNEL TOOLBAR ELEMENTS */
+/*------------------------------------------------*/
+.portlet-toolbar-container {
+line-height: normal;
+background: url("../images/navigation/page_nav_bg.jpg") repeat-x;
+color : #505050;
+height: 35px;
+padding-left: 0px;
+display: none;
+}
+
+.tool {
+margin: 5px 0 5px 5px;
+float: left;
+}
+
+.tool-right {
+margin: 0 5px 5px 5px;
+float: right;
+position: relative;
+}
+
+.tool-tab-body {
+font-size: 10pt;
+font-family: verdana, arial;
+font-weight: bold;
+padding: 5px 10px 5px 10px;
+}
+
+.tool-tab-right {
+background: url("../images/navigation/calendar_nav_right.gif") no-repeat top left;
+}
+
+.tool-tab-left {
+background: url("../images/navigation/calendar_nav_left.gif") no-repeat top right;
+}
+
+.tool a, .tool a:hover, .tool a:visited{
+color: #333333;
+text-decoration: none;
+}
+
+.selected-tool {
+background-color: #AFAFAF;
+color: #FFFFFF;
+}
+
+a.selected-tab-link, a.selected-tab-link:link, a.selected-tab-link:visited, a.selected-tab-link:hover {
+    color: #FFF;
+}
+
+.tool2 {
+padding: 2px 8px;
+float: left;
+font-size: 9px;
+font-family: verdana, arial;
+font-weight: bold;
+height: 18px;
+display: none;
+}
+
+.tool3 {
+margin: 2px 5px 5px 5px;
+float: left;
+}
+
+.tool3 a, .tool3 a:hover, .tool3 a:visited{
+text-decoration: none;
+}
+
+.tool-divider {
+float: left;
+}
+
+.selected-group {
+background-color: #efefef;
+border-bottom: #e1e1e1;
+padding: 2px;
+}
+
+.page-title {
+font-size: 9pt;
+color: #000000;
+padding: 0px;
+margin: 0px;
+font-weight: bold;
+
+}
+
+.page-subtitle {
+font-weight: bold;
+margin: 10px 10px 0 10px;
+}
+
+.page-toolbar-container {
+margin: 0;
+padding: 2px;
+border-bottom: 1px solid #CCCCCC;
+font-size: 10pt;
+height: 18px;
+_width: 100%;
+display: none;
+}
+
+.toolbar-img {
+margin: 0px 4px 0px 4px;
+}
+
+.toolbar-table {
+font-size: 7pt;
+}
+
+.bounding-box1 {
+margin: 0 0 15px 0;
+_width: 100%;
+padding: 0px;
+}
+
+.bounding-box2 {
+padding: 3px;
+margin: 10px;
+background-color: #FFFFFF;
+border: 1px solid #EAEAEA;
+text-align: center;
+_width: 100%;
+}
+
+.bounding-box-right {
+margin: 15px;
+padding: 3px;
+background-color: #FFFFFF;
+border: 1px solid #E3E3E3;
+float: right;
+}
+
+.bounding-box3 {
+padding: 5px;
+margin: 0 0 0 0;
+background-color: #F5F5F5;
+_width: 100%;
+}
+
+.bounding-box4 {
+padding: 4px;
+margin: 0;
+background-color: #BBBBBB;
+border-bottom: 1px solid #E3E3E3;
+color: white;
+font-weight: bold;
+_width:100%;
+}
+
+.bounding-box5 {
+padding: 5px;
+margin: 0 5px 0 5px;
+background-color: #FAFAFA;
+border: 1px solid #E3E3E3;
+_width:100%;
+}
+
+.bounding-box6 {
+padding: 5px;
+margin: 5px 10px;
+_width:100%;
+}
+
+.bounding-box7 {
+padding: 5px;
+margin: 10px 30px;
+_width:100%;
+}
+
+#forum-searchbox {
+float:right;
+}
+
+.forum-list {
+margin: 5px 15px 15px 15px;
+background-color: #FAFAFA;
+border: 1px solid #afafaf;
+}
+
+
+.border-left {
+border-left: 1px solid #E3E3E3;
+}
+
+a.whitetext {
+color: #FFFFFF;
+font-weight: bold;
+text-decoration: none;
+}
+
+.table-light td {
+	vertical-align: top;
+}
+
+
+
+                 

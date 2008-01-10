@@ -1,0 +1,603 @@
+/* Any style declaration within an element that has an underscore "_" prefix (e.g. _width: 100%) is Microsoft IE specific. MSIE will process the underscore as valid CSS syntax even though it is not valid. All other browsers will ignore it. Thus, using the underscore can send MSIE specific style information that other browsers will ignore. */
+
+
+/* PREFERENCES */
+/*--------------------------------------------------------------------------------------*/
+
+/* ((((( Preferences Hooks ))))) */
+/* Preferences hooks in the default view layout (Change Layout, Add Content, Change Skin) */
+
+#prefLinks {
+margin: 0px;
+padding: 0px;
+list-style-type: none;
+font-size: 7pt;
+position: absolute;
+top: 145px;
+left: 205px;
+_left: 180;
+z-index: 1;
+}
+
+#prefLinks li {
+margin-left: 25px;
+float: left;
+}
+
+#prefLinks li a {
+display: block;
+height: 17px;
+padding: 3px 0px 0px 23px;
+text-decoration: none;
+float: left;
+}
+
+#prefLinks li a:hover {
+text-decoration: underline;
+/* background-position: 0px -17px; */
+}
+
+/* ((((( Preferences Content Layout ))))) */
+/* Layout for preferences views */
+
+#contentPrefs {
+}
+
+#contentTablePrefs {
+width: 100%;
+margin: 12px 30px 30px 30px;
+_margin: 0px;
+_padding: 12px 30px 0px 30px
+clear: both;
+}
+
+#tabPrefsContainer {
+background: #98C0E4 url("../images/brand/prefs_layout_background.gif") repeat-x;
+border-left: 1px solid #7BADDD;
+border-right: 1px solid #7BADDD;
+border-bottom: 1px solid #7BADDD;
+}
+
+#tabPrefsNavContainer {
+border-left: 1px solid #FFF;
+border-right: 1px solid #FFF;
+border-bottom: 1px solid #7BADDD;
+}
+
+#tabPrefsContent {
+margin: 20px;
+clear: both;
+}
+
+#prefsLeftNav {
+height: 100%;
+background: #6699CC url("../images/brand/prefs_layout_left_background.gif") no-repeat;
+}
+
+#prefsLeftNavCol {
+height: 100%;
+width: 165px;
+min-height: 330px;
+background: url("../images/brand/prefs_layout_left_background2.gif") no-repeat bottom left;
+}
+
+
+/* ((((( Portal Preferences ))))) */
+/* Main user preferences title, navigation tabs (tabs, fragments, languages, skins), and preferences submit buttons */
+
+#portalPrefsContainer {
+min-width: 800px;
+margin: 12px 30px 0px 30px;
+/*position: absolute;
+top: 55px;
+z-index: 10;*/
+}
+
+#portalPrefsContainer h3 {
+margin: 8px 0px 0px 0px;
+padding: 0px;
+color: #000;
+font-size: 12pt;
+}
+
+#prefsNavcontainer {
+margin: 0px 25px;
+}
+
+#portalPrefsNav {
+height: 30px;
+margin: 20px 0px;
+padding: 0px;
+list-style: none;
+border-bottom: 1px solid #CCC;
+}
+
+#portalPrefsNav li {
+margin-right: 4px;
+float: left;
+font-size: 7pt;
+}
+
+a.portalPrefsNav-link, a.portalPrefsNav-link-selected {
+font-weight: bold;
+}
+
+a.portalPrefsNav-link-selected {
+color: #000;
+text-decoration: none;
+}
+
+a.portalPrefsNav-link:hover, a.portalPrefsNav-link-selected:hover {
+text-decoration: underline;
+}
+
+#portalPrefsExit {
+height: 30px;
+_height: 35px;
+margin: 25px 0px 0px 25px;
+padding: 0px;
+list-style: none;
+clear: both;
+}
+
+#portalPrefsExit li {
+margin-right: 20px;
+float: left;
+}
+
+#prefModeFinished, #prefModeCancel {
+display: block;
+margin: 0px;
+padding: 3px 15px;
+background: #D7D7D7;
+color: #666;
+border-top: 2px solid #FFF;
+border-right: 2px solid #000;
+border-bottom: 2px solid #000;
+border-left: 2px solid #FFF;
+font-size: 8pt;
+font-weight: bold;
+text-decoration: none;
+text-align: center;
+v-align: middle;
+}
+
+#prefModeFinished {
+background: #477BAD;
+color: #FFF;
+}
+
+/* ((((( Tab Preferences ))))) */
+/* Tab preferences title, tab preferences navigation, tab rename, tab positioning, and tab layout. */
+
+#addTab {
+height: 20px;
+margin: 0px 0px 25px 30px;
+background: url("../images/icons/tab_add.gif") no-repeat top left;
+}
+
+.add-tab {
+margin: 0px 0px 0px 43px;
+font-size: 7pt;
+font-weight: bold;
+}
+
+#tab-prefs-container {
+padding: 20px;
+background-color: #F5F5F6;
+clear: both;
+}
+
+#tab-preferences {
+}
+
+#tab-preferences h3 {
+margin-bottom: 0px;
+padding: 0px;
+_font-size: 11pt;
+}
+
+#tabPrefsOptions {
+margin: 20px 0px 0px 28px;
+padding: 0px;
+list-style-type: none;
+font-size: 7pt;
+}
+
+#tabPrefsOptions li {
+margin-left: 4px;
+float: left;
+}
+
+#tabPrefsOptions a {
+font-weight: bold;
+}
+
+#tabPrefsSelector {
+position: relative;
+top: -15px;
+left: 55px;
+}
+
+#tabPrefsRename {
+height: 70px;
+width: 250px;
+margin: 10px 0px 10px 0px;
+padding: 0px;
+border: 1px solid #666;
+background: #FFF;
+text-align: center;
+position: absolute;
+top: 270px;
+left: 40px;
+}
+
+#tabPrefsRenameForm {
+margin-top: 0px;
+}
+
+#tabPrefsRenameInput {
+margin: 10px;
+border-top: 1px solid #333;
+border-right: 1px solid #EEE;
+border-bottom: 1px solid #EEE;
+border-left: 1px solid #333;
+background: #EFEFEF;
+color: #666;
+text-align: left;
+}
+
+#tabPrefsRenameSubmit {
+margin-top: 0px;
+}
+
+.tab-rename-cancel {
+padding-top: 30px;
+}
+
+input#tabPrefsRename:focus {
+background: #FFF;
+color: 000;
+}
+
+#tab-preferences ul {
+margin: 0px;
+padding: 0px;
+list-style-type: none;
+}
+
+#tabPrefsContainerToolbar {
+width: 100%;
+}
+
+#tabPrefsContainerToolbarDefault {
+vertical-align: top;
+}
+
+#tabPrefsContainerToolbarLayout {
+text-align: right;
+}
+
+#tabPrefsContainerToolbarLayoutContainer {
+margin: 10px 10px 0px 10px;
+}
+
+#tabPrefsContainerToolbarLayout form {
+display: inline;
+}
+
+/* ((((( Preferences Navigation ))))) */
+/* Tab preferences navigation. */
+
+#prefsNavcontainer {
+}
+
+#prefsNavigation {
+margin: 0px 0px 0px 2px;
+padding: 0px;
+list-style: none;
+vertical-align: bottom;
+}
+
+.prefsnav-li {
+margin: 0px;
+margin-right: 3px;
+padding: 0px;
+background: url("../images/navigation/prefs_tab_background.gif") no-repeat;
+float: left;
+position: relative;
+top: 6px;
+_top: 8px;
+}
+
+.prefsnav-link:link, .prefsnav-link:visited {
+display: block;
+padding: 7px 20px;
+white-space: nowrap;
+background: url("../images/navigation/prefs_tab_background2.gif") no-repeat top right;
+color: #888;
+font-size: 8pt;
+font-weight: normal;
+text-decoration: none;
+}
+
+.prefsnav-li-selected {
+display: block;
+height: 33px;
+_height: 35px;
+margin-right: 3px;
+white-space: nowrap;
+background: url("../images/navigation/prefs_tab_selected_background.gif") no-repeat;
+color: #477BAD;
+font-size: 8pt;
+font-weight: bold;
+text-decoration: none;
+float: left;
+position: relative;
+top: 1px;
+}
+
+.prefsnav-selected-container {
+height: 100%;
+width: 100%;
+_width: auto;
+background: url("../images/navigation/prefs_tab_selected_background2.gif") no-repeat top right;
+_float: left;
+}
+
+.prefsnav-li-selected a, .prefsnav-li-selected span {
+float: left;
+}
+
+.prefsnav-selected-label {
+padding: 12px 10px 0px 10px;
+_padding-top: 14px; 
+}
+
+.prefsnav-selected-move-link {
+display: block;
+height: 17px;
+width: 17px;
+margin-top: 10px; 
+_margin-top: 12px; 
+float: left;
+}
+
+.tab-prefs-move-left {
+margin-left: 10px;
+}
+
+.tab-prefs-move-right {
+margin-right: 10px;
+}
+
+.prefsnav-selected-move-label {
+display: none;
+}
+
+#prefsNavigation span.hide {
+display: none;
+}
+
+.prefsnav-link:hover {
+text-decoration: underline;
+}
+
+/* ((((( Column Preferences ))))) */
+/* Column title, column move, column delete. */
+
+.add-column-container {
+width: 175px;
+margin: 0px 10px;
+padding: 10px 0px;
+background-color: #EEF4FB; 
+text-align: center;
+}
+
+.removeColumn {
+margin: 0px 0px 20px 0px;
+text-align:right;
+}
+
+.column-actions-table {
+}
+
+.add-column, .remove-column {
+font-size: 7pt;
+font-weight: bold;
+}
+
+.preferences-column {
+background: url("../images/brand/prefs_column_bottom.gif") no-repeat; 
+}
+
+.column-preferences, .column-preferences-narrow, .column-preferences-wide {
+height: 100%;
+margin: 0px 20px;
+padding: 10px;
+}
+
+.column-preferences {
+width: 300px;
+background: #EEF4FB url("../images/brand/prefs_column_top.gif") no-repeat; 
+}
+
+.column-preferences-narrow {
+width: 200px;
+background: #EEF4FB url("../images/brand/prefs_column_narrow_top.gif") no-repeat;
+}
+
+.column-preferences-wide {
+width: 400px;
+background: #EEF4FB url("../images/brand/prefs_column_wide_top.gif") no-repeat;
+}
+
+.column-preferences form {
+margin: 0px;
+padding: 0px;
+float: right;
+position: relative;
+top: -20px;
+}
+
+.preferences-column .add-content {
+display: block;
+height: 17px;
+width: 90px;
+margin-top: 10px;
+_margin-top: 0px;
+margin-bottom: 20px;
+vertical-align: middle;
+}
+
+.preferences-column .add-content span {
+padding: 0px 0px 0px 22px;
+font-size: 7pt;
+font-weight: bold;
+}
+
+.remove-column {
+display: block;
+height: 17px;
+width: 90px;
+margin-top: 10px;
+_margin-top: 0px;
+margin-bottom: 20px;
+vertical-align: middle;
+}
+
+/* ((((( Portlet Preferences ))))) */
+/* Portlet or channel title, move, delete. */
+
+.portlet-prefs, .portlet-prefs-hidden {
+height: 80px;
+_height: 50px;
+margin-bottom: 10px;
+padding: 5px 10px;
+background-color: #FFF;
+border: 1px solid #7EB0DC;
+clear: both;
+position: relative;
+}
+
+.portlet-prefs-hidden {
+height: 140px;
+_height: 120px;
+background-color: #EFEFEF;
+border: 1px solid #CCC;
+}
+
+.portlet-prefs h3, .portlet-prefs-hidden h3 {
+margin: 0px 30px 5px 0px;
+padding: 0px;
+font-size: 10pt;
+clear: both;
+}
+
+.portlet-prefs-hidden h3 {
+margin: 0px 30px 10px 0px;
+}
+
+.portlet-remove {
+display: block;
+height: 16px;
+width: 16px;
+position: absolute;
+top: 7px;
+right: 5px
+}
+
+.portlet-remove span {
+display: none;
+}
+
+.hidden-portlet-label {
+color: #000;
+font-weight: bold;
+}
+
+.hidden-portlet-description {
+margin: 3px 0px 0px 0px;
+font-size: 8pt;
+}
+
+.portlet-move-table {
+margin: 0px 10px 0px 0px;
+float: right;
+}
+
+.portlet-move-left-container, .portlet-move-right-container {
+width: 29px;
+}
+
+.portlet-move-right-container {
+margin-left: 10px;
+}
+
+.portlet-move-up-container, .portlet-move-down-container {
+margin-left: 19px;
+}
+
+.portlet-move-table a {
+display: block;
+height: 19px;
+width: 19px;
+}
+
+.portlet-move-table span {
+display: none;
+}
+
+/* ((((( General Preferences ))))) */
+/* Icons and global preference elements. */
+
+.add-content {
+background: url("../images/icons/prefs_add.gif") no-repeat;
+}
+
+.change-layout {
+background: url("../images/icons/prefs_add.gif") no-repeat;
+}
+
+.change-skin {
+background: url("../images/icons/prefs_add.gif") no-repeat;
+}
+
+.tab-prefs-move-right, .tab-prefs-move-right-inactive {
+background: url("../images/icons/prefs_tab_move_right.gif") no-repeat;
+}
+
+.tab-prefs-move-left, .tab-prefs-move-left-inactive {
+background: url("../images/icons/prefs_tab_move_left.gif") no-repeat;
+}
+
+.portlet-remove {
+background: url("../images/icons/prefs_channel_remove.gif") no-repeat;
+}
+
+.portlet-move-left {
+background: url("../images/icons/prefs_channel_move_left.gif") no-repeat;
+}
+.portlet-move-right {
+background: url("../images/icons/prefs_channel_move_right.gif") no-repeat;
+}
+
+.portlet-move-up {
+background: url("../images/icons/prefs_channel_move_up.gif") no-repeat;
+}
+
+.portlet-move-down {
+background: url("../images/icons/prefs_channel_move_down.gif") no-repeat;
+}
+
+.inactive {
+display: block;
+height: 19px;
+width: 19px;
+background-position: 0px -19px;
+}
+
+.add-target {
+margin-left: 20px;
+font-weight: bold;
+}
