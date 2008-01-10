@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema>
+<tables>
+    <table>
+      <name>UPC_BOOKMARKS</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>PORTAL_USER_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>BOOKMARK_XML</name>
+          <type>LONGVARCHAR</type>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>UPC_BOOKMARKS_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>PORTAL_USER_ID</column>
+          </columns>
+        </index>
+    
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>UPC_BOOKMARKS_PORTAL_USER_ID_NN</name>
+          <columns>
+            <column>PORTAL_USER_ID</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>UPC_BOOKMARKS_PKEY</name>
+          <columns>
+            <column>PORTAL_USER_ID</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+</tables>
+</schema>

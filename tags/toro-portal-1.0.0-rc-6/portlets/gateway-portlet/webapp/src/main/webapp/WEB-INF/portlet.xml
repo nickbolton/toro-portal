@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+        *********************************
+        ** ACADEMUS APPS CONFIGURATION **
+        *********************************
+
+Use this XML document to configure the AcademusApps Portlet Aplication.  The
+scaema of this document must conform to the JSR 168 Portlet Specification.  You
+must declare each portlet and user attribute that you wish to use in the portal
+here.
+
+<portlet-app>
+*************
+The root node of this document is a <portlet-app> element.
+
+The <portlet-app> element supports the following attributes:
+  - @xmlns              "http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+  - @xmlns:xsi          "http://www.w3.org/2001/XMLSchema-instance"
+  - @xsi:schemaLocation "http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+
+The <portlet-app> element has the following child elements:
+  - <portlet>           Defines a portlet (see below).  IMPORTANT:  You can
+                        define the same portlet codebase multiple times.  Some
+                        configuration values will need to be unique to each
+                        definition.
+  - <user-attribute>    Defines a user attribute (see below).
+
+Portlets
+********
+A Portlet Application contains one or more portlet definitions.  Use the
+<portlet> Element to define a portlet within AcademusApps.  IMPORTANT:  You can
+publish a portlet class more than once to use a single tool in different
+scenarios.
+
+The <portlet> element has the following child elements:
+  - <portlet-name>      A simple name (viz. handle) for the portlet.  This value
+                        is used to make the portlet "Id" when publishing within
+                        uPortal.  Each portlet must have a unique value for this
+                        item.
+  - <portlet-class>     The fully-qualiffied name of the Java class that
+                        implements Portlet.
+  - <init-param>        Specifies an initialization parameter for the portlet.
+                        Each <init-param> element must contain two child
+                        elements:  <name> and <value>.  AcademusApps portlets
+                        normally employ two init-parameters:  Id and configPath.
+                        Each portlet must have a unique value for the "Id" item.
+  - <expiration-cache>  Should be set to "0" (zero).
+  - <supported-locale>  Should be set to "en-US" (U.S. English).
+  - <portlet-info>      Contains child elements <title>, <short-title>, and
+                        <keywords>.  Set each of these to appropriate values.
+
+User Attributes
+***************
+A Portlet Application may employ one or more user attributes.  The Portlet
+Container is responsible for populating requested user attributes.
+
+The <user-attribute> element has the following child elements:
+  - <description>       A user-friendly description of the attribute.
+  - <name>              The programatic "Id" (handle) of the attribute.  This
+                        value must match a declared alias in uPortal.
+
+-->
+
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
+    <portlet>
+        <portlet-name>GatewayPortlet</portlet-name>
+        <portlet-class>net.unicon.academus.apps.gateway.GatewayPortlet</portlet-class>
+        <init-param>
+            <name>Id</name>
+            <value>cromagnum</value>
+        </init-param>
+        <init-param>
+            <name>configPath</name>
+            <value>/WEB-INF/classes/config/gateway-portlet.xml</value>
+        </init-param>
+        <!--
+        User context expiration timer in seconds.
+        Specifies how long a gateway user context
+        will linger in the shared cache after created.
+        -->
+        <init-param>
+            <name>userContextTimer</name>
+            <value>60</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supported-locale>en-US</supported-locale>
+        <portlet-info>
+            <title>GatewayPortlet</title>
+            <short-title>Gateway</short-title>
+            <keywords>Gateway</keywords>
+        </portlet-info>
+        <supports>
+            <mime-type>text/html</mime-type>
+        </supports>
+    </portlet>
+
+    <portlet>
+        <portlet-name>AcademusWcmSsoPortlet</portlet-name>
+        <portlet-class>net.unicon.academus.apps.gateway.GatewayPortlet</portlet-class>
+        <init-param>
+            <name>Id</name>
+            <value>simian</value>
+        </init-param>
+        <init-param>
+            <name>configPath</name>
+            <value>/WEB-INF/classes/config/gateway-AcademusWCM.xml</value>
+        </init-param>
+        <!--
+        User context expiration timer in seconds.
+        Specifies how long a gateway user context
+        will linger in the shared cache after created.
+        -->
+        <init-param>
+            <name>userContextTimer</name>
+            <value>60</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supported-locale>en-US</supported-locale>
+        <portlet-info>
+            <title>Academus WCM Integration</title>
+            <short-title>Academus WCM</short-title>
+            <keywords>wcm</keywords>
+        </portlet-info>
+        <supports>
+            <mime-type>text/html</mime-type>
+        </supports>
+    </portlet>
+
+
+    <!-- BEGIN Blog instance: EXAMPLE
+    <portlet>
+        <portlet-name>BlogEXAMPLE</portlet-name>
+        <portlet-class>net.unicon.academus.apps.gateway.GatewayPortlet</portlet-class>
+        <init-param>
+            <name>Id</name>
+            <value>blog-EXAMPLE</value>
+        </init-param>
+        <init-param>
+            <name>configPath</name>
+            <value>/WEB-INF/classes/config/blog-EXAMPLE.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supported-locale>en-US</supported-locale>
+        <portlet-info>
+            <title>Blog: EXAMPLE</title>
+            <short-title>EXAMPLE</short-title>
+            <keywords>Blog</keywords>
+        </portlet-info>
+        <supports>
+            <mime-type>text/html</mime-type>
+        </supports>
+    </portlet>
+         END Blog instance: EXAMPLE -->
+
+    <!-- BEGIN Blog instance: default -->
+    <portlet>
+        <portlet-name>BlojsomGatewayPortlet</portlet-name>
+        <portlet-class>net.unicon.academus.apps.gateway.GatewayPortlet</portlet-class>
+        <init-param>
+            <name>Id</name>
+            <value>blog-default</value>
+        </init-param>
+        <init-param>
+            <name>configPath</name>
+            <value>/WEB-INF/classes/config/blog-default.xml</value>
+        </init-param>
+        <!--
+        User context expiration timer in seconds.
+        Specifies how long a gateway user context
+        will linger in the shared cache after created.
+        -->
+        <init-param>
+            <name>userContextTimer</name>
+            <value>60</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supported-locale>en-US</supported-locale>
+        <portlet-info>
+            <title>Blog: Default</title>
+            <short-title>Default</short-title>
+            <keywords>Blog</keywords>
+        </portlet-info>
+        <supports>
+            <mime-type>text/html</mime-type>
+        </supports>
+    </portlet>
+    <!-- END Blog instance: default -->
+
+    <user-attribute>
+        <description>User's username</description>
+        <name>user.login.id</name>
+    </user-attribute>
+
+    <user-attribute>
+        <description>User's password</description>
+        <name>password</name>
+    </user-attribute>
+</portlet-app>
+

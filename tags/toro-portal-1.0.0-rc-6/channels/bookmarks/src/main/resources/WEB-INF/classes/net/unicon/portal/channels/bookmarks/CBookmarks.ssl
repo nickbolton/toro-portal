@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet title="view_mode"   href="view_mode_html.xsl"     type="text/xsl" media="explorer"?>
+<?xml-stylesheet title="edit_node"   href="edit_node_html.xsl"   type="text/xsl" media="explorer"?>
+<?xml-stylesheet title="add_node"    href="add_node_html.xsl"    type="text/xsl" media="explorer"?>
+<?xml-stylesheet title="move_node"   href="move_node_html.xsl"   type="text/xsl" media="explorer"?>
+<?xml-stylesheet title="delete_node" href="delete_node_html.xsl" type="text/xsl" media="explorer"?>
+
+<document>
+</document>

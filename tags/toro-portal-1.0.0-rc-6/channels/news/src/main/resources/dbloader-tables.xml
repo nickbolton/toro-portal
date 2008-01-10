@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema>
+<tables>
+    <table>
+      <name>NEWS_CONTENT</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>NEWS_ID</name>
+          <type>VARCHAR</type>
+          <param>48</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>TITLE</name>
+          <type>VARCHAR</type>
+          <param>100</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>ABSTRACT</name>
+          <type>VARCHAR</type>
+          <param>300</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>NEWS_STORY</name>
+          <type>LONGVARCHAR</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>TOPIC_ID</name>
+          <type>VARCHAR</type>
+          <param>10</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>CREATE_DATE</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>AUTHOR</name>
+          <type>VARCHAR</type>
+          <param>50</param>
+          <desc></desc>
+        </column>
+        
+        <column>
+          <name>BEGIN_DATE</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>END_DATE</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>PRIORITY</name>
+          <type>CHAR</type>
+          <param>1</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>IMAGE_NAME</name>
+          <type>VARCHAR</type>
+          <param>512</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>IMAGE_MIME_TYPE</name>
+          <type>VARCHAR</type>
+          <param>50</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>LAYOUT_TYPE</name>
+          <type>VARCHAR</type>
+          <param>10</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>NEWS_CONTENT_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>NEWS_ID</column>
+          </columns>
+        </index>
+
+        <index>
+	  <name>NEWS_CONTENT_NI_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>NEWS_ID</column>
+          </columns>
+        </index>
+
+        <index>
+	  <name>NEWS_CONTENT_TITLE_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>TITLE</column>
+          </columns>
+        </index>
+
+        <index>
+	  <name>NEWS_CONTENT_TID_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>TOPIC_ID</column>
+          </columns>
+        </index>
+
+        <index>
+	  <name>NEWS_CONTENT_CD_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>CREATE_DATE</column>
+          </columns>
+        </index>
+
+        <index>
+	  <name>NEWS_CONTENT_LT_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>LAYOUT_TYPE</column>
+          </columns>
+        </index>
+             
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>NEWS_CONTENT_NEWS_ID_NN</name>
+          <columns>
+            <column>NEWS_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>NEWS_CONTENT_TITLE_NN</name>
+          <columns>
+            <column>TITLE</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>NEWS_CONTENT_TOPIC_ID_NN</name>
+          <columns>
+            <column>TOPIC_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>NEWS_CONTENT_CREATE_DATE_NN</name>
+          <columns>
+            <column>CREATE_DATE</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>NEWS_CONTENT_LAYOUT_TYPE_NN</name>
+          <columns>
+            <column>LAYOUT_TYPE</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>NEWS_CONTENT_PKEY</name>
+          <columns>
+            <column>NEWS_ID</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>NEWS_TOPIC</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>TOPIC_ID</name>
+          <type>VARCHAR</type>
+          <param>10</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>TOPIC_NAME</name>
+          <type>VARCHAR</type>
+          <param>20</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DESCRIPTION</name>
+          <type>VARCHAR</type>
+          <param>250</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>CREATE_DATE</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>NEWS_TOPIC_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>TOPIC_NAME</column>
+          </columns>
+        </index>
+              
+        <index>
+          <name>NEWS_TOPIC_CREATE_DATE_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>CREATE_DATE</column>
+          </columns>
+        </index>
+  
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>NEWS_TOPIC_TOPIC_NAME_NN</name>
+          <columns>
+            <column>TOPIC_NAME</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>NEWS_TOPIC_CREATE_DATE_NN</name>
+          <columns>
+            <column>CREATE_DATE</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>NEWS_TOPIC_PKEY</name>
+          <columns>
+            <column>TOPIC_NAME</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>NEWS_TOPIC_GROUPS</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>TOPIC_ID</name>
+          <type>VARCHAR</type>
+          <param>48</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>GROUP_ID</name>
+          <type>VARCHAR</type>
+          <param>16</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>OWNER_ID</name>
+          <type>VARCHAR</type>
+          <param>16</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>GROUP_ENTITY_TYPE</name>
+          <type>VARCHAR</type>
+          <param>16</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>NEWS_TOPIC_GROUPS_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>TOPIC_ID</column>
+            <column>GROUP_ID</column>
+            <column>GROUP_ENTITY_TYPE</column>
+          </columns>
+        </index>
+    	  
+        <index>
+          <name>NEWS_TOPIC_GID_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>GROUP_ID</column>
+          </columns>
+        </index>
+     	  
+        <index>
+          <name>NEWS_TOPIC_GET_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>GROUP_ENTITY_TYPE</column>
+          </columns>
+        </index>
+    
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>NEWS_TOPIC_GROUPS_TOPIC_ID_NN</name>
+          <columns>
+            <column>TOPIC_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>NEWS_TOPIC_GROUPS_GROUP_ID_NN</name>
+          <columns>
+            <column>GROUP_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>NEWS_TOPIC_GROUPS_GROUP_ENTITY_TYPE_NN</name>
+          <columns>
+            <column>GROUP_ENTITY_TYPE</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>NEWS_TOPIC_GROUPS_PKEY</name>
+          <columns>
+            <column>TOPIC_ID</column>
+            <column>GROUP_ID</column>
+            <column>GROUP_ENTITY_TYPE</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>NEWS_TOPIC_SUBSCRIPTION</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>USER_ID</name>
+          <type>VARCHAR</type>
+          <param>16</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>TOPIC_ID</name>
+          <type>VARCHAR</type>
+          <param>10</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DATE_SUBSCRIBED</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>SUSPEND</name>
+          <type>CHAR</type>
+          <param>1</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+      <indexes>
+        <index>
+          <name>NEWS_TOPIC_SUBSCRIPTION_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>USER_ID</column>
+            <column>TOPIC_ID</column>
+          </columns>
+        </index>
+       
+        <index>
+          <name>NEWS_TOPIC_SUB_TOPIC_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>TOPIC_ID</column>
+          </columns>
+        </index>
+    
+      </indexes>
+      <constraints>
+        <not-null>
+          <name>NEWS_TOPIC_SUB_USER_ID_NN</name>
+          <columns>
+            <column>USER_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>NEWS_TOPIC_SUB_TOPIC_ID_NN</name>
+          <columns>
+            <column>TOPIC_ID</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>NEWS_TOPIC_SUBSCRIPTION_PKEY</name>
+          <columns>
+            <column>USER_ID</column>
+            <column>TOPIC_ID</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>NEWS_UNIQUE_ID</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>ID_NAME</name>
+          <type>VARCHAR</type>
+          <param>50</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>ID_VALUE</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>NEWS_UNIQUE_ID_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ID_NAME</column>
+          </columns>
+        </index>
+    
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>NEWS_UNIQUE_ID_ID_NAME_NN</name>
+          <columns>
+            <column>ID_NAME</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>NEWS_UNIQUE_ID_PKEY</name>
+          <columns>
+            <column>ID_NAME</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>NEWS_USER_CONFIG</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>USER_ID</name>
+          <type>VARCHAR</type>
+          <param>16</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>LAYOUT</name>
+          <type>VARCHAR</type>
+          <param>16</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>ITEMS_PER_TOPIC</name>
+          <type>VARCHAR</type>
+          <param>10</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+        
+        <index>
+          <name>NEWS_USER_CONFIG_USER_ID_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>USER_ID</column>
+          </columns>
+        </index>
+
+      </indexes>
+
+      <constraints>
+      </constraints>
+    </table>
+</tables>
+</schema>
