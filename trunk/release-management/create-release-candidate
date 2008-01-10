@@ -32,7 +32,15 @@ mvn clean
 
 mvn --batch-mode release:prepare -DpreparationGoals="clean install"
 
+if [ $? -ne 0 ]; then
+    exit
+fi
+
 mvn release:perform -DuseReleaseProfile=false
+
+if [ $? -ne 0 ]; then
+    exit
+fi
 
 release=$(egrep -- '-rc-[0-9]+</version>' blojsom/ant_pom.xml | sed -e 's~^.*<version>~~' -e 's~</version>.*$~~')
 nextSnapshot=$(fgrep -- '-SNAPSHOT</version>' pom.xml | sed -e 's~^.*<version>~~' -e 's~</version>.*$~~')
