@@ -1,0 +1,134 @@
+/*  JSR-168 Java Portlet Specification v1.0 - October 07 2003  =
+*/
+
+/*####  PLT.C CSS Style Definitions  #####*/
+
+/*##  PLT.C.1 Links (Anchor) - defined by theme-level CSS  ##*/
+
+/*##  PLT.C.2 Fonts  ##*/
+
+.portlet-font {
+} /*  uPortal equivalent style =3D  "uportal-text "  */
+
+.portlet-font-dim {
+} /*  uPortal equivalent style =3D  " no current equivalent"  */
+
+
+/*##  PLT.C.3 Messages  ##*/
+
+.portlet-msg-status, .portlet-msg-info, .portlet-msg-error, .portlet-msg-alert, .portlet-msg-success {
+}
+
+.portlet-msg-status {
+} /*  uPortal equivalent style =3D  " uportal-channel-warning"  */
+
+.portlet-msg-info {
+} /*  uPortal equivalent style =3D  " uportal-channel-warning"  */
+
+.portlet-msg-error {
+} /*  uPortal equivalent style =3D  " uportal-channel-error"  */
+
+.portlet-msg-alert {
+} /*  uPortal equivalent style =3D  " uportal-channel-warning"  */
+
+.portlet-msg-success {
+} /*  uPortal equivalent style =3D  " uportal-channel-warning"  */
+
+
+
+/*##  PLT.C.4 Sections ##*/
+
+.portlet-section-header {
+} /*  uPortal equivalent style =3D  " uportal-channel-title"  */
+
+.portlet-section-body {
+} /*  uPortal equivalent style =3D  " uportal-text"  */
+
+.portlet-section-alternate {
+} /*  uPortal equivalent style =3D  " uportal-channel-table-row-odd"  */
+
+.portlet-section-selected {
+} /*  uPortal equivalent style =3D  " no current equivalent"  */
+
+.portlet-section-subheader {
+} /*  uPortal equivalent style =3D  " uportal-channel-subtitle"  */
+
+.portlet-section-footer {
+} /*  uPortal equivalent style =3D  " no current equivalent"  */
+
+.portlet-section-text {
+} /*  uPortal equivalent style =3D  "uportal-text-small "  */
+
+
+
+/*##  PLT.C.5 Forms ##*/
+
+.portlet-form-label {
+} /*  uPortal equivalent style =3D  " uportal-label"  */
+
+.portlet-form-input-field {
+} /*  uPortal equivalent style =3D  " uportal-input-text"  */
+
+.portlet-form-button {
+} /*  uPortal equivalent style =3D  "uportal-button "  */
+
+.portlet-icon-label {
+} /*  uPortal equivalent style =3D  " uportal-button"  */
+
+.portlet-dlg-icon-label {
+} /*  uPortal equivalent style =3D  " uportal-button"  */
+
+.portlet-form-field-label {
+} /*  uPortal equivalent style =3D  " uportal-label"  */
+
+.portlet-form-field {
+} /*  uPortal equivalent style =3D  " no current equivalent"  */
+
+
+
+/*##  PLT.C.7 Menus ##*/
+
+.portlet-menu {
+} /*  uPortal equivalent style =3D  " no current equivalent"  */
+
+.portlet-menu-item {
+} /*  uPortal equivalent style =3D  " no current equivalent"  */
+
+.portlet-menu-item-selected {
+} /*  uPortal equivalent style =3D  " no current equivalent"  */
+
+.portlet-menu-item-hover {
+} /*  uPortal equivalent style =3D  " no current equivalent"  */
+
+.portlet-menu-item-hover-selected {
+} /*  uPortal equivalent style =3D  " no current equivalent"  */
+
+.portlet-menu-cascade-item {
+} /*  uPortal equivalent style =3D  " no current equivalent"  */
+
+.portlet-menu-cascade-item-selected {
+} /*  uPortal equivalent style =3D  " no current equivalent"  */
+
+.portlet-menu-description {
+} /*  uPortal equivalent style =3D  " no current equivalent"  */
+
+.portlet-menu-caption {
+} /*  uPortal equivalent style =3D  " no current equivalent"  */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

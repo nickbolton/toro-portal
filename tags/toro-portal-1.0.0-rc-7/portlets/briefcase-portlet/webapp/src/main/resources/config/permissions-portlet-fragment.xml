@@ -1,0 +1,9 @@
+    -->
+    <portlet handle="briefcase">
+        <label>Briefcase Portlet</label>
+        <description>The Briefcase Portlet allows the adding, deleting, moving, and sharing of folders and files.</description>
+        <portlet-access handle="briefcaseHelper">
+            <import src="file:@tomcat.home@/webapps/toro-briefcase-portlet/WEB-INF/classes/config/briefcase-portlet.xml" select="//access-broker[@handle='personal-jit']"/>
+            <access impl="net.unicon.academus.apps.briefcase.BriefcaseAccessType"/>
+        </portlet-access>
+    </portlet>

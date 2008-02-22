@@ -1,0 +1,436 @@
+
+/* GLOBALS */
+/*--------------------------------------------------------------------------------------*/
+
+.border-top {
+border-top: 3px solid #669ACC;
+}
+
+.border-bottom {
+border-bottom: 3px solid #669ACC;
+}
+
+.header {
+/*background: #669ACC;*/
+}
+
+.title h2, .title2 h2 {
+font-size: 11pt;
+}
+
+.header-status th, .header-status td {
+/*color: #FFF;*/
+border-bottom: 1px solid #8AADC9;
+}
+
+.secondary {
+/*border-right: 3px solid #669ACC;
+border-bottom: 3px solid #669ACC;
+border-left: 3px solid #669ACC;*/
+}
+
+.secondary2 {
+border: none;
+/*background: #E8ECF8;*/
+background: #D5E4F4;
+padding-top:10px;
+}
+
+.secondary3 {
+border: none;
+background: #FFF;
+}
+
+.navbar {
+/*background: #EEE;*/
+background: #477BAD;
+}
+
+.navtree {
+border: 1px solid #CCCCCC;
+}
+
+.navtree a, .navtree a:link, .navtree a:visited {
+color: #000;
+}
+
+.sidebox, .searchbox {
+border: 1px solid #669ACC;
+background: #FFF;
+}
+
+.sidebox h4, .searchbox h4 {
+color: #416498;
+margin-bottom: 5px;
+font-size: 11px;
+}
+
+.sidebox a:link, .sidebox a:visited {
+display:block;
+text-decoration:underline;
+margin-top: 8px;
+}
+
+.sidebox a.selected {
+display:block;
+margin-top: 8px;
+}
+
+.selection-basket-label {
+margin: 2px;
+background: #EEE;
+color: #000;
+font-weight: normal;
+border: 1px solid #EEE;
+}
+
+.selection-basket-number {
+margin: 2px;
+background: #FFF;
+color: #FE0000;
+font-weight: bold;
+border: 1px solid #EEE;
+}
+
+.toolbar {
+/*background: #C3D3ED;*/
+background: #FFF;    
+}
+
+.toolbar-alternate {
+/*background: #669ACC;*/
+background: #7BADDD;
+}
+
+.toolbar-secondary {
+/*background: #EEE;*/
+    
+}
+
+.toolbar-nostyle {
+background: #FFF;
+}
+
+.form-button-disabled {
+	color: #999;
+    font-weight: bold;
+    font-size: 8pt;
+	background: #CCC;
+	padding: 2px 8px 2px 8px;
+    _padding: 2px;
+	border-top: 1px solid #DDD;
+	border-right: 1px solid #999;
+	border-bottom: 1px solid #999;
+	border-left: 1px solid #DDD;
+	margin-left: 7px;
+}
+
+input[type='radio'].disabled, .form-field-disabled input, .form-field-disabled textarea {
+	color: #999;
+	background: #CCC;
+}
+
+.form-button-emphasis {
+background: #FEFF99;
+}
+
+.pagetexttitle h3 {
+color: #000;
+font-weight: normal;
+}
+
+.pagetexttitle p {
+font-weight: bold;
+}
+
+.content-title {
+background: #669ACC;
+color: #FFF;
+}
+
+.expanded-link {
+border: 1px solid #FFF; /* IE Hack; having a border for some reason pulls the content to the top. vertical-align did nothing */
+}
+
+.expanded-link h4 a:link, .expanded-link h4 a:visited {
+color: #FE0000;
+}
+
+.tabs {
+/*border-bottom: 3px solid #999;*/
+border-bottom: 1px solid #7BADDD;
+background-color: #D5E4F4;
+}
+
+.main-content-table, .main-content-table-alternate {
+/*border-bottom: 3px solid #999;*/
+border-bottom: 3px solid #487CAD;
+border-collapse: collapse;
+}
+
+.main-content-table caption {
+margin: 0px;
+padding: 3px 10px 3px 10px;
+height: 25px;
+font-size: 80%;
+font-weight: bold;
+text-align: left;
+background: #669ACC;
+}
+
+.main-content-table th a:link, .main-content-table th a:visited, .main-content-table-alternate th a:link, .main-content-table-alternate th a:visited {
+color: #FFF;
+}
+
+.main-content-table th, .main-content-table-alternate th {
+text-align: left;
+}
+
+.main-content-table th.center, .main-content-table-alternate th.center {
+text-align: center;
+}
+.main-content-table th, .main-content-table td {
+border: 1px solid #CCCCCC;
+}
+
+.main-content-table-alternate th,  .main-content-table-alternate td {
+border: 1px solid #FFF;
+}
+
+.main-content h2 {
+font-size:13pt;
+}
+
+/* Messaging Portlet */
+
+table.portlet-content h2 {
+font-size:13pt;
+}
+
+.message-unread {
+font-weight:bold;
+}
+
+.tab_body {
+margin-top: 20px;
+}
+
+.attachment-list {
+list-style-type: none;
+margin:0px 0px 10px 0px;
+padding:0px;
+}
+
+.attachment-list-view {
+list-style-type: none;
+margin:10px 10px 20px 20px;
+padding:0px;
+}
+
+ul.message-header {
+list-style-type: none;
+/*border: #CCCCCC 1px solid;*/
+/*border: #FFF 1px solid;*/
+margin:0px 0px 0px 0px;
+padding:0px;
+width: 100%;
+}
+
+ul.message-header li {
+/*border: #CCCCCC 1px solid;*/
+border-top: #FFF 1px solid;
+border-bottom: #FFF 1px solid;
+padding: 5px 10px 5px 10px;
+background-color: #D5E4F4;
+clear:left;
+}
+
+ul.message-header li.message-header-subject {
+/*background-color: #EEE;*/
+font-weight: bold;
+}
+
+ul.message-header li .label-text {
+display:block;
+float: left;
+height: 20px;
+width: 80px;
+font-weight: bold;
+font-size: 10pt;
+margin: 0px;
+padding: 0px;
+}
+
+div.message-body {
+margin: 20px;
+min-height: 200px;
+_height: 200px;
+}
+
+table.portlet-content h2.body-subsection-header {
+border-top: #CCC 2px solid;
+background-color: #EEE;
+font-size: 10pt;
+padding: 5px 20px 5px 20px;
+margin: 0px;
+}
+
+/* Table Header Styling */
+
+.th-button-select, .th-button-attachments, .th-button-priority, .th-column-edit {
+width:50px;
+}
+
+div.MessagingPortlet_message_peephole_wide .th-button-priority, .th-button-type {
+width:100px;
+}
+
+.th-button-received, .th-button-lastmod, .th-button-size {
+width:130px;
+}
+
+.th-button-from, .th-button-recipient {
+width:200px;
+}
+
+.th-button-attachments a, .th-button-attachments a:link, .th-button-attachments a:visited {
+height:20px;
+}
+
+.th-button-attachments a span {
+display:none;
+}
+
+.th-button-attachments a img {
+display:block;
+margin:5px 0px 0px 6px;
+border-style: none;
+}
+
+/* Messaging Portlet Attachments */
+span.attachments-icon {
+display: block;
+padding-left:20px;
+background: url("../images/icons/paperclip_dark.gif") no-repeat left top;
+}
+
+/* Gateway Portlet */
+div.GatewayPortlet_gateway_main th.cell-emphasis {
+width:80px;
+}
+
+div.GatewayPortlet_gateway_main th.cell-emphasis label {
+display:block;
+padding: 10px;
+}
+
+/* Permissions Portlet */
+div.PermissionsPortlet_permissions_list h3 {
+font-size:11pt;
+}
+
+div.PermissionsPortlet_permissions_list th.th-button-select, div.SelectorServant th.th-button-select, div.BriefcasePortlet th.th-button-select, div.MessagingPortlet th.th-button-select, div.BriefcasePortlet th.th-column-permission {
+width:50px;
+text-align: center;
+vertical-align:middle;
+}
+
+th.th-button-name {
+vertical-align:top;
+}
+
+div.PermissionsPortlet_permissions_list th.th-column-permission {
+width: 100px;
+}
+
+div.PermissionsPortlet_permissions_list table.main-content-table td {
+text-align:center;
+}
+
+div.PermissionsPortlet_permissions_list table.main-content-table td.permitted-member-group {
+text-align:left;
+}
+ 
+/* Selector Servant */
+div.SelectorServant th.th-button-name {
+width: 70%;
+}
+
+/* Other Styling */
+.select-cell {
+text-align: center;
+}
+
+.cell-emphasis {
+/*background-color: #DBDBDB;*/
+background-color: #EEEEEE;
+color: #666;
+}
+
+.cell-emphasis2 {
+background-color: #EEE;
+color: #666;
+}
+
+.cell-selected, .row-selected {
+background-color: #D5E4F4;
+}
+
+.cell-selected-emphasis {
+background-color: #C3D3ED;
+}
+
+.cell-info {
+border: 1px solid #FFF;
+color: #666;
+font-weight: normal;
+}
+
+table.highlightAndSelectOnClick tr.nohoverhighlight {
+background-color: #FFFFFF;
+}
+
+table.highlightAndSelectOnClick tr.hoverhighlight {
+background-color: yellow;
+}
+
+a.notSorted:hover, a.sortedAscending:hover, a.sortedDescending:hover, a.select-toggle:hover {
+background-color: #656565;
+}
+
+a.portlet-menu-item-selected, a.portlet-menu-item-selected:link, a.portlet-menu-item-selected:visited {
+color: #000;
+}
+
+a.portlet-menu-item, a.portlet-menu-item:link, a.portlet-menu-item:visited {
+color: #FFF;
+}
+
+a.selected {
+color: #000;
+}
+
+.removable-selected {
+color: #000;
+}
+
+/* 
+option- classes are for highlighting different options within
+a grant / deny / defer permissions scenario.  Colors help to
+distinguish between items when a lot of dropdowns are present.
+*/
+.option-grant {
+background-color:green;
+color:white;
+}
+
+.option-deny {
+background-color:red;
+color:white;
+}
+
+.option-defer {
+background-color:white;
+color:black;
+}
+

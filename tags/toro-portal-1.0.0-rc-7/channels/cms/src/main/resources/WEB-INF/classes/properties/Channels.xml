@@ -1,0 +1,489 @@
+<?xml version="1.0"?>
+
+<!--
+  This manifest describes that channels that exist in the LMS. It
+  is a convention that the handle of a non producer channel MUST be the same
+  as the class name that corresponds to the class given in <className>.
+  And the handle of a producer channel MUST be the same as the producer
+  class name.
+  For example, if the className =
+  net.unicon.portal.channels.navigation.NavigationChannel, the handle must
+  be NavigationChannel   or
+  producer = net.unicon.academus.apps.navigation.NavigationProducer, the
+  handle must be NavigationProducer.  The handles must be unique and this
+  convention doesn't guarentee this. Care must be taken that there are no
+  duplicate handles.
+-->
+<manifest>
+    <global>
+        <channel order="1" mode="Global" handle="NavigationChannel">
+        <producer />
+            <className>net.unicon.portal.channels.navigation.NavigationChannel</className>
+            <cscrEnabled>false</cscrEnabled>
+            <sslLocation>NavigationChannel.ssl</sslLocation>
+            <timeout>60000</timeout>
+            <type>Admin</type>
+            <label>Navigation</label>			
+            <description></description>
+            <permissions>
+                <activity handle="viewInactiveOfferings">
+                    <label>View Inactive Offerings</label>
+                    <description>User may view the inactive offerings.</description>
+                    <setting role="Administrator" value="True"/>
+                </activity>
+            </permissions>
+        </channel>
+    </global>
+    <subscription>
+        <channel order="1" mode="Subscription" handle="SubscriptionChannel">
+        <producer />
+            <className>net.unicon.portal.channels.subscription.SubscriptionChannel</className>
+            <cscrEnabled>true</cscrEnabled>
+            <sslLocation>SubscriptionChannel.ssl</sslLocation>
+            <timeout>60000</timeout>
+            <type>Admin</type>
+            <label>Offering Subscription</label>
+            <description></description>
+            <permissions>
+                <activity handle="subscribe">
+                    <label>Subscribe</label>
+                    <description>User may subscribe to offerings.</description>
+                    <setting role="Administrator" value="True"/>
+                    <setting role="Facilitator" value="True"/>
+                    <setting role="User" value="True"/>
+                </activity>
+                <activity handle="unsubscribe">
+                    <label>Unsubscribe</label>
+                    <description>User may unsubscribe to offerings.</description>
+                    <setting role="Administrator" value="True"/>
+                    <setting role="Facilitator" value="True"/>
+                    <setting role="User" value="True"/>
+                </activity>
+            </permissions>
+        </channel>
+    </subscription>
+    <offering>
+        <channel order="1" mode="Offering" handle="AnnouncementProducer">
+            <producer>net.unicon.academus.apps.announcement.AnnouncementProducer</producer>
+            <className>net.unicon.portal.channels.PortletMultithreadedChannel</className>
+            <cscrEnabled>true</cscrEnabled>
+            <sslLocation>announcement/AnnouncementChannel.ssl</sslLocation>
+            <timeout>60000</timeout>
+            <type>Offering</type>
+            <label>Announcements</label>
+            <description></description>
+        </channel>
+        <channel order="2" mode="Offering" handle="ClassFolderChannel">
+            <className>net.unicon.portal.channels.classfolder.ClassFolderChannel</className>
+        <producer />
+            <cscrEnabled>true</cscrEnabled>
+            <sslLocation>ResourceChannel.ssl</sslLocation>
+            <timeout>60000</timeout>
+            <type>Offering</type>
+            <label>Folders</label>
+            <description></description>
+            <permissions>
+                <activity handle="addResource">
+                    <label>Add a resource</label>
+                    <description>User may add a resource to an offering</description>
+                    <setting role="Sponsor" value="True"/>
+                </activity>
+                <activity handle="deleteResource">
+                    <label>Delete a resource</label>
+                    <description>User may delete a resource from an offering</description>
+                    <setting role="Sponsor" value="True"/>
+                </activity>
+                <activity handle="editResource">
+                    <label>Edit a resource</label>
+                    <description>User may edit a resource for an offering</description>
+                    <setting role="Sponsor" value="True"/>
+                </activity>
+            </permissions>
+        </channel>
+        
+        <channel order="9" mode="Offering" handle="CurriculumUsabilityChannel">
+            <className>net.unicon.portal.channels.curriculum.CurriculumUsabilityChannel</className>
+        <producer />
+            <cscrEnabled>true</cscrEnabled>
+            <sslLocation>CurriculumChannel.ssl</sslLocation>
+            <timeout>60000</timeout>
+            <type>Offering</type>
+            <label>Curriculum Content</label>
+            <description></description>
+            <permissions>
+                <activity handle="addCurriculum">
+                    <label>Add Curriculum</label>
+                    <description>User may add curriculum to an offering</description>
+                    <setting role="Sponsor" value="True"/>
+                </activity>
+                <activity handle="removeCurriculum">
+                    <label>Remove Curriculum</label>
+                    <description>User may remove curriculum from an offering</description>
+                    <setting role="Sponsor" value="True"/>
+                </activity>
+            </permissions>
+        </channel>
+        <channel order="3" mode="Offering" handle="GradebookChannel">
+            <className>net.unicon.portal.channels.gradebook.GradebookChannel</className>
+        <producer />
+            <cscrEnabled>true</cscrEnabled>
+            <sslLocation>gradebook.ssl</sslLocation>
+            <timeout>60000</timeout>
+            <type>Offering</type>
+            <label>Gradebook</label>
+            <description></description>
+            <permissions>
+                <activity handle="excludeFromGradebook">
+                    <label>Exclude user from Gradebook</label>
+                    <description>User is not viewable in Gradebook.</description>
+                    <setting role="Sponsor" value="True"/>
+                </activity>
+                <activity handle="addItem">
+                    <label>Add Gradebook Item</label>
+                    <description>User may add Gradebook Item colums.</description>
+                    <setting role="Sponsor" value="True"/>
+                    <setting role="Assistant" value="True"/>
+                </activity>
+                <activity handle="editItem">
+                    <label>Edit Gradebook Item</label>
+                    <description>User may add Gradebook Item colums.</description>
+                    <setting role="Sponsor" value="True"/>
+                    <setting role="Assistant" value="True"/>
+                </activity>
+                <activity handle="deleteItem">
+                    <label>Delete Gradebook Item</label>
+                    <description>User may delete Gradebook Item colums.</description>
+                    <setting role="Sponsor" value="True"/>
+                    <setting role="Assistant" value="True"/>
+                </activity>
+                <activity handle="viewAll">
+                    <label>View All</label>
+                    <description>User may view all members scores in the gradebook.</description>
+                    <setting role="Sponsor" value="True"/>
+                    <setting role="Assistant" value="True"/>
+                </activity>
+                <activity handle="editItemScores">
+                    <label>Edit Gradebook Item Scores</label>
+                    <description>User may edit gradebook item scores</description>
+                    <setting role="Sponsor" value="True"/>
+                    <setting role="Assistant" value="True"/>
+                </activity>
+                <activity handle="editAllItemScores">
+                    <label>Edit All Gradebook Item Scores</label>
+                    <description>User may edit all of the gradebook item scores at once.</description>
+                    <setting role="Sponsor" value="True"/>
+                    <setting role="Assistant" value="True"/>
+                </activity>
+                <activity handle="editWeighting">
+                    <label>Edit All Gradebook Item Weights</label>
+                    <description>User may edit the all of the gradebook item weights at once.</description>
+                    <setting role="Sponsor" value="True"/>
+                </activity>
+                <activity handle="accessDetails">
+                    <label>Access Submission and Feedback Details View</label>
+                    <description>User may navigate to the details view of the gradebook.</description>
+                    <setting role="Sponsor" value="True"/>
+                    <setting role="Assistant" value="True"/>
+                </activity>
+                <activity handle="accessHiddenFeedback">
+                    <label>Access Hidden Feedback</label>
+                    <description>User may access column feedback details even when it is designated as NOT visible.</description>
+                    <setting role="Sponsor" value="True"/>
+                    <setting role="Assistant" value="True"/>
+                </activity>
+                <activity handle="viewSubmissionDetails">
+                    <label>View Submitted Assignment Details</label>
+                    <description>User may view the submitted assignment details.</description>
+                    <setting role="Sponsor" value="True"/>
+                    <setting role="Assistant" value="True"/>
+                </activity>
+                <activity handle="viewFeedbackDetails">
+                    <label>View Assignment Feedback Details</label>
+                    <description>User may view the feedback on submitted assignments provided that feedback has been designated as visible.</description>
+                    <setting role="Sponsor" value="True"/>
+                    <setting role="Assistant" value="True"/>
+                </activity>
+                <activity handle="editSubmissionDetails">
+                    <label>Submit Assignment</label>
+                    <description>User may submit an assignment with comments.</description>
+                    <setting role="Member" value="False"/>
+                </activity>
+                <activity handle="editFeedbackDetails">
+                    <label>Submit Assignment Feedback</label>
+                    <description>User may submit feedback to a submitted assignment.</description>
+                    <setting role="Sponsor" value="True"/>
+                    <setting role="Assistant" value="True"/>
+                </activity>
+                <activity handle="addActivation">
+                    <label>Add Assignment Activation</label>
+                    <description>User may activate an assignment for others to complete.</description>
+                    <setting role="Sponsor" value="True"/>
+                    <setting role="Assistant" value="True"/>
+                </activity>
+                <activity handle="deleteActivation">
+                    <label>Delete Assignment Activation</label>
+                    <description>User may de-activate an assignment.</description>
+                    <setting role="Sponsor" value="True"/>
+                    <setting role="Assistant" value="True"/>
+                </activity>
+                <activity handle="viewAllUserActivations">
+                    <label>View Activations for All Users</label>
+                    <description>User may view activations for all users in the offering.</description>
+                    <setting role="Sponsor" value="True"/>
+                    <setting role="Assistant" value="True"/>
+                </activity>
+                <activity handle="viewActivationDetails">
+                    <label>View Activation Details</label>
+                    <description>User may view the information recorded for an assignment activation.</description>
+                    <setting role="Sponsor" value="True"/>
+                    <setting role="Assistant" value="True"/>
+                    <setting role="Member" value="True"/>
+                </activity>
+                <activity handle="externalUserDetailEditing">
+                    <label>Edit Details for Other Users</label>
+                    <description>Allows user to edit details for other users.</description>
+                    <setting role="Sponsor" value="True"/>
+                </activity>
+            </permissions>
+        </channel>
+        <channel order="4" mode="Offering" handle="CCalendarUnicon">
+            <className>net.unicon.portal.channels.calendar.CCalendarUnicon</className>
+        <producer />
+            <cscrEnabled>true</cscrEnabled>
+            <sslLocation>CalendarChannel.ssl</sslLocation>
+            <timeout>60000</timeout>
+            <type>Offering</type>
+            <label>Calendar</label>
+            <description></description>
+            <permissions>     
+                 <activity handle="addEvents">
+            <label>Add Events to Offering Calendar</label>
+            <description>User may add calendar events.</description>
+            <setting role="Sponsor" value="True"/>
+          </activity>
+          <activity handle="editEvents">
+             <label>Edit Events in  Offering Calendar</label>
+             <description>User may edit calendar events.</description>
+            <setting role="Sponsor" value="True"/>
+           </activity>
+           <activity handle="deleteEvents">
+             <label>Delete Events in Offering Calendar</label>
+             <description>User may delete calendar events.</description>
+            <setting role="Sponsor" value="True"/>
+           </activity>        
+            </permissions>
+        </channel>
+        <channel order="5" mode="Offering" handle="RosterChannel">
+            <className>net.unicon.portal.channels.roster.RosterChannel</className>
+        <producer />
+            <cscrEnabled>true</cscrEnabled>
+            <sslLocation>RosterChannel.ssl</sslLocation>
+            <timeout>60000</timeout>
+            <type>Offering</type>
+            <label>Roster</label>
+            <description></description>
+            <permissions>
+                <activity handle="viewUserInfo">
+                    <label>View User Info</label>
+                    <description>User may view user information.</description>
+                    <setting role="Sponsor" value="True"/>
+                    <setting role="Assistant" value="True"/>
+                    <setting role="Member" value="True"/>
+                    <setting role="Observer" value="True"/>
+                </activity>
+                <activity handle="importRoster">
+                    <label>Import Roster</label>
+                    <description>User may import a roster.</description>
+                    <setting role="Sponsor" value="True"/>
+                </activity>
+                <activity handle="enrollUser">
+                    <label>Enroll User</label>
+                    <description>User may enroll other users into offerings.</description>
+                    <setting role="Sponsor" value="True"/>
+                </activity>
+                <activity handle="unenrollUser">
+                    <label>Unenroll User</label>
+                    <description>User may unenroll other users from offerings.</description>
+                    <setting role="Sponsor" value="True"/>
+                </activity>
+                <activity handle="editOfferingPermissions">
+                    <label>Edit Offering Permissions</label>
+                    <description>User may edit offering level permissions.</description>
+                    <setting role="Sponsor" value="True"/>
+                </activity>
+                <activity handle="editUserPermissions">
+                    <label>Edit User Permissions</label>
+                    <description>User may edit user level permissions.</description>
+                    <setting role="Sponsor" value="True"/>
+                </activity>
+            </permissions>
+        </channel>
+        <channel order="7" mode="Offering" handle="NotepadChannel">
+            <className>net.unicon.portal.channels.notepad.NotepadChannel</className>
+        <producer />
+            <cscrEnabled>true</cscrEnabled>
+            <sslLocation>NotepadChannel.ssl</sslLocation>
+            <timeout>60000</timeout>
+            <type>Offering</type>
+            <label>Notepad</label>
+            <description></description>
+            <permissions>
+            </permissions>
+        </channel>
+    </offering>
+    <admin>
+
+    <channel order="1" mode="Administration" handle="UserAdminProducer">
+        <producer>net.unicon.academus.apps.useradmin.UserAdminProducer</producer>
+        <className>net.unicon.portal.channels.PortletMultithreadedChannel</className>
+        <cscrEnabled>true</cscrEnabled>
+        <sslLocation>useradmin/UserAdminChannel.ssl</sslLocation>
+        <timeout>60000</timeout>
+        <type>Admin</type>
+        <label>User Administration</label>
+        <description>The ability to add users to the system.</description>
+    </channel>
+
+    <channel order="3" mode="Administration" handle="TopicAdminChannel">
+        <className>net.unicon.portal.channels.topicadmin.TopicAdminChannel</className>
+    <producer />
+        <cscrEnabled>true</cscrEnabled>
+        <sslLocation>TopicAdminChannel.ssl</sslLocation>
+        <timeout>60000</timeout>
+        <type>Admin</type>
+        <label>Topic Administration</label>
+        <description>The ability to add, edit or delete topics.</description>
+        <permissions>
+            <activity handle="addTopic">
+                <label>Add Topics</label>
+                <description>Add a topic</description>
+                <setting role="Administrator" value="True"/>
+            </activity>
+            <activity handle="editTopic">
+                <label>Edit Topics</label>
+                <description>Edit a topic</description>
+                <setting role="Administrator" value="True"/>
+            </activity>
+            <activity handle="deleteTopic">
+                <label>Delete Topics</label>
+                <description>Delete a topic</description>
+                <setting role="Administrator" value="True"/>
+            </activity>
+        </permissions>
+    </channel>
+    <channel order="2" mode="Administration" handle="PermissionsChannel">
+        <className>net.unicon.portal.channels.permissionadmin.PermissionsChannel</className>
+    <producer />
+        <cscrEnabled>true</cscrEnabled>
+        <sslLocation>PermissionsChannel.ssl</sslLocation>
+        <timeout>60000</timeout>
+        <type>Admin</type>
+        <label>Role Administration</label>
+        <description></description>
+        <permissions>
+            <activity handle="addAdminPermissions">
+                <label>Add System Role and Permissions</label>
+                <description>User may add new administration roles and permissions</description>
+                <setting role="Administrator" value="True"/>
+            </activity>
+            <activity handle="editAdminPermissions">
+                <label>Edit Admin Role and Permissions</label>
+                <description>User may edit existing administration roles and permissions</description>
+                <setting role="Administrator" value="True"/>
+            </activity>
+            <activity handle="deleteAdminPermissions">
+                <label>Delete Admin Role and Permissions</label>
+                <description>User may delete existing administration roles and permissions</description>
+                <setting role="Administrator" value="True"/>
+            </activity>
+            <activity handle="addOfferingPermissions">
+                <label>Add Offering Role and Permissions</label>
+                <description>User may add new offering level roles and permissions</description>
+                <setting role="Administrator" value="True"/>
+            </activity>
+            <activity handle="editOfferingPermissions">
+                <label>Edit Offering Role and Permissions</label>
+                <description>User may edit existing offering level roles and permissions</description>
+                <setting role="Administrator" value="True"/>
+            </activity>
+            <activity handle="deleteOfferingPermissions">
+                <label>Delete Offering Role and Permissions</label>
+                <description>User may delete existing offering level roles and permissions</description>
+                <setting role="Administrator" value="True"/>
+            </activity>
+        </permissions>
+    </channel>  
+    <channel order="5" mode="Administration" handle="OfferingAdminChannel">
+        <className>net.unicon.portal.channels.offeringadmin.OfferingAdminChannel</className>
+    <producer />
+        <cscrEnabled>true</cscrEnabled>
+        <sslLocation>OfferingAdminChannel.ssl</sslLocation>
+        <timeout>60000</timeout>
+        <type>Admin</type> 
+       <label>Offering Administration</label>
+        <description></description>
+        <permissions>
+            <activity handle="addOffering">
+                <label>Add Offerings</label>
+                <description>User may add an offering.</description>
+                <setting role="Administrator" value="True"/>
+                <setting role="Facilitator" value="True"/>
+            </activity>
+            <activity handle="editOffering">
+                <label>Edit Offerings</label>
+                <description>User may edit offerings.</description>
+                <setting role="Administrator" value="True"/>
+                <setting role="Facilitator" value="True"/>
+            </activity>
+            <activity handle="inactivateOffering">
+                <label>Inactivate Offerings</label>
+                <description>User may inactivate offerings.</description>
+                <setting role="Administrator" value="True"/>
+                <setting role="Facilitator" value="True"/>
+            </activity>
+            <activity handle="activateOffering">
+                <label>Activate Offerings</label>
+                <description>User may activate offerings.</description>
+                <setting role="Administrator" value="True"/>
+                <setting role="Facilitator" value="True"/>
+            </activity>
+            <activity handle="deleteOffering">
+                <label>Delete Offerings</label>
+                <description>User may permanently delete offerings.</description>
+                <setting role="Administrator" value="True"/>
+                <setting role="Facilitator" value="True"/>
+            </activity>
+            <activity handle="exportOffering">
+                <label>Export Offerings</label>
+                <description>User may export the entire offering.</description>
+                <setting role="Administrator" value="True"/>
+                <setting role="Facilitator" value="True"/>
+            </activity>
+            <activity handle="copyOffering">
+                <label>Copy Offerings</label>
+                <description>User may copy an offering.</description>
+                <setting role="Administrator" value="True"/>
+                <setting role="Facilitator" value="True"/>
+            </activity>
+        </permissions>
+    </channel>
+    <channel order="4" mode="Administration" handle="ImportChannel">
+        <className>net.unicon.portal.channels.importer.ImportChannel</className>
+    <producer />
+        <cscrEnabled>true</cscrEnabled>
+        <sslLocation>ImportChannel.ssl</sslLocation>
+        <timeout>60000</timeout>
+        <type>Admin</type>
+        <label>Import Channel</label>
+        <description></description>
+        <permissions>
+            <activity handle="canImport">
+                <label>Import Users and Offerings</label>
+                <description>User may export the entire offering.</description>
+                <setting role="Administrator" value="True"/>
+                <setting role="Facilitator" value="True"/>
+            </activity>
+        </permissions>
+    </channel>
+    </admin>
+</manifest>
