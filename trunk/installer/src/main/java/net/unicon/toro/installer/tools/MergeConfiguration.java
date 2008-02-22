@@ -135,7 +135,30 @@ public class MergeConfiguration {
         }
         
         File mergeFrom = new File(path.getParentFile(), path.getName()+"_mergeFrom.properties");
-        props.store(new FileOutputStream(mergeFrom), "");
+        FileOutputStream fos = null;
+        
+        try {
+            fos = new FileOutputStream(mergeFrom);
+            props.store(new FileOutputStream(mergeFrom), "");
+        } finally {
+            if (fos != null) {fos.close(); fos = null;}
+        }
+        
+        // add properties to remove
+        PrintWriter out = null;
+        
+        try {
+            for ( Iterator i = el.elementIterator( "remove" ); i.hasNext(); ) {
+                if (out == null) {
+                    out = new PrintWriter(new FileWriter(mergeFrom, true));
+                }
+                Element remove = (Element) i.next();
+                String name = remove.elementText("name");
+                out.println('-'+name+'=');
+            }
+        } finally {
+            if (out != null) {out.close(); out = null;}
+        }
         
         try {
 	        OverwriteProperties overwriter = new OverwriteProperties();
@@ -198,6 +221,7 @@ public class MergeConfiguration {
         processNodeReplacements(el, source);
         //processAddToNodes(el, source);
         processNodeAddOrReplace(el, source, path);
+        processNodeRemovals(el, source);
         
         //saveXml(doc, new File("/tmp/after."+path.getName()));
         saveXml(doc, path);
@@ -333,6 +357,22 @@ public class MergeConfiguration {
             }
             System.out.println("Replacing node at path: " + xpath);
             replaceElement(sourceEl, replacementElement);
+        }
+    }
+
+    private void processNodeRemovals(Element el, Element source) {
+        List list = el.selectNodes("remove[@type='node']");
+        if (list == null) return;
+        
+        Iterator itr = list.iterator();
+        while (itr.hasNext()) {
+            Element replace = (Element)itr.next();
+            String xpath = replace.elementText("xpath");
+            Element sourceEl = (Element)source.selectSingleNode(xpath);
+            if (sourceEl == null) {
+                throw new RuntimeException("xpath expression doesn't resolve to a node: " + xpath);
+            }
+            sourceEl.detach();
         }
     }
 
