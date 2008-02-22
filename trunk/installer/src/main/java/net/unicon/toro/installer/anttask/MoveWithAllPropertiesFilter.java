@@ -53,7 +53,6 @@ public class MoveWithAllPropertiesFilter extends Move {
         Iterator itr = h.keySet().iterator();
         while (itr.hasNext()) {
             String name = (String) itr.next();
-            System.out.println("ZZZ setting filter token: " + name + "=" + (String) h.get(name));
             allPropertiesFilterSet.addFilter(name, (String) h.get(name));
         }
         super.getFilterSets().add(allPropertiesFilterSet);
