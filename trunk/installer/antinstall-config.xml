@@ -850,6 +850,7 @@
         <conditional ifProperty="(${cms.active}!=true)">
             <hidden property="cms.active" value="false"/>
         </conditional>
+        <hidden property="bypass.db" value="false"/>
     </page>
 	<page
             ifProperty="(${initialize.all}!=true)"

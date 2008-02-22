@@ -318,168 +318,231 @@
             </or>
         </condition>
         <condition property="run.publish.briefcase.portlet">
-            <or>
-                <equals arg1="${deploy.all}" arg2="true"/>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${briefcase-portlet.publish}" arg2="true"/>
-                <equals arg1="${briefcase-portlet.active}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${deploy.all}" arg2="true"/>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${briefcase-portlet.publish}" arg2="true"/>
+                    <equals arg1="${briefcase-portlet.active}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.publish.gateway.portlet">
-            <or>
-                <equals arg1="${deploy.all}" arg2="true"/>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${gateway-portlet.publish}" arg2="true"/>
-                <equals arg1="${gateway-portlet.active}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${deploy.all}" arg2="true"/>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${gateway-portlet.publish}" arg2="true"/>
+                    <equals arg1="${gateway-portlet.active}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.publish.messaging.portlet">
-            <or>
-                <equals arg1="${deploy.all}" arg2="true"/>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${messaging-portlet.publish}" arg2="true"/>
-                <equals arg1="${messaging-portlet.active}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${deploy.all}" arg2="true"/>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${messaging-portlet.publish}" arg2="true"/>
+                    <equals arg1="${messaging-portlet.active}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.publish.permissions.portlet">
-            <or>
-                <equals arg1="${deploy.all}" arg2="true"/>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${permissions-portlet.publish}" arg2="true"/>
-                <equals arg1="${permissions-portlet.active}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${deploy.all}" arg2="true"/>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${permissions-portlet.publish}" arg2="true"/>
+                    <equals arg1="${permissions-portlet.active}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.publish.web.content.portlet">
-            <or>
-                <equals arg1="${deploy.all}" arg2="true"/>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${web-content-portlet.publish}" arg2="true"/>
-                <equals arg1="${web-content-portlet.active}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${deploy.all}" arg2="true"/>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${web-content-portlet.publish}" arg2="true"/>
+                    <equals arg1="${web-content-portlet.active}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.publish.survey.channel">
-            <or>
-                <equals arg1="${deploy.all}" arg2="true"/>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${survey.publish}" arg2="true"/>
-                <equals arg1="${survey.active}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${deploy.all}" arg2="true"/>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${survey.publish}" arg2="true"/>
+                    <equals arg1="${survey.active}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.publish.cms.channel">
-            <or>
-                <equals arg1="${deploy.all}" arg2="true"/>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${cms.publish}" arg2="true"/>
-                <equals arg1="${cms.active}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${deploy.all}" arg2="true"/>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${cms.publish}" arg2="true"/>
+                    <equals arg1="${cms.active}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.publish.news.channel">
-            <or>
-                <equals arg1="${deploy.all}" arg2="true"/>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${news.publish}" arg2="true"/>
-                <equals arg1="${news.active}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${deploy.all}" arg2="true"/>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${news.publish}" arg2="true"/>
+                    <equals arg1="${news.active}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.publish.classifieds.channel">
-            <or>
-                <equals arg1="${deploy.all}" arg2="true"/>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${classifieds.publish}" arg2="true"/>
-                <equals arg1="${classifieds.active}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${deploy.all}" arg2="true"/>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${classifieds.publish}" arg2="true"/>
+                    <equals arg1="${classifieds.active}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.publish.calendar.channel">
-            <or>
-                <equals arg1="${deploy.all}" arg2="true"/>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${calendar.publish}" arg2="true"/>
-                <equals arg1="${run.deploy.calendar.channel}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${deploy.all}" arg2="true"/>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${calendar.publish}" arg2="true"/>
+                    <equals arg1="${run.deploy.calendar.channel}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.publish.notes.channel">
-            <or>
-                <equals arg1="${deploy.all}" arg2="true"/>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${notes.publish}" arg2="true"/>
-                <equals arg1="${notes.active}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${deploy.all}" arg2="true"/>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${notes.publish}" arg2="true"/>
+                    <equals arg1="${notes.active}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.publish.bookmarks.channel">
-            <or>
-                <equals arg1="${deploy.all}" arg2="true"/>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${bookmarks.publish}" arg2="true"/>
-                <equals arg1="${bookmarks.active}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${deploy.all}" arg2="true"/>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${bookmarks.publish}" arg2="true"/>
+                    <equals arg1="${bookmarks.active}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.publish.campusannouncement.channel">
-            <or>
-                <equals arg1="${deploy.all}" arg2="true"/>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${campusannouncement.publish}" arg2="true"/>
-                <equals arg1="${campusannouncement.active}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${deploy.all}" arg2="true"/>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${campusannouncement.publish}" arg2="true"/>
+                    <equals arg1="${campusannouncement.active}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.publish.ldapchangepw.channel">
-            <or>
-                <equals arg1="${deploy.all}" arg2="true"/>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${ldapchangepw.publish}" arg2="true"/>
-                <equals arg1="${ldapchangepw.active}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${deploy.all}" arg2="true"/>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${ldapchangepw.publish}" arg2="true"/>
+                    <equals arg1="${ldapchangepw.active}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.publish.useradmin.channel">
-            <or>
-                <equals arg1="${deploy.all}" arg2="true"/>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${useradmin.publish}" arg2="true"/>
-                <equals arg1="${run.deploy.useradmin.channel}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${deploy.all}" arg2="true"/>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${useradmin.publish}" arg2="true"/>
+                    <equals arg1="${run.deploy.useradmin.channel}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.publish.login.channel">
-            <or>
-                <equals arg1="${deploy.all}" arg2="true"/>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${login.publish}" arg2="true"/>
-                <equals arg1="${login.active}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${deploy.all}" arg2="true"/>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${login.publish}" arg2="true"/>
+                    <equals arg1="${login.active}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.publish.common.channels">
-            <or>
-                <equals arg1="${run.publish.cms.channel}" arg2="true"/>
-                <equals arg1="${run.publish.survey.channel}" arg2="true"/>
-                <equals arg1="${run.publish.news.channel}" arg2="true"/>
-                <equals arg1="${run.publish.classifieds.channel}" arg2="true"/>
-                <equals arg1="${run.publish.calendar.channel}" arg2="true"/>
-                <equals arg1="${run.publish.notes.channel}" arg2="true"/>
-                <equals arg1="${run.publish.bookmarks.channel}" arg2="true"/>
-                <equals arg1="${run.publish.campusannouncement.channel}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${run.publish.cms.channel}" arg2="true"/>
+                    <equals arg1="${run.publish.survey.channel}" arg2="true"/>
+                    <equals arg1="${run.publish.news.channel}" arg2="true"/>
+                    <equals arg1="${run.publish.classifieds.channel}" arg2="true"/>
+                    <equals arg1="${run.publish.calendar.channel}" arg2="true"/>
+                    <equals arg1="${run.publish.notes.channel}" arg2="true"/>
+                    <equals arg1="${run.publish.bookmarks.channel}" arg2="true"/>
+                    <equals arg1="${run.publish.campusannouncement.channel}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.uportal.db">
-            <or>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${uportal.db}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${uportal.db}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.uportal.pubchan">
-            <or>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${uportal.pubchan}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${uportal.pubchan}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.uportal.i18n.db">
-            <or>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${uportal.i18n.db}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${uportal.i18n.db}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.uportal.pubfragments">
-            <or>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${uportal.pubfragments}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${uportal.pubfragments}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.uportal.deploy.testsuite.portlet">
             <or>
@@ -512,88 +575,130 @@
             </or>
         </condition>
         <condition property="run.hibernate.alchemist">
-            <or>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${hibernate.alchemist}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${hibernate.alchemist}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.hibernate.demetrius">
-            <or>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${hibernate.demetrius}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${hibernate.demetrius}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.hibernate.mercury">
-            <or>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${hibernate.mercury}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${hibernate.mercury}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.hibernate.portlets-common">
-            <or>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${hibernate.portlets-common}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${hibernate.portlets-common}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.dbloader.cdk">
-            <or>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${dbloader.cdk}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${dbloader.cdk}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.dbloader.toro.common">
-            <or>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${dbloader.toro.common}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${dbloader.toro.common}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.dbloader.survey">
-            <or>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${dbloader.survey}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${dbloader.survey}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.dbloader.cms">
-            <or>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${dbloader.cms}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${dbloader.cms}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.dbloader.news">
-            <or>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${dbloader.news}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${dbloader.news}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.dbloader.classifieds">
-            <or>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${dbloader.classifieds}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${dbloader.classifieds}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.dbloader.calendar">
-            <or>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${dbloader.calendar}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${dbloader.calendar}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.dbloader.notes">
-            <or>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${dbloader.notes}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${dbloader.notes}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.dbloader.bookmarks">
-            <or>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${dbloader.bookmarks}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${dbloader.bookmarks}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="run.dbloader.campusannouncement">
-            <or>
-                <equals arg1="${initialize.all}" arg2="true"/>
-                <equals arg1="${dbloader.campusannouncement}" arg2="true"/>
-            </or>
+            <and>
+                <or>
+                    <equals arg1="${initialize.all}" arg2="true"/>
+                    <equals arg1="${dbloader.campusannouncement}" arg2="true"/>
+                </or>
+                <not><equals arg1="${bypass.db}" arg2="true"/></not>
+            </and>
         </condition>
         <condition property="hibernate.create.only" value="--create">
             <equals arg1="${hibernate.create.only.checkbox}" arg2="true"/>
@@ -997,7 +1102,10 @@
       </if>
 
       <if>
-          <not><available file="${work.dir}/.uportal-add-additional-constraints"/></not>
+          <and>
+              <not><available file="${work.dir}/.uportal-add-additional-constraints"/></not>
+              <not><equals arg1="${bypass.db}" arg2="true"/></not>
+          </and>
           <then>
               <antcall target="uportal-add-additional-constraints"/>
               <touch file="${work.dir}/.uportal-add-additional-constraints"/>
@@ -1029,6 +1137,7 @@
           <and>
               <isset property="run.dbloader.toro.common"/>
               <not><available file="${work.dir}/.initialize-access-controller"/></not>
+              <not><equals arg1="${bypass.db}" arg2="true"/></not>
           </and>
           <then>
               <antcall target="initialize-access-controller"/>
@@ -2953,20 +3062,23 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
 
        <!-- constructing a dbloader.xml based on the jdbc properties -->
        <copy overwrite="true" todir="${work.dir}/uportal-properties/properties/db" file="${basedir}/properties/uPortal-${uportal.version}/dbloader.xml"/>
-       <java outputproperty="db.meta.data" fork="true" failonerror="false" dir="${basedir}" classname="net.unicon.toro.installer.dbloader.DbVersion">
-           <classpath>
-               <pathelement path="${basedir}"/>
-               <path refId="uportal.classpath"/>
-               <path refId="db.classpath"/>
-           </classpath>
-           <arg line="${jdbc.driver} ${jdbc.url} ${jdbc.user} ${jdbc.password}"/>
-       </java>
        <if>
-           <not>
-               <contains string="${db.meta.data}" substring="db-name>"/>
-           </not>
+           <not><equals arg1="${bypass.db}" arg2="true"/></not>
            <then>
-               <fail>
+               <java outputproperty="db.meta.data" fork="true" failonerror="false" dir="${basedir}" classname="net.unicon.toro.installer.dbloader.DbVersion">
+                   <classpath>
+                       <pathelement path="${basedir}"/>
+                       <path refId="uportal.classpath"/>
+                       <path refId="db.classpath"/>
+                   </classpath>
+                   <arg line="${jdbc.driver} ${jdbc.url} ${jdbc.user} ${jdbc.password}"/>
+               </java>
+               <if>
+                   <not>
+                       <contains string="${db.meta.data}" substring="db-name>"/>
+                   </not>
+                   <then>
+                       <fail>
 
 DbVersion utility failed.
 
@@ -2976,19 +3088,21 @@ jdbc.user=${jdbc.user}
 jdbc.password=${jdbc.password}
 
 Message: ${db.meta.data}
-               </fail>
+                       </fail>
+                   </then>
+               </if>
+               <echo>db.meta.data =\n${db.meta.data}</echo>
+               <copy overwrite="true" todir="${work.dir}" file="${basedir}/properties/dbloader-${db.platform}-mapping.xml">
+                   <filterset>
+                       <filter token="db.meta.data" value="${db.meta.data}"/>
+                   </filterset>
+               </copy>
+               <antcall target="merge-configuration">
+                   <param name="configfile" value="${work.dir}/dbloader-${db.platform}-mapping.xml"/>
+                   <param name="targetdir" value="${work.dir}/uportal-properties"/>
+               </antcall>
            </then>
        </if>
-       <echo>db.meta.data =\n${db.meta.data}</echo>
-       <copy overwrite="true" todir="${work.dir}" file="${basedir}/properties/dbloader-${db.platform}-mapping.xml">
-           <filterset>
-               <filter token="db.meta.data" value="${db.meta.data}"/>
-           </filterset>
-       </copy>
-       <antcall target="merge-configuration">
-           <param name="configfile" value="${work.dir}/dbloader-${db.platform}-mapping.xml"/>
-           <param name="targetdir" value="${work.dir}/uportal-properties"/>
-       </antcall>
    </target>
 
    <target name="uportal-pubchan">
