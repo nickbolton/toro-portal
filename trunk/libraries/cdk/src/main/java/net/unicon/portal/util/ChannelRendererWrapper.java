@@ -15,9 +15,9 @@
  * along with this distribution.  It is also available here:
  * http://www.fsf.org/licensing/licenses/gpl.html
  *
- * As a special exception to the terms and conditions of version 
- * 2 of the GPL, you may redistribute this Program in connection 
- * with Free/Libre and Open Source Software ("FLOSS") applications 
+ * As a special exception to the terms and conditions of version
+ * 2 of the GPL, you may redistribute this Program in connection
+ * with Free/Libre and Open Source Software ("FLOSS") applications
  * as described in the GPL FLOSS exception.  You should have received
  * a copy of the text describing the FLOSS exception along with this
  * distribution.
@@ -120,7 +120,7 @@ public class ChannelRendererWrapper {
      */
     public void startRendering(Map channelCacheTables) throws PortalException {
 try {
-        channelRenderer = channelRendererFactory.newInstance(ichannel, runtimeData);
+        channelRenderer = channelRendererFactory.newInstance(ichannel, runtimeData, pcs);
 } catch (Throwable t) {
 //t.printStackTrace();
 throw new PortalException(new Exception(t));

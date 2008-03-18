@@ -26,7 +26,7 @@ standard.version = 1.1.2
 jstl.version = 1.1.2
 hibernate.version = 3.2.4.ga
 whirlycache.version = 0.7.1
-cernunnos.version = 1.0-M1
+cernunnos.version = 1.0-M4
 ant-contrib.version = 1.0b2
 
 # deployment options

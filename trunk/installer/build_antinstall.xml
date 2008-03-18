@@ -1101,7 +1101,7 @@
           </then>
       </if>
 
-      <if>
+      <!--if>
           <and>
               <not><available file="${work.dir}/.uportal-add-additional-constraints"/></not>
               <not><equals arg1="${bypass.db}" arg2="true"/></not>
@@ -1110,7 +1110,7 @@
               <antcall target="uportal-add-additional-constraints"/>
               <touch file="${work.dir}/.uportal-add-additional-constraints"/>
           </then>
-      </if>
+      </if-->
 
       <if>
           <and>
@@ -3017,7 +3017,7 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
            overwrite="true"/>
    </target>
 
-   <target name="uportal-add-additional-constraints">
+   <!--target name="uportal-add-additional-constraints">
        <echo>Adding additional uportal constraints</echo>
        <sql
            driver="${jdbc.driver}"
@@ -3030,7 +3030,7 @@ INSERT INTO UNI_SEQUENCE (NAME, NEXT_INDEX) VALUES ('RdbmsAccessBroker', 9);
                <path refId="db.classpath"/>
            </classpath>
        </sql>
-   </target>
+   </target-->
 
    <target name="create-uportal-properties">
        <mkdir dir="${work.dir}/uportal-properties/properties/db"/>
@@ -3194,11 +3194,15 @@ Message: ${db.meta.data}
     <if>
         <equals arg1="${run.remote.config}" arg2="false"/>
         <then>
-            <artifact:dependencies pathId="cernunnos.classpath">
+            <artifact:dependencies pathId="cernunnos.path">
                 <dependency groupId="org.danann" artifactId="cernunnos"
                     version="${cernunnos.version}" type="jar"/>
                 <remoteRepository refid="toro.repository" />
             </artifact:dependencies>
+            <path id="cernunnos.classpath">
+                 <pathelement path="${work.dir}/uportal-${uportal.version}/WEB-INF/lib/resolver.jar"/>
+                 <path refId="cernunnos.path"/>
+            </path>
         </then>
     </if>
 
@@ -3263,9 +3267,9 @@ Message: ${db.meta.data}
        <classpath>
          <pathelement path="${work.dir}/uportal-properties"/>
          <fileset refId="uportal-jar.fileset"/>
+         <path refId="cernunnos.classpath"/>
          <path refId="uportal.classpath"/>
          <path refId="db.classpath"/>
-         <path refId="cernunnos.classpath"/>
        </classpath>
        <arg value="classpath://org/jasig/portal/container/deploy/deploy-portlet-app.crn"/>
        <arg value="lib/portlets/${artifactId}.war"/>
