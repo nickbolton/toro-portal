@@ -1,0 +1,19 @@
+#set(SKIN_IMAGE_PATH = "media/org/jasig/portal/layout/tab-column/nested-tables/$skin/skin")
+#set(CONTROLS_IMAGE_PATH = "media/org/jasig/portal/layout/tab-column/nested-tables/$skin/controls")
+#set(NAV_IMAGE_PATH = "media/net/unicon/portal/channels/Navigation")
+#set(GRADEBOOK_HEADER_PATH = "media/net/unicon/flash/$skin")
+#set(SPACER = "$SKIN_IMAGE_PATH/transparent.gif")
+
+## rollover JS
+<script language="JavaScript1.2" type="text/javascript">
+<!--
+    window.focus(); // seems to be necessary to get Mozilla to display image title attributes
+    function swapImage(imageTarget,imageSrc)
+    {
+        if (document.getElementById &amp;&amp; document.getElementById(imageTarget))
+        {
+            document.getElementById(imageTarget).src = '${CONTROLS_IMAGE_PATH}/'+imageSrc;
+        }
+    }
+//-->
+</script>
