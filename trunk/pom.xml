@@ -3,7 +3,7 @@
   <groupId>net.unicon.toro</groupId>
   <artifactId>toro-portal</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.0-rc-8-SNAPSHOT</version>
+  <version>1.0.0-rc-7-SNAPSHOT</version>
   <name>toro-portal</name>
   <url>http://code.google.com/p/toro/</url>
 
