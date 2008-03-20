@@ -15,11 +15,16 @@ This section describes the steps required to configure a new Toro Gateway SSO Po
 
 Warning: You should make a backup of all files you edit before editing them.  Your portal environment should have a rigorous and thorough backup regimen and you should be in a position to restore your entire environment from backup if needed.  You should have a development or test instance of your portal in which you verify new configuration and other changes before applying these in production.
 
+== Placeholder tokens used in these instructions ==
+
+Your local name for the portlet web application containing the Toro Gateway SSO Portlet (here placeheld as "{TORO_WEBAPP}") will vary.  For instance, Academus instances used the name "AcademusApps".  New deployments using the Toro Installer will by default name this web application "toro-gateway-portlet".  In any case this token in these instructions should be replaced with the name of the web application containing the Toro portlets.
+
+Your local path to the Tomcat Java servlet container application (here placeheld as "{TOMCAT}") will vary.  In Academus deployments, this path was frequently somewhere like .../unicon/academus/portal-tomcata/ .
+
 == Creating a configuration file for the new portlet ==
 
 The following steps will configure OWA to open in an iframe (inline frame) with a height of 600 pixels. The desirable height for your environment may vary.  
 
-Your local name for the Toro web application (here placeheld as "{TORO_WEBAPP}" will vary.  For instance, Academus instances used the name "AcademusApps".  In any case this is the name of the web application containing the Toro portlets.
 
 *Create a file* at {TOMCAT}/{TORO_WEBAPP}/WEB-INF/classes/config/ named something like "gateway-OutlookWebAccessSso.xml" .  Whatever you name this configuration file, make note of that name as you'll need to refer to it later in these instructions ("the name of the configuration file for the Outlook Web Access instance of the Gateway SSO Portlet").
 
@@ -70,7 +75,7 @@ Note: the hostname of the value of the '<url>' element and the value of the 'par
 *Place a new servlet entry and servlet mapping* in the web.xml file for the portlet applications.  This file will be located somewhere like this:
 
 {{{
-{tomcat}/webapps/uPortalApps/WEB-INF/web.xml
+{TOMCAT}/webapps/uPortalApps/WEB-INF/web.xml
 }}}
 
 The new '<servlet>' element will need to look like this:
