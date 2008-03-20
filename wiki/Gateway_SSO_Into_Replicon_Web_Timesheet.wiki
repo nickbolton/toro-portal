@@ -1,0 +1,136 @@
+#summary Example Gateway SSO Configuration for accomplishing single sign-on into Replicon Web Timesheet.
+#labels Phase-Deploy,SSO
+
+= Introduction =
+
+Replicon WebTimesheet is a proprietary closed-source software application for time tracking.  This wiki page presents an example of configuring Gateway SSO to accomplish single sign-on into this application.
+
+= Screenshot =
+
+This is what the integration can look like when accomplished (here shown with an ugly custom icon -- your icon can be better!)
+
+http://toro-portal.googlecode.com/svn/wiki/images/replicon_web_timesheet_sso.png
+
+= Details =
+
+Gateway SSO configuration file for accomplishing this integration:
+
+{{{
+<gateway peephole="gateway_main">
+
+
+  <!--
+
+   The title to display when showing a list of available SSO entries.
+   In this example, this is a list of just one SSO entry, but it could have
+   additional entries, and then having a title for the list of multiple entries would
+   be more interesting.
+  -->
+
+  <title>Timesheet</title>
+
+
+    <!--
+
+     Single Sign-On entry for an external system.
+
+     The attribute 'handle' is required, and must be unique among other
+
+     sso-entry elements.
+
+    -->
+
+    <sso-entry handle="Timesheet" class="largeTimesheet">
+
+        <!-- Label and description to identify the external site. -->
+
+        <label>Timesheet</label>
+
+        <description>Launch My Timesheet</description>
+
+
+
+		<target handle="submit">
+
+			<url>https://webtimesheet.yourorganization.com/CGI/rt.exe</url>
+
+			<method>POST</method>
+
+			<parameter name="module"><value>login</value></parameter>
+
+			<parameter name="package"><value></value></parameter>
+
+			<parameter name="startpage"><value></value></parameter>
+
+			<parameter name="startpageuserid"><value></value></parameter>
+			<parameter name="startpageobjectid"><value></value></parameter>
+
+			<parameter name="UserId"><value>{user.login.id}</value></parameter>
+
+			<parameter name="UserPass"><value>{password}</value></parameter>
+
+		</target>
+
+        <!--
+
+            A sequence defines one or more targets that must be submitted in sequence.
+
+            The only two expected sequence types are "login" and "refresh". The
+
+            "login" sequence type must always exist; the "refresh" sequence may
+
+            be specified if you wish for a difference sequence to be executed
+
+            after the user's first login has occurred. All other sequences are
+
+            available via buttons in the user interface.
+
+        -->
+
+		<sequence type="login">
+
+			<target handle="submit" />
+
+		</sequence>
+
+
+
+        <!--
+
+            Window definition. Type can be either 'popup' or 'iframe'.
+
+            <title> and <name> can be declared for both.
+
+            If using type 'iframe', the element <style> can be defined to contain CSS information.
+
+            If using type 'popup', the element <properties> can be defined to specify window parameters.
+
+        -->
+
+        <window type="popup">
+
+            <title>Timesheet</title>
+
+            <name>Timesheet</name>
+
+            <properties></properties>
+
+        </window>
+
+
+
+    </sso-entry>
+
+
+
+    <!-- Nothing below this line should require modification in normal usage. -->
+
+
+
+    <!-- JNDI Reference to the database. -->
+
+    <jndi-ref>java:comp/env/jdbc/PortalDb</jndi-ref>
+
+</gateway>
+
+}}}
