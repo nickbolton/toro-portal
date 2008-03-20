@@ -1,0 +1,31 @@
+#summary Guide to configuring the Gateway SSO Portlet to single sign-on into Outlook Web Access.
+
+= Overview =
+
+Outlook Web Access (OWA) is a component of Microsoft Exchange that enables users to access their e-mail, calendar, contacts and other Exchange/Outlook personal information through a web browser. 
+
+The Gateway SSO Portlet is a powerful, flexible part of the Toro open source technology that allows portal administrators to accomplish single sign-on for embedded or externally linked access to applications like OWA from within the Portal.
+
+= Configuration =
+
+This section describes the steps required to configure a new Toro Gateway SSO Portlet for OWA.
+
+== Obligatory Backup Warning ==
+
+Warning: You should make a backup of all files you edit before editing them.  Your portal environment should have a rigorous and thorough backup regimen and you should be in a position to restore your entire environment from backup if needed.  You should have a development or test instance of your portal in which you verify new configuration and other changes before applying these in production.
+
+== Creating a configuration file for the new portlet ==
+
+The following steps will configure OWA to open in an iframe (inline frame) with a height of 600 pixels. The desirable height for your environment may vary.  
+
+Your local name for the Toro web application (here placeheld as "{TORO_WEBAPP}" will vary.  For instance, Academus instances used the name "AcademusApps".  In any case this is the name of the web application containing the Toro portlets.
+
+*Create a file* at {TOMCAT}/{TORO_WEBAPP}/WEB-INF/classes/config/ named something like "gateway-OutlookWebAccessSso.xml" .  Whatever you name this configuration file, make note of that name as you'll need to refer to it later in these instructions ("the name of the configuration file for the Outlook Web Access instance of the Gateway SSO Portlet").
+
+Seed this file with the following configuration:
+
+{{{
+
+}}}
+
+
