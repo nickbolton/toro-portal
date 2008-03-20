@@ -1,5 +1,5 @@
 #summary Guide to configuring the Gateway SSO Portlet to single sign-on into Outlook Web Access.
-#labels Phase-Deploy
+#labels Phase-Deploy,Featured
 
 = Overview =
 
@@ -75,7 +75,7 @@ Note: the hostname of the value of the '<url>' element and the value of the 'par
 *Place a new servlet entry and servlet mapping* in the web.xml file for the portlet applications.  This file will be located somewhere like this:
 
 {{{
-{TOMCAT}/webapps/uPortalApps/WEB-INF/web.xml
+{TOMCAT}/webapps/{TORO_WEBAPP}/WEB-INF/web.xml
 }}}
 
 The new '<servlet>' element will need to look like this:
@@ -97,4 +97,66 @@ The new '<servlet>' element will need to look like this:
 </servlet>
 }}}
 
-TODO: complete this document
+The new '<servlet-mapping' element will need to look like this:
+
+{{{
+<servlet-mapping>
+  <servlet-name>OutlookWebAccessPortlet</servlet-name>
+  <url-pattern>/OutlookWebAccessPortlet</url-pattern>
+</servlet-mapping>
+}}}
+
+== Adding the new portlet to portlet.xml ==
+
+*Add a new '<portlet>' element to the portlet.xml file*. 
+
+This file will be located in the same directory as web.xml, at a path something like this:
+
+{{{
+{TOMCAT}/webapps/{TORO_WEBAPP}/WEB-INF/portlet.xml
+}}} 
+
+The new '<portlet' element needs to look like this:
+
+{{{
+<portlet>
+  <portlet-name>OutlookWebAccessPortlet</portlet-name>
+  <portlet-class>net.unicon.academus.apps.gateway.GatewayPortlet</portlet-class>
+  <init-param>
+    <name>id</name>
+    <value>outlookwebaccess</value>
+  </init-param>
+  <init-param>
+    <name>configPath</name>
+    <value>/WEB-INF/classes/config/gateway-OutlookWebAccessSoo.xml</value>
+  </init-param>
+  <expiration-cache>0</expiration-cache>
+  <supported-locale>en-US</supported-locale>
+  <portlet-info>
+    <title>Outlook Web Access</title>
+    <short-title>Outlook Web Access</short-title>
+    <keywords>Outlook,Webmail,email</keywords>
+  </portlet-info>
+</portlet>
+}}}
+
+== Restart the portal ==
+
+A restart of the portal will be required to effect these changes.
+
+== Publishing the portlet ==
+
+Publish the portlet adapter channel via the uPortal Channel Manager to present the deployed Gateway SSO Portlet instance in the portal.
+
+|| *Channel publication parameter* || *Value* || *Notes* ||
+|| Channel Type || Portlet || ||
+|| Channel Title || Outlook Web Access || _(any other channel title you prefer will work)_ ||
+|| Channel Name || Outlook Web Access || _(any other channel title you prefer will work)_ ||
+|| Channel Functional Name || OutlookWebAccess || _(any valid functional name you prefer will work)_ ||
+|| Channel Description || This is a portlet that will broker authentication to Outlook Web Access. || _(Any channel description will work.)_ ||
+|| Channel Timeout || 5000 milliseconds || _(any reasonable timeout will work.  5 seconds (as configured here) is suggested)_ ||
+|| Channel Secure || || _(check or uncheck the box depending on your preference.  Unicon highly recommends that uPortal instances making use of the Gateway SSO Portlet use SSL for all situations involving this portlet)_ ||
+|| Portlet definition ID || {TORO_WEBAPP}.OutlookWebAccessPortlet || ||
+|| Channel controls || || _None of Editable, Has Help, and Has About should be checked._ ||
+|| Selected Categories || || _A suitable category should be selected._ ||
+|| Selected Groups and/or People || || _The group of people desired to be able to accomplish single sign-on should be selected._ ||
