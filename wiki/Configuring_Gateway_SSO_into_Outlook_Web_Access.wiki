@@ -26,7 +26,70 @@ Your local name for the Toro web application (here placeheld as "{TORO_WEBAPP}" 
 Seed this file with the following configuration:
 
 {{{
+<gateway peephole="gateway_main">
+  <title>Outlook Web Access</title>
+  <sso-entry handle="outlookwebaccess" class="noImage">
+    <label>Outlook Web Access</label>
+    <description>Sign in to Outlook Web Access</description>
+    <target handle="log">
+      <url>https://deploy1.unicon.net/exchweb/bin/auth/owaauth.dll</url>
+      <method>POST</method>
+      <parameter name="username">
+        <value>uniconsystest\{user.login.id}</value>
+      </parameter>
+      <parameter name="password">
+        <value>{password}</value>
+      </parameter>
+      <parameter name="destination">
+        <value>https://deploy1.unicon.net/exchange/<value>
+      </parameter>
+      <parameter name="flags">
+        <value>0</value>
+      </parameter>
+    </target>
+    <sequence type="login">
+      <target handle="log"/>
+    </sequence>
+    <sequence type="relog">
+      <target handle="log"/>
+    </sequence>
+    <window type="iframe">
+      <title>Outlook Web Access</title>
+      <name>Outlook Web Access</name>
+      <style>width: 100%; height: 600px; border: 0px;</style>
+    </window>
+  </sso-entry>
+  <jndi-ref>java:comp/env/jdbc/PortalDb</jndi-ref>
+</gateway>
+}}}
 
+Note: the hostname of the value of the '<url>' element and the value of the 'parameter' element named "destination" must be set to the values for your OWA server.  This will be specific to your environment.  The prefix in the value of the 'parameter' tag named "username" should be replaced with the name of the Windows Active Directory Domain the Exchange server is using.
+
+== Adding the new portlet to the application's web.xml file ==
+
+*Place a new servlet entry and servlet mapping* in the web.xml file for the portlet applications.  This file will be located somewhere like this:
+
+{{{
+{tomcat}/webapps/uPortalApps/WEB-INF/web.xml
+}}}
+
+The new '<servlet>' element will need to look like this:
+
+{{{
+<servlet>
+  <servlet-name>OutlookWebAccessPortlet</servlet-name>
+  <display-name>Outlook Web Access Wrapper</display-name>
+  <description>Servlet layer binding enabling Pluto to operate the corresponding Portlet instance</description>
+  <servlet-class>org.apache.pluto.code.PortletServlet</servlet-class>
+  <init-param>
+    <param-name>portlet-class</param-name>
+    <param-value>net.unicon.academus.apps.gateway.GatewayPortlet</param-value>
+  </init-param>
+  <init-param>
+    <param-name>portlet-guid</portlet-name>
+    <param-value>toro-gateway-portlet.OutlookWebAccessPortlet</param-value>
+  </init-param>
+</servlet>
 }}}
 
 TODO: complete this document
