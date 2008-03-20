@@ -3,7 +3,7 @@
 
 = Introduction =
 
-Replicon WebTimesheet is a proprietary closed-source software application for time tracking.  This wiki page presents an example of configuring Gateway SSO to accomplish single sign-on into this application.
+[http://www.replicon.com/ Replicon] [http://www.replicon.com/timesheet.aspx WebTimesheet] is a proprietary closed-source software application for time tracking.  This wiki page presents an example of configuring Gateway SSO to accomplish single sign-on into this application.
 
 = Screenshot =
 
