@@ -1,5 +1,5 @@
 #summary Guide to configuring the Gateway SSO Portlet to single sign-on into Outlook Web Access.
-#labels Phase-Deploy,Featured
+#labels Phase-Deploy,Featured,SSO
 
 = Overview =
 
