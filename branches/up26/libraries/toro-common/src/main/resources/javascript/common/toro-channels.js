@@ -1,5 +1,10 @@
 window.swapImage=function() {};
 
+function openBrWindow(theURL,winName,features) {
+    var winRef = window.open(theURL,winName,features);
+    winRef.focus();
+}
+
 window.checkForNewHref = function () {
     if (window.locationhref)
     {
