@@ -1,0 +1,130 @@
+<?xml version="1.0" ?>
+<!--
+  Copyright (C) 2007 Unicon, Inc.
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this distribution.  It is also available here:
+  http://www.fsf.org/licensing/licenses/gpl.html
+
+  As a special exception to the terms and conditions of version 
+  2 of the GPL, you may redistribute this Program in connection 
+  with Free/Libre and Open Source Software ("FLOSS") applications 
+  as described in the GPL FLOSS exception.  You should have received
+  a copy of the text describing the FLOSS exception along with this
+  distribution.
+-->
+<!--
+<state>
+    <settings>
+        <sharing disabled="false"></sharing>
+    </settings>
+    <status>
+        <available-space>50.2 MB</available-space>
+        <total-shared>12</total-shared>
+    </status>
+
+    <welcome>
+        <user>
+            <fullname>John Doe</fullname>
+        </user>
+    </welcome>
+
+    <briefcase>
+      <drive handle="personal" class-large="largePersonal"
+class-opened="folderopen" class-closed="folderclosed" sharing="on"
+share-target="shared">
+        <label>Personal Folder</label>
+        <description>Your Personal Folder is where you can store your
+documents, notes, photos, and more.</description>
+      </drive>
+      <drive handle="shared" class-large="largeShared"
+class-opened="sharedfolderopen" class-closed="sharedfolderclosed"
+sharing="off">
+        <label>Shared Folders</label>
+        <description>Access other files that have been shared with
+you.</description>
+      </drive>
+      <drive handle="fdrive" class-large="largeNetwork"
+class-opened="networkfolderopen" class-closed="networkfolderclosed"
+sharing="off">
+        <label>F Drive</label>
+        <description>The F Drive contain common folders that you and others
+on the Campus can access.</description>
+      </drive>
+      <drive handle="idrive" class-large="largeNetwork"
+class-opened="networkfolderopen" class-closed="networkfolderclosed"
+sharing="off">
+        <label>I Drive</label>
+        <description>The I Drive contain common folders that you and others
+on the Campus can access.</description>
+      </drive>
+    </briefcase>
+</state>
+-->
+<screen handle="welcome">
+   <layout>
+   	  <layout-context class="BriefcasePortlet BriefcasePortlet_welcome" />
+      <section type="header" cols="1">
+         <section type="title">
+            <h2>Welcome to your Briefcase</h2>
+         </section>
+
+      </section>
+
+      <section type="content">
+            <section type="main" cols="1" class="padding-large">
+               <choice-collection handle="content">
+                   <section type="pagetexttitle">
+                      <!--<h3 class="no-pad">Welcome
+                      <if test="{count(/state/welcome/user/fullname)}" against="0" condition="gt">
+                      <true>, <value-of select="/state/welcome/user/fullname" /></true>
+                      </if>!</h3> -->
+
+                      <p class="no-pad">Start by selecting the folders you want to view:</p>
+                   </section>
+
+                   <section type="pagetext">
+                      <choice handle="goLocation" min-selections="0" max-selections="1">
+                         <ul class="no-bullet no-pad">
+                            <call-template handle="drive" select="/state/briefcase/drive" />
+                         </ul>
+                      </choice>
+                   </section>
+               </choice-collection>
+            </section>
+      </section>
+   </layout>
+
+   <template handle="drive">
+      <li>
+         <expanded-link class="{@class-large}">
+            <h4 class="personal_folder">
+               <link>
+                  <action handle="briefcaseNavigateToDrive" impl="net.unicon.academus.apps.briefcase.engine.GoToFolderAction" inpt="content">
+                     <label>
+                        <value-of select="label" />
+                     </label>
+                     <description>To view <value-of select="label" />.</description>
+                     <option handle="{@handle}" complement-type="net.unicon.penelope.complement.TypeNone" />
+                  </action>
+               </link>
+            </h4>
+
+            <p>
+               <value-of select="description" />
+            </p>
+         </expanded-link>
+      </li>
+   </template>
+</screen>
+
