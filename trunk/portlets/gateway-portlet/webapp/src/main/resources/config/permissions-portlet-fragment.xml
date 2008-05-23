@@ -1,0 +1,22 @@
+    -->
+    <!-- BEGIN blog instance: EXAMPLE
+    <portlet handle="blog-EXAMPLE">
+        <label>Blog: EXAMPLE</label>
+        <description>Modify permissions for the blog instance: EXAMPLE</description>
+        <portlet-access handle="access-blog-EXAMPLE">
+            <import src="file:@tomcat.home@/webapps/toro-gateway-portlet/WEB-INF/classes/config/blog-EXAMPLE.xml" select="//access-broker[@handle='blog-EXAMPLE']"/>
+            <access impl="net.unicon.academus.apps.blogger.BlojsomAccessType"/>
+        </portlet-access>
+    </portlet>
+         END blog instance: EXAMPLE -->
+
+    <!-- BEGIN blog instance: default -->
+    <portlet handle="blog-default">
+        <label>Blog: Default</label>
+        <description>Modify permissions for the blog instance: default</description>
+        <portlet-access handle="access-blog-default">
+            <import src="file:@tomcat.home@/webapps/toro-gateway-portlet/WEB-INF/classes/config/blog-default.xml" select="//access-broker[@handle='blog-default']"/>
+            <access impl="net.unicon.academus.apps.blogger.BlojsomAccessType"/>
+        </portlet-access>
+    </portlet>
+    <!-- END blog instance: default -->

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
+
+    <parent>
+        <groupId>net.unicon.toro</groupId>
+        <artifactId>toro-portal</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.unicon.toro.portlets-overlay</groupId>
+    <artifactId>portlets-overlay-parent</artifactId>
+    <packaging>pom</packaging>
+
+    <name>Toro Portlets</name>
+    <description>Parent package for portlets deployed with uPortal.</description>
+
+    <modules>
+        <module>toro-briefcase-portlet</module>
+        <module>toro-messaging-portlet</module>
+        <module>toro-web-content-portlet</module>
+        <module>toro-gateway-portlet</module>
+        <module>toro-permissions-portlet</module>
+    </modules>
+
+    <build>
+        <finalName>${pom.artifactId}</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.pluto</groupId>
+                    <artifactId>maven-pluto-plugin</artifactId>
+                    <version>${pluto.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>assemble</goal>
+                            </goals>
+                            <configuration>
+                                <assemblyOutputDirectory>${project.build.directory}</assemblyOutputDirectory>
+                                <archives>
+                                    <assembleArchive>${project.build.directory}/${project.build.finalName}.war</assembleArchive>
+                                </archives>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

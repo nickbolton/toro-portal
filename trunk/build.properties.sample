@@ -1,0 +1,17 @@
+datasource=PortalDb
+#db.platform=oracle
+#db.platform=sqlserver
+db.platform=postgres
+portal.base.url=
+portal.server.hostname=localhost
+portal.server.http.protocol=http
+portal.server.port=8080
+reddot.content.path=
+reddot.method=GET
+reddot.url=
+smtp.server.hostname=zimbra.unicon.net
+smtp.server.password=
+smtp.server.port=25
+smtp.server.username=
+tomcat.home=/Users/deuce/dev/src/uportal/up3/tomcat
+toro.data.home=/Users/deuce/dev/src/uportal/up3/data

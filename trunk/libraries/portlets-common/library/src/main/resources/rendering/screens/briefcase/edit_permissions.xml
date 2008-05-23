@@ -1,0 +1,576 @@
+<?xml version="1.0" ?>
+<!--
+  Copyright (C) 2007 Unicon, Inc.
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this distribution.  It is also available here:
+  http://www.fsf.org/licensing/licenses/gpl.html
+
+  As a special exception to the terms and conditions of version 
+  2 of the GPL, you may redistribute this Program in connection 
+  with Free/Libre and Open Source Software ("FLOSS") applications 
+  as described in the GPL FLOSS exception.  You should have received
+  a copy of the text describing the FLOSS exception along with this
+  distribution.
+-->
+<!-- 
+<state>
+
+    <shared-items>
+      <resource id="c:/temp/briefcaseNew/factory1/" name="factory1" shared="no">
+         <mimetype>Folder</mimetype>
+
+         <type>Folder</type>
+
+         <lastmod>Sep 7, 2004 1:30:09 PM</lastmod>
+
+         <size>0</size>
+      </resource>
+    </shared-items>
+    
+    <sharees currentpage="5" perpage="5" totalpages="5" firstdisplayed="6" lastdisplayed="10" totalitems="27">
+        <member id="1"><name>Howdy Dudey</name></member>
+        <group id="2"><name>Mouseketeers</name></group>
+        <member id="11"><name>John Doe</name></member>
+    </sharees>
+</state>
+
+
+-->
+<screen handle="edit_permissions">
+   <layout>
+   	  <layout-context class="BriefcasePortlet BriefcasePortlet_edit_permissions" />
+        <!-- DEBUG to show state XML -->
+        <!--<form>
+        <textarea>
+            <call-template handle="showStateXMLElement" select="/state" ></call-template>
+        </textarea>
+        </form> -->
+      <section type="header" cols="1">
+         <section type="title">
+            <h2>Share Folder with Members or Groups</h2>
+         </section>
+      </section>
+      
+      <section type="content">
+         <section type="main" cols="1" class="padding">
+
+            <choice-collection handle="editPermissionForm">
+                <!--<call-template handle="pageToolbar" select="."/> -->
+                
+                <section type="content2">
+                    <section type="secondary" class="secondary2 padding">
+                       <section type="sidebox">
+                          <h4>Viewing Sharing Details For:</h4>
+            
+                          <ul class="no-bullet">
+                             <call-template handle="sharedResources" select="//state/shared-items/resource">
+                             </call-template>
+                          </ul>
+                       </section>
+            
+                       <section type="sidebox">
+                          <h4>You Just Added:</h4>
+            
+                          <if test="{number(/state/additions/members/@count)+number(/state/additions/groups/@count)}" against="0" condition="gt">
+                             <true>
+                                <table cellpadding="0" cellspacing="1" border="0" class="selection-basket">
+                                   <tr>
+                                      <th class="portlet-section-subheader selection-basket-label"><span class="member">MEMBERS</span></th>
+            
+                                      <td class="portlet-section-body selection-basket-number">
+                                         <value-of select="number(/state/additions/members/@count)" />
+                                      </td>
+                                   </tr>
+            
+                                   <tr>
+                                      <th class="portlet-section-subheader selection-basket-label"><span class="group">GROUPS</span></th>
+            
+                                      <td class="portlet-section-body selection-basket-number">
+                                         <value-of select="number(/state/additions/groups/@count)" />
+                                      </td>
+                                   </tr>
+                                </table>
+                             </true>
+            
+                             <false>
+                                <p>(No Recent Additions)</p>
+            
+                                <link>
+                                   <action handle="briefcaseAddSelections" impl="net.unicon.academus.apps.briefcase.engine.GoToSelectorAction" to-screen="select_groups" inpt="editPermissionForm">
+                                      <label>Add Members or Groups Now</label>
+            
+                                      <description>To add members or groups to share this folder with</description>
+                                   </action>
+                                </link>
+                             </false>
+                          </if>
+                       </section>
+                    </section>
+                
+                    <section type="main" cols="2" class="main-content padding">
+                       <!--<h3 class="content-title">Sharing Details</h3> -->
+                       <if test="{count(//state/sharees/*[name(.)='member' or name(.)='group'])}" against="0" condition="gt">
+                          <true>
+        
+                             <table even-row-class="portlet-section-body evenrow" odd-row-class="portlet-section-alternate oddrow" cellpadding="0" cellspacing="0" border="0" class="main-content-table-alternate">
+                                <tr>
+                                   <th class="cell-info cell-border-alternate" colspan="2">
+                                      <!--<call-template handle="nameFilter" select="." /> -->
+                                   </th>
+        
+                                   <th class="cell-info cell-border-alternate center" colspan="3" id="permission_header">Set Permissions Below</th>
+                                </tr>
+        
+                                <col>
+                                   <th class="portlet-section-header th-button th-button-select">
+                                      <select-toggle targetname="selectedItems" title="To select or de-select all members and groups on this page">Select</select-toggle>
+                                   </th>
+        
+                                   <choice handle="selectedItems" min-selections="0" max-selections="0">
+                                      <call-template handle="rowSelect" select="//state/sharees/*[name(.)='member' or name(.)='group']" />
+                                   </choice>
+                                </col>
+        
+                                <col>
+				                  <th class="portlet-section-header th-button th-button-name">
+				                     <sort-column>
+				                        <choice handle="nameSortDirection" min-selections="0" max-selections="1">
+				                           <label>Name Sort Direction</label>
+				
+				                           <option handle="asc" complement-type="net.unicon.penelope.complement.TypeNone">
+				                              <label>Sort Names in ascending order</label>
+				                           </option>
+				
+				                           <option handle="des" complement-type="net.unicon.penelope.complement.TypeNone">
+				                              <label>Sort Names in descending order</label>
+				                           </option>
+				                        </choice>
+				
+				                        <action handle="briefcaseSortName" impl="net.unicon.academus.apps.briefcase.engine.ToggleNameSorting" to-screen="edit_permissions">
+				                           <label>Name</label>
+				                        </action>
+				                     </sort-column>
+				                  </th>
+        
+                                   <call-template handle="rowName" select="//state/sharees/*[name(.)='member' or name(.)='group']" />
+                                </col>
+        
+                                <col>
+                                   <th class="portlet-section-header th-column-permission">
+                                   		<select-toggle targetname="readPermittedItems" title="To select or de-select the View Permission for all members and groups on this page">View</select-toggle>
+                                   </th>
+        
+                                   <choice handle="readPermittedItems" min-selections="0" max-selections="0">
+                                      <call-template handle="rowReadPermission" select="//state/sharees/*[name(.)='member' or name(.)='group']" />
+                                   </choice>
+                                </col>
+        
+                                <col>
+                                   <th class="portlet-section-header th-column-permission">
+                                   		<select-toggle targetname="deletePermittedItems" title="To select or de-select the Delete Permission for all members and groups on this page">Delete</select-toggle>
+                                   </th>
+        
+                                   <choice handle="deletePermittedItems" min-selections="0" max-selections="0">
+                                      <call-template handle="rowDeletePermission" select="//state/sharees/*[name(.)='member' or name(.)='group']" />
+                                   </choice>
+                                </col>
+        
+                                <col>
+                                   <th class="portlet-section-header th-column-permission">
+                                   		<select-toggle targetname="writePermittedItems" title="To select or de-select the Add Permission for all members and groups on this page">Add</select-toggle>
+                                   </th>
+        
+                                   <choice handle="writePermittedItems" min-selections="0" max-selections="0">
+                                      <call-template handle="rowWritePermission" select="//state/sharees/*[name(.)='member' or name(.)='group']" />
+                                   </choice>
+                                </col>
+                             </table>
+        
+                             <paging>
+                                <display-per-page>
+                                    <select-one type="dropdown" title="Select the number of items to display per page.">
+                                      <choice handle="chooseDisplayNumber" min-selections="0" max-selections="1">
+                                         <label>Display</label>
+        
+                                         <option handle="5" complement-type="net.unicon.penelope.complement.TypeNone">
+                                            <label>5</label>
+                                         </option>
+        
+                                         <option handle="10" complement-type="net.unicon.penelope.complement.TypeNone">
+                                            <label>10</label>
+                                         </option>
+        
+                                         <option handle="20" complement-type="net.unicon.penelope.complement.TypeNone">
+                                            <label>20</label>
+                                         </option>
+        
+                                         <option handle="50" complement-type="net.unicon.penelope.complement.TypeNone">
+                                            <label>50</label>
+                                         </option>
+        
+                                         <option handle="100" complement-type="net.unicon.penelope.complement.TypeNone">
+                                            <label>100</label>
+                                         </option>
+        
+        				               <action handle="setDisplay" impl="net.unicon.academus.apps.briefcase.engine.SetItemsPerPageAction" inpt="editPermissionForm" to-screen="edit_permissions">
+        				                  <label>Set</label>
+        				                  <description>To set the number of displayed items, per page.</description>
+        				               </action>
+        
+                                      </choice>
+                                   </select-one>
+        
+                                   <text>Per Page</text>
+                                </display-per-page>
+        
+                                <paging-controls currentpage="{//state/sharees/@currentpage}" perpage="{//state/sharees/@perpage}" totalpages="{//state/sharees/@totalpages}" firstdisplayed="{//state/sharees/@firstdisplayed}" lastdisplayed="{//state/sharees/@lastdisplayed}" totalitems="{//state/sharees/@totalitems}">
+                                   <first>
+                                      <link>
+                                         <action handle="goToFirstPage" impl="net.unicon.academus.apps.briefcase.engine.ChangeUserPrefPageAction" move="first" to-screen="edit_permissions" inpt="editPermissionForm">
+                                            <label>First</label>
+							                <description >To go to the first page of the results.</description>
+                                         </action>
+                                      </link>
+                                   </first>
+        
+                                   <prev>
+                                      <link>
+                                         <action handle="goToPrevPage" impl="net.unicon.academus.apps.briefcase.engine.ChangeUserPrefPageAction" move="previous" to-screen="edit_permissions" inpt="editPermissionForm">
+                                            <label>Prev</label>
+							                <description >To go to the previous page of the results.</description>
+                                         </action>
+                                      </link>
+                                   </prev>
+        
+                                   <next>
+                                      <link>
+                                         <action handle="goToNextPage" impl="net.unicon.academus.apps.briefcase.engine.ChangeUserPrefPageAction" move="next" to-screen="edit_permissions" inpt="editPermissionForm">
+                                            <label>Next</label>
+							                <description >To go to the next page of the results.</description>
+                                         </action>
+                                      </link>
+                                   </next>
+        
+                                   <last>
+                                      <link>
+                                         <action handle="goToLastPage" impl="net.unicon.academus.apps.briefcase.engine.ChangeUserPrefPageAction" move="last" to-screen="edit_permissions" inpt="editPermissionForm">
+                                            <label>Last</label>
+							                <description >To go to the last page of the results.</description>
+                                         </action>
+                                      </link>
+                                   </last>
+                                </paging-controls>
+                             </paging>
+        
+                             <call-template handle="permissionsToolbar" select="." />
+                          </true>
+                          <false>
+                             <!--<call-template handle="noShareesToolbar" select="." /> -->
+        
+        					 	<h2>This folder is currently not being shared with anyone.</h2>
+        					 	<p>
+        					 	To start sharing you must first <link>
+                                         <action handle="addMembersGroupsLink" impl="net.unicon.academus.apps.briefcase.engine.GoToSelectorAction" to-screen="select_groups" inpt="editPermissionForm">
+                                            <label>add members or groups</label>
+                                            <description>To add members or groups to share with.</description>
+                                         </action>
+                                      </link> to share with.
+        					 	</p>
+                             
+                             <call-template handle="noShareesToolbar" select="." />
+                          </false>
+                       </if>
+                       </section>
+                    </section>
+    
+                <call-template handle="pageToolbar" select="." />
+             </choice-collection>
+
+         </section>
+      </section>
+   </layout>
+
+   <template handle="sharedResources">
+      <li class="li-image shared-items">
+         <value-of select="@name">
+         </value-of>
+      </li>
+   </template>
+
+   <template handle="pageToolbar">
+      <toolbar>
+         <action handle="submitPermissions" impl="net.unicon.academus.apps.briefcase.engine.SubmitShareeAction" inpt="editPermissionForm" to-screen="folderview" class="form-button-emphasis">
+            <label>Submit</label>
+
+            <description>To save these changes to Sharing permissions.</description>
+         </action>
+
+         <action handle="cancelSetPermissions" impl="net.unicon.academus.apps.briefcase.engine.ShowFolderAction">
+            <label>Cancel</label>
+
+            <description>To cancel these changes to Sharing permissions</description>
+         </action>
+      </toolbar>
+   </template>
+
+   <template handle="noShareesToolbar">
+      <toolbar class="toolbar-secondary">
+         <action handle="addMembersGroups" impl="net.unicon.academus.apps.briefcase.engine.GoToSelectorAction" to-screen="select_groups" inpt="editPermissionForm">
+            <label>Add Members / Groups</label>
+
+            <description>To add members or groups to share with.</description>
+
+         </action>
+      </toolbar>
+   </template>
+
+   <template handle="permissionsToolbar">
+      <toolbar class="toolbar-secondary">
+         <button-group>
+	         <action handle="addMoreSharees" impl="net.unicon.academus.apps.briefcase.engine.GoToSelectorAction" to-screen="select_groups" inpt="editPermissionForm">
+	            <label>Add More</label>
+	
+	            <description>To add additional members or groups to share with.</description>
+	
+	         </action>
+
+	         <action handle="removeSharees" impl="net.unicon.academus.apps.briefcase.engine.RemoveShareeAction" to-screen="edit_permissions" inpt="editPermissionForm">         
+	            <label>Remove</label>
+	
+	            <description>To remove the selected members or groups from sharing this folder.</description>
+	         </action>
+	
+         </button-group>
+
+		 <!--<call-template handle="newAdditionViewFilter" select="*[number(/state/additions/members/@count)+number(/state/additions/groups/@count) &gt; 0]" ></call-template> -->
+      </toolbar>
+   </template>
+
+   <!--<template handle="newAdditionViewFilter" >
+		<view-filter>
+	        <select-one type="link">
+	            <choice handle="newAdditionFilter" min-selections="0" max-selections="1">
+	                <option handle="all" complement-type="net.unicon.penelope.complement.TypeNone">
+	                    <label>View All</label>
+			            <description>To view all members or groups that this folder is shared with.</description>
+	                </option>
+	
+	                | 
+	                <option handle="new" complement-type="net.unicon.penelope.complement.TypeNone">
+	                    <label>View New Additions Only</label>
+			            <description>To view only those members or groups that you just added to share with.</description>
+	                </option>
+	            </choice>
+	
+	            <action handle="filterByNew" impl="net.unicon.academus.apps.briefcase.engine.ChangeShareeViewAction" to-screen="edit_permissions" inpt="editPermissionForm">
+	               <label>View Selection</label>
+	
+	               <description>To view the items as selected.</description>
+	            </action>
+	        </select-one>
+        </view-filter>
+   </template> -->
+
+   <template handle="nameFilter">
+      <select-one type="link">
+         <choice handle="chooseNameFilter" min-selections="0" max-selections="1">
+         <option handle="all" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>All</label>
+         </option>
+
+         | 
+         <option handle="a" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>A</label>
+         </option>
+
+         <option handle="b" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>B</label>
+         </option>
+
+         <option handle="c" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>C</label>
+         </option>
+
+         <option handle="d" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>D</label>
+         </option>
+
+         <option handle="e" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>E</label>
+         </option>
+
+         <option handle="f" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>F</label>
+         </option>
+
+         <option handle="g" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>G</label>
+         </option>
+
+         <option handle="h" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>H</label>
+         </option>
+
+         <option handle="i" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>I</label>
+         </option>
+
+         <option handle="j" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>J</label>
+         </option>
+
+         <option handle="k" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>K</label>
+         </option>
+
+         <option handle="l" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>L</label>
+         </option>
+
+         <option handle="m" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>M</label>
+         </option>
+
+         <option handle="n" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>N</label>
+         </option>
+
+         <option handle="o" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>O</label>
+         </option>
+
+         <option handle="p" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>P</label>
+         </option>
+
+         <option handle="q" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>Q</label>
+         </option>
+
+         <option handle="r" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>R</label>
+         </option>
+
+         <option handle="s" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>S</label>
+         </option>
+
+         <option handle="t" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>T</label>
+         </option>
+
+         <option handle="u" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>U</label>
+         </option>
+
+         <option handle="v" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>V</label>
+         </option>
+
+         <option handle="w" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>W</label>
+         </option>
+
+         <option handle="xyz" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>XYZ</label>
+         </option>
+         </choice>
+
+         <action handle="filterAlphabetically" impl="net.unicon.warlock.fac.SimpleNavigateAction" to-screen="edit_permissions">
+            <label>View Selection</label>
+
+            <description>To view the items as selected.</description>
+         </action>
+      </select-one>
+   </template>
+
+   <template handle="rowSelect">
+      <td class="cell-emphasis2 select-cell">
+         <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label><value-of select="name" /></label>
+         </option>
+      </td>
+   </template>
+
+   <template handle="rowName">
+      <td class="cell-emphasis">
+         <label for-option="{concat('editPermissionForm_selectedItems_',@id)}">
+            <if test="{name(.)}" against="member" condition="equals" >
+	            <true>
+		            <span class="member">
+		                <value-of select="name" />
+		            </span>
+	            </true>
+	            <false>
+		            <span class="group">
+		                <value-of select="name" />
+		            </span>
+	            </false>
+            </if>
+         </label>
+      </td>
+   </template>
+
+   <template handle="rowReadPermission">
+      <td class="cell-emphasis2 center">
+         <input type="checkbox" value="{@id}" title="{@name}" name="editPermissionForm_readPermittedItems" disabled="disabled" checked="checked"/>
+      </td>
+   </template>
+
+   <template handle="rowDeletePermission">
+      <td class="cell-emphasis2 center">
+         <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>To set DELETE permissions for <value-of select="name" />.</label>
+         </option>
+      </td>
+   </template>
+
+   <template handle="rowWritePermission">
+      <td class="cell-emphasis2 center">
+         <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>To set ADD permissions for <value-of select="name" />.</label>
+         </option>
+      </td>
+   </template>
+
+   <!-- DEBUG Templates to show STATE XML -->
+   <template handle="showStateXMLElement" >
+        <element name="{name(.)}">
+            <call-template handle="showStateXMLAttribute" select="@*" ></call-template>
+            <call-template handle="showStateXMLElement" select="*" ></call-template>
+        </element>
+
+   </template>
+
+   <template handle="showStateXMLAttribute" >
+        <attribute name="{name(.)}" value="{.}" />
+   </template>
+
+<!--<decisions>
+      <decision-collection choice-collection="editPermissionForm">
+         <decision choice="newAdditionFilter">
+            <selection option="all"></selection>
+         </decision>
+
+         <decision choice="chooseNameFilter">
+            <selection option="all"></selection>
+         </decision>
+         
+         <decision choice="readPermittedItems" >
+            <selection option="1" ></selection>
+         </decision>
+      </decision-collection>
+   </decisions> -->
+</screen>
+
