@@ -1,88 +1,97 @@
+/* TORO PORTLET LAYOUT CSS
+ *
+ * Define CSS classes for layout of Toro portlets.
+ *
+ * For more information on Toro portlets, visit:
+ * http://www.unicon.net/node/675
+ * 
+ * This CSS file is deployed with each Toro portlet.
+ *
+ * This CSS affects all Toro portlets.
+ *
+ * This CSS works in tandem with portlet_styling.css, which provides visual styling 
+ * declarations, and config_icons.css, which provides icon file declarations.
+ *
+ * Only CSS that affects the layout (positioning) of major elements should be
+ * listed here. Such as:
+ *   display, position, float, clear, width, height, min-width, min-height
+ *   margin, border, padding, overflow
+ *
+ * Each declaration should be preceeded by .toro-portlet for proper namespacing
+ * (to prevent CSS collision with the portal or other portlets).
+ */
 
-/* GLOBALS */
-/*--------------------------------------------------------------------------------------*/
 
-html, body, form {
-margin: 0px;
-padding: 0px;
-}
+/* GLOBAL LAYOUT
+ * Declarations used in broad context.
+--------------------------------------------------------------------------------------*/
 
-.portlet {
-margin: 0px;
-padding: 0px;
-width: 100%;
-/*height: 100%;*/
-position:relative;
-left:0px;
-top:0px;
-}
-
-.inline {
+.toro-portlet .inline {
 display: inline;
 }
 
-.hide {
+.toro-portlet .hide {
 display: none;
 }
 
-.implied {
+.toro-portlet .implied {
 display:none;
 }
 
-.top {
+.toro-portlet .top {
 vertical-align: top;
 }
 
-.margin {
+.toro-portlet .margin {
 margin: 10px;
 }
 
-.padding {
+.toro-portlet .padding {
 padding: 10px;
 }
 
-.padding2 {
+.toro-portlet .padding2 {
 padding: 0 10px 10px 10px;
 }
 
-.padding-large {
+.toro-portlet .padding-large {
 padding: 25px;
 }
 
-.no-pad {
+.toro-portlet .no-pad {
 margin: 0px;
 padding: 0px;
 }
 
-.center {
+.toro-portlet .center {
 text-align: center;
 }
 
-.right {
+.toro-portlet .right {
 text-align: right;
 }
 
-.left {
+.toro-portlet .left {
 text-align: left;
 }
 
-.float-right {
+.toro-portlet .float-right {
 float: right;
 }
 
-.float-left {
+.toro-portlet .float-left {
 float: left;
 }
 
-.extraPad {
+.toro-portlet .extraPad {
 margin-left: 25px;
 }
 
-.no-bullet {
+.toro-portlet .no-bullet {
 list-style-type: none;
 }
 
-.li-image {
+.toro-portlet .li-image {
 display: block;
 min-height: 16px;
 _height: 16px;
@@ -90,440 +99,386 @@ padding-left: 20px;
 padding-top: 2px;
 }
 
-.portlet-content {
+
+/* CONTENT LAYOUT 
+ * Declarations for the basic layout of a portlet view.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet .toro-portlet-content {
 width: 100%;
-/*height: 100%;*/
 }
 
-.header {
-height: 10%;
-min-height: 64px;
+.toro-portlet .toro-portlet-header {
 position: relative;
 }
 
-.title2 {
-height: 64px;
+.toro-portlet h2 {
+margin: 0px;
+padding: 0px;
+}
+
+/*
+.toro-portlet .title2 {
 text-align: left;
 }
 
-.title2 h2 {
+.toro-portlet .title2 h2 {
 margin: 0px;
 padding: 25px 0px 0px 15px;
-font-weight: normal;
 }
 
-.portlet-content .title {
-text-align: left;
+.toro-portlet .toro-portlet-content .title {
 padding-left: 10px;
 }
 
-.portlet-content .title h2 {
+.toro-portlet .toro-portlet-content .title h2 {
 margin: 0px;
 padding: 15px 0px 5px 15px;
-font-weight: normal;
+}*/
+
+.toro-portlet .content2 {
 }
 
-.header-status-container {
-width: 250px;
-}
-
-.header-status {
-margin: 0px;
-padding: 0px;
-}
-
-.header-status th, .header-status td {
-margin: 0px;
-padding: 0px;
-padding-top: 8px;
-font-weight: normal;
-text-align: left;
-}
-
-.header-status th {
-width: 175px;
-}
-
-.header-status td {
-width: 75px;
-}
-
-.content2 {
-}
-
-.main-1col, .main-2col, .secondary {
-/*height: 90%;*/
+.toro-portlet .main-1col, .toro-portlet .main-2col, .toro-portlet .secondary {
 vertical-align: top;
 }
 
-.main-1col {
+.toro-portlet .main-1col {
 width: 100%;
 }
 
-.main-2col {
+.toro-portlet .main-2col {
 width: 75%;
 }
 
-.secondary {
+.toro-portlet .secondary {
 width: 25%;
 }
 
-.secondary3 {
+.toro-portlet .secondary3 {
 padding-top: 10px;
 padding-bottom: 10px;
 }
 
-.navbar {
-height: 38px;
-padding-top: 8px;
-padding-left: 10px;
-/*text-align: center; /* Removed to fix Mozilla Dropdown issue */
+
+/* HEADER STATUS LAYOUT 
+ * Declarations for the layout of the header status area.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet .header-status-container {
+width: 250px;
 }
 
-.navbar select {
-/*float: left;/* Removed to fix Mozilla Dropdown issue */
-}
-
-.back-button, .back-button-disabled {
-display: block;
-height: 16px;
-width: 16px;
-background: url("../images/icons/button_back.gif") no-repeat;
-float: right;
-margin: 2px 5px 2px 5px;
-}
-
-.back-button-disabled {
-background-position: 0px -16px;
-}
-
-.navtree {
-/*overflow: auto;*/
-/*height: 100%;*/
-}
-
-.navtree ul {
+.toro-portlet .header-status {
 margin: 0px;
 padding: 0px;
 }
 
-.navtree li {
+.toro-portlet .header-status th, .toro-portlet .header-status td {
+margin: 0px;
+padding: 0px;
+padding-top: 8px;
+font-weight: normal;
+text-align: left;
+}
+
+.toro-portlet .header-status th {
+width: 175px;
+}
+
+.toro-portlet .header-status td {
+width: 75px;
+}
+
+
+/* NAVIGATION BAR LAYOUT
+ * Declarations for the layout of the portlet navigation bar.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet .navbar {
+height: 38px;
+padding-top: 8px;
+padding-left: 10px;
+}
+
+.toro-portlet .back-button, .toro-portlet .back-button-disabled {
+display: block;
+height: 16px;
+width: 16px;
+float: right;
+margin: 2px 5px 2px 5px;
+}
+
+.toro-portlet .back-button-disabled {
+background-position: 0px -16px;
+}
+
+
+/* NAVIGATION TREE LAYOUT 
+ * Declarations for the layout of the navigation tree.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet .navtree ul {
+margin: 0px;
+padding: 0px;
+}
+
+.toro-portlet .navtree li {
 list-style-type: none;
 padding-left: 18px;
 _margin-left: 18px;
 _padding-left: 0px;
 }
 
-.navtree li a {
+.toro-portlet .navtree li a {
 display: block;
 min-height: 18px;
 _height: 18px;
 padding-top: 2px;
 }
 
-.nolink-node {
-/*border: 1px solid #000;*/
-/*height: 18px;*/
+.toro-portlet .nolink-node {
 padding-top: 2px;
 }
 
-.welcomelink {
-background: url("../images/icons/tree_folder_opened.gif") no-repeat;
+.toro-portlet .welcomelink, .toro-portlet .folderopen, .toro-portlet .folderclosed, .toro-portlet .sharedfolderopen, .toro-portlet .sharedfolderclosed, .toro-portlet .networkfolderopen, .toro-portlet .networkfolderclosed {
 padding-left: 35px;
 }
 
-label.select-tree {
+.toro-portlet label.select-tree {
 line-height:20px;
 padding-top:4px;
 padding-bottom:4px;
 margin-left:5px;
 }
 
-.folderopen {
-background: url("../images/icons/tree_folder_opened.gif") top left no-repeat;
-padding-left: 35px;
-}
-
-.folderclosed {
-background: url("../images/icons/tree_folder_closed.gif") no-repeat;
-padding-left: 35px;
-}
-
-.sharedfolderopen {
-background: url("../images/icons/tree_shared_opened.gif") no-repeat;
-padding-left: 35px;
-}
-
-.sharedfolderclosed {
-background: url("../images/icons/tree_shared_closed.gif") no-repeat;
-padding-left: 35px;
-}
-
-.networkfolderopen {
-background: url("../images/icons/tree_network_opened.gif") no-repeat;
-padding-left: 35px;
-}
-
-.networkfolderclosed {
-background: url("../images/icons/tree_network_closed.gif") no-repeat;
-padding-left: 35px;
-}
-
-div.BriefcasePortlet_movecopy table.highlightAndSelectOnClick td a.folderopen, 
-div.BriefcasePortlet_movecopy table.highlightAndSelectOnClick td a.folderclosed, 
-div.BriefcasePortlet_movecopy table.highlightAndSelectOnClick td a.sharedfolderopen, 
-div.BriefcasePortlet_movecopy table.highlightAndSelectOnClick td a.sharedfolderclosed, 
-div.BriefcasePortlet_movecopy table.highlightAndSelectOnClick td a.networkfolderopen, 
-div.BriefcasePortlet_movecopy table.highlightAndSelectOnClick td a.networkfolderclosed
+.toro-portlet div.BriefcasePortlet_movecopy table.highlightAndSelectOnClick td a.folderopen, 
+.toro-portlet div.BriefcasePortlet_movecopy table.highlightAndSelectOnClick td a.folderclosed, 
+.toro-portlet div.BriefcasePortlet_movecopy table.highlightAndSelectOnClick td a.sharedfolderopen, 
+.toro-portlet div.BriefcasePortlet_movecopy table.highlightAndSelectOnClick td a.sharedfolderclosed, 
+.toro-portlet div.BriefcasePortlet_movecopy table.highlightAndSelectOnClick td a.networkfolderopen, 
+.toro-portlet div.BriefcasePortlet_movecopy table.highlightAndSelectOnClick td a.networkfolderclosed
 {
 font-size:120%;
 }
 
-.sidebox, .searchbox {
+
+/* SIDEBOX LAYOUT 
+ * Declarations for the layout of the sidebox and searchbox.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet .sidebox, .toro-portlet .searchbox {
 padding: 10px 10px 15px 10px;
 margin-bottom: 10px;
 }
 
-.sidebox h4, .sidebox p, .searchbox h4, .searchbox p {
+.toro-portlet .sidebox h4, .toro-portlet .sidebox p, .toro-portlet .searchbox h4, .toro-portlet .searchbox p {
 margin: 0px;
 padding: 0px;
 margin-bottom: 3px;
 }
 
-.searchbox label {
+.toro-portlet .searchbox label {
 display: block;
 font-weight:bold;
 color: #416498;
 margin-bottom: 5px;
 }
 
-.shared-items {
-background: url("../images/icons/file_folder.gif") no-repeat;
-}
-
-.selection-basket {
+.toro-portlet .selection-basket {
 width: 90%;
 }
 
-.selection-basket-label, .selection-basket-number {
+.toro-portlet .selection-basket-label, .toro-portlet .selection-basket-number {
 text-align: left;
 padding: 2px 10px 2px 10px;
 }
 
-.selected-items {
-background: url("../images/icons/file.gif") no-repeat;
-}
-
-.group {
+.toro-portlet .group, .toro-portlet .member {
 display: block;
-background: url("../images/icons/group.gif") left top no-repeat;
 min-height: 22px;
 _height: 22px;
 padding-left: 27px;
 padding-top: 2px;
 }
 
-.member {
-display: block;
-background: url("../images/icons/member.gif") left top no-repeat;
-min-height: 22px;
-_height: 22px;
-padding-left: 27px;
-padding-top: 2px;
-}
 
-.toolbar {
+/* TOOLBAR LAYOUT 
+ * Declarations for the layout of the toolbar.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet .toolbar {
 height: 38px;
 padding-top: 8px;
 padding-left: 10px;
 }
 
-.toolbar-nostyle {
+.toro-portlet .toolbar-nostyle {
 height: 24px;
 _height: 30px;
 padding-top: 10px;
 }
 
-.button-group-left {
+.toro-portlet .button-group-left {
 float:left;
 }
 
-.view-filter {
+.toro-portlet .view-filter {
 text-align:right;
 margin-right:10px;
 }
 
-.main-content {
+
+/* CONTENT LAYOUT 
+ * Declarations for the layout of the main contents.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet .main-content {
 margin: 10px;
 margin-bottom: 25px;
 }
 
-.pagetexttitle h3 {
+.toro-portlet .main-content table {
+width: 100%;
+margin: 10px 0px 10px 0px;
+clear: both;
+}
+
+.toro-portlet table.main-content-table {
+margin: 0px 0px 10px 0px;
+}
+
+.toro-portlet .main-content table th, .toro-portlet .main-content table td {
+padding: 5px 8px 5px 8px;
+}
+
+.toro-portlet .main-content table th.th-button {
+padding: 0px;
+}
+
+.toro-portlet .pagetexttitle h3 {
 margin-bottom: 5px;
 }
 
-.pagetexttitle p {
+.toro-portlet .pagetexttitle p {
 margin-bottom: 25px;
 }
 
-.content-title {
+.toro-portlet .content-title {
 margin: 0px;
 padding: 8px 20px 8px 20px;
 }
 
-.error {
+
+/* ERROR MESSAGE LAYOUT 
+ * Declarations for the layout of error messages.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet .error {
 margin: 10px 0px 10px 0px;
 }
 
-.error h4 {
+.toro-portlet .error h4 {
 margin-right: 3px;
 }
 
-.error p {
+.toro-portlet .error p {
 display: inline;
 }
 
-.problem {
-}
 
-.solution {
-}
+/* TABS LAYOUT 
+ * Declarations for the layout of tabs to switch portlet views.
+--------------------------------------------------------------------------------------*/
 
-.tabs {
+.toro-portlet .tabs {
 list-style-type: none;
 margin: 0;
 padding: 20px 0 2px 6px;
 white-space: nowrap;
 }
 
-.tabs li {
+.toro-portlet .tabs li {
 margin: 0 0 0 3px;
 padding: 0;
 display: inline;
 }
 
-.tab {
+.toro-portlet .tab {
 padding: 2px 20px 2px 20px;
 }
 
-.removable, .removable-selected {
+.toro-portlet .removable, .toro-portlet .removable-selected {
 padding-right: 20px;
 background-repeat: no-repeat;
 background-position: right;
 }
 
-.removable {
-background-image: url("../images/icons/action_close_blue.gif");
-}
 
-.removable-selected {
-background-image: url("../images/icons/action_close_blue.gif");
-}
+/* PAGING CONTROLS LAYOUT 
+ * Declarations for the layout of paging controls.
+--------------------------------------------------------------------------------------*/
 
-.paging {
+.toro-portlet .paging {
 height: 30px;
 }
 
-.display-per-page {
+.toro-portlet .display-per-page {
 float: left;
 margin: 0px;
 padding: 0px;
 }
 
-.display-per-page select {
+.toro-portlet .display-per-page select {
 margin: 0px 5px 0px 5px;
 }
 
-.paging-controls {
+.toro-portlet .paging-controls {
 text-align: right;
 _margin-right:15px; /* Hack to fix IE paging controls being truncated */
 }
 
-.paging-controls span {
+.toro-portlet .paging-controls span {
 margin-right: 10px;
 }
 
-.main-content table {
-width: 100%;
-margin: 10px 0px 10px 0px;
-clear: both;
-}
 
-table.main-content-table {
-margin: 0px 0px 10px 0px; /* Remove top margin to keep caption from being spaced from the content */
-}
+/* LINKS AND ICONS LAYOUT 
+ * Declarations for the layout of links and icons.
+--------------------------------------------------------------------------------------*/
 
-.main-content table th, .main-content table td {
-padding: 5px 8px 5px 8px;
-}
-
-.main-content table th.th-button {
-padding: 0px;
-}
-
-.expanded-link {
+.toro-portlet .expanded-link {
 margin-bottom: 25px;
 }
 
-.expanded-link h4, .expanded-link p {
+.toro-portlet .expanded-link h4, .toro-portlet .expanded-link p {
 margin: 0px;
 margin-bottom: 5px;
 padding: 0px;
 }
 
-.sharedfolder-icon {
-background: url("../images/icons/file_shared_folder.gif") no-repeat;
-}
-
-.folder-icon {
-background: url("../images/icons/file_folder.gif") no-repeat;
-}
-
-a.folder-icon, a.folder-icon:link, a.folder-icon:visited {
-/*text-decoration:underline;*/
-}
-
-.file-icon {
-background: url("../images/icons/file.gif") no-repeat;
-}
-
-a.file-icon, a.file-icon:link, a.file-icon:visited {
-/*text-decoration:underline;*/
-}
-
-.edit-icon {
+.toro-portlet .edit-icon {
 height: 16px;
 width: 16px;
-background: url("../images/icons/action_edit.gif") no-repeat;
 }
 
-.remove-icon {
-background: url("../images/icons/action_close_blue.gif") no-repeat;
-}
-
-.up-icon {
-background: url("../images/icons/action_up.gif") no-repeat;
-}
-
-span.refresh-icon, span.reddot-icon {
+.toro-portlet span.refresh-icon, .toro-portlet span.reddot-icon {
 display:none;
 }
 
-a.refresh-icon, a:link.refresh-icon, a:visited.refresh-icon {
+.toro-portlet a.refresh-icon, .toro-portlet a:link.refresh-icon, .toro-portlet a:visited.refresh-icon {
 display: block;
 height: 9px;
 width: 8px;
-background: url("../images/icons/refresh.gif") no-repeat;
 }
 
-a.reddot-icon, a:link.reddot-icon, a:visited.reddot-icon {
+.toro-portlet a.reddot-icon, .toro-portlet a:link.reddot-icon, .toro-portlet a:visited.reddot-icon {
 display: block;
 height: 12px;
 width: 11px;
-background: url("../images/icons/reddot.gif") no-repeat;
 }
 
-a.notSorted:link, a.notSorted:visited, a.sortedAscending:link, a.sortedAscending:visited, a.sortedDescending:link, a.sortedDescending:visited, a.select-toggle:link, a.select-toggle:visited {
+.toro-portlet a.notSorted:link, .toro-portlet a.notSorted:visited, .toro-portlet a.sortedAscending:link, .toro-portlet a.sortedAscending:visited, .toro-portlet a.sortedDescending:link, .toro-portlet a.sortedDescending:visited, .toro-portlet a.select-toggle:link, .toro-portlet a.select-toggle:visited {
 /* Requires th class plus link class to pass style through for font-color.  May not be needed for background-image */
 display: block;
 height: 100%;
@@ -531,7 +486,7 @@ width: 100%;
 text-align: left;
 }
 
-.th-button-name a.notSorted:link,.th-button-name a.notSorted:visited,.th-button-name a.sortedAscending:link,.th-button-name a.sortedAscending:visited,.th-button-name a.sortedDescending:link,.th-button-name a.sortedDescending:visited,th.th-column-permission a.hint:link, th.th-column-permission a.hint:visited {
+.toro-portlet .th-button-name a.notSorted:link, .toro-portlet .th-button-name a.notSorted:visited, .toro-portlet .th-button-name a.sortedAscending:link, .toro-portlet .th-button-name a.sortedAscending:visited, .toro-portlet .th-button-name a.sortedDescending:link, .toro-portlet .th-button-name a.sortedDescending:visited, .toro-portlet th.th-column-permission a.hint:link, .toro-portlet th.th-column-permission a.hint:visited {
 /* Requires th class plus link class to pass style through for font-color.  May not be needed for background-image */
 display: block;
 height: 100%;
@@ -539,28 +494,22 @@ width: 100%;
 text-align: center;
 }
 
-a.sortedAscending:link, a.sortedAscending:visited {
-/* Requires th class plus link class to pass style through for font-color.  May not be needed for background-image */
-background: url("../images/icons/sort_ascend.gif") no-repeat right top;
-}
-
-a.sortedDescending:link, a.sortedDescending:visited {
-/* Requires th class plus link class to pass style through for font-color.  May not be needed for background-image */
-background: url("../images/icons/sort_descend.gif") no-repeat right top;
-}
-
-a.notSorted span, a.sortedAscending span, a.sortedDescending span, a.select-toggle span {
+.toro-portlet a.notSorted span, .toro-portlet a.sortedAscending span, .toro-portlet a.sortedDescending span, .toro-portlet a.select-toggle span {
 /* Requires th class plus link class to pass style through for font-color.  May not be needed for background-image */
 display: block;
 margin: 5px 20px 5px 8px;
 }
 
-a.hint:hover {
+.toro-portlet a.hint:hover {
 cursor: help;
 }
 
-/* Messaging Portlet */
-div.MessagingPortlet .toolbar
+
+/* MESSAGING PORTLET SPECIFIC LAYOUT 
+ * Declarations specific to the Messaging Portlet.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet div.MessagingPortlet .toolbar
 {
 margin-top: 10px;
 }

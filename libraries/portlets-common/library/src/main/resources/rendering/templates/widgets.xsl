@@ -32,8 +32,8 @@
 		<!-- Call Function to write all hidden forms first to avoid wrapping forms inadvertently -->
 		<xsl:call-template name = "write-all-hidden-forms" />
 
-        <div class="portlet-font portlet {layout-context/@class}">
-            <table cellpadding="0" cellspacing="0" border="0" class="portlet-content">
+        <div class="portlet-font toro-portlet {layout-context/@class}">
+            <table cellpadding="0" cellspacing="0" border="0" class="toro-portlet-content">
                 <xsl:apply-templates />
             </table>
         </div>
@@ -42,7 +42,7 @@
 <!-- HEADER -->
 <xsl:template match="section[@type = 'header']">
         <tr>
-            <th class="portlet-font header">
+            <th class="portlet-font toro-portlet-content-header">
                 <xsl:attribute name="colspan"><xsl:value-of select="@cols"/></xsl:attribute>
                 <xsl:apply-templates />
             </th>
