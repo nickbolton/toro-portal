@@ -31,6 +31,8 @@
 
     <title>Blog: Default</title>
 
+    <ajax-callback-url>/toro-portlets-common/ssoCallback</ajax-callback-url>
+
     <sso-entry handle="blog-default" class="largeBlog">
         <label>Blog: Default</label>
         <description>View your Blojsom Webblog</description>

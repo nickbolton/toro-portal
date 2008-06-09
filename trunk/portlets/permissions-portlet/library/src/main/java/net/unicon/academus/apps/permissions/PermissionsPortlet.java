@@ -106,6 +106,12 @@ public final class PermissionsPortlet extends AbstractWarlockPortlet {
 
             boolean useXsltc = Boolean.valueOf(configElement.attributeValue("useXsltc"));
 
+            boolean cacheTemplates = true;
+
+            if (configElement.attributeValue("cacheTemplates") != null) {
+                cacheTemplates = Boolean.valueOf(configElement.attributeValue("cacheTemplates"));
+            }
+
             configElement = ConfigHelper.handle(configElement);
 
             // read the portlet specified
@@ -193,9 +199,10 @@ public final class PermissionsPortlet extends AbstractWarlockPortlet {
                     TransletsConstants.xsltcPackage,
                     TransletsConstants.xsltcGenerateTranslet,
                     TransletsConstants.xsltcAutoTranslet,
-                    TransletsConstants.xsltcUseClasspath);
+                    TransletsConstants.xsltcUseClasspath,
+                    cacheTemplates);
             } else {
-                fac = new XmlWarlockFactory(trans);
+                fac = new XmlWarlockFactory(trans, cacheTemplates);
             }
 
             // Construct the screens;

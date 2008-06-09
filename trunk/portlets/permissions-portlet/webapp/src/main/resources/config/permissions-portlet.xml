@@ -33,17 +33,84 @@
         unique amongst all other defined portlet elements.
     -->
 
-    <!-- DO NOT REMOVE 
-    messaging-portlet-section-->
+    <portlet handle="messaging">
+        <!-- The label to identify the portlet to the user -->
+        <label>Notification Portlet</label>
 
-    <!-- DO NOT REMOVE
-    briefcase-portlet-section-->
+        <!-- A description of the entry. -->
+        <description>The Notification Portlet allows the reading, composing, importing, and exporting messages.</description>
 
-    <!-- DO NOT REMOVE
-    gateway-portlet-section-->
+        <!--
+            A portlet-access element couples an access-broker element and an
+            access element. The 'handle' attribute is required, and must be
+            unique amongst the 'portlet-access' elements defined within each
+            portlet element.
 
-    <!-- DO NOT REMOVE
-    web-content-portlet-section-->
+            The access-broker element must be a fully functional AccessBroker
+            XML fragment. It is possible and recommended that an 'import' be
+            used to reference the original definition of the access-broker
+            element to avoid inconsistencies in configuration.
+
+            The 'access' element must have an 'impl' attribute, pointing to the
+            class enumerating the AccessTypes used by the access-broker.
+
+            An import element requires the attributes 'src' and 'select'. The
+            'src' attribute defines the file to import from, relative to the
+            classpath (i.e. a file located in /WEB-INF/classes/config/ would be
+            referenced using /config/). The 'select' attribute defines an XPath
+            expression to select the desired node from the 'src' XML file.
+        -->
+        <portlet-access handle="MessagingNotification">
+            <import src="file:@tomcat.home@/webapps/toro-messaging-portlet/WEB-INF/classes/config/messaging-portlet.xml" select="//access-broker[@handle='notifications']"/>
+            <access impl="net.unicon.academus.apps.messaging.MessagingAccessType"/>
+        </portlet-access>
+    </portlet>
+
+    <portlet handle="briefcase">
+        <label>Briefcase Portlet</label>
+        <description>The Briefcase Portlet allows the adding, deleting, moving, and sharing of folders and files.</description>
+        <portlet-access handle="briefcaseHelper">
+            <import src="file:@tomcat.home@/webapps/toro-briefcase-portlet/WEB-INF/classes/config/briefcase-portlet.xml" select="//access-broker[@handle='personal-jit']"/>
+            <access impl="net.unicon.academus.apps.briefcase.BriefcaseAccessType"/>
+        </portlet-access>
+    </portlet>
+
+    <!-- BEGIN blog instance: EXAMPLE
+    <portlet handle="blog-EXAMPLE">
+        <label>Blog: EXAMPLE</label>
+        <description>Modify permissions for the blog instance: EXAMPLE</description>
+        <portlet-access handle="access-blog-EXAMPLE">
+            <import src="file:@tomcat.home@/webapps/toro-gateway-portlet/WEB-INF/classes/config/blog-EXAMPLE.xml" select="//access-broker[@handle='blog-EXAMPLE']"/>
+            <access impl="net.unicon.academus.apps.blogger.BlojsomAccessType"/>
+        </portlet-access>
+    </portlet>
+         END blog instance: EXAMPLE -->
+
+    <!-- BEGIN blog instance: default -->
+    <portlet handle="blog-default">
+        <label>Blog: Default</label>
+        <description>Modify permissions for the blog instance: default</description>
+        <portlet-access handle="access-blog-default">
+            <import src="file:@tomcat.home@/webapps/toro-gateway-portlet/WEB-INF/classes/config/blog-default.xml" select="//access-broker[@handle='blog-default']"/>
+            <access impl="net.unicon.academus.apps.blogger.BlojsomAccessType"/>
+        </portlet-access>
+    </portlet>
+    <!-- END blog instance: default -->
+
+    <!--
+    NOTE:  The following is an example of how the WebContent Portlet may be configured to use the
+    Permissions Portlet to mange which users get to launch AcademusWCM from the content (i.e. SSO).
+    See also content-portlet.xml.
+
+    <portlet handle="content">
+        <label>WebContent Portlet Administration</label>
+        <description>Identify the users who can manage content in the WebContent Portlet.</description>
+        <portlet-access handle="contentHelper">
+            <import src="file:@tomcat.home@/webapps/toro-web-content-portlet/WEB-INF/classes/config/content-portlet.xml" select="//access-broker[@handle='content-sso']"/>
+            <access impl="net.unicon.academus.apps.content.WebContentAccessType"/>
+        </portlet-access>
+    </portlet>
+    -->
 
     <!-- Nothing below this line should require modification in normal usage. -->
 

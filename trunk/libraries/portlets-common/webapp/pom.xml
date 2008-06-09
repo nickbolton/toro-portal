@@ -19,7 +19,12 @@
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.jasig.portal</groupId>
+            <artifactId>uportal-impl</artifactId>
+            <version>${uportal-impl.version}</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>net.unicon.toro</groupId>
             <artifactId>civis</artifactId>
@@ -63,6 +68,12 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
+            <groupId>net.unicon.toro</groupId>
+            <artifactId>sso-authentication-cache</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>xalan</groupId>
             <artifactId>xalan</artifactId>
             <version>${xalan.version}</version>
@@ -96,25 +107,5 @@
 
   <build>
     <finalName>${artifactId}</finalName>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>compile</phase>
-            <goals>
-              <goal>run</goal>
-            </goals>
-            <configuration>
-              <tasks>
-                <property name="toro.remote.repo" value="${toro.remote.repo}" />
-                <ant antfile="${basedir}/build.xml" dir="${basedir}" inheritRefs="true" />
-              </tasks>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
   </build>
 </project>

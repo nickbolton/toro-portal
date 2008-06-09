@@ -57,7 +57,6 @@ import net.unicon.civis.grouprestrictor.IGroupRestrictor;
 import net.unicon.civis.ICivisFactory;
 import net.unicon.mercury.IMessageFactory;
 import net.unicon.warlock.fac.xml.XmlWarlockFactory;
-import net.unicon.warlock.fac.xml.XmlWarlockFactory;
 import net.unicon.warlock.Handle;
 import net.unicon.warlock.IScreen;
 import net.unicon.warlock.IStateQuery;
@@ -116,6 +115,12 @@ public final class MessagingPortlet extends AbstractWarlockPortlet {
                                 .selectSingleNode("messaging");
 
             boolean useXsltc = Boolean.valueOf(configElement.attributeValue("useXsltc"));
+
+            boolean cacheTemplates = true;
+
+            if (configElement.attributeValue("cacheTemplates") != null) {
+                cacheTemplates = Boolean.valueOf(configElement.attributeValue("cacheTemplates"));
+            }
 
             configElement = ConfigHelper.handle(configElement);
             
@@ -278,9 +283,10 @@ public final class MessagingPortlet extends AbstractWarlockPortlet {
                     TransletsConstants.xsltcPackage,
                     TransletsConstants.xsltcGenerateTranslet,
                     TransletsConstants.xsltcAutoTranslet,
-                    TransletsConstants.xsltcUseClasspath);
+                    TransletsConstants.xsltcUseClasspath,
+                    cacheTemplates);
             } else {
-                fac = new XmlWarlockFactory(trans);
+                fac = new XmlWarlockFactory(trans, cacheTemplates);
             }
 
             // Construct the screens;

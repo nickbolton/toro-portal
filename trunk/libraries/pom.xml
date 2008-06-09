@@ -13,7 +13,7 @@
 
   <modules>
       <module>academus-api</module>
-      <!--module>uportal-academus-api</module-->
+      <module>uportal-academus-api</module>
       <module>alchemist</module>
       <module>civis</module>
       <module>demetrius</module>

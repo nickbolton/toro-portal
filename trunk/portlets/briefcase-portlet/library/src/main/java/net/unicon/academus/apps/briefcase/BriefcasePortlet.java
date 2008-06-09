@@ -60,11 +60,6 @@ import org.dom4j.Attribute;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import org.springframework.util.ResourceUtils;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.ResourcePatternResolver;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-
 public final class BriefcasePortlet extends AbstractWarlockPortlet {
     
     // Instance Members.
@@ -103,6 +98,12 @@ public final class BriefcasePortlet extends AbstractWarlockPortlet {
             Element configElement = (Element) reader.read(configUrl.toString()).selectSingleNode("briefcase");
 
             boolean useXsltc = Boolean.valueOf(configElement.attributeValue("useXsltc"));
+
+            boolean cacheTemplates = true;
+
+            if (configElement.attributeValue("cacheTemplates") != null) {
+                cacheTemplates = Boolean.valueOf(configElement.attributeValue("cacheTemplates"));
+            }
             
             // Prep the drive(s).
             List dList = configElement.selectNodes("drive");
@@ -158,12 +159,7 @@ public final class BriefcasePortlet extends AbstractWarlockPortlet {
                     , groupRestrictors);
 
             // Construct the rendering engine;
-            //URL xslUrl = ctx.getResource("/rendering/templates/layout.xsl");
-            /*
-            ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-            URL xslUrl = resolver.getResource("classpath:/rendering/templates/layout.xsl").getURL;
-             */
-            URL xslUrl = ResourceUtils.getURL("classpath:rendering/templates/layout.xsl");
+            URL xslUrl = ctx.getResource("/rendering/templates/layout.xsl");
             
             Source trans = new StreamSource(xslUrl.toString());
             IWarlockFactory fac = null;
@@ -175,18 +171,19 @@ public final class BriefcasePortlet extends AbstractWarlockPortlet {
                     TransletsConstants.xsltcPackage,
                     TransletsConstants.xsltcGenerateTranslet,
                     TransletsConstants.xsltcAutoTranslet,
-                    TransletsConstants.xsltcUseClasspath);
+                    TransletsConstants.xsltcUseClasspath,
+                    cacheTemplates);
             } else {
-                fac = new XmlWarlockFactory(trans);
+                fac = new XmlWarlockFactory(trans, cacheTemplates);
             }
 
             // Construct the screens;
             List list = new ArrayList();
             IScreen peephole = null;
-            ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-            Resource[] screenResources = resolver.getResources("classpath:rendering/screens/briefcase/*.xml");
-            for (int i=0; i<screenResources.length; i++) {
-                URL screenUrl = screenResources[i].getURL();
+            Iterator it = ctx.getResourcePaths("/rendering/screens/briefcase/").iterator();
+            while (it.hasNext()) {
+                String path = (String) it.next();
+                URL screenUrl = ctx.getResource(path);
                 Element e = (Element) reader.read(screenUrl.toString()).selectSingleNode("screen");
                 IScreen s = fac.parseScreen(e);
                 if (s.getHandle().equals("welcome")) {
@@ -196,9 +193,10 @@ public final class BriefcasePortlet extends AbstractWarlockPortlet {
             }
             
             // construct the selector screens
-            screenResources = resolver.getResources("classpath:rendering/screens/selector/*.xml");
-            for (int i=0; i<screenResources.length; i++) {
-                URL screenUrl = screenResources[i].getURL();
+            it = ctx.getResourcePaths("/rendering/screens/selector/").iterator();
+            while (it.hasNext()) {
+                String path = (String) it.next();
+                URL screenUrl = ctx.getResource(path);
                 Element e = (Element) reader.read(screenUrl.toString()).selectSingleNode("screen");
                 IScreen s = fac.parseScreen(e);                
                 list.add(s);
