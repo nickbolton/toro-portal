@@ -106,6 +106,12 @@ public final class WebContentPortlet extends AbstractWarlockPortlet {
             
             boolean useXsltc = Boolean.valueOf(configElement.attributeValue("useXsltc"));
 
+            boolean cacheTemplates = true;
+
+            if (configElement.attributeValue("cacheTemplates") != null) {
+                cacheTemplates = Boolean.valueOf(configElement.attributeValue("cacheTemplates"));
+            }
+
             // AJAX form population
             String ajaxCallbackUrl = null;
 
@@ -170,9 +176,10 @@ public final class WebContentPortlet extends AbstractWarlockPortlet {
                     TransletsConstants.xsltcPackage,
                     TransletsConstants.xsltcGenerateTranslet,
                     TransletsConstants.xsltcAutoTranslet,
-                    TransletsConstants.xsltcUseClasspath);
+                    TransletsConstants.xsltcUseClasspath,
+                    cacheTemplates);
             } else {
-                fac = new XmlWarlockFactory(trans);
+                fac = new XmlWarlockFactory(trans, cacheTemplates);
             }
 
             // Choose a peephole.

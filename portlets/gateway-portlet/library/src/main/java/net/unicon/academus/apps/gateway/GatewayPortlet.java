@@ -122,6 +122,12 @@ public final class GatewayPortlet extends AbstractWarlockPortlet {
             
             boolean useXsltc = Boolean.valueOf(configElement.attributeValue("useXsltc"));
 
+            boolean cacheTemplates = true;
+
+            if (configElement.attributeValue("cacheTemplates") != null) {
+                cacheTemplates = Boolean.valueOf(configElement.attributeValue("cacheTemplates"));
+            }
+
             //Element configElement = (Element) reader.read(
             //    configUrl.toString()).selectSingleNode("gateway");            // Resolve any copy-of and imports
             configElement = ConfigHelper.handle(configElement);
@@ -158,9 +164,10 @@ public final class GatewayPortlet extends AbstractWarlockPortlet {
                     TransletsConstants.xsltcPackage,
                     TransletsConstants.xsltcGenerateTranslet,
                     TransletsConstants.xsltcAutoTranslet,
-                    TransletsConstants.xsltcUseClasspath);
+                    TransletsConstants.xsltcUseClasspath,
+                    cacheTemplates);
             } else {
-                fac = new XmlWarlockFactory(trans);
+                fac = new XmlWarlockFactory(trans, cacheTemplates);
             }
 
             // Construct the screens, and choose a peephole.

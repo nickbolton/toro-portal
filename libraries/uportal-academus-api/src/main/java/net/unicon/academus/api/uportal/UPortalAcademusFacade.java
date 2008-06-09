@@ -26,17 +26,13 @@
 package net.unicon.academus.api.uportal;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
-
-import net.unicon.academus.api.AcademusFacadeContainer;
-import net.unicon.academus.api.AcademusFacadeException;
-import net.unicon.academus.api.IAcademusFacade;
-import net.unicon.academus.api.IAcademusGroup;
-import net.unicon.academus.api.IAcademusUser;
 
 import org.jasig.portal.EntityIdentifier;
 import org.jasig.portal.RDBMServices;
@@ -46,10 +42,16 @@ import org.jasig.portal.groups.IEntity;
 import org.jasig.portal.groups.IEntityGroup;
 import org.jasig.portal.groups.IGroupConstants;
 import org.jasig.portal.groups.IGroupMember;
-import org.jasig.portal.security.IPerson;
-import org.jasig.portal.security.PersonFactory;
 import org.jasig.portal.services.GroupService;
 import org.jasig.portal.services.PersonDirectory;
+import org.jasig.portal.security.IPerson;
+import org.jasig.portal.security.PersonFactory;
+
+import net.unicon.academus.api.AcademusFacadeContainer;
+import net.unicon.academus.api.AcademusFacadeException;
+import net.unicon.academus.api.IAcademusFacade;
+import net.unicon.academus.api.IAcademusGroup;
+import net.unicon.academus.api.IAcademusUser;
 
 public class UPortalAcademusFacade implements IAcademusFacade {
 	
@@ -84,7 +86,8 @@ public class UPortalAcademusFacade implements IAcademusFacade {
     	try {
     		IPerson user = PersonFactory.createPerson();
     		user.setAttribute(IPerson.USERNAME, username);
-    		user.setAttributes(PersonDirectory.getPersonAttributeDao().getUserAttributes(username));
+    		
+    		user.setAttributes(convertToMapOfLists(PersonDirectory.getPersonAttributeDao().getUserAttributes(username)));
         	rslt = new AcademusUserImpl(user, this);
     	} catch (Throwable t) {
     		String msg = "Unable to obtain a reference to the specified user:  " + username;
@@ -93,6 +96,17 @@ public class UPortalAcademusFacade implements IAcademusFacade {
 
     	return rslt;
 
+    }
+    
+    private Map<String, List<Object>> convertToMapOfLists(Map<String, Object> m) {
+        Map<String, List<Object>> expandedMap = new HashMap<String, List<Object>>(m.size());
+        
+        for (String key : m.keySet()) {
+            List<Object> l = new LinkedList<Object>();
+            l.add(m.get(key));
+            expandedMap.put(key, l);
+        }
+        return expandedMap;
     }
 
     public IAcademusGroup[] getContainingGroups(String username) throws AcademusFacadeException {
@@ -160,7 +174,18 @@ public class UPortalAcademusFacade implements IAcademusFacade {
     }
 
     public boolean authenticate(String username, String password) throws AcademusFacadeException {
-    	throw new UnsupportedOperationException();
+        boolean result = false;
+        try {
+            result = PortalAuthentication.authenticate(username, password);
+        } catch (Exception e) {
+            StringBuffer errorMsg = new StringBuffer(128);
+            errorMsg.append("AcademusFacadeImpl:authenticate(): ");
+            errorMsg.append("An error while authenticating user: " + username);
+
+            throw new AcademusFacadeException(errorMsg.toString(), e);
+        }
+
+        return result;
     }
 
     public Timestamp getTimeStamp () throws AcademusFacadeException {

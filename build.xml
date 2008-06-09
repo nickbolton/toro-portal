@@ -22,7 +22,7 @@
   a copy of the text describing the FLOSS exception along with this
   distribution.
 -->
-<project name="toro" default="deploy-ear" basedir="." xmlns:up="urn:up-util-ant" xmlns:artifact="urn:maven-artifact-ant">
+<project name="toro" default="deploy-ear" basedir="." xmlns:toro="urn:toro-ant" xmlns:up="urn:up-util-ant" xmlns:artifact="urn:maven-artifact-ant">
 
     <property file="build.properties"/>
 
@@ -46,43 +46,80 @@
         id="central.repository"
         url="${central.remote.repo}" />
 
-    <artifact:dependencies pathId="up.classpath">
-        <dependency groupId="org.jasig.portal" artifactId="uportal-ear-deployer"
-            version="3.1.0-SNAPSHOT" type="jar"/>
-        <dependency groupId="org.jasig.portal" artifactId="uportal-ant-tasks"
-            version="3.1.0-SNAPSHOT" type="jar"/>
+    <artifact:dependencies pathId="toro-ant.classpath">
+        <dependency groupId="dom4j" artifactId="dom4j"
+            version="1.6.1" type="jar"/>
+        <dependency groupId="commons-logging" artifactId="commons-logging"
+            version="1.1.1" type="jar"/>
+        <dependency groupId="jaxen" artifactId="jaxen"
+            version="1.1.1" type="jar"/>
         <remoteRepository refid="central.repository" />
     </artifact:dependencies>
 
-    <typedef resource="org/jasig/portal/ant/antlib.xml" uri="urn:up-util-ant">
+    <typedef resource="net/unicon/toro/ant/antlib.xml" uri="urn:toro-ant">
         <classpath>
-            <path refid="up.classpath"/>
+            <pathelement location="dependencies/ant-tasks-2.0.0-SNAPSHOT.jar"/>
+            <path refid="toro-ant.classpath"/>
         </classpath>
     </typedef>
-    <target name="deploy-ear">
+
+    <target name="clean">
+        <delete dir="deploy"/>
+    </target>
+
+    <target name="deploy-ear" depends="clean">
+        <toro:importpom/>
+        <!--toro:dumpproperties/-->
+
+        <artifact:dependencies pathId="up.classpath">
+            <dependency groupId="org.jasig.portal" artifactId="uportal-ear-deployer"
+                version="${uportal-impl.version}" type="jar"/>
+            <dependency groupId="org.jasig.portal" artifactId="uportal-ant-tasks"
+                version="${uportal-impl.version}" type="jar"/>
+            <dependency groupId="commons-logging" artifactId="commons-logging"
+                version="${commons-logging.version}" type="jar"/>
+            <dependency groupId="commons-io" artifactId="commons-io"
+                version="${commons-io.version}" type="jar"/>
+            <dependency groupId="commons-lang" artifactId="commons-lang"
+                version="${commons-lang.version}" type="jar"/>
+            <remoteRepository refid="central.repository" />
+        </artifact:dependencies>
+
+        <typedef resource="org/jasig/portal/ant/antlib.xml" uri="urn:up-util-ant">
+            <classpath>
+                <path refid="up.classpath"/>
+            </classpath>
+        </typedef>
+
         <up:tomcatEarDeploy ear="ear/target/toro.ear" catalinaBase="deploy" extractWars="true" removeExistingDirectories="true" />
 
         <copy todir="${tomcat.home}">
             <fileset dir="deploy">
                 <exclude name="**/config/**.xml"/>
+                <exclude name="**/*.properties"/>
+                <exclude name="**/*.xml"/>
             </fileset>
         </copy>
         <copy todir="${tomcat.home}">
             <fileset dir="deploy">
                 <include name="**/config/**.xml"/>
+                <include name="**/*.properties"/>
+                <include name="**/*.xml"/>
             </fileset>
             <filterset>
                 <filtersfile file="build.properties"/>
             </filterset>
         </copy>
-        <!--artifact:dependencies filesetId="copy-uportal-academus-api.filesetId">
+        <artifact:dependencies filesetId="copy-uportal-academus-api.filesetId">
             <dependency groupId="net.unicon.toro" artifactId="uportal-academus-api"
                 version="${maven.project.version}" type="jar"/>
             <remoteRepository refid="toro.repository" />
         </artifact:dependencies>
-        <copy flatten="true" todir="/Users/deuce/dev/src/uportal/up3/tomcat/webapps/uPortal/WEB-INF/lib">
+        <copy flatten="true" todir="${tomcat.home}/webapps/${portal.webappName}/WEB-INF/lib">
             <fileset refId="copy-uportal-academus-api.filesetId"/>
-        </copy-->
+        </copy>
+
+        <toro:mergeConfiguration target="${tomcat.home}/webapps/${portal.webappName}/WEB-INF" mergeConfig="uPortalMergeConfig.xml"/>
     </target>
 
 </project>

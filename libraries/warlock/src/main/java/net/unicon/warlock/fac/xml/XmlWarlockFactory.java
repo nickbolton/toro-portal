@@ -93,12 +93,14 @@ public final class XmlWarlockFactory extends AbstractWarlockFactory {
     private boolean xsltcGenerateTranslet = false;
     private boolean xsltcAutoTranslet = false;
     private boolean xsltcUseClasspath = false;
+    
+    private boolean cacheTemplates = true;
 
     /*
      * Public API.
      */
 
-    public XmlWarlockFactory(Source transSource) {
+    public XmlWarlockFactory(Source transSource, boolean cacheTemplates) {
         // Assertions.
         if (transSource == null) {
             String msg = "Arg:wument 'transSource' cannot be null.";
@@ -109,6 +111,7 @@ public final class XmlWarlockFactory extends AbstractWarlockFactory {
         this.transSource = transSource;
         this.engine = new RenderingEngineImpl(this);
         this.store = new JvmEntityStore();
+        this.cacheTemplates = cacheTemplates;
         
         this.useXsltc = false;
         initializeDefaultTransformerFactory();
@@ -118,7 +121,7 @@ public final class XmlWarlockFactory extends AbstractWarlockFactory {
     public XmlWarlockFactory(Source transSource,
         String transformerImplemention, boolean debug, String packageName,
         boolean generateTranslet, boolean autoTranslet,
-        boolean useClasspath) {
+        boolean useClasspath, boolean cacheTemplates) {
         
         // Assertions.
         if (transSource == null) {
@@ -143,6 +146,8 @@ public final class XmlWarlockFactory extends AbstractWarlockFactory {
         this.engine = new RenderingEngineImpl(this);
         this.store = new JvmEntityStore();
         
+        this.cacheTemplates = cacheTemplates;
+        
         this.useXsltc = true;
         initializeXsltcTransformerFactory(transformerImplemention,
             debug, packageName, generateTranslet, autoTranslet, useClasspath);
@@ -164,7 +169,11 @@ public final class XmlWarlockFactory extends AbstractWarlockFactory {
         }
     }
     
-    private void cacheTemplates() {
+    private Templates getTemplates() {
+        if (templates != null) {
+            return templates;
+        }
+
         try {
             if (useXsltc) {
     	        // cache the precompiled templates object
@@ -179,7 +188,11 @@ public final class XmlWarlockFactory extends AbstractWarlockFactory {
                 transformerFactory.setAttribute("use-classpath",
                     Boolean.toString(xsltcUseClasspath));
             }
-	        templates = transformerFactory.newTemplates(transSource);
+	        Templates tmpls = transformerFactory.newTemplates(transSource);
+            if (cacheTemplates) {
+                templates = tmpls;
+            }
+            return tmpls;
         } catch (TransformerConfigurationException tce) {
             throw new RuntimeException("Failed caching templates.", tce);
         }
@@ -192,7 +205,6 @@ public final class XmlWarlockFactory extends AbstractWarlockFactory {
 	        log.info("Warlock using transformer - "
 	            + transformerFactory.getClass().getName());
         }
-        cacheTemplates();
     }
     
     private void initializeXsltcTransformerFactory(String transformerImplemention,
@@ -227,7 +239,6 @@ public final class XmlWarlockFactory extends AbstractWarlockFactory {
             
             // cache the source as a precompile templates object 
         }
-        cacheTemplates();
     }
 
     public IRenderingEngine getRenderingEngine() {
@@ -339,7 +350,7 @@ public final class XmlWarlockFactory extends AbstractWarlockFactory {
                     transformerFactory.setAttribute("use-classpath",
                         Boolean.toString(xsltcUseClasspath));
                 }
-                rslt = transformerFactory.newTransformerHandler(templates);
+                rslt = transformerFactory.newTransformerHandler(getTemplates());
             } catch (Throwable t) {
                 String msg = "Unable to create a new transformer instance.";
                 throw new WarlockException(msg, t);

@@ -20,6 +20,17 @@
     </servlet>
 
     <servlet>
+        <servlet-name>SsoCallback</servlet-name>
+        <servlet-class>net.unicon.academus.apps.sso.SsoCallbackServlet</servlet-class>
+        <load-on-startup>4</load-on-startup>
+        <init-param>
+            <!-- This path should map back to the Login servlet -->
+            <param-name>unauthenticatedRedirectUrl</param-name>
+            <param-value>/@portal.webappName@/Login</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet>
         <servlet-name>SpellCheckerServlet</servlet-name>
         <servlet-class>net.unicon.academus.spell.SpellCheckerServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
@@ -76,6 +87,11 @@
     <servlet-mapping>
            <servlet-name>SpellCheckerServlet</servlet-name>
            <url-pattern>/spellcheck/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>SsoCallback</servlet-name>
+        <url-pattern>/ssoCallback</url-pattern>
     </servlet-mapping>
 
     <mime-mapping>
