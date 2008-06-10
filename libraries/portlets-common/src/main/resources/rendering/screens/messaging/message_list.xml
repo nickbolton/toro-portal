@@ -1,0 +1,986 @@
+<?xml version="1.0" ?>
+<!--
+  Copyright (C) 2007 Unicon, Inc.
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this distribution.  It is also available here:
+  http://www.fsf.org/licensing/licenses/gpl.html
+
+  As a special exception to the terms and conditions of version 
+  2 of the GPL, you may redistribute this Program in connection 
+  with Free/Libre and Open Source Software ("FLOSS") applications 
+  as described in the GPL FLOSS exception.  You should have received
+  a copy of the text describing the FLOSS exception along with this
+  distribution.
+-->
+<screen handle="message_list" portlet-handle="MessagingPortlet">
+<!-- Message Types: -->
+<!-- Error Types: delete_fail -->
+<!-- Will display only <message></message> or <error></error>  elements, not both -->
+<!--
+<state>
+   <status>
+        <error type="other">
+            <problem>Something else happened.</problem>
+            <solution>To fix it, try it again later.  If it still happens, contact the Portal support.</solution>
+        </error>
+   </status>
+
+   <settings>
+      <upload-limit>0</upload-limit>
+   </settings>
+
+   <navigation>
+      <account id="notifications">
+         <label>Notifications</label>
+
+         <description>Notifications are important messages that may require further action or input from you.</description>
+
+         <folder id="11">
+            <label>INBOX</label>
+         </folder>
+
+         <folder id="12">
+            <label>SENT</label>
+         </folder>
+
+         <folder id="13">
+            <label>ARCHIVED</label>
+         </folder>
+      </account>
+   </navigation>
+
+   <current>
+      <account id="notifications">
+         <label>Notifications</label>
+
+         <description>Notifications are important messages that may require further action or input from you.</description>
+      </account>
+
+      <folder id="11">
+         <label>INBOX</label>
+      </folder>
+   </current>
+
+   <contents currentpage="1" perpage="5" totalpages="3" firstdisplayed="1" lastdisplayed="5" totalitems="12">
+      <message id="11" recip-count="1">
+         <received>4/6/05 10:48 AM</received>
+
+         <status>unread</status>
+
+         <priority>1</priority>
+
+         <sender>
+            <address native-format="admin">
+               <label>admin</label>
+            </address>
+         </sender>
+
+         <recipient type="TO">
+            <address native-format="ibiswas">
+               <label>ibiswas</label>
+            </address>
+         </recipient>
+
+         <subject>Hello !!</subject>
+
+         <body>Hello !! This is the body of the message.</body>
+
+         <attachments total="4">
+         </attachments>
+
+         <expires>
+         </expires>
+      </message>
+
+      <message id="131" recip-count="3">
+         <received>4/6/05 2:39 PM</received>
+
+         <status>unread</status>
+
+         <priority>1</priority>
+
+         <sender>
+            <address native-format="admin">
+               <label>admin</label>
+            </address>
+         </sender>
+
+         <recipient type="TO">bivas</recipient>
+
+         <subject>Hello with attachments !!</subject>
+
+         <body>Hello !! This is the body of the message.</body>
+
+         <attachments total="3">
+         </attachments>
+
+         <expires>
+         </expires>
+      </message>
+   </contents>
+</state>
+-->
+   <layout>
+   	  <layout-context class="MessagingPortlet MessagingPortlet_message_list" />
+<!-- DEBUG to show state XML -->
+<!--
+<form>
+    <textarea>
+        <copy-of select = "/state"/>
+    </textarea>
+</form>
+-->
+      <section type="header">
+         <hbox width="100%">
+            <call-template handle="nowViewing" select="/state">
+            </call-template>
+
+<!--<div style="text-align:right;" nowrap="nowrap">
+               <call-template handle="BasicSearch" select="/state">
+               </call-template>
+            </div> -->
+         </hbox>
+      </section>
+
+      <section type="content">
+         <section type="main" cols="2" class="main-content padding">
+            <choice-collection handle="mainFolderForm">
+               <select-one type="tabs">
+                  <choice handle="chooseFolder" min-selections="0" max-selections="0">
+                     <call-template handle="TabOptions" select="/state/navigation/account/folder">
+                     </call-template>
+                  </choice>
+
+                  <action handle="filterMembers" impl="net.unicon.academus.apps.messaging.engine.GoToFolderAction" inpt="mainFolderForm">
+                     <label>View Folder as Selected</label>
+
+                     <description>To view folders on/off as as selected.</description>
+                  </action>
+               </select-one>
+
+               <call-template handle="MainBody" select=".">
+               </call-template>
+            </choice-collection>
+         </section>
+      </section>
+   </layout>
+
+   <template handle="nowViewing">
+      <h2>Notifications / 
+      <value-of select="/state/current/folder/label">
+      </value-of>
+
+<!--<call-template handle="SearchTitle" select="/state/search">
+      </call-template> -->
+      </h2>
+   </template>
+
+   <template handle="SearchTitle">/ Search Results</template>
+
+   <template handle="TabOptions">| 
+       <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+        <label><value-of select="label" ></value-of></label>
+
+        <description>To view messages in '<value-of select="label" ></value-of>'</description>
+       </option>
+   </template>
+
+<!--<template handle="OutboxOption">| 
+   <option handle="outbox" complement-type="net.unicon.penelope.complement.TypeNone">
+      <label>My Outbox</label>
+
+      <description>To view messages in your Outbox.</description>
+   </option>
+   </template>-->
+
+<!--<template handle="SystemMessagesOption">| 
+   <option handle="system" complement-type="net.unicon.penelope.complement.TypeNone">
+      <label>System Messages</label>
+
+      <description>To view all active system messages.</description>
+   </option>
+   </template>-->
+    
+   <template handle="MainBody">
+      <toolbar>
+         <div style="float:left;">
+            <call-template handle="ComposePermitted" select="/state[count(/state/current/accesstype[text() = 'COMPOSE']) &gt; 0]">
+            </call-template>
+
+            <call-template handle="ComposeNotPermitted" select="/state[not(count(/state/current/accesstype[text() = 'COMPOSE']) &gt; 0)]">
+            </call-template>
+
+            <call-template handle="ImportPermitted" select="/state[count(/state/current/accesstype[text() = 'IMPORT']) &gt; 0]">
+            </call-template>
+
+            <call-template handle="ImportNotPermitted" select="/state[not(count(/state/current/accesstype[text() = 'IMPORT']) &gt; 0)]">
+            </call-template>
+
+            <call-template handle="ExportPermitted" select="/state[count(/state/current/accesstype[text() = 'EXPORT']) &gt; 0]">
+            </call-template>
+
+            <call-template handle="ExportNotPermitted" select="/state[not(count(/state/current/accesstype[text() = 'EXPORT']) &gt; 0)]">
+            </call-template>
+
+            <call-template handle="SavePermitted" select="/state[count(/state/current/accesstype[text() = 'SAVE']) &gt; 0]">
+            </call-template>
+
+            <call-template handle="SaveNotPermitted" select="/state[not(count(/state/current/accesstype[text() = 'SAVE']) &gt; 0)]">
+            </call-template>
+
+            <call-template handle="DeletePermitted" select="/state[count(/state/current/accesstype[text() = 'DELETE']) &gt; 0]">
+            </call-template>
+
+            <call-template handle="DeleteNotPermitted" select="/state[not(count(/state/current/accesstype[text() = 'DELETE']) &gt; 0)]">
+            </call-template>
+
+         </div>
+
+         <div style="float:right;text-align:right;">
+            <call-template handle="ViewFilter" select="/state">
+            </call-template>
+         </div>
+      </toolbar>
+      <div style="clear:both"></div>
+
+      <section type="main-content">
+<!-- SUCCESS MESSAGE -->
+         <if test="{count(/state/status/message)}" against="0" condition="gt">
+            <true>
+               <call-template handle="messages" select="/state/status/message">
+               </call-template>
+            </true>
+         </if>
+
+<!-- ERROR MESSAGE -->
+         <if test="{count(/state/status/error)}" against="0" condition="gt">
+            <true>
+               <call-template handle="errors" select="/state/status/error">
+               </call-template>
+            </true>
+         </if>
+
+         <!--<call-template handle="SearchResults" select="/state/search">
+         </call-template> -->
+
+         <table even-row-class="portlet-section-body evenrow" odd-row-class="portlet-section-alternate oddrow" cellpadding="0" cellspacing="0" border="0" class="main-content-table">
+<!-- Select Column -->
+            <call-template handle="selectColumn" select="self::node()">
+            </call-template>
+
+<!-- Priority Column -->
+            <col>
+               <th class="portlet-section-header th-button th-button-priority">
+                  <sort-column>
+                     <choice handle="prioritySortDirection" min-selections="0" max-selections="1">
+                        <label>Priority Sort Direction</label>
+
+                        <option handle="asc" complement-type="net.unicon.penelope.complement.TypeNone">
+                           <label>Sort Priority in ascending order</label>
+                        </option>
+
+                        <option handle="des" complement-type="net.unicon.penelope.complement.TypeNone">
+                           <label>Sort Priority in descending order</label>
+                        </option>
+                     </choice>
+
+                     <action handle="messagingSortPriority" impl="net.unicon.academus.apps.messaging.engine.ChangeMessageSortAction" mode="priority">
+                        <label>Priority</label>
+                     </action>
+                  </sort-column>
+               </th>
+
+               <call-template handle="rowPriority" select="/state/contents/message" />
+            </col>
+
+<!-- From Column -->
+			<call-template handle="recipientColumn" select="/state[current/folder/label/text() = 'OUTBOX']" ></call-template>
+			<call-template handle="fromColumn" select="/state[not(current/folder/label/text() = 'OUTBOX')]" ></call-template>
+
+<!-- Attachments Column -->
+            <col>
+               <th class="portlet-section-header th-button th-button-attachments">
+                  <sort-column>
+                     <choice handle="attachSortDirection" min-selections="0" max-selections="1">
+                        <label>Attachments Sort Direction</label>
+
+                        <option handle="asc" complement-type="net.unicon.penelope.complement.TypeNone">
+                           <label>Sort Attachments in ascending order</label>
+                        </option>
+
+                        <option handle="des" complement-type="net.unicon.penelope.complement.TypeNone">
+                           <label>Sort Attachments in descending order</label>
+                        </option>
+                     </choice>
+
+                     <action handle="messagingSortAttachments" impl="net.unicon.academus.apps.messaging.engine.ChangeMessageSortAction" mode="attach">
+                        <label>Attachments</label>
+                        <image src="images/icons/paperclip_light.gif" alt="Attachments"></image>
+                     </action>
+                  </sort-column>
+               </th>
+
+               <call-template handle="rowAttachments" select="/state/contents/message" />
+            </col>
+
+<!-- Subject Column -->
+            <col>
+               <th class="portlet-section-header th-button th-button-subject">
+                  <sort-column>
+                     <choice handle="subjectSortDirection" min-selections="0" max-selections="1">
+                        <label>Subject Sort Direction</label>
+
+                        <option handle="asc" complement-type="net.unicon.penelope.complement.TypeNone">
+                           <label>Sort Subject in ascending order</label>
+                        </option>
+
+                        <option handle="des" complement-type="net.unicon.penelope.complement.TypeNone">
+                           <label>Sort Subject in descending order</label>
+                        </option>
+                     </choice>
+
+                     <action handle="messagingSortSubject" impl="net.unicon.academus.apps.messaging.engine.ChangeMessageSortAction" mode="subject">
+                        <label>Subject</label>
+                     </action>
+                  </sort-column>
+               </th>
+
+                <choice handle="readMessage" min-selections="0" max-selections="1">
+                  <call-template handle="rowSubject" select="/state/contents/message" />
+                </choice>
+            </col>
+
+<!-- Date Column -->
+            <col>
+               <th class="portlet-section-header th-button th-button-received">
+                  <sort-column>
+                     <choice handle="dateSortDirection" min-selections="0" max-selections="1">
+                        <label><call-template handle="sentColumnText1" select="/state[current/folder/label/text() = 'OUTBOX' or current/folder/label/text() = 'SYSTEM MESSAGES']" ></call-template><call-template handle="receivedColumnText1" select="/state[not(current/folder/label/text() = 'OUTBOX' or current/folder/label/text() = 'SYSTEM MESSAGES')]" ></call-template></label>
+
+                        <option handle="asc" complement-type="net.unicon.penelope.complement.TypeNone">
+                           <label><call-template handle="sentColumnText2" select="/state[current/folder/label/text() = 'OUTBOX' or current/folder/label/text() = 'SYSTEM MESSAGES']" ></call-template><call-template handle="receivedColumnText2" select="/state[not(current/folder/label/text() = 'OUTBOX' or current/folder/label/text() = 'SYSTEM MESSAGES')]" ></call-template></label>
+                        </option>
+
+                        <option handle="des" complement-type="net.unicon.penelope.complement.TypeNone">
+                           <label><call-template handle="sentColumnText3" select="/state[current/folder/label/text() = 'OUTBOX' or current/folder/label/text() = 'SYSTEM MESSAGES']" ></call-template><call-template handle="receivedColumnText3" select="/state[not(current/folder/label/text() = 'OUTBOX' or current/folder/label/text() = 'SYSTEM MESSAGES')]" ></call-template></label>
+                        </option>
+                     </choice>
+
+                     <action handle="messagingSortDate" impl="net.unicon.academus.apps.messaging.engine.ChangeMessageSortAction" mode="date">
+                        <label><call-template handle="sentColumnText4" select="/state[current/folder/label/text() = 'OUTBOX' or current/folder/label/text() = 'SYSTEM MESSAGES']" ></call-template><call-template handle="receivedColumnText4" select="/state[not(current/folder/label/text() = 'OUTBOX' or current/folder/label/text() = 'SYSTEM MESSAGES')]" ></call-template></label>
+                     </action>
+                  
+                  </sort-column>
+               </th>
+
+               <call-template handle="rowDate" select="/state/contents/message" />
+            </col>
+
+            <if test="{count(//state/contents/message)}" against="0" condition="equals">
+               <true>
+                  <tr>
+                     <td colspan="6" style="text-align:center;">
+                        <span class="emptytable">There are currently no messages in this folder.</span>
+                     </td>
+                  </tr>
+               </true>
+            </if>
+         </table>
+
+         <paging>
+            <display-per-page>
+               <select-one type="dropdown" title="Select the number of items to display per page.">
+                  <choice handle="chooseDisplayNumber" min-selections="0" max-selections="1">
+                     <label>Display</label>
+
+                     <option handle="5" complement-type="net.unicon.penelope.complement.TypeNone">
+                        <label>5</label>
+                     </option>
+
+                     <option handle="10" complement-type="net.unicon.penelope.complement.TypeNone">
+                        <label>10</label>
+                     </option>
+
+                     <option handle="20" complement-type="net.unicon.penelope.complement.TypeNone">
+                        <label>20</label>
+                     </option>
+
+                     <option handle="50" complement-type="net.unicon.penelope.complement.TypeNone">
+                        <label>50</label>
+                     </option>
+
+                     <option handle="0" complement-type="net.unicon.penelope.complement.TypeNone">
+                        <label>All</label>
+                     </option>
+
+                     <action handle="setDisplay" impl="net.unicon.academus.apps.messaging.engine.SetMessageItemsPerPageAction" inpt="mainFolderForm">
+                        <label>Set</label>
+
+                        <description>To set the number of displayed items, per page.</description>
+                     </action>
+                  </choice>
+               </select-one>
+
+               <text>Per Page</text>
+            </display-per-page>
+
+            <paging-controls currentpage="{/state/contents/@currentpage}" perpage="{/state/contents/@perpage}" totalpages="{/state/contents/@totalpages}" firstdisplayed="{/state/contents/@firstdisplayed}" lastdisplayed="{/state/contents/@lastdisplayed}" totalitems="{/state/contents/@totalitems}">
+               <first>
+                  <link>
+                     <action handle="goToFirstPage" impl="net.unicon.academus.apps.messaging.engine.ChangeMessagePageAction" move="first">
+                        <label>First</label>
+
+                        <description>To go to the first page of the results.</description>
+                     </action>
+                  </link>
+               </first>
+
+               <prev>
+                  <link>
+                     <action handle="goToPrevPage" impl="net.unicon.academus.apps.messaging.engine.ChangeMessagePageAction" move="previous">
+                        <label>Prev</label>
+
+                        <description>To go to the previous page of the results.</description>
+                     </action>
+                  </link>
+               </prev>
+
+               <next>
+                  <link>
+                     <action handle="goToNextPage" impl="net.unicon.academus.apps.messaging.engine.ChangeMessagePageAction" move="next">
+                        <label>Next</label>
+
+                        <description>To go to the next page of the results.</description>
+                     </action>
+                  </link>
+               </next>
+
+               <last>
+                  <link>
+                     <action handle="goToLastPage" impl="net.unicon.academus.apps.messaging.engine.ChangeMessagePageAction" move="last">
+                        <label>Last</label>
+
+                        <description>To go to the last page of the results.</description>
+                     </action>
+                  </link>
+               </last>
+            </paging-controls>
+         </paging>
+      </section>
+   </template>
+
+   <template handle="ComposePermitted">
+      <call-template handle="ComposeAction" select=".">
+      </call-template>
+   </template>
+
+   <template handle="ComposeNotPermitted">
+      <disabled title="Not permitted to move items from here.">
+         <call-template handle="ComposeAction" select=".">
+         </call-template>
+      </disabled>
+   </template>
+
+   <template handle="ComposeAction">
+      <action handle="messagingCompose" impl="net.unicon.academus.apps.messaging.engine.ComposeMessageAction">
+         <label>Compose</label>
+
+         <description>To compose a new message.</description>
+      </action>
+   </template>
+
+   <!--<template handle="BasicSearch">
+      <select-one type="dropdown" title="Select the folder you would search within.">
+         <choice handle="searchFolder" min-selections="0" max-selections="1">
+            <call-template handle="SearchFolderOption" select="navigation/account//folder">
+            </call-template>
+         </choice>
+      </select-one>
+
+      <default-action ref-handle="searchSubmit">
+         <choice handle="cSearchString" min-selections="0" max-selections="1">
+            <option handle="oSearchString" complement-type="net.unicon.penelope.complement.TypeText64">
+               <label>Enter string to search for here.</label>
+            </option>
+         </choice>
+      </default-action>
+
+      <action handle="searchSubmit" impl="net.unicon.warlock.fac.SimpleNavigateAction" to-screen="message_list">
+         <label>Search</label>
+
+         <description>To search within messages.</description>
+      </action>
+   </template> -->
+
+   <!--<template handle="SearchFolderOption">
+      <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+         <label>
+            <value-of select="@name" />
+         </label>
+      </option>
+   </template> -->
+
+   <template handle="SavePermitted">
+      <call-template handle="SaveAction" select=".">
+      </call-template>
+   </template>
+
+   <template handle="SaveNotPermitted">
+      <disabled title="Not permitted to save items from here.">
+         <call-template handle="SaveAction" select=".">
+         </call-template>
+      </disabled>
+   </template>
+
+   <template handle="SaveAction">
+      <action handle="messagingSave" impl="net.unicon.academus.apps.messaging.engine.SaveMessageAction" inpt="mainFolderForm" to-screen="message_list">
+         <label>Save</label>
+
+         <description>To save the selected messages.</description>
+      </action>
+   </template>
+
+   <template handle="DeletePermitted">
+      <call-template handle="DeleteAction" select=".">
+      </call-template>
+   </template>
+
+   <template handle="DeleteNotPermitted">
+      <disabled title="Not permitted to delete items from here.">
+         <call-template handle="DeleteAction" select=".">
+         </call-template>
+      </disabled>
+   </template>
+
+   <template handle="DeleteAction">
+      <action handle="messagingDelete" impl="net.unicon.academus.apps.messaging.engine.ConfirmDeleteAction" inpt="mainFolderForm">
+         <label>Delete</label>
+
+         <description>To delete the selected messages.</description>
+
+      </action>
+   </template>
+
+   <template handle="ImportPermitted">
+      <call-template handle="ImportAction" select=".">
+      </call-template>
+   </template>
+
+   <template handle="ImportNotPermitted">
+      <disabled title="Not permitted to import items from here.">
+         <call-template handle="ImportAction" select=".">
+         </call-template>
+      </disabled>
+   </template>
+
+   <template handle="ImportAction">
+      <action handle="messagingImport" impl="net.unicon.warlock.fac.SimpleNavigateAction" to-screen="message_import">
+         <label>Import</label>
+
+         <description>To import and send messages.</description>
+      </action>
+   </template>
+
+   <template handle="ExportPermitted">
+      <call-template handle="ExportAction" select=".">
+      </call-template>
+   </template>
+
+   <template handle="ExportNotPermitted">
+      <disabled title="Not permitted to export items from here.">
+         <call-template handle="ExportAction" select=".">
+         </call-template>
+      </disabled>
+   </template>
+
+   <template handle="ExportAction">
+      <action handle="messagingExport" impl="net.unicon.academus.apps.messaging.engine.ExportMessageAction" inpt="mainFolderForm">
+         <label>Export</label>
+
+         <description>To export messages.</description>
+      </action>
+   </template>
+
+   <template handle="ViewFilter">
+      <select-one type="link">
+         <choice handle="viewFilter" min-selections="0" max-selections="0">
+         <label>Display:</label>
+
+         <option handle="all" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>All</label>
+
+            <description>To view all messages regardless of read/unread status.</description>
+         </option>
+
+         | 
+         <option handle="read" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>Read</label>
+
+            <description>To view only read messages.</description>
+         </option>
+
+         | 
+         <option handle="unread" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>Unread</label>
+
+            <description>To view only unread messages.</description>
+         </option>
+         </choice>
+
+         <action handle="setView" impl="net.unicon.academus.apps.messaging.engine.SetViewModeAction" inpt="mainFolderForm">
+            <label>Set</label>
+
+            <description>To set the filter on the displayed items.</description>
+         </action>
+      </select-one>
+
+   </template>
+
+   <!--<template handle="SearchResults">
+      <section>
+         <p>
+         <link>
+            <action handle="messagingReturnFromSearch" impl="net.unicon.warlock.fac.SimpleNavigateAction" to-screen="message_list">
+               <label>
+                  <value-of select="/state/location/current/name" />
+               </label>
+
+               <description>To return to 
+               <value-of select="/state/location/current/name" />
+
+               , clearing search.</description>
+
+               <option handle="{/state/location/current/name/@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+               </option>
+            </action>
+         </link>
+
+         &gt; Search Results</p>
+
+         <p>
+         <value-of select="/state/contents/@totalitems" />
+
+         Results for search term "
+         <value-of select="." />
+
+         "</p>
+      </section>
+   </template> -->
+
+   <template handle="fromColumn">
+<!-- From Column -->
+        <col>
+           <th class="portlet-section-header th-button th-button-from">
+              <sort-column>
+                 <choice handle="senderSortDirection" min-selections="0" max-selections="1">
+                    <label>From Sort Direction</label>
+
+                    <option handle="asc" complement-type="net.unicon.penelope.complement.TypeNone">
+                       <label>Sort From in ascending order</label>
+                    </option>
+
+                    <option handle="des" complement-type="net.unicon.penelope.complement.TypeNone">
+                       <label>Sort From in descending order</label>
+                    </option>
+                 </choice>
+
+                 <action handle="messagingSortFrom" impl="net.unicon.academus.apps.messaging.engine.ChangeMessageSortAction" mode="sender">
+                    <label>From</label>
+                 </action>
+              </sort-column>
+           </th>
+
+           <call-template handle="rowFrom" select="/state/contents/message" />
+        </col>
+   </template>
+
+   <template handle="recipientColumn">
+<!-- Recipient Column -->
+        <col>
+           <th class="portlet-section-header th-button th-button-recipient">
+              <sort-column>
+                 <choice handle="recipientSortDirection" min-selections="0" max-selections="1">
+                    <label>Recipient Sort Direction</label>
+
+                    <option handle="asc" complement-type="net.unicon.penelope.complement.TypeNone">
+                       <label>Sort Recipient in ascending order</label>
+                    </option>
+
+                    <option handle="des" complement-type="net.unicon.penelope.complement.TypeNone">
+                       <label>Sort Recipient in descending order</label>
+                    </option>
+                 </choice>
+
+                 <action handle="messagingSortRecipient" impl="net.unicon.academus.apps.messaging.engine.ChangeMessageSortAction" mode="recipient">
+                    <label>Recipient</label>
+                 </action>
+              </sort-column>
+           </th>
+
+		   <choice handle="readMessageRecipients" min-selections="0" max-selections="1">
+		      <call-template handle="rowRecipient" select="/state/contents/message" />
+		   </choice>
+        </col>
+   </template>
+   
+   <template handle="receivedColumnText1" >Received Date Sort Direction</template>
+   <template handle="receivedColumnText2" >Sort Received times in ascending order</template>
+   <template handle="receivedColumnText3" >Sort Received times in descending order</template>
+   <template handle="receivedColumnText4" >Received Date</template>
+
+   <template handle="sentColumnText1" >Sent Date Sort Direction</template>
+   <template handle="sentColumnText2" >Sort Sent times in ascending order</template>
+   <template handle="sentColumnText3" >Sort Sent times in descending order</template>
+   <template handle="sentColumnText4" >Sent Date</template>
+
+   <template handle="selectColumn">
+      <col>
+         <th class="portlet-section-header th-button th-button-select">
+            <select-toggle targetname="selectedItems" title="To select or de-select all items" class="select-toggle">Select</select-toggle>
+         </th>
+
+         <choice handle="selectedItems" min-selections="0" max-selections="0">
+            <call-template handle="rowSelect" select="//state/contents/message" />
+         </choice>
+      </col>
+   </template>
+
+   <template handle="rowSelect">
+      <td class="cell-emphasis select-cell">
+         <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+            <label>To select / de-select <value-of select="@name" /> for a subsequent action.</label>
+         </option>
+      </td>
+   </template>
+
+   <template handle="rowPriority">
+      <td>
+	      <span class="{concat('message-',status/text())}">
+	         <if test="{priority}" against="1" condition="equals">
+	            <true>
+	               <span>High</span>
+	            </true>
+	         </if>
+	
+	         <if test="{priority}" against="2" condition="equals">
+	            <true>
+	               <span>Medium</span>
+	            </true>
+	         </if>
+	
+	         <if test="{priority}" against="3" condition="equals">
+	            <true>
+	               <span>Low</span>
+	            </true>
+	         </if>
+	      </span>
+      </td>
+   </template>
+
+   <template handle="rowRecipient">
+      <call-template handle="rowRecipientMultiple" select="self::node()[@recip-count &gt; 1]" ></call-template>
+      <call-template handle="rowRecipientSingle" select="self::node()[not(@recip-count &gt; 1)]" ></call-template>
+   </template>
+
+   <template handle="rowRecipientSingle">
+      <td>
+	      <span class="{concat('message-',status/text())}">
+	 		<value-of select="recipient[1]" />
+	      </span>
+      </td>
+   </template>
+
+   <template handle="rowRecipientMultiple">
+      <td>
+	      <span class="{concat('message-',status/text())}">
+	        <link>
+	           <action handle="selectReportTab" impl="net.unicon.academus.apps.messaging.engine.ReadMessageAction" mode="report" inpt="mainFolderForm">
+	              <label>view all (<value-of select="@recip-count" />)</label>
+	
+	              <description>To view the list of all recipients for this message.</description>
+	              
+	              <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone"></option>
+	
+	           </action>
+	        </link>
+	      </span>
+      </td>
+   </template>
+
+   <template handle="rowFrom">
+      <td>
+	      <span class="{concat('message-',status/text())}">
+	          <if test="{count(sender)}" against="0" condition="gt">
+	            <true>
+	                <value-of select="sender" />
+	            </true>
+	
+	            <false>----</false>
+	          </if>
+	      </span>
+      </td>
+   </template>
+
+   <template handle="rowSubject">
+      <td>
+	      <span class="{concat('message-',status/text())}">
+		      <link>
+		        <action handle="messagingReadMessage" impl="net.unicon.academus.apps.messaging.engine.ReadMessageAction" inpt="mainFolderForm">
+		          <label>
+		            <value-of select="subject" />
+		          </label>
+		
+		          <description>To view this message.</description>
+		
+		          <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+		          </option>
+		        </action>
+		      </link>
+	      </span>
+      </td>
+   </template>
+
+   <template handle="rowAttachments">
+      <td>
+         <call-template handle="rowAttachmentsNotEmpty" select="self::node()[attachments/@total &gt; 0]" />
+
+         <call-template handle="rowAttachmentsEmpty" select="self::node()[not(attachments/@total &gt; 0)]" />
+      </td>
+   </template>
+
+   <template handle="rowAttachmentsNotEmpty">
+      <span class="attachments-icon">
+      <if test="{attachments/@total}" against="1" condition="gt" >
+      	<true>x<value-of select="attachments/@total" /></true>
+      	<false>&#160;</false>
+      </if>
+      </span>
+   </template>
+
+   <template handle="rowAttachmentsEmpty">
+   </template>
+
+   <template handle="rowDate">
+      <td>
+	      <span class="{concat('message-',status/text())}">
+		      <value-of select="received" />
+	      </span>
+      </td>
+   </template>
+
+   <template handle="messages">
+      <removable>
+         <section type="message">
+            <h4 class="inline">SUCCESS:</h4>
+
+            <if test="{@type}" against="move_ok" condition="equals">
+               <true>
+                  <p>The items have been moved</p>
+               </true>
+            </if>
+
+            <if test="{@type}" against="copy_ok" condition="equals">
+               <true>
+                  <p>The items have been copied</p>
+               </true>
+            </if>
+
+            <if test="{@type}" against="delete_ok" condition="equals">
+               <true>
+                  <p>The items have been deleted</p>
+               </true>
+            </if>
+
+            <if test="{@type}" against="addfiles_ok" condition="equals">
+               <true>
+                  <p>The file(s) have been added</p>
+               </true>
+            </if>
+
+            <if test="{@type}" against="addfolder_ok" condition="equals">
+               <true>
+                  <p>The folder have been added</p>
+               </true>
+            </if>
+         </section>
+      </removable>
+   </template>
+
+   <template handle="errors">
+      <section type="error">
+         <if test="{@type}" against="delete_fail" condition="equals">
+            <true>
+               <section type="portlet-msg-error problem">
+                  <h4 class="inline">PROBLEM:</h4>
+
+                  <p>You cannot delete Notification messages that have not been read.</p>
+               </section>
+
+               <section type="portlet-msg-info solution">
+                  <h4 class="inline">SOLUTION:</h4>
+
+                  <p>To resolve this problem, first click to read each Notification message that you want to delete. Afterwards, try deleting the message.</p>
+               </section>
+            </true>
+         </if>
+
+         <if test="{@type}" against="other" condition="equals">
+            <true>
+               <section type="portlet-msg-error problem">
+                  <h4 class="inline">PROBLEM:</h4>
+
+                  <p>
+                     <value-of select="problem" />
+                  </p>
+               </section>
+
+               <section type="portlet-msg-info solution">
+                  <h4 class="inline">SOLUTION:</h4>
+
+                  <p>
+                     <value-of select="solution" />
+                  </p>
+               </section>
+            </true>
+         </if>
+
+<!-- If not any of the above types,  then give generic error message (SHOULD NEVER BE SEEN) -->
+         <if test="{boolean(@type!='other' and @type!='delete_fail')}" against="true" condition="equals">
+            <true>
+               <section type="portlet-msg-error problem">
+                  <h4 class="inline">PROBLEM:</h4>
+
+                  <p>The channel has experienced an unclassified problem.</p>
+               </section>
+
+               <section type="portlet-msg-info solution">
+                  <h4 class="inline">SOLUTION:</h4>
+
+                  <p>Please notify the Portal Administrator of the problem.</p>
+               </section>
+            </true>
+         </if>
+      </section>
+   </template>
+
+<!--<decisions>
+      <decision-collection choice-collection="mainFolderForm">
+         <decision choice="chooseFolder">
+            <selection option="inbox"></selection>
+         </decision>
+
+      </decision-collection>
+   </decisions> -->
+</screen>
+

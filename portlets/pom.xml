@@ -12,11 +12,21 @@
   <name>toro-portlets</name>
 
   <modules>
-      <module>briefcase-portlet</module>
-      <module>gateway-portlet</module>
-      <module>messaging-portlet</module>
-      <module>permissions-portlet</module>
-      <module>web-content-portlet</module>
+    <module>portlets-common</module>
+    <module>briefcase-portlet</module>
+    <module>gateway-portlet</module>
+    <module>messaging-portlet</module>
+    <module>permissions-portlet</module>
+    <module>web-content-portlet</module>
   </modules>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+  </build>
 
 </project>

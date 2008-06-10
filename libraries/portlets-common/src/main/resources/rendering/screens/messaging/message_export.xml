@@ -1,0 +1,117 @@
+<?xml version="1.0" ?>
+<!--
+  Copyright (C) 2007 Unicon, Inc.
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this distribution.  It is also available here:
+  http://www.fsf.org/licensing/licenses/gpl.html
+
+  As a special exception to the terms and conditions of version 
+  2 of the GPL, you may redistribute this Program in connection 
+  with Free/Libre and Open Source Software ("FLOSS") applications 
+  as described in the GPL FLOSS exception.  You should have received
+  a copy of the text describing the FLOSS exception along with this
+  distribution.
+-->
+<screen handle="message_export">
+<!--
+<state>
+   <current>
+      <message id="c:/notifications/Inbox/message1">
+        <status>unread</status>
+      	<subject>Register for classes now!</subject>
+      </message>
+      <message id="c:/notifications/Inbox/message2">
+        <status>read</status>
+      	<subject>Be safe on campus.</subject>
+      </message>
+   </current>
+   <export>
+   		<url>http://www.unicon.net</url>
+   		<name>unicon1.xml</name>
+   </export>
+</state>
+
+ -->
+   <layout>
+   	  <layout-context class="MessagingPortlet MessagingPortlet_message_export" />
+      <section type="header" cols="2">
+         <section type="title">
+            <h2>Export Messages</h2>
+         </section>
+      </section>
+
+      <section type="content">
+         <section type="main" cols="1" class="padding">
+         <choice-collection handle="confirmationForm">
+            <hidden-input> <!-- Hack to fix the no choices in choice-collection problem. -->
+                <choice handle="ignoreMe" min-selections="0" max-selections="0">
+                    <option handle="meToo" complement-type="net.unicon.penelope.complement.TypeNone">
+                    </option>
+                </choice>
+            </hidden-input>
+
+            <!--<call-template handle="pageToolbar" select="." /> -->
+            
+            <section type="content2">
+            
+                <section type="secondary" class="secondary2 padding">
+                   <section type="sidebox">
+                      <h4>Messages You Have Selected to Export:</h4>
+    
+                      <ul class="no-bullet">
+                           <call-template handle="unreadTarget" select="//state/current/message[status/text() = 'unread']" />
+
+                           <call-template handle="readTarget" select="//state/current/message[not(status/text() = 'unread')]" />
+                      </ul>
+                   </section>
+                </section>
+    
+                <section type="main" cols="2" class="main-content padding">
+                   <p>
+                      An export file for the selected messages has been created.
+                   </p>
+                   <p>  
+                      <a href="{/state/export/url}" target="hidden_download" title="{concat('View / Download this file (',/state/export/name,')')}">Click here to download it.</a>
+                   </p>
+                </section>
+            </section>
+
+            <call-template handle="pageToolbar" select="." />
+         </choice-collection>
+         </section>
+      </section>
+   </layout>
+
+   <template handle="readTarget">
+      <li class="li-image file-icon">
+         <value-of select="subject" />
+      </li>
+   </template>
+   
+   <template handle="unreadTarget">
+      <li class="li-image file-icon" style="font-weight:bold;">
+         <value-of select="subject" />
+      </li>
+   </template>
+
+   <template handle="pageToolbar">
+      <toolbar>
+         <action handle="messagingCancel" impl="net.unicon.academus.apps.messaging.engine.ReturnViewAction">
+            <label>Cancel</label>
+            <description>To return to the previous view.</description>
+         </action>
+      </toolbar>
+   </template>
+</screen>
+

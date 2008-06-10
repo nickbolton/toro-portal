@@ -56,9 +56,7 @@
       <module>libraries</module>
       <module>portlets</module>
       <module>blojsom</module>
-      <module>ear</module>
       <module>portlets-overlay</module>
-      <module>ant-tasks</module>
   </modules>
 
   <properties>

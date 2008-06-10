@@ -21,6 +21,7 @@
       <module>penelope</module>
       <module>warlock</module>
       <module>sso-authentication-cache</module>
+      <module>sso-callback-servlet</module>
       <module>portlets-common</module>
       <module>civis-selector</module>
       <!--module>resource-pool</module>

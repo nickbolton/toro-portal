@@ -34,6 +34,27 @@
 -->
 <messaging allow-xhtml="true">
     <!--
+        JNDI Reference to the portal database. This should not require
+        modification unless the portal container is modified.
+    -->
+    <jndi-ref>java:comp/env/jdbc/@datasource@</jndi-ref>
+
+    <query-file>/config/queries/RdbmsMessageFactory.@db.platform@.xml</query-file>
+
+    <!--
+        Name to Location mappings for the notification Callback system.  The
+        URL referenced must support the REST protocol.  Please see the
+        Notifications API Document for further details of adding additional
+        modules to the callback system.
+    -->
+    <!--callbacks>
+        <entry>
+            <name>calendar</name>
+            <location>@portal.server.http.protocol@://@portal.server.hostname@@portal.server.port@/@portal.webappName@/CalendarReply</location>
+        </entry>
+    </callbacks-->
+
+    <!--
         Attachment upload limit. This value is a floating point number followed
         by a suffix of 'b', 'k', or 'm', which correspond respectively to
         bytes, kilobytes, or megabytes. These suffixes are not case sensitive.
@@ -96,7 +117,7 @@
     <message-factory id="system" impl="net.unicon.mercury.fac.email.EmailMessageFactory">
         <account type="transport" impl="net.unicon.mercury.fac.email.SMTPTransportAccount">
             <!-- The address mail sent using this instance should appear to originate from. -->
-            <from>academus@unicon.net</from>
+            <from>@admin.email@</from>
             <!-- The SMTP server hostname or IP -->
             <host>@smtp.server.hostname@</host>
             <!--- The port SMTP is running on. This should be 25 in most cases. -->
@@ -215,27 +236,5 @@
             <attribute handle="email">E-mail Address</attribute>
         </person-attributes>
     </civis>
-
-
-    <!--
-        Name to Location mappings for the notification Callback system.  The
-        URL referenced must support the REST protocol.  Please see the
-        Notifications API Document for further details of adding additional
-        modules to the callback system.
-    -->
-    <callbacks>
-        <entry>
-            <name>calendar</name>
-            <location>@portal.base.url@/CalendarReply</location>
-        </entry>
-    </callbacks>
-
-    <!--
-        JNDI Reference to the portal database. This should not require
-        modification unless the portal container is modified.
-    -->
-    <jndi-ref>java:comp/env/jdbc/@datasource@</jndi-ref>
-
-    <query-file>/config/queries/RdbmsMessageFactory.@db.platform@.xml</query-file>
 
 </messaging>

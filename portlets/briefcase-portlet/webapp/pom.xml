@@ -74,6 +74,12 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>${commons-dbcp.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
       <version>${commons-fileupload.version}</version>
@@ -107,6 +113,9 @@
 
   <build>
     <finalName>${artifactId}</finalName>
+    <filters>
+      <filter>../../../build.properties</filter>
+    </filters>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

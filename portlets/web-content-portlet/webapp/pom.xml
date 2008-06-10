@@ -74,9 +74,21 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>${commons-dbcp.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
             <groupId>xalan</groupId>
             <artifactId>xalan</artifactId>
             <version>${xalan.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+            <version>${springframework.version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -100,6 +112,9 @@
     </dependencies>
    <build>
     <finalName>${artifactId}</finalName>
+    <filters>
+      <filter>../../../build.properties</filter>
+    </filters>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
