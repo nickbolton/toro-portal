@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<antlib>
-    <!-- Tasks -->
-    <taskdef name="mergeConfiguration" classname="net.unicon.toro.ant.MergeConfigurationTask"/>
-    <taskdef name="dumpproperties" classname="net.unicon.toro.ant.DumpProperties"/>
-    <taskdef name="importpom" classname="net.unicon.toro.ant.ImportPomProperties"/>
-</antlib>
