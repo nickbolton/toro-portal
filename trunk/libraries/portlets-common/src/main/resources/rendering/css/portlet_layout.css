@@ -1,29 +1,29 @@
 /* TORO PORTLET LAYOUT CSS
- *
- * Define CSS classes for layout of Toro portlets.
- *
- * For more information on Toro portlets, visit:
- * http://www.unicon.net/node/675
- * 
- * This CSS file is deployed with each Toro portlet.
- *
- * This CSS affects all Toro portlets.
- *
- * This CSS works in tandem with portlet_styling.css, which provides visual styling 
- * declarations, and config_icons.css, which provides icon file declarations.
- *
- * Only CSS that affects the layout (positioning) of major elements should be
- * listed here. Such as:
- *   display, position, float, clear, width, height, min-width, min-height
- *   margin, border, padding, overflow
- *
- * Each declaration should be preceeded by .toro-portlet for proper namespacing
- * (to prevent CSS collision with the portal or other portlets).
- */
+*
+* Define CSS classes for layout of Toro portlets.
+*
+* For more information on Toro portlets, visit:
+* http://www.unicon.net/node/675
+* 
+* This CSS file is deployed with each Toro portlet.
+*
+* This CSS affects all Toro portlets.
+*
+* This CSS works in tandem with portlet_styling.css, which provides visual styling 
+* declarations, and config_icons.css, which provides icon file declarations.
+*
+* Only CSS that affects the layout (positioning) of major elements should be
+* listed here. Such as:
+*   display, position, float, clear, width, height, min-width, min-height
+*   margin, border, padding, overflow
+*
+* Each declaration should be preceeded by .toro-portlet for proper namespacing
+* (to prevent CSS collision with the portal or other portlets).
+*/
 
 
 /* GLOBAL LAYOUT
- * Declarations used in broad context.
+* Declarations used in broad context.
 --------------------------------------------------------------------------------------*/
 
 .toro-portlet .inline {
@@ -87,7 +87,7 @@ float: left;
 margin-left: 25px;
 }
 
-.toro-portlet .no-bullet {
+.toro-portlet ul.no-bullet li {
 list-style-type: none;
 }
 
@@ -101,7 +101,7 @@ padding-top: 2px;
 
 
 /* CONTENT LAYOUT 
- * Declarations for the basic layout of a portlet view.
+* Declarations for the basic layout of a portlet view.
 --------------------------------------------------------------------------------------*/
 
 .toro-portlet .toro-portlet-content {
@@ -162,7 +162,7 @@ padding-bottom: 10px;
 
 
 /* HEADER STATUS LAYOUT 
- * Declarations for the layout of the header status area.
+* Declarations for the layout of the header status area.
 --------------------------------------------------------------------------------------*/
 
 .toro-portlet .header-status-container {
@@ -192,7 +192,7 @@ width: 75px;
 
 
 /* NAVIGATION BAR LAYOUT
- * Declarations for the layout of the portlet navigation bar.
+* Declarations for the layout of the portlet navigation bar.
 --------------------------------------------------------------------------------------*/
 
 .toro-portlet .navbar {
@@ -215,7 +215,7 @@ background-position: 0px -16px;
 
 
 /* NAVIGATION TREE LAYOUT 
- * Declarations for the layout of the navigation tree.
+* Declarations for the layout of the navigation tree.
 --------------------------------------------------------------------------------------*/
 
 .toro-portlet .navtree ul {
@@ -264,7 +264,7 @@ font-size:120%;
 
 
 /* SIDEBOX LAYOUT 
- * Declarations for the layout of the sidebox and searchbox.
+* Declarations for the layout of the sidebox and searchbox.
 --------------------------------------------------------------------------------------*/
 
 .toro-portlet .sidebox, .toro-portlet .searchbox {
@@ -304,7 +304,7 @@ padding-top: 2px;
 
 
 /* TOOLBAR LAYOUT 
- * Declarations for the layout of the toolbar.
+* Declarations for the layout of the toolbar.
 --------------------------------------------------------------------------------------*/
 
 .toro-portlet .toolbar {
@@ -330,7 +330,7 @@ margin-right:10px;
 
 
 /* CONTENT LAYOUT 
- * Declarations for the layout of the main contents.
+* Declarations for the layout of the main contents.
 --------------------------------------------------------------------------------------*/
 
 .toro-portlet .main-content {
@@ -371,7 +371,7 @@ padding: 8px 20px 8px 20px;
 
 
 /* ERROR MESSAGE LAYOUT 
- * Declarations for the layout of error messages.
+* Declarations for the layout of error messages.
 --------------------------------------------------------------------------------------*/
 
 .toro-portlet .error {
@@ -388,7 +388,7 @@ display: inline;
 
 
 /* TABS LAYOUT 
- * Declarations for the layout of tabs to switch portlet views.
+* Declarations for the layout of tabs to switch portlet views.
 --------------------------------------------------------------------------------------*/
 
 .toro-portlet .tabs {
@@ -416,7 +416,7 @@ background-position: right;
 
 
 /* PAGING CONTROLS LAYOUT 
- * Declarations for the layout of paging controls.
+* Declarations for the layout of paging controls.
 --------------------------------------------------------------------------------------*/
 
 .toro-portlet .paging {
@@ -444,7 +444,7 @@ margin-right: 10px;
 
 
 /* LINKS AND ICONS LAYOUT 
- * Declarations for the layout of links and icons.
+* Declarations for the layout of links and icons.
 --------------------------------------------------------------------------------------*/
 
 .toro-portlet .expanded-link {
@@ -506,7 +506,7 @@ cursor: help;
 
 
 /* MESSAGING PORTLET SPECIFIC LAYOUT 
- * Declarations specific to the Messaging Portlet.
+* Declarations specific to the Messaging Portlet.
 --------------------------------------------------------------------------------------*/
 
 .toro-portlet div.MessagingPortlet .toolbar
