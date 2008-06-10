@@ -18,6 +18,7 @@
     <module>messaging-portlet</module>
     <module>permissions-portlet</module>
     <module>web-content-portlet</module>
+    <module>portlets-overlay</module>
   </modules>
 
   <build>
