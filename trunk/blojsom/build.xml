@@ -440,11 +440,14 @@
         <!-- jar jarfile="${war.file}" basedir="${war.dir}"/ -->
 		<mkdir dir="build" />
 
-		<copy overwrite="true" todir="build" filtering="off">
+		<copy overwrite="true" todir="build">
 			<fileset dir="${war.dir}">
                 <include name="**/*.xml"/>
                 <include name="**/*.properties"/>
             </fileset>
+            <filterset>
+                <filtersfile file="../build.properties"/>
+            </filterset>
         </copy>
         <copy overwrite="false" todir="build">
             <fileset dir="${war.dir}"/>

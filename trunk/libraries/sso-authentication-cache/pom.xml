@@ -13,7 +13,6 @@
     <name>Sso Authentication Cache</name>
 
     <dependencies>
-        <!-- ===== Compile Time Dependencies ============================== -->
     </dependencies>
 
 </project>
