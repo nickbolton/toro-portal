@@ -24,9 +24,15 @@
 
     <parameters>
         <parameter>
-            <name>portletDefinitionId</name>
-            <value>toro-web-content-portlet.WebContentPortlet</value>
-            <description>Identifies the portlet deployed within the portlet container</description>
+            <name>portletApplicationId</name>
+            <value>/toro-web-content-portlet</value>
+            <description/>
+            <ovrd>N</ovrd>
+        </parameter>
+        <parameter>
+            <name>portletName</name>
+            <value>WebContentPortlet</value>
+            <description/>
             <ovrd>N</ovrd>
         </parameter>
     </parameters>
