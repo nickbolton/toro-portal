@@ -1,0 +1,8 @@
+Configure 'build.properties' using 'build.properties.sample' as a basis.
+
+Run 'ant deploy' to build and deploy blojsom
+
+Other ant targets are:
+  compile  - Build blojsom, but do not package
+  war      - Generate the .WAR file packaging for blojsom
+  deploy   - Deploy the .WAR file into tomcat
