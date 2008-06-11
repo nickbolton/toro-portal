@@ -1,0 +1,33 @@
+<channel-definition script="classpath://org/jasig/portal/io/import-channel_v3-0.crn">
+    <title>Toro Web Content Portlet</title>
+    <name>Toro Web Content Portlet</name>
+    <fname>toro-web-content-portlet</fname>
+    <desc>Toro Web Content Portlet</desc>
+    <type>Portlet</type>
+    <class>org.jasig.portal.channels.portlet.CPortletAdapter</class>
+    <timeout>60000</timeout>
+
+    <hasedit>N</hasedit>
+    <hashelp>N</hashelp>
+    <hasabout>N</hasabout>
+
+    <secure>N</secure>
+    <locale>en_US</locale>
+
+    <categories>
+        <category>Applications</category>
+    </categories>
+
+    <groups>
+        <group>Everyone</group>
+    </groups>
+
+    <parameters>
+        <parameter>
+            <name>portletDefinitionId</name>
+            <value>toro-web-content-portlet.WebContentPortlet</value>
+            <description>Identifies the portlet deployed within the portlet container</description>
+            <ovrd>N</ovrd>
+        </parameter>
+    </parameters>
+</channel-definition>

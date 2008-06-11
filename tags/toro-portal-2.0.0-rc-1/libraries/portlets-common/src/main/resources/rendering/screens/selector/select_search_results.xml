@@ -1,0 +1,498 @@
+<?xml version="1.0" ?>
+<!--
+  Copyright (C) 2007 Unicon, Inc.
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this distribution.  It is also available here:
+  http://www.fsf.org/licensing/licenses/gpl.html
+
+  As a special exception to the terms and conditions of version 
+  2 of the GPL, you may redistribute this Program in connection 
+  with Free/Libre and Open Source Software ("FLOSS") applications 
+  as described in the GPL FLOSS exception.  You should have received
+  a copy of the text describing the FLOSS exception along with this
+  distribution.
+-->
+<!-- 
+<state>
+	<status>
+		<error type="other">
+			<problem>Members with duplicate names were found. </problem>
+	    	<solution></solution>
+		</error>
+	</status>
+	
+   <search>Ad</search>
+
+   <selections members="2" groups="4">
+   </selections>
+
+   <options currentpage="5" perpage="5" totalpages="5" firstdisplayed="6" lastdisplayed="10" totalitems="27">
+      <group id="Personal" selectable="false" inbasket="false" inprevious="false">
+         <name>My Personal Groups</name>
+      </group>
+
+      <member id="1" selectable="true" inbasket="false" inprevious="false">
+         <name>Howdy Dudey</name>
+      </member>
+
+      <group id="2" selectable="true" inbasket="false" inprevious="false">
+         <name>Mouseketeers</name>
+      </group>
+
+      <group id="3" selectable="true" inbasket="false" inprevious="true">
+         <name>Musketeers</name>
+      </group>
+
+      <member id="11" selectable="true" inbasket="true" inprevious="false">
+         <name>John Doe</name>
+      </member>
+   </options>
+</state>
+
+
+-->
+<screen handle="select_search_results">
+   <layout>
+   	  <layout-context class="SelectorServant SelectorServant_select_search_results" />
+      <section type="header" cols="1">
+         <section type="title">
+            <h2>Select Member or Groups to Share with</h2>
+         </section>
+      </section>
+
+      <section type="content">
+         <section type="main" cols="1" class="padding">
+         
+         <choice-collection handle="selectMemberGroupForm">
+            <!--<call-template handle="pageToolbar" select="." /> -->
+
+            <section type="content2">
+
+            <section type="secondary" class="secondary2 padding">
+               <search>
+                  <label>Search</label>
+
+                  <default-action ref-handle="searchGo">
+	                  <choice handle="searchText" min-selections="0" max-selections="1">
+	                     <option handle="searchstring" complement-type="net.unicon.penelope.complement.TypeText64">
+	                        <label>Enter Name or Keyword</label>
+	                     </option>
+	                  </choice>
+                  </default-action>
+
+                  <action handle="searchGo" impl="net.unicon.academus.civisselector.SearchShareeAction" inpt="selectMemberGroupForm">
+                     <label>Go</label>
+
+                     <description>To search for groups and members who match the entered criteria.</description>
+
+                  </action>
+               </search>
+
+               <section type="sidebox">
+                  <h4>My Selections</h4>
+
+                  <table cellpadding="0" cellspacing="1" border="0" class="selection-basket">
+                     <tr>
+                        <th class="portlet-section-subheader selection-basket-label"><span class="member">MEMBERS</span></th>
+
+                        <td class="portlet-section-body selection-basket-number">
+                           <value-of select="//selections/@members" />
+                        </td>
+                     </tr>
+
+                     <tr>
+                        <th class="portlet-section-subheader selection-basket-label"><span class="group">GROUPS</span></th>
+
+                        <td class="portlet-section-body selection-basket-number">
+                           <value-of select="//selections/@groups" />
+                        </td>
+                     </tr>
+                  </table>
+                  <link>
+                       <action handle="selectReviewSelections" impl="net.unicon.academus.civisselector.SelectBasketAction" to-screen="select_basket">
+                          <label>Review My Selections</label>
+
+                          <description>To review my selection basket</description>
+                          
+                       </action>
+                  </link>
+               </section>
+            </section>
+
+            <section type="main" cols="2" class="main-content padding2">
+
+            <!-- ERROR MESSAGE -->
+            <if test="{count(/state/status/error)}" against="0" condition="gt">
+               <true>
+                  <call-template handle="errors" select="/state/status/error">
+                  </call-template>
+               </true>
+            </if>
+            
+               <tabs>
+                  <!--tab>
+                     <tab-label>
+                        <link class="portlet-menu-item tab">
+                           <action handle="selectMembersTab" impl="net.unicon.academus.civisselector.ShowMemberAction" to-screen="select_members">
+                              <label>Members</label>
+
+                              <description>To select Members</description>
+
+                           </action>
+                        </link>
+                     </tab-label>
+                  </tab-->
+
+                  <tab>
+                     <tab-label>
+                        <link class="portlet-menu-item tab">
+                           <action handle="selectGroupsTab" impl="net.unicon.academus.civisselector.ShowGroupAction" to-screen="select_groups">
+                              <label>Groups</label>
+
+                              <description>To select Groups</description>
+
+                           </action>
+                        </link>
+                     </tab-label>
+                  </tab>
+
+                  <tab selected="selected" removable="removable">
+                     <tab-label>
+                        <link class="portlet-menu-item-selected tab selected">
+                           <action handle="selectRemoveSearchResults" impl="net.unicon.academus.civisselector.CloseSearchResults">
+                              <label><span class="removable-selected">Search Results</span></label>
+
+                              <description>To remove these Search Results, and return to the previous screen.</description>
+                           </action>
+                        </link>
+                     </tab-label>
+
+                     <tab-body>
+                        <!--<call-template handle="selectionToolbar" select="." /> -->
+
+                        <p>
+                        <strong>
+                           <value-of select="/state/options/@totalitems" />
+                        </strong>
+
+                        Items match your search for 
+                        <strong><entity value="quot"/><value-of select="/state/search" /><entity value="quot"/></strong>
+                        </p>
+
+                        <table even-row-class="portlet-section-body evenrow" odd-row-class="portlet-section-alternate oddrow" cellpadding="0" cellspacing="0" border="0" class="main-content-table-alternate">
+                           <col>
+                              <th class="portlet-section-header th-button th-button-select">
+                                 <select-toggle targetname="selectedItems" title="To select or de-select all members and groups on this page">Select</select-toggle>
+                              </th>
+
+                              <choice handle="selectedItems" min-selections="0" max-selections="0">
+                                 <call-template handle="rowSelect" select="//state/options/*[name(.)='member' or name(.)='group']" />
+                              </choice>
+                           </col>
+
+                           <col>
+                              <th class="portlet-section-header th-button th-button-name">
+                                 <sort-column>
+                                    <choice handle="nameSortDirection" min-selections="0" max-selections="1">
+                                       <label>Name Sort Direction</label>
+
+                                       <option handle="asc" complement-type="net.unicon.penelope.complement.TypeNone">
+                                          <label>Sort Names in ascending order</label>
+                                       </option>
+
+                                       <option handle="des" complement-type="net.unicon.penelope.complement.TypeNone">
+                                          <label>Sort Names in descending order</label>
+                                       </option>
+                                    </choice>
+
+                                    <action handle="selectSortName" impl="net.unicon.academus.civisselector.ToggleNameSorting" to-screen="select_search_results" inpt="selectMemberGroupForm">
+                                       <label>Name</label>
+                                    </action>
+                                 </sort-column>
+                              </th>
+
+                              <choice handle="selectedItemNavigate" min-selections="0" max-selections="0">
+                                 <call-template handle="rowNameSelect" select="//state/options/*[name(.)='member' or name(.)='group']" />
+                              </choice>
+                           </col>
+
+                           <col>
+                              <th class="portlet-section-header">
+                              </th>
+
+                              <choice handle="selectedItemRemove" min-selections="0" max-selections="0">
+                                 <call-template handle="rowRemove" select="//state/options/*[name(.)='member' or name(.)='group']" />
+                              </choice>
+                           </col>
+                        </table>
+                     </tab-body>
+                  </tab>
+               </tabs>
+
+               <call-template handle="paging" select=".">
+               </call-template>
+
+                <call-template handle="selectionToolbar" select="." />
+            </section>
+            </section>
+
+            <call-template handle="pageToolbar" select="." />
+         </choice-collection>
+         
+      </section>
+      </section>
+   </layout>
+
+   <template handle="selectionToolbar">
+      <toolbar class="toolbar-secondary">
+         <action handle="addSelection" impl="net.unicon.academus.civisselector.AddToSelBasketAction" inpt="selectMemberGroupForm" to-screen="select_search_results" class="form-button-emphasis">
+            <label>Add to My Selection Basket</label>
+
+            <description>To add the checked items, to your selections basket.</description>
+         </action>
+      </toolbar>
+   </template>
+
+   <template handle="pageToolbar">
+      <toolbar>
+            <action handle="submitSelections" impl="net.unicon.academus.civisselector.SubmitBasketAction" to-screen="edit_permissions" class="form-button-emphasis">
+               <label>Submit My Selections</label>
+
+               <description>To submit all selections of members and groups</description>
+
+               </action>
+
+            <action handle="cancelSelections" impl="net.unicon.academus.civisselector.CancelBasketAction" to-screen="edit_permissions">
+               <label>Cancel</label>
+
+               <description>To cancel all selections of members and groups.</description>
+            </action>
+      </toolbar>
+   </template>
+
+   <template handle="paging">
+      <paging>
+         <display-per-page>
+            <select-one type="dropdown" title="Select the number of items to display per page.">
+               <choice handle="chooseDisplayNumber" min-selections="0" max-selections="1">
+                  <label>Display</label>
+
+                  <option handle="5" complement-type="net.unicon.penelope.complement.TypeNone">
+                     <label>5</label>
+                  </option>
+
+                  <option handle="10" complement-type="net.unicon.penelope.complement.TypeNone">
+                     <label>10</label>
+                  </option>
+
+                  <option handle="20" complement-type="net.unicon.penelope.complement.TypeNone">
+                     <label>20</label>
+                  </option>
+
+                  <option handle="50" complement-type="net.unicon.penelope.complement.TypeNone">
+                     <label>50</label>
+                  </option>
+
+                  <option handle="100" complement-type="net.unicon.penelope.complement.TypeNone">
+                     <label>100</label>
+                  </option>
+
+	               <action handle="setDisplay" impl="net.unicon.academus.civisselector.SetItemsPerPageAction" inpt="selectMemberGroupForm" to-screen="select_search_results">
+	                  <label>Set</label>
+	                  <description>To set the number of displayed items, per page.</description>
+	               </action>
+
+               </choice>
+            </select-one>
+
+            <text>Per Page</text>
+         </display-per-page>
+
+         <paging-controls currentpage="{//state/options/@currentpage}" perpage="{//state/options/@perpage}" totalpages="{//state/options/@totalpages}" firstdisplayed="{//state/options/@firstdisplayed}" lastdisplayed="{//state/options/@lastdisplayed}" totalitems="{//state/options/@totalitems}">
+            <first>
+               <link>
+                  <action handle="goToFirstPage" impl="net.unicon.academus.civisselector.ChangeUserPrefPageAction" move="first" to-screen="select_search_results" inpt="selectMemberGroupForm">
+                     <label>First</label>
+                     <description >To go to the first page of the results.</description>
+                  </action>
+               </link>
+            </first>
+
+            <prev>
+               <link>
+                  <action handle="goToPrevPage" impl="net.unicon.academus.civisselector.ChangeUserPrefPageAction" move="previous" to-screen="select_search_results" inpt="selectMemberGroupForm">
+                     <label>Prev</label>
+                     <description >To go to the previous page of the results.</description>
+                  </action>
+               </link>
+            </prev>
+
+            <next>
+               <link>
+                  <action handle="goToNextPage" impl="net.unicon.academus.civisselector.ChangeUserPrefPageAction" move="next" to-screen="select_search_results" inpt="selectMemberGroupForm"> 
+                     <label>Next</label>
+                     <description >To go to the next page of the results.</description>
+                  </action>
+               </link>
+            </next>
+
+            <last>
+               <link>
+                  <action handle="goToLastPage" impl="net.unicon.academus.civisselector.ChangeUserPrefPageAction" move="last" to-screen="select_search_results" inpt="selectMemberGroupForm">
+                     <label>Last</label>
+                     <description >To go to the last page of the results.</description>
+                  </action>
+               </link>
+            </last>
+         </paging-controls>
+      </paging>
+   </template>
+
+   <template handle="rowSelect">
+      <td class="cell-emphasis select-cell">
+      		<call-template handle="rowSelectIsSelectable" select="self::node()[(name(.)='member' and @selectable='true') or (name(.)='group' and @selectable='true')]" ></call-template>
+      		<call-template handle="rowSelectNotSelectable" select="self::node()[not((name(.)='member' and @selectable='true') or (name(.)='group' and @selectable='true'))]" ></call-template>
+      </td>
+   </template>
+
+   <template handle="rowSelectIsSelectable">
+      		<call-template handle="rowSelectNotSelectable" select="self::node()[@inprevious = 'true']" ></call-template>
+      		<call-template handle="rowSelectNotInPrevious" select="self::node()[not(@inprevious = 'true')]" ></call-template>
+   </template>
+
+   <template handle="rowSelectNotInPrevious">
+      		<call-template handle="rowSelectInBasket" select="self::node()[@inbasket = 'true']" ></call-template>
+      		<call-template handle="rowSelectSelectable" select="self::node()[not(@inbasket = 'true')]" ></call-template>
+   </template>
+
+   <template handle="rowSelectInBasket">
+      		<input type="checkbox" readonly="readonly" disabled="disabled" checked="checked" title="Item is already in the selection basket.  Click Remove Selection to remove it from your selection basket."></input>
+   </template>
+
+   <template handle="rowSelectSelectable">
+      <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+         <label><value-of select="name" /></label>
+      </option>
+   </template>
+
+   <template handle="rowSelectNotSelectable"> </template>
+   
+
+   <template handle="rowName">
+        <if test="{name(.)}" against="member" condition="equals" >
+            <true>
+                <span class="member">
+                    <value-of select="name" />
+                </span>
+            </true>
+            <false>
+                <span class="group">
+                    <value-of select="name" />
+                </span>
+            </false>
+        </if>
+   </template>
+
+   <template handle="rowNameSelect">
+      <td>
+      		<call-template handle="rowNameSelectNotSelectable" select="self::node()[not(@selectable='true') or @inprevious = 'true' or @inbasket = 'true']" ></call-template>
+      		<call-template handle="rowNameSelectIsSelectable" select="self::node()[@selectable='true' and not(@inprevious = 'true' or @inbasket = 'true')]" ></call-template>
+      </td>
+   </template>
+
+   <template handle="rowNameSelectIsSelectable">
+      <label for-option="{concat('selectMemberGroupForm_selectedItems_',@id)}">
+        <call-template handle="rowName" select="." ></call-template>
+      </label>
+   </template>
+
+   <template handle="rowNameSelectNotSelectable">
+      <call-template handle="rowName" select="." ></call-template>
+   </template>
+
+
+   <template handle="rowRemove">
+      <td nowrap="nowrap">
+         <call-template handle="rowRemoveSelectable" select="self::node()[(name(.)='member' and @selectable='true') or (name(.)='group' and @selectable='true')]" ></call-template>
+      </td>
+   </template>
+
+   <template handle="rowRemoveSelectable" >
+         <call-template handle="rowRemoveInPrevious" select="self::node()[@inprevious = 'true']" ></call-template>
+         <call-template handle="rowRemoveNotInPrevious" select="self::node()[not(@inprevious = 'true')]" ></call-template>
+   </template>
+
+   <template handle="rowRemoveInPrevious" >
+	    <div>Previously Selected</div>
+   </template>
+
+   <template handle="rowRemoveNotInPrevious" >
+         <call-template handle="rowRemoveInBasket" select="self::node()[@inbasket = 'true']" ></call-template>
+   </template>
+
+   <template handle="rowRemoveInBasket" >
+          <link class="li-image remove-icon">
+             <action handle="selectRemoveItem" impl="net.unicon.academus.civisselector.RemoveFromSelBasketAction" to-screen="select_search_results" inpt="selectMemberGroupForm">
+                <label>Remove Selection</label>
+
+                <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+                </option>
+
+                <description>To remove <value-of select="name" /> from your selection basket.</description>
+
+             </action>
+          </link>
+   </template>
+   
+   <template handle="errors">
+      <section type="error">
+         <if test="{@type}" against="other" condition="equals">
+            <true>
+               <section type="portlet-msg-error problem">
+                  <h4 class="inline">PROBLEM:</h4>
+
+                  <p><value-of select="problem" /></p>
+               </section>
+
+               <section type="portlet-msg-info solution">
+                  <h4 class="inline">SOLUTION:</h4>
+
+                  <p><value-of select="solution" /></p>
+               </section>
+            </true>
+         </if>
+         <!-- If not any of the above types,  then give generic error message (SHOULD NEVER BE SEEN) -->
+         <if test="{boolean(@type!='other' and @type!='delete_fail_sharing')}" against="true" condition="equals">
+            <true>
+               <section type="portlet-msg-error problem">
+                  <h4 class="inline">PROBLEM:</h4>
+
+                  <p>The channel has experienced an unclassified problem.</p>
+               </section>
+
+               <section type="portlet-msg-info solution">
+                  <h4 class="inline">SOLUTION:</h4>
+
+                  <p>Please notify the Portal Administrator of the problem.</p>
+               </section>
+            </true>
+         </if>
+      </section>
+   </template>
+   
+   <decisions>
+   </decisions>
+   
+</screen>
+
