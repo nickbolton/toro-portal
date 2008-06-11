@@ -17,9 +17,6 @@ fi
 sed -e 's~-SNAPSHOT</version>~</version>~' blojsom/ant_pom.xml > blojsom/ant_pom.xml.tmp
 mv blojsom/ant_pom.xml.tmp blojsom/ant_pom.xml
 
-sed -e 's~-SNAPSHOT</version>~</version>~' installer/src/main/resources/pom.xml > installer/src/main/resources/pom.xml.tmp
-mv installer/src/main/resources/pom.xml.tmp installer/src/main/resources/pom.xml
-
 svn commit -m 'preparing release candidate' 
 
 mvn install
@@ -43,7 +40,4 @@ nextSnapshot=$(fgrep -- '-SNAPSHOT</version>' pom.xml | sed -e 's~^.*<version>~~
 sed -e "s~<version>$release</version>~<version>$nextSnapshot</version>~" blojsom/ant_pom.xml > blojsom/ant_pom.xml.tmp
 mv blojsom/ant_pom.xml.tmp blojsom/ant_pom.xml
 
-sed -e "s~<version>$release</version>~<version>$nextSnapshot</version>~" installer/src/main/resources/pom.xml > installer/src/main/resources/pom.xml.tmp
-mv installer/src/main/resources/pom.xml.tmp installer/src/main/resources/pom.xml
-
-svn commit -m "adding next snapshot version ($nextSnapshot) after release candidate ($release)" blojsom/ant_pom.xml installer/src/main/resources/pom.xml
+svn commit -m "adding next snapshot version ($nextSnapshot) after release candidate ($release)" blojsom/ant_pom.xml 
