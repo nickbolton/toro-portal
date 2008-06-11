@@ -1,0 +1,34 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <parent>
+    <groupId>net.unicon.toro</groupId>
+    <artifactId>toro-portal</artifactId>
+    <version>2.0.0-rc-1</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>libraries</artifactId>
+  <packaging>pom</packaging>
+  <name>libraries</name>
+
+  <modules>
+      <module>academus-api</module>
+      <module>uportal-academus-api</module>
+      <module>alchemist</module>
+      <module>civis</module>
+      <module>demetrius</module>
+      <module>mercury</module>
+      <module>penelope</module>
+      <module>warlock</module>
+      <module>sso-authentication-cache</module>
+      <module>sso-callback-servlet</module>
+      <module>portlets-common</module>
+      <module>civis-selector</module>
+      <!--module>resource-pool</module>
+      <module>sdk</module>
+      <module>jgrapht</module>
+      <module>cdk</module>
+      <module>toro-common</module-->
+  </modules>
+
+</project>
