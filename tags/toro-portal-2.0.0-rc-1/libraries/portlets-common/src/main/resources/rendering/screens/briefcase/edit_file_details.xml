@@ -1,0 +1,225 @@
+<?xml version="1.0" ?>
+<!--
+  Copyright (C) 2007 Unicon, Inc.
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this distribution.  It is also available here:
+  http://www.fsf.org/licensing/licenses/gpl.html
+
+  As a special exception to the terms and conditions of version 
+  2 of the GPL, you may redistribute this Program in connection 
+  with Free/Libre and Open Source Software ("FLOSS") applications 
+  as described in the GPL FLOSS exception.  You should have received
+  a copy of the text describing the FLOSS exception along with this
+  distribution.
+-->
+<!--<state>
+    <status>
+        <error type="editfiles_invalid_name"></error>
+		<error type="other">
+			<problem>Something else happened.</problem>
+			<solution>To fix it, try it again later.  If it still happens, contact the Portal support.</solution>
+		</error>
+    </status>
+
+    <properties>
+	    <metadata type="description"></metadata>
+	    <metadata type="type">
+	    	<label>Type</label>
+	    	<value>File</value>
+	    </metadata>
+	    <metadata type="location">
+	    	<label>Location</label>
+	    	<value>Welcome Page/Personal Folders/</value>
+	    </metadata>
+	    <metadata type="size">
+	    	<label>Size</label>
+	    	<value>3 MB</value>
+	    </metadata>
+	    <metadata type="created">
+	    	<label>Created On</label>
+	    	<value>Friday, May 14, 2004, 3:53:33 PM</value>
+	    </metadata>
+	    <metadata type="lastmod">
+	    	<label>Last Modified</label>
+	    	<value>Friday, May 14, 2004, 3:53:33 PM</value>
+	    </metadata>
+    </properties>
+</state> -->
+<screen handle="edit_file_details">
+   <layout>
+   	  <layout-context class="BriefcasePortlet BriefcasePortlet_edit_file_details" />
+      <section type="header" cols="1">
+          <section type="title">
+             <h2>Review / Edit this File's Properties</h2>
+          </section>
+      </section>
+
+      <section type="content">
+         <section type="main" cols="1">
+         <section type="main-content">
+         
+<!-- ERROR MESSAGE -->
+         <if test="{count(/state/status/error)}" against="0" condition="gt">
+            <true>
+               <call-template handle="errors" select="/state/status/error">
+               </call-template>
+            </true>
+         </if>
+
+         <choice-collection handle="fileInfoForm">
+            <!--<call-template handle="toolbar" select="." /> -->
+
+            <table even-row-class="portlet-section-body evenrow" odd-row-class="portlet-section-alternate oddrow" cellpadding="0" cellspacing="0" border="0" class="main-content-table">
+               <caption class="portlet-section-header">File Details</caption>
+
+               <tr>
+                  <th class="cell-emphasis">
+                     <label for-option="fileInfoForm_fileName_file_name">File Name:</label>
+                  </th>
+
+                  <td>
+                     <choice handle="fileName" min-selections="1" max-selections="1">
+                     	<option handle="file_name" complement-type="org.springframework.beans.factory.xml.XmlBeanFactory">
+                     		<bean id="complementType" class="net.unicon.penelope.complement.TypeTextConfigurableLimit" factory-method="createInstance">
+                     			<constructor-arg type="java.lang.Integer">
+                     				<value>128</value>
+                     			</constructor-arg>
+                     		</bean>
+                     		<label>Enter or change file name here.</label>
+                     	</option>
+                     </choice>
+                  </td>
+               </tr>
+
+               <if test="{count(/state/properties/metadata[@type='description'])}" against="0" condition="gt">
+                  <true>
+                     <tr>
+                        <th class="cell-emphasis">
+                           <label for="fileInfoForm_fileDescription_file_description">Description / Keywords:</label>
+                        </th>
+
+                        <td>
+                           <choice handle="fileDescription" min-selections="0" max-selections="1">
+                              <option handle="file_description" complement-type="net.unicon.penelope.complement.TypeText1024">
+                              </option>
+                           </choice>
+                        </td>
+                     </tr>
+                  </true>
+               </if>
+
+               <call-template handle="metadata" select="/state/properties/metadata[@type='type']">
+               </call-template>
+
+               <call-template handle="metadata" select="/state/properties/metadata[@type='location']">
+               </call-template>
+
+               <call-template handle="metadata" select="/state/properties/metadata[@type='size']">
+               </call-template>
+
+               <call-template handle="metadata" select="/state/properties/metadata[@type='created']">
+               </call-template>
+
+               <call-template handle="metadata" select="/state/properties/metadata[@type='lastmod']">
+               </call-template>
+
+<!-- Other Metadata -->
+               <call-template handle="metadata" select="/state/properties/metadata[@type!='description' and @type!='type' and @type!='size' and @type!='created' and @type!='lastmod' and @type!='location' and @type!='sharing']">
+               </call-template>
+            </table>
+
+            <call-template handle="toolbar" select="." />
+         </choice-collection>
+         </section>
+         </section>
+      </section>
+   </layout>
+
+   <template handle="toolbar">
+      <toolbar>
+         <action handle="briefcaseSubmit" impl="net.unicon.academus.apps.briefcase.engine.UpdateFileAction" inpt="fileInfoForm" class="form-button-emphasis">
+            <label>Submit</label>
+            <description>To submit the changes for this file.</description>
+         </action>
+
+         <action handle="briefcaseCancel" impl="net.unicon.academus.apps.briefcase.engine.ShowFolderAction">
+            <label>Cancel</label>
+            <description>To cancel and return to the previous view.</description>
+         </action>
+      </toolbar>
+   </template>
+
+   <template handle="metadata">
+      <tr>
+         <th class="cell-emphasis">
+            <value-of select="label" />:
+         </th>
+
+         <td>
+            <value-of select="value" />
+         </td>
+      </tr>
+   </template>
+
+   <template handle="errors">
+      <section type="error">
+         <if test="{@type}" against="editfiles_invalid_name" condition="equals">
+            <true>
+               <section type="portlet-msg-error problem">
+                  <h4 class="inline">PROBLEM:</h4>
+
+                  <p>The file name is composed of invalid characters.</p>
+               </section>
+
+               <section type="portlet-msg-info solution">
+                  <h4 class="inline">SOLUTION:</h4>
+
+                  <p>To resolve this problem, please rename the file to contain valid characters only.</p>
+               </section>
+            </true>
+         </if>
+         <if test="{@type}" against="other" condition="equals">
+            <true>
+               <section type="portlet-msg-error problem">
+                  <h4 class="inline">PROBLEM:</h4>
+
+                  <p><value-of select="problem" /></p>
+               </section>
+
+               <section type="portlet-msg-info solution">
+                  <h4 class="inline">SOLUTION:</h4>
+
+                  <p><value-of select="solution" /></p>
+               </section>
+            </true>
+         </if>
+         <!-- If not any of the above types,  then give generic error message (SHOULD NEVER BE SEEN) -->
+         <if test="{boolean(@type!='other' and @type!='editfiles_invalid_name')}" against="true" condition="equals">
+            <true>
+               <section type="portlet-msg-error problem">
+                  <h4 class="inline">PROBLEM:</h4>
+
+                  <p>The channel has experienced an unclassified problem.</p>
+               </section>
+
+               <section type="portlet-msg-info solution">
+                  <h4 class="inline">SOLUTION:</h4>
+
+                  <p>Please notify the Portal Administrator of the problem.</p>
+               </section>
+            </true>
+         </if>
+      </section>
+   </template>
+</screen>
