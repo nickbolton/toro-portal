@@ -7,6 +7,12 @@
   <name>toro-portal</name>
   <url>http://code.google.com/p/toro-portal/</url>
 
+  <scm>
+    <connection>scm:svn:https://toro-portal.googlecode.com/svn/tags/toro-portal-2.0.0-rc-1-SNAPSHOT</connection>
+    <developerConnection>scm:svn:https://toro-portal.googlecode.com/svn/tags/toro-portal-2.0.0-rc-1-SNAPSHOT</developerConnection>
+    <url>https://toro-portal.googlecode.com/svn/tags/toro-portal-2.0.0-rc-1-SNAPSHOT</url>
+  </scm>
+
   <issueManagement>
     <system>jira</system>
     <url>http://www.ja-sig.org/issues/browse/TORO</url>
