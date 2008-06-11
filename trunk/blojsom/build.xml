@@ -6,6 +6,7 @@
 <project name="blojsom" default="compile" basedir="."
     xmlns:artifact="urn:maven-artifact-ant">
 
+    <property name="build.compiler" value="extJavac"/>
     <property name="build.properties.file" value="build.properties"/>
     <property file="${build.properties.file}"/>
     <property name="name" value="blojsom"/>
