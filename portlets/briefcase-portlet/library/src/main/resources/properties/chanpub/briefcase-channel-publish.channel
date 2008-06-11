@@ -24,10 +24,16 @@
 
     <parameters>
         <parameter>
-            <name>portletDefinitionId</name>
-            <value>toro-briefcase-portlet.BriefcasePortlet</value>
-            <description>Identifies the portlet deployed within the portlet container</description>
+            <name>portletApplicationId</name>
+            <value>/toro-briefcase-portlet</value>
+            <description/>
             <ovrd>N</ovrd>
         </parameter>
+        <parameter>
+            <name>portletName</name>
+            <value>BriefcasePortlet</value>
+            <description/>
+            <ovrd>N</ovrd>
+        </parameter> 
     </parameters>
 </channel-definition>

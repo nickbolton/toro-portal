@@ -24,9 +24,15 @@
 
     <parameters>
         <parameter>
-            <name>portletDefinitionId</name>
-            <value>toro-messaging-portlet.MessagingPortlet</value>
-            <description>Identifies the portlet deployed within the portlet container</description>
+            <name>portletApplicationId</name>
+            <value>/toro-messaging-portlet</value>
+            <description/>
+            <ovrd>N</ovrd>
+        </parameter>
+        <parameter>
+            <name>portletName</name>
+            <value>MessagingPortlet</value>
+            <description/>
             <ovrd>N</ovrd>
         </parameter>
     </parameters>

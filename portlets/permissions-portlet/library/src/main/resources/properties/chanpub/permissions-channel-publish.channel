@@ -24,9 +24,15 @@
 
     <parameters>
         <parameter>
-            <name>portletDefinitionId</name>
-            <value>toro-permissions-portlet.PermissionsPortlet</value>
-            <description>Identifies the portlet deployed within the portlet container</description>
+            <name>portletApplicationId</name>
+            <value>/toro-permissions-portlet</value>
+            <description/>
+            <ovrd>N</ovrd>
+        </parameter>
+        <parameter>
+            <name>portletName</name>
+            <value>PermissionsPortlet</value>
+            <description/>
             <ovrd>N</ovrd>
         </parameter>
     </parameters>

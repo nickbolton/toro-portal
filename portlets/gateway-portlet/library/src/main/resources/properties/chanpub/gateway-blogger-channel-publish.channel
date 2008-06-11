@@ -24,9 +24,15 @@
 
     <parameters>
         <parameter>
-            <name>portletDefinitionId</name>
-            <value>toro-gateway-portlet.BlojsomGatewayPortlet</value>
-            <description>Identifies the portlet deployed within the portlet container</description>
+            <name>portletApplicationId</name>
+            <value>/toro-gateway-portlet</value>
+            <description/>
+            <ovrd>N</ovrd>
+        </parameter>
+        <parameter>
+            <name>portletName</name>
+            <value>BlojsomGatewayPortlet</value>
+            <description/>
             <ovrd>N</ovrd>
         </parameter>
     </parameters>
