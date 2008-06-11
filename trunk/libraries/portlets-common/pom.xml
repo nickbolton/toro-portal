@@ -104,7 +104,7 @@
         <artifactId>hibernate3-maven-plugin</artifactId>
         <configuration>
           <componentProperties>
-            <propertyfile>../../../hibernate.properties</propertyfile>
+            <propertyfile>../../hibernate.properties</propertyfile>
             <skip>${hibernate.skip.portlets-common}</skip>
           </componentProperties>
         </configuration>
