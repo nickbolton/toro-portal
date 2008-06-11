@@ -1,13 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<!DOCTYPE channel-definition PUBLIC "-//uPortal//Channel Definition/EN" "channelDefinition.dtd">
-
-<!-- You can download this Google Sample Portlet from the Portlet Open Source Trading site (POST).
-     http://portlet-opensrc.sourceforge.net/
-     http://prdownloads.sourceforge.net/portlet-opensrc/GooglePortlet.zip?download
--->
-
-<channel-definition>
+<channel-definition script="classpath://org/jasig/portal/io/import-channel_v3-0.crn">
     <title>Toro Blogger Portlet</title>
     <name>Toro Blogger Portlet</name>
     <fname>toro-blogger-portlet</fname>
