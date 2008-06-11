@@ -1,0 +1,632 @@
+<?xml version="1.0" ?>
+<!--
+  Copyright (C) 2007 Unicon, Inc.
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this distribution.  It is also available here:
+  http://www.fsf.org/licensing/licenses/gpl.html
+
+  As a special exception to the terms and conditions of version 
+  2 of the GPL, you may redistribute this Program in connection 
+  with Free/Libre and Open Source Software ("FLOSS") applications 
+  as described in the GPL FLOSS exception.  You should have received
+  a copy of the text describing the FLOSS exception along with this
+  distribution.
+-->
+<screen handle="message_compose">
+<!-- NOTE:  <view-type>edit</view-type> or <view-type>preview</view-type>-->
+<!--
+<state>
+   <settings>
+      <xhtml value="allowed"></xhtml>
+   </settings>
+   <status>
+      <view-type>preview</view-type>
+	  <error type="delete_fail">
+      </error>
+      <error type="other">
+          <problem>Something else happened.</problem>
+          <solution>To fix it, try it again later.  If it still happens, contact the Portal support.</solution>
+      </error>
+   </status>
+
+   <navigation>
+      <account id="notifications">
+         <label>Notifications</label>
+
+         <description>Notifications are important messages that may require further action or input from you.</description>
+
+         <folder id="11">
+            <label>INBOX</label>
+         </folder>
+
+         <folder id="12">
+            <label>SENT</label>
+         </folder>
+
+         <folder id="13">
+            <label>ARCHIVED</label>
+         </folder>
+      </account>
+   </navigation>
+
+   <current>
+      <account id="notifications">
+         <label>Notifications</label>
+
+         <description>Notifications are important messages that may require further action or input from you.</description>
+      </account>
+
+      <folder id="11">
+         <label>INBOX</label>
+      </folder>
+
+      <accesstype>ATTACH</accesstype>
+      <accesstype>COMPOSE</accesstype>
+      <accesstype>SAVE</accesstype>
+      <accesstype>READ</accesstype>
+      <accesstype>DELETE</accesstype>
+      <accesstype>IMPORT</accesstype>
+      <accesstype>EXPORT</accesstype>
+   </current>
+
+   <attachments total="1">
+      <file id="1">
+         <name>Pricelist.xls</name>
+
+         <uri>http://</uri>
+
+         <size>23 KB</size>
+
+         <mime>xls</mime>
+      </file>
+
+      <file id="2">
+         <name>something.txt</name>
+
+         <uri>http://</uri>
+
+         <size>2 KB</size>
+
+         <mime>txt</mime>
+      </file>
+
+      <file id="3">
+         <name>hello.html</name>
+
+         <uri>http://</uri>
+
+         <size>43 KB</size>
+
+         <mime>html</mime>
+      </file>
+   </attachments>
+
+   <recipients>
+      <address native-format="admin" id="12344">
+         <label>Mike Roberts</label>
+      </address>
+
+      <address native-format="admin" id="12345">
+         <label>John Doe</label>
+      </address>
+
+      <address native-format="admin" id="12346">
+         <label>Biff Lake</label>
+      </address>
+   </recipients>
+
+    <priority>1</priority>
+
+    <subject>Register for classes now!</subject>
+
+    <body>
+        <h1>Heading1</h1>
+
+        <b>Get registered!</b>
+
+        <p>11Regular text. Regular text. <a href="http://www.unicon.net" title="Unicon rocks!">Link text</a>. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. 
+        <i>22Italics text</i>
+
+        . 33Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text. Regular text.</p>
+    </body>
+
+    <sent>Aug 7, 2005 1:30:09 PM</sent>
+
+    <sender>
+        <address native-format="admin">
+            <label>Michael Jordan</label>
+        </address>
+    </sender>
+    
+</state>
+
+ -->
+   <layout>
+   	  <layout-context class="MessagingPortlet MessagingPortlet_message_compose" />
+<!-- DEBUG to show state XML -->
+	  <!--<form>
+        <textarea>
+        	<copy-of select = "/state"/>
+        </textarea>
+      </form> -->
+      <section type="header" cols="1">
+         <section type="title">
+            <h2>Compose New Notification</h2>
+         </section>
+      </section>
+
+      <section type="content">
+         <section type="main" cols="1">
+            <section type="main-content">
+<!-- ERROR MESSAGE -->
+               <call-template handle="errors" select="/state/status/error">
+               </call-template>
+
+		      <choice-collection handle="composeForm">
+               <tabs>
+                  <call-template handle="EditSelectedTab" select="/state/status/view-type[text() = 'edit']">
+                  </call-template>
+
+                  <call-template handle="EditTab" select="/state/status/view-type[not(text() = 'edit')]">
+                  </call-template>
+
+                  <call-template handle="PreviewSelectedTab" select="/state/status/view-type[text() = 'preview']">
+                  </call-template>
+
+                  <call-template handle="PreviewTab" select="/state/status/view-type[not(text() = 'preview')]">
+                  </call-template>
+               </tabs>
+		      </choice-collection>
+            </section>
+         </section>
+      </section>
+   </layout>
+
+<!-- TABS -->
+   <template handle="EditSelectedTab">
+      <tab selected="selected">
+         <tab-label>
+            <span class="portlet-menu-item-selected tab selected">Edit Message</span>
+         </tab-label>
+
+         <tab-body>
+            <call-template handle="MainEditBody" select=".">
+            </call-template>
+         </tab-body>
+      </tab>
+   </template>
+
+   <template handle="EditTab">
+      <tab>
+         <tab-label>
+            <link class="portlet-menu-item tab">
+               <action handle="selectEditTab" impl="net.unicon.academus.apps.messaging.engine.ComposeMessageAction" mode="edit">
+                  <label>Edit Message</label>
+
+                  <description>To edit the details of this message.</description>
+               </action>
+            </link>
+         </tab-label>
+      </tab>
+   </template>
+
+   <template handle="PreviewSelectedTab">
+      <tab selected="selected">
+         <tab-label>
+            <span class="portlet-menu-item-selected tab selected">Preview Message</span>
+         </tab-label>
+
+         <tab-body>
+            <call-template handle="MainPreviewBody" select=".">
+            </call-template>
+         </tab-body>
+      </tab>
+   </template>
+
+   <template handle="PreviewTab">
+      <tab>
+         <tab-label>
+            <link validate="pass" class="portlet-menu-item tab">
+               <action handle="selectPreviewTab" impl="net.unicon.academus.apps.messaging.engine.ComposeMessageAction" inpt="composeForm" mode="preview">
+                  <label>Preview Message</label>
+
+                  <description>To preview this message as it will appear to a recipient.</description>
+               </action>
+            </link>
+         </tab-label>
+      </tab>
+   </template>
+
+<!-- MAIN TAB BODIES -->
+   <template handle="MainEditBody">
+         <table even-row-class="portlet-section-body evenrow" odd-row-class="portlet-section-alternate oddrow" cellpadding="0" cellspacing="0" border="0" class="main-content-table">
+            <tr>
+               <th class="cell-emphasis" width="100px" style="text-align:right;">
+                    To:
+               </th>
+
+               <td>
+                  <call-template handle="ToPopulated" select="self::node()[count(/state/recipients/address) &gt; 0]" />
+
+                  <call-template handle="ToEmpty" select="self::node()[count(/state/recipients/address) &lt; 1]" />
+               </td>
+            </tr>
+
+            <call-template handle="AttachmentsHandler" select="self::node()[/state/current/accesstype/text() = 'ATTACH']" />
+
+            <tr>
+               <th class="cell-emphasis" width="100px" style="text-align:right;">
+                    <label for-option="composeForm_cSubject_oSubject">Subject:</label>
+               </th>
+
+               <td>
+					<choice handle="cSubject" min-selections="0" max-selections="1">
+						<option handle="oSubject" complement-type="net.unicon.penelope.complement.TypeText64">
+	                        <label>Enter message Subject here.</label>
+						</option>
+					</choice>
+               </td>
+            </tr>
+
+            <tr>
+               <th class="cell-emphasis" width="100px" style="text-align:right;">
+                    <label for-option="composeForm_cBody_oBody">Message:</label>
+               </th>
+
+               <td>
+                    <call-template handle="XHTMLBody" select="/state[settings/xhtml/@value = 'allowed']" ></call-template>
+                    <call-template handle="TextBody" select="/state[not(settings/xhtml/@value = 'allowed')]" ></call-template>
+                    <!--<script src="/toro-portlets-common/rendering/html/speller/spellChecker.js"></script>
+					<a href="javascript:openSpellChecker('composeForm_cBody_oBody');">SpellCheck</a>-->
+
+					<!-- ADD SPELLCHECK LINK HERE -->
+               </td>
+            </tr>
+
+            <tr>
+               <th class="cell-emphasis" width="100px" style="text-align:right;">
+                    Priority:
+               </th>
+
+               <td>
+					<select-one type="radio">
+						<choice handle="cPriority" min-selections="1" max-selections="1">
+						     <option handle="3" complement-type="net.unicon.penelope.complement.TypeNone">
+						        <label>Low</label>
+						
+						        <description>To mark this Notification as low priority</description>
+						     </option>
+						     <option handle="2" complement-type="net.unicon.penelope.complement.TypeNone">
+						        <label>Medium</label>
+						
+						        <description>To mark this Notification as medium priority</description>
+						     </option>
+						     <option handle="1" complement-type="net.unicon.penelope.complement.TypeNone">
+						        <label>High</label>
+						
+						        <description>To mark this Notification as high priority</description>
+						     </option>
+						</choice>
+					</select-one>
+               </td>
+            </tr>
+
+            <tr>
+               <th class="cell-emphasis" width="100px" style="text-align:right;">
+                    <label for-option="composeForm_cEmail_yes">Email Option:</label>
+               </th>
+
+               <td>
+					<choice handle="cEmail" min-selections="0" max-selections="0">
+					     <option handle="yes" complement-type="net.unicon.penelope.complement.TypeNone">
+					        <label>Also Send Copy by Email</label>
+					
+					        <description>To also send this notification as an email to the recipients</description>
+					     </option>
+					</choice>
+
+                    <label for-option="composeForm_cEmail_yes">Also Send Copy by Email</label>
+               </td>
+            </tr>
+         </table>
+
+         <call-template handle="toolbar" select="." />
+   </template>
+
+<!-- TO (RECIPIENTS) -->
+   <template handle="ToEmpty">
+   		<call-template handle="AddRecipient" select="." ></call-template>
+   </template>
+
+
+   <template handle="AddRecipient" >
+      <action handle="messagingAddRecipients" impl="net.unicon.academus.apps.messaging.engine.ComposeNavigateSelectorAction" inpt="composeForm" to-screen="select_groups" class="no-validate">
+         <label>Add Recipient(s)</label>
+
+         <description>To add users or groups to receive this Notification.</description>
+      </action>
+   </template>
+
+   <template handle="ToPopulated">
+      <select-many type="listbox">
+         <choice handle="cRecipients" min-selections="0" max-selections="0">
+            <call-template handle="ToOptions" select="/state/recipients/address">
+            </call-template>
+         </choice>
+      </select-many>
+
+      <span style="vertical-align:top;">To select more than one item, hold &lt;CTRL&gt; or &lt;SHIFT&gt; while selecting.</span>
+
+      <div>
+	   	 <call-template handle="AddRecipient" select="." ></call-template>
+<!-- TODO action to remove a particular recipient -->
+            <action handle="messagingRemoveRecipients" impl="net.unicon.academus.apps.messaging.engine.ComposeMessageAction" inpt="composeForm" mode="recipient_remove" class="no-validate">
+            <label>Remove Recipient(s)</label>
+
+            <description>To remove users or groups from the list of recipients for this Notification.</description>
+         </action>
+      </div>
+   </template>
+
+   <template handle="ToOptions">
+      <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+         <label>
+            <value-of select="label">
+            </value-of>
+         </label>
+      </option>
+   </template>
+
+<!-- ATTACHMENTS -->
+   <template handle="AttachmentsHandler">
+	    <tr>
+	       <th class="cell-emphasis" width="100px" style="text-align:right;">
+	            Attachment(s):
+	       </th>
+	
+	       <td>
+	          <call-template handle="Attachments" select="." />
+	       </td>
+	    </tr>
+   </template>
+
+   <template handle="Attachments">
+      <call-template handle="PreviousAttachments" select="self::node()[count(/state/attachments/file) &gt; 0]">
+      </call-template>
+
+      <div>
+            <link validate="pass">
+          <action handle="messagingAddAttachment" impl="net.unicon.academus.apps.messaging.engine.ComposeNavigateAction" inpt="composeForm" to-screen="message_attachfile">
+             <label>Add Attachments</label>
+
+             <description>To add attachments to this Notification.</description>
+
+          </action>
+            </link>
+      </div>
+   </template>
+
+   <template handle="PreviousAttachments">
+      <choice handle="removeAttachment" min-selections="0" max-selections="1">
+         <ul class="attachment-list">
+         	<call-template handle="Attachment" select="/state/attachments/file" />
+         </ul>
+      </choice>
+   </template>
+
+   <template handle="Attachment">
+   	  <li>
+	   	  <span><value-of select="name"></value-of> (<value-of select="size" />) </span>
+	   
+	      <link validate="pass">
+	         <action handle="messagingRemoveAttachment" impl="net.unicon.academus.apps.messaging.engine.ComposeMessageAction" inpt="composeForm" mode="attachment_remove">
+	            <label>[Remove]</label>
+	
+	            <description>To remove this attachment.</description>
+	
+	            <option handle="{@id}" complement-type="net.unicon.penelope.complement.TypeNone">
+	            </option>
+	         </action>
+	      </link>
+   	  </li>
+   </template>
+
+<!-- XHTML / Text Body Input -->
+   <template handle="XHTMLBody">
+        <text-input format="rte" cols="80" rows="20" style="width:100%;">
+			<choice handle="cBody" min-selections="0" max-selections="1">
+				<option handle="oBody" complement-type="net.unicon.academus.apps.messaging.TypeHTMLFilter">
+                    <label>Enter message Message here.</label>
+				</option>
+			</choice>
+		</text-input>
+   </template>
+
+   <template handle="TextBody">
+		<text-input cols="80" rows="20">
+			<choice handle="cBody" min-selections="0" max-selections="1">
+				<option handle="oBody" complement-type="net.unicon.penelope.complement.TypeText">
+                    <label>Enter message Message here.</label>
+				</option>
+			</choice>
+		</text-input>
+   </template>
+
+   <template handle="MainPreviewBody">
+   	<call-template handle="messagePreviewDetails" select="/state" ></call-template>
+    <hidden-input> <!-- Hack to fix the no choices in choice-collection problem. -->
+        <choice handle="ignoreMe" min-selections="0" max-selections="0">
+            <option handle="meToo" complement-type="net.unicon.penelope.complement.TypeNone">
+            </option>
+        </choice>
+    </hidden-input>
+   
+   </template>
+
+    <template handle="messagePreviewDetails">
+        <ul class="message-header">
+            <li class="message-header-priority">
+            <label-text>Priority:</label-text>
+
+            <if test="{priority}" against="1" condition="equals">
+                <true>High - 1</true>
+            </if>
+
+            <if test="{priority}" against="2" condition="equals">
+                <true>Medium - 2</true>
+            </if>
+
+            <if test="{priority}" against="3" condition="equals">
+                <true>Low - 3</true>
+            </if>
+            </li>
+
+            <li class="message-header-received">
+            <label-text>Received:</label-text>
+
+            <value-of select="sent">
+            </value-of>
+            </li>
+
+            <li class="message-header-from">
+            <label-text>From:</label-text>
+
+            <value-of select="sender">
+            </value-of>
+            </li>
+
+            <li class="message-header-subject">
+            <label-text>Subject:</label-text>
+
+            <value-of select="subject">
+            </value-of>&#160;
+            </li>
+        </ul>
+
+        <!--<p>
+            <copy-of select="child::body/node()|child::body/text()" />
+        </p> -->
+        <div class="message-body">
+	        <call-template handle="XHTMLBodyPreview" select="self::node()[/state/settings/xhtml/@value = 'allowed' and boolean(body/html/body)]" ></call-template>
+	        <call-template handle="TextBodyPreview" select="self::node()[not(/state/settings/xhtml/@value = 'allowed' and boolean(body/html/body))]" ></call-template>
+        </div>
+
+        <call-template handle="messageAttachments" select="self::node()[number(attachments/@total) &gt; 0]">
+        </call-template>
+
+        <call-template handle="toolbar" select="." />
+    </template>
+
+    <template handle="XHTMLBodyPreview">
+    	<permitted-markup allowed="*">
+    		<copy-of select="body/html/child::body/node()|body/html/child::body/text()" />
+    	</permitted-markup>
+    </template>
+
+    <template handle="TextBodyPreview">
+        <text-to-markup>
+        	<copy-of select="child::body/node()|child::body/text()" />
+        </text-to-markup>
+    </template>
+
+    <template handle="messageAttachments">
+        <h2 class="body-subsection-header">Attachments:</h2>
+
+        <ul class="attachment-list-view">
+            <call-template handle="messageAttachment" select="attachments/file">
+            </call-template>
+        </ul>
+    </template>
+
+    <template handle="messageAttachment">
+        <li>
+            <span><value-of select="name"></value-of> (<value-of select="size" />)</span>
+        </li>
+    </template>
+
+<!-- TOOLBAR (SEND AND CANCEL) -->
+   <template handle="toolbar">
+      <toolbar>
+         <action handle="messagingSendNotification" impl="net.unicon.academus.apps.messaging.engine.SendMessageAction" inpt="composeForm" class="form-button-emphasis">
+            <label>Send</label>
+
+            <description>To send this Notification.</description>
+         </action>
+         
+         <call-template handle="toolbarCancel" select="/state[status/view-type/text() = 'edit']" ></call-template>
+
+      </toolbar>
+   </template>
+
+   <template handle="toolbarCancel">
+         <action handle="messagingCancel" impl="net.unicon.academus.apps.messaging.engine.MessageListAction">
+            <label>Cancel</label>
+
+            <description>To cancel this and return to the previous view.</description>
+         </action>
+   </template>
+
+
+<!-- ERRORS -->
+   <template handle="errors">
+      <section type="error">
+         <if test="{@type}" against="other" condition="equals">
+            <true>
+               <section type="portlet-msg-error problem">
+                  <h4 class="inline">PROBLEM:</h4>
+
+                  <p>
+                     <value-of select="problem" />
+                  </p>
+               </section>
+
+               <section type="portlet-msg-info solution">
+                  <h4 class="inline">SOLUTION:</h4>
+
+                  <p>
+                     <value-of select="solution" />
+                  </p>
+               </section>
+            </true>
+         </if>
+
+<!-- If not any of the above types,  then give generic error message (SHOULD NEVER BE SEEN) -->
+         <if test="{boolean(@type!='other')}" against="true" condition="equals">
+            <true>
+               <section type="portlet-msg-error problem">
+                  <h4 class="inline">PROBLEM:</h4>
+
+                  <p>The channel has experienced an unclassified problem.</p>
+               </section>
+
+               <section type="portlet-msg-info solution">
+                  <h4 class="inline">SOLUTION:</h4>
+
+                  <p>Please notify the Portal Administrator of the problem.</p>
+               </section>
+            </true>
+         </if>
+      </section>
+   </template>
+
+<!--<decisions>
+        <decision-collection choice-collection="composeForm">
+         <decision choice="cId">
+            <selection option="oId">1234</selection>
+         </decision>
+
+      </decision-collection>
+   </decisions> -->
+</screen>
+
