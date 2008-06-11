@@ -1,0 +1,483 @@
+/* TORO PORTLET STYLING CSS
+ *
+ * Define CSS classes for visual styling of Toro portlets.
+ *
+ * For more information on Toro portlets, visit:
+ * http://www.unicon.net/node/675
+ * 
+ * This CSS file is deployed with each Toro portlet.
+ *
+ * This CSS affects all Toro portlets.
+ *
+ * This CSS works in tandem with portlet_layout.css, which provides layout declarations, 
+ * and config_icons.css, which provides icon file declarations.
+ *
+ * Each declaration should be preceeded by .toro-portlet for proper namespacing
+ * (to prevent CSS collision with the portal or other portlets).
+ */
+
+
+/* GLOBAL STYLING 
+ * Declarations used in broad context.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet .border-top {
+border-top: 3px solid #669ACC;
+}
+
+.toro-portlet .border-bottom {
+border-bottom: 3px solid #669ACC;
+}
+
+
+/* CONTENT STYLING 
+ * Declarations for the basic styling.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet h2 {
+font-size: 150%;
+font-weight: bold;
+text-align: left;
+}
+
+.toro-portlet .secondary2 {
+border: none;
+background: #D5E4F4;
+padding-top:10px;
+}
+
+.toro-portlet .secondary3 {
+border: none;
+background: #FFF;
+}
+
+/* HEADER STATUS STYLING 
+ * Declarations for the styling of the header status area.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet .header-status th, .header-status td {
+border-bottom: 1px solid #8AADC9;
+}
+
+
+/* NAVIGATION BAR STYLING
+ * Declarations for the styling of the portlet navigation bar.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet .navbar {
+background: #477BAD;
+}
+
+
+/* NAVIGATION TREE STYLING 
+ * Declarations for the styling of the navigation tree.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet .navtree {
+border: 1px solid #CCCCCC;
+}
+
+.toro-portlet .navtree a, .toro-portlet .navtree a:link, .toro-portlet .navtree a:visited {
+color: #000;
+}
+
+
+/* SIDEBOX STYLING 
+ * Declarations for the styling of the sidebox and searchbox.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet .sidebox, .toro-portlet .searchbox {
+border: 1px solid #669ACC;
+background: #FFF;
+}
+
+.toro-portlet .sidebox h4, .toro-portlet .searchbox h4 {
+color: #416498;
+margin-bottom: 5px;
+font-size: 11px;
+}
+
+.toro-portlet .sidebox a:link, .toro-portlet .sidebox a:visited {
+display:block;
+text-decoration:underline;
+margin-top: 8px;
+}
+
+.toro-portlet .sidebox a.selected {
+display:block;
+margin-top: 8px;
+}
+
+.toro-portlet .selection-basket-label {
+margin: 2px;
+background: #EEE;
+color: #000;
+font-weight: normal;
+border: 1px solid #EEE;
+}
+
+.toro-portlet .selection-basket-number {
+margin: 2px;
+background: #FFF;
+color: #FE0000;
+font-weight: bold;
+border: 1px solid #EEE;
+}
+
+
+/* TOOLBAR STYLING 
+ * Declarations for the styling of the toolbar.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet .toolbar {
+background: #FFF;    
+}
+
+.toro-portlet .toolbar-alternate {
+background: #7BADDD;
+}
+
+.toro-portlet .toolbar-nostyle {
+background: #FFF;
+}
+
+
+/* CONTENT STYLING 
+ * Declarations for the styling of the main contents.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet .main-content-table, .toro-portlet .main-content-table-alternate {
+border-bottom: 3px solid #487CAD;
+border-collapse: collapse;
+}
+
+.toro-portlet .form-button-disabled {
+	color: #999;
+    font-weight: bold;
+    font-size: 8pt;
+	background: #CCC;
+	padding: 2px 8px 2px 8px;
+    _padding: 2px;
+	border-top: 1px solid #DDD;
+	border-right: 1px solid #999;
+	border-bottom: 1px solid #999;
+	border-left: 1px solid #DDD;
+	margin-left: 7px;
+}
+
+.toro-portlet input[type='radio'].disabled, .toro-portlet .form-field-disabled input, .toro-portlet .form-field-disabled textarea {
+	color: #999;
+	background: #CCC;
+}
+
+.toro-portlet .form-button-emphasis {
+background: #FEFF99;
+}
+
+.toro-portlet .pagetexttitle h3 {
+color: #000;
+font-weight: normal;
+}
+
+.toro-portlet .pagetexttitle p {
+font-weight: bold;
+}
+
+.toro-portlet .content-title {
+background: #669ACC;
+color: #FFF;
+}
+
+.toro-portlet .main-content-table caption {
+margin: 0px;
+padding: 3px 10px 3px 10px;
+height: 25px;
+font-size: 80%;
+font-weight: bold;
+text-align: left;
+background: #669ACC;
+}
+
+
+/* TABS STYLING 
+ * Declarations for the styling of tabs to switch portlet views.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet .tabs {
+border-bottom: 1px solid #7BADDD;
+background-color: #D5E4F4;
+}
+
+
+/* LINK STYLING 
+ * Declarations for the styling of links.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet .expanded-link {
+border: 1px solid #FFF; /* IE Hack; having a border for some reason pulls the content to the top. vertical-align did nothing */
+}
+
+.toro-portlet .expanded-link h4 a:link, .toro-portlet .expanded-link h4 a:visited {
+color: #FE0000;
+}
+
+.toro-portlet .main-content-table th a:link, .toro-portlet .main-content-table th a:visited, .toro-portlet .main-content-table-alternate th a:link, .toro-portlet .main-content-table-alternate th a:visited {
+color: #FFF;
+}
+
+.toro-portlet a.portlet-menu-item-selected, .toro-portlet a.portlet-menu-item-selected:link, .toro-portlet a.portlet-menu-item-selected:visited {
+color: #000;
+}
+
+.toro-portlet a.portlet-menu-item, .toro-portlet a.portlet-menu-item:link, .toro-portlet a.portlet-menu-item:visited {
+color: #FFF;
+}
+
+.toro-portlet a.selected {
+color: #000;
+}
+
+.toro-portlet .removable-selected {
+color: #000;
+}
+
+
+/* TABLE STYLING 
+ * Declarations for the styling of tabular information.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet .main-content-table th, .toro-portlet .main-content-table-alternate th {
+text-align: left;
+}
+
+.toro-portlet .main-content-table th.center, .toro-portlet .main-content-table-alternate th.center {
+text-align: center;
+}
+.toro-portlet .main-content-table th, .toro-portlet .main-content-table td {
+border: 1px solid #CCCCCC;
+}
+
+.toro-portlet .main-content-table-alternate th,  .toro-portlet .main-content-table-alternate td {
+border: 1px solid #FFF;
+}
+.toro-portlet .select-cell {
+text-align: center;
+}
+
+.toro-portlet .cell-emphasis {
+background-color: #EEEEEE;
+color: #666;
+}
+
+.toro-portlet .cell-emphasis2 {
+background-color: #EEE;
+color: #666;
+}
+
+.toro-portlet .cell-selected, .toro-portlet .row-selected {
+background-color: #D5E4F4;
+}
+
+.toro-portlet .cell-selected-emphasis {
+background-color: #C3D3ED;
+}
+
+.toro-portlet .cell-info {
+border: 1px solid #FFF;
+color: #666;
+font-weight: normal;
+}
+
+.toro-portlet table.highlightAndSelectOnClick tr.nohoverhighlight {
+background-color: #FFFFFF;
+}
+
+.toro-portlet table.highlightAndSelectOnClick tr.hoverhighlight {
+background-color: yellow;
+}
+
+.toro-portlet a.notSorted:hover, .toro-portlet a.sortedAscending:hover, .toro-portlet a.sortedDescending:hover, .toro-portlet a.select-toggle:hover {
+background-color: #656565;
+}
+
+
+/* MESSAGING PORTLET SPECIFIC STYLING 
+ * Declarations specific to the Messaging Portlet.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet .message-unread {
+font-weight:bold;
+}
+
+.toro-portlet .tab_body {
+margin-top: 20px;
+}
+
+.toro-portlet .attachment-list {
+list-style-type: none;
+margin:0px 0px 10px 0px;
+padding:0px;
+}
+
+.toro-portlet .attachment-list-view {
+list-style-type: none;
+margin:10px 10px 20px 20px;
+padding:0px;
+}
+
+.toro-portlet ul.message-header {
+list-style-type: none;
+margin:0px 0px 0px 0px;
+padding:0px;
+width: 100%;
+}
+
+.toro-portlet ul.message-header li {
+border-top: #FFF 1px solid;
+border-bottom: #FFF 1px solid;
+padding: 5px 10px 5px 10px;
+background-color: #D5E4F4;
+clear:left;
+}
+
+.toro-portlet ul.message-header li.message-header-subject {
+font-weight: bold;
+}
+
+.toro-portlet ul.message-header li .label-text {
+display:block;
+float: left;
+height: 20px;
+width: 80px;
+font-weight: bold;
+font-size: 10pt;
+margin: 0px;
+padding: 0px;
+}
+
+.toro-portlet div.message-body {
+margin: 20px;
+min-height: 200px;
+_height: 200px;
+}
+
+.toro-portlet table.toro-portlet-content h2.body-subsection-header {
+border-top: #CCC 2px solid;
+background-color: #EEE;
+font-size: 10pt;
+padding: 5px 20px 5px 20px;
+margin: 0px;
+}
+
+/* Messaging Portlet Table Header Styling */
+
+.toro-portlet .th-button-select, .toro-portlet .th-button-attachments, .toro-portlet .th-button-priority, .toro-portlet .th-column-edit {
+width:50px;
+}
+
+.toro-portlet div.MessagingPortlet_message_peephole_wide .toro-portlet .th-button-priority, .toro-portlet .th-button-type {
+width:100px;
+}
+
+.toro-portlet .th-button-received, .toro-portlet .th-button-lastmod, .toro-portlet .th-button-size {
+width:130px;
+}
+
+.toro-portlet .th-button-from, .toro-portlet .th-button-recipient {
+width:200px;
+}
+
+.toro-portlet .th-button-attachments a, .toro-portlet .th-button-attachments a:link, .toro-portlet .th-button-attachments a:visited {
+height:20px;
+}
+
+.toro-portlet .th-button-attachments a span {
+display:none;
+}
+
+.toro-portlet .th-button-attachments a img {
+display:block;
+margin:5px 0px 0px 6px;
+border-style: none;
+}
+
+/* Messaging Portlet Attachments */
+.toro-portlet span.attachments-icon {
+display: block;
+padding-left:20px;
+}
+
+
+/* GATEWAY PORTLET SPECIFIC STYLING 
+ * Declarations specific to the Gateway Portlet.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet div.GatewayPortlet_gateway_main th.cell-emphasis {
+width:80px;
+}
+
+.toro-portlet div.GatewayPortlet_gateway_main th.cell-emphasis label {
+display:block;
+padding: 10px;
+}
+
+
+/* PERMISSIONS PORTLET SPECIFIC STYLING 
+ * Declarations specific to the Permissions Portlet.
+--------------------------------------------------------------------------------------*/
+
+.toro-portlet div.PermissionsPortlet_permissions_list h3 {
+font-size:11pt;
+}
+
+.toro-portlet div.PermissionsPortlet_permissions_list th.th-button-select, .toro-portlet div.SelectorServant th.th-button-select, .toro-portlet div.BriefcasePortlet th.th-button-select, .toro-portlet div.MessagingPortlet th.th-button-select, .toro-portlet div.BriefcasePortlet th.th-column-permission {
+width:50px;
+text-align: center;
+vertical-align:middle;
+}
+
+.toro-portlet th.th-button-name {
+vertical-align:top;
+}
+
+.toro-portlet div.PermissionsPortlet_permissions_list th.th-column-permission {
+width: 100px;
+}
+
+.toro-portlet div.PermissionsPortlet_permissions_list table.main-content-table td {
+text-align:center;
+}
+
+.toro-portlet div.PermissionsPortlet_permissions_list table.main-content-table td.permitted-member-group {
+text-align:left;
+}
+
+/* Permissions Portlet Option Selectors
+option- classes are for highlighting different options within
+a grant / deny / defer permissions scenario.  Colors help to
+distinguish between items when a lot of dropdowns are present.
+*/
+.toro-portlet .option-grant {
+background-color:green;
+color:white;
+}
+
+.toro-portlet .option-deny {
+background-color:red;
+color:white;
+}
+
+.toro-portlet .option-defer {
+background-color:white;
+color:black;
+}
+
+
+/* SELECTOR SERVANT SPECIFIC STYLING 
+ * Declarations specific to the Selector Servant.
+--------------------------------------------------------------------------------------*/
+.toro-portlet div.SelectorServant th.th-button-name {
+width: 70%;
+}
+
+
