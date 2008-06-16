@@ -82,7 +82,7 @@ The <user-attribute> element has the following child elements:
         -->
         <init-param>
             <name>userContextTimer</name>
-            <value>1800</value>
+            <value>60</value>
         </init-param>
         <expiration-cache>0</expiration-cache>
         <supported-locale>en-US</supported-locale>
@@ -114,7 +114,7 @@ The <user-attribute> element has the following child elements:
         -->
         <init-param>
             <name>userContextTimer</name>
-            <value>1800</value>
+            <value>60</value>
         </init-param>
         <expiration-cache>0</expiration-cache>
         <supported-locale>en-US</supported-locale>
@@ -173,7 +173,7 @@ The <user-attribute> element has the following child elements:
         -->
         <init-param>
             <name>userContextTimer</name>
-            <value>1800</value>
+            <value>60</value>
         </init-param>
         <expiration-cache>0</expiration-cache>
         <supported-locale>en-US</supported-locale>
