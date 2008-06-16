@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema>
+<tables>
+    <table>
+      <name>UPC_AB_CONTACT</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>LOGON_ID</name>
+          <type>VARCHAR</type>
+          <param>64</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>CONTACT_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>CONTACT_NAME</name>
+          <type>VARCHAR</type>
+          <param>64</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>EMAIL</name>
+          <type>VARCHAR</type>
+          <param>64</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>MOBILE</name>
+          <type>VARCHAR</type>
+          <param>24</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>TITLE</name>
+          <type>VARCHAR</type>
+          <param>46</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>COMPANY</name>
+          <type>VARCHAR</type>
+          <param>64</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DEPARTMENT</name>
+          <type>VARCHAR</type>
+          <param>64</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>BUSINESSPHONE</name>
+          <type>VARCHAR</type>
+          <param>24</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>FAX</name>
+          <type>VARCHAR</type>
+          <param>24</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>OFFICEADDRESS</name>
+          <type>VARCHAR</type>
+          <param>128</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>HOMEPHONE</name>
+          <type>VARCHAR</type>
+          <param>24</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>HOMEADDRESS</name>
+          <type>VARCHAR</type>
+          <param>128</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>NOTES</name>
+          <type>VARCHAR</type>
+          <param>128</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>REF</name>
+          <type>VARCHAR</type>
+          <param>64</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>UPC_AB_CONTACT_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>CONTACT_ID</column>
+          </columns>
+        </index>
+                          
+        <index>
+          <name>UPC_AB_CONTACT_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>LOGON_ID</column>
+          </columns>
+        </index>
+                          
+        <index>
+          <name>UPC_AB_CONTACT_NAME_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>CONTACT_NAME</column>
+          </columns>
+        </index>
+     
+      </indexes>
+
+      <constraints>
+ 
+        <not-null>
+          <name>UPC_AB_CONTACT_CONTACT_ID_NN</name>
+          <columns>
+            <column>CONTACT_ID</column>
+          </columns>
+        </not-null>
+
+        <not-null>
+          <name>UPC_AB_CONTACT_LOGON_ID_NN</name>
+          <columns>
+            <column>LOGON_ID</column>
+          </columns>
+        </not-null>
+       
+        <not-null>
+          <name>UPC_AB_CONTACT_CONTACT_NAME_NN</name>
+          <columns>
+            <column>CONTACT_NAME</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>UPC_AB_CONTACT_PKEY</name>
+          <columns>
+            <column>CONTACT_ID</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+
+    <table>
+      <name>UPC_AB_FOLDCON</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>FOLDER_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>CONTACT_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>LOGON_ID</name>
+          <type>VARCHAR</type>
+          <param>64</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>UPC_AB_FOLDCON_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>FOLDER_ID</column>
+            <column>CONTACT_ID</column>
+            <column>LOGON_ID</column>
+          </columns>
+        </index>
+                
+        <index>
+          <name>UPC_AB_FOLDCON_CONTACT_ID_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>CONTACT_ID</column>
+          </columns>
+        </index>
+                 
+        <index>
+          <name>UPC_AB_FOLDCON_LOGON_ID_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>LOGON_ID</column>
+          </columns>
+        </index>
+    
+      </indexes>
+
+      <constraints>
+        <not-null>
+          <name>UPC_AB_FOLDCON_FOLDER_ID_NN</name>
+          <columns>
+            <column>FOLDER_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>UPC_AB_FOLDCON_CONTACT_ID_NN</name>
+          <columns>
+            <column>CONTACT_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>UPC_AB_FOLDCON_LOGON_ID_NN</name>
+          <columns>
+            <column>LOGON_ID</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>UPC_AB_FOLDCON_PKEY</name>
+          <columns>
+            <column>FOLDER_ID</column>
+            <column>CONTACT_ID</column>
+            <column>LOGON_ID</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+
+    <table>
+      <name>UPC_AB_FOLDER</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>LOGON_ID</name>
+          <type>VARCHAR</type>
+          <param>64</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>FOLDER_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>FOLDER_NAME</name>
+          <type>VARCHAR</type>
+          <param>64</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>UPC_AB_FOLDER_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>FOLDER_ID</column>
+          </columns>
+        </index>
+                   
+        <index>
+          <name>UPC_AB_FOLDER_LID_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>LOGON_ID</column>
+          </columns>
+        </index>
+                     
+        <index>
+          <name>UPC_AB_FOLDER_FID_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>FOLDER_ID</column>
+          </columns>
+        </index>
+                      
+        <index>
+          <name>UPC_AB_FOLDER_FN_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>FOLDER_NAME</column>
+          </columns>
+        </index>
+     
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>UPC_AB_FOLDER_LID_NN</name>
+          <columns>
+            <column>LOGON_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>UPC_AB_FOLDER_FID_NN</name>
+          <columns>
+            <column>FOLDER_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>UPC_AB_FOLDER_FN_NN</name>
+          <columns>
+            <column>FOLDER_NAME</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>UPC_AB_FOLDER_PKEY</name>
+          <columns>
+            <column>FOLDER_ID</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+</tables>
+</schema>

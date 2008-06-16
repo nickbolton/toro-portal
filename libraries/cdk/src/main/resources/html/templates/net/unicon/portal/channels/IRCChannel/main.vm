@@ -1,0 +1,63 @@
+#set($SKIN_IMAGE_PATH = "media/org/jasig/portal/layout/tab-column/nested-tables/$skin/skin")
+#set($CONTROLS_IMAGE_PATH = "media/org/jasig/portal/layout/tab-column/nested-tables/$skin/controls")
+#set($SPACER = "$SKIN_IMAGE_PATH/transparent.gif")
+#set($authentication = "")
+
+
+    <script language="JavaScript" src="javascript/IRCChannel/launchChat.js"></script>
+<form method="post" name="chatChannel"><input type="hidden" id="chatOfferingName" name="chatOfferingName" value="${chatroom}"/></form>
+## UniAcc: Layout Table
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td class="views-title">
+            <img border="0" src="${CONTROLS_IMAGE_PATH}/channel_options.gif" 
+            alt="Icon of tool-tip indicating the channel options section" title="Icon of tool-tip indicating channel options section"  
+            align="absmiddle"/></td>
+        <td class="views" valign="middle" height="26" width="100%">
+
+#if($chatAllowed == "Y")
+                    <a title="To launch the chat application in a separate window"
+                    onmouseover="swapImage('chatLaunchImage','channel_view_active.gif')" 
+                    onmouseout="swapImage('chatLaunchImage','channel_view_base.gif')"
+                    href="javascript:void(null);"
+                    onclick="launchChatRoom('chatWin${groupId}','${workerActionURL}?command=chat&amp;chatRoomId=${groupId}');">
+                    Launch Chat<img height="1" width="3" src="${SPACER}"
+                    alt="" title="" border="0"/><img border="0" src="${CONTROLS_IMAGE_PATH}/channel_view_base.gif"
+                    alt="'View' icon: launch chat application in a separate window" 
+                    title="'View' icon: launch chat application in a separate window" align="absmiddle" 
+                    name="chatLaunchImage" id="chatLaunchImage"/></a>
+#else
+                    Launch Chat<img height="1" width="3" src="${SPACER}"
+                    alt="" title="" border="0"/><img border="0" src="${CONTROLS_IMAGE_PATH}/channel_view_inactive.gif"
+                    alt="Inactive 'View' icon: unable to launch chat due to permission status" 
+                    title="Inactive 'View' icon: unable to launch chat due to permission status" align="absmiddle"/><img 
+                    height="1" width="3" src="${SPACER}" alt="" title="" border="0"/>
+#end
+             | <a href="html/net/unicon/common/chatFAQ.html" title="View Chat's frequently asked questions"
+                    onmouseover="swapImage('chatFAQImage','channel_view_active.gif')" 
+                    onmouseout="swapImage('chatFAQImage','channel_view_base.gif')"
+            target="_new">Chat FAQ<img height="1" width="3" src="${SPACER}"
+            alt="" title="" border="0"/><img border="0" src="${CONTROLS_IMAGE_PATH}/channel_view_base.gif"
+            alt="'View' icon: Chat's frequently asked questions" title="'View' icon: Chat's frequently asked questions" 
+            align="absmiddle" name="chatFAQImage" id="chatFAQImage"/></a>
+         </td>
+    </tr>
+    </table>
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr>
+            <th colspan="2" class="th-top">
+                Chat Sessions
+            </th>
+        </tr>
+
+        <tr>
+            <th class="table-light-left" style="text-align:right;" nowrap="nowrap">Chat Name</th>
+            <td class="table-content-right" style="text-align:left;" width="100%">${chatroom}</td>
+        </tr>
+
+        <tr>
+            <th class="table-light-left-bottom" style="text-align:right;" nowrap="nowrap">Chat Status</th>
+            <td class="table-content-right-bottom" style="text-align:left;" width="100%">Enabled</td>
+        </tr>
+    </table>
+

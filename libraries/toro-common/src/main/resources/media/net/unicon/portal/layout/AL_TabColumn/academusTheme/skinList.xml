@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<skins>
+	<!-- the skin name is a reference to the folder of the same name in the skins directory -->
+	<!-- this name will get passed to the framework to find the CSS and image files -->
+	<skin>
+		<skin>academus</skin>
+		<skin-name>academus</skin-name>
+        <skin-description>Demo skin for the Academus Theme.</skin-description>
+	</skin>
+	<skin>
+		<skin>academusADA</skin>
+		<skin-name>academusADA</skin-name>
+        <skin-description>ADA skin for the Academus Theme.</skin-description>
+	</skin>
+</skins>

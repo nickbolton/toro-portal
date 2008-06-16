@@ -31,8 +31,6 @@
 
     <title>Blog: EXAMPLE</title>
 
-    <ajax-callback-url>/@portal.webappName@/ssoCallback</ajax-callback-url>
-
     <sso-entry handle="blog-EXAMPLE" class="largeBlog">
         <label>Blog: EXAMPLE</label>
         <description>View your Blojsom Webblog</description>

@@ -44,7 +44,7 @@
     -->
     <title>Gateway Portlet Test</title>
     
-    <ajax-callback-url>/@portal.webappName@/ssoCallback</ajax-callback-url>
+    <ajax-callback-url>/portal/ssoCallback</ajax-callback-url>
 
     <!--
         Single Sign-On entry for an external system.

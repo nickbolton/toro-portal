@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet title="main" href="CampusAnnouncementChannel/main.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet title="main" href="CampusAnnouncementChannel/main.xsl" type="text/xsl" media="netscape" alternate="true"?>
+
+<?xml-stylesheet title="empty" href="CampusAnnouncementChannel/empty.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet title="empty" href="CampusAnnouncementChannel/empty.xsl" type="text/xsl" media="netscape" alternate="true"?>
+
+<?xml-stylesheet title="edit-preferences" href="CampusAnnouncementChannel/editPreferences.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet title="edit-preferences" href="CampusAnnouncementChannel/editPreferences.xsl" type="text/xsl" media="netscape" alternate="true"?>
+
+<?xml-stylesheet title="delete-announcement" href="CampusAnnouncementChannel/deleteAnnouncement.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet title="delete-announcement" href="CampusAnnouncementChannel/deleteAnnouncement.xsl" type="text/xsl" media="netscape" alternate="true"?>
+
+<?xml-stylesheet title="edit-announcement" href="CampusAnnouncementChannel/editAnnouncement.xsl" type="text/xsl" media="explorer"?>
+<?xml-stylesheet title="edit-announcement" href="CampusAnnouncementChannel/editAnnouncement.xsl" type="text/xsl" media="netscape" alternate="true"?>
+
+<document>
+</document>
