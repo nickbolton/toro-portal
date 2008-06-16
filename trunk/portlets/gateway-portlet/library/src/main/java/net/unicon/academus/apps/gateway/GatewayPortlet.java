@@ -236,20 +236,16 @@ public final class GatewayPortlet extends AbstractWarlockPortlet {
 
         final String key = id + ":CONTEXT";
 
-        // Look for existing, create if we don't find.
-        GatewayUserContext rslt = (GatewayUserContext) s.getAttribute(key);
-        if (rslt == null) {
-            String username = (String)userInfo.get("user.login.id");
-            String cacheKey = constructUserContextCacheKey(s, username);
-            rslt = new GatewayUserContext(context, username, cacheKey, userInfo);
-            s.setAttribute(key, rslt);
+        String username = (String)userInfo.get("user.login.id");
+        String cacheKey = constructUserContextCacheKey(s, username);
+        GatewayUserContext rslt = new GatewayUserContext(context, username, cacheKey, userInfo);
+        s.setAttribute(key, rslt);
             
-	        if (log.isDebugEnabled()) {
-	            log.debug("GatewayPortlet::getUserContext adding user context: " +
-	                rslt.getCacheKey());
-	        }
-	        userContextMap.put(rslt.getCacheKey(), rslt);
+	    if (log.isDebugEnabled()) {
+	        log.debug("GatewayPortlet::getUserContext adding user context: " +
+	            rslt.getCacheKey());
         }
+        userContextMap.put(rslt.getCacheKey(), rslt);
         
         return rslt;
 
