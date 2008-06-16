@@ -1,0 +1,29 @@
+<HTML>
+<HEAD>
+<TITLE>uPortal 2.0.1</TITLE>
+<script language="javascript">
+
+        function imagePath(imageName) {
+			var imagePath=parent.imagePathTop;
+            image = '../../../../../'+imagePath + imageName;
+			imageFull = '<IMG src="' + image + '"align="left" border="0">';
+            document.write(imageFull);
+			}
+
+		var skinPath='../../../../../'+parent.skinPathTop;
+		var skinFull= '<link type="text/css" rel="stylesheet" href="'+skinPath+'">';			
+		//alert(skinFull);
+		document.write(skinFull);
+			
+		 
+	</script>
+</HEAD>
+<BODY class="uportal-background-content">
+<span class="uportal-channel-text">
+<ul>
+	<li><strong>TIMESHEET REMINDER</strong>: Timesheet entries for this week are due Friday at 5:00pm.</li>
+	<li><strong>PTO REQUEST</strong>: Your PTO request for Monday, June 3 2002 has been approved.</li>
+</ul>
+</span>
+</BODY>
+</HTML>

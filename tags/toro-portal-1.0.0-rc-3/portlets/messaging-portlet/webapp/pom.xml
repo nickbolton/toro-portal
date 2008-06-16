@@ -1,0 +1,78 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <parent>
+        <groupId>net.unicon.toro</groupId>
+        <artifactId>messaging</artifactId>
+        <version>1.0.0-rc-3</version> 
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>messaging-portlet</artifactId>
+    <packaging>war</packaging>
+
+    <name>Messaging Portlet</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.unicon.toro</groupId>
+            <artifactId>academus-api</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency> 
+        <dependency>
+            <groupId>net.unicon.toro</groupId>
+            <artifactId>portlets-common-lib</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency> 
+        <dependency>
+            <groupId>net.unicon.toro</groupId>
+            <artifactId>alchemist</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency> 
+        <dependency>
+            <groupId>net.unicon.toro</groupId>
+            <artifactId>civis</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency> 
+        <dependency>
+            <groupId>net.unicon.toro</groupId>
+            <artifactId>civis-selector</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency> 
+        <dependency>
+            <groupId>net.unicon.toro</groupId>
+            <artifactId>penelope</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency> 
+        <dependency>
+            <groupId>net.unicon.toro</groupId>
+            <artifactId>mercury</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency> 
+        <dependency>
+            <groupId>net.unicon.toro</groupId>
+            <artifactId>warlock</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency> 
+        <dependency>
+            <groupId>net.unicon.toro</groupId>
+            <artifactId>messaging-lib</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>jaxen</groupId>
+            <artifactId>jaxen</artifactId>
+            <version>${jaxen.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+
+</project>
