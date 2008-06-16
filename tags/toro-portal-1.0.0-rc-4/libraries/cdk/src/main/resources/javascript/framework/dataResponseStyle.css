@@ -1,9 +1,0 @@
-/*####### Style for Data page returned in client-side optimization #######*/
-
-/* 
-    Make all <div> tags hidden so that if it is loaded into a visible frame 
-    it will not be visible while the script corrects the problem.
-*/
-div{
-visibility: hidden;
-}
