@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local>
+    <text id="COPYRIGHT">Copyright (c) 2002, Dan Phong Ltd (IBS-DP). All Rights Reserved.</text>
+    <text id="LOGO">ibs-dp.gif</text>
+    <text id="PRODUCT_DESC"/>
+    <text id="ERROR_NO_RESPONSE">Please answer at least one question.</text>
+    <text id="ERROR_RESPONSE_FAIL">Database error submitting responses.</text>
+    <text id="ERROR_FORM_CLOSED">The poll has been closed.</text> 
+    <text id="ERROR_FORM_REMOVED">The poll has been deleted.</text> 
+</local>

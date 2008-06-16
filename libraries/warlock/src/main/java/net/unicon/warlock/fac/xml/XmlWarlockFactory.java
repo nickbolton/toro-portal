@@ -25,9 +25,14 @@
 
 package net.unicon.warlock.fac.xml;
 
+import java.io.PrintWriter;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -37,6 +42,7 @@ import javax.xml.transform.Source;
 import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.sax.TransformerHandler;
@@ -46,6 +52,7 @@ import net.unicon.penelope.IChoiceCollection;
 import net.unicon.penelope.IChoiceCollectionParser;
 import net.unicon.penelope.IDecisionCollection;
 import net.unicon.penelope.IEntityStore;
+import net.unicon.penelope.PenelopeException;
 import net.unicon.penelope.store.jvm.JvmEntityStore;
 import net.unicon.warlock.IRenderingEngine;
 import net.unicon.warlock.IScreen;
@@ -59,13 +66,20 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.xalan.serialize.Serializer;
 import org.apache.xml.serializer.Method;
 import org.dom4j.Attribute;
+import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.dom.DOMNodeHelper;
+import org.dom4j.io.DocumentSource;
+import org.dom4j.io.SAXContentHandler;
+import org.dom4j.io.SAXEventRecorder;
+import org.dom4j.io.SAXReader;
+import org.dom4j.io.SAXWriter;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
+import org.xml.sax.helpers.LocatorImpl;
 
 public final class XmlWarlockFactory extends AbstractWarlockFactory {
     
@@ -87,20 +101,17 @@ public final class XmlWarlockFactory extends AbstractWarlockFactory {
     private Templates templates = null;
     
     
-    private boolean useXsltc = false;
     private boolean xsltcDebug = false;
     private String xsltcPackageName = "translets";
     private boolean xsltcGenerateTranslet = false;
     private boolean xsltcAutoTranslet = false;
     private boolean xsltcUseClasspath = false;
-    
-    private boolean cacheTemplates = true;
 
     /*
      * Public API.
      */
 
-    public XmlWarlockFactory(Source transSource, boolean cacheTemplates) {
+    public XmlWarlockFactory(Source transSource) {
         // Assertions.
         if (transSource == null) {
             String msg = "Arg:wument 'transSource' cannot be null.";
@@ -111,9 +122,7 @@ public final class XmlWarlockFactory extends AbstractWarlockFactory {
         this.transSource = transSource;
         this.engine = new RenderingEngineImpl(this);
         this.store = new JvmEntityStore();
-        this.cacheTemplates = cacheTemplates;
         
-        this.useXsltc = false;
         initializeDefaultTransformerFactory();
         initializeSerializer();
     }
@@ -121,7 +130,7 @@ public final class XmlWarlockFactory extends AbstractWarlockFactory {
     public XmlWarlockFactory(Source transSource,
         String transformerImplemention, boolean debug, String packageName,
         boolean generateTranslet, boolean autoTranslet,
-        boolean useClasspath, boolean cacheTemplates) {
+        boolean useClasspath) {
         
         // Assertions.
         if (transSource == null) {
@@ -146,9 +155,6 @@ public final class XmlWarlockFactory extends AbstractWarlockFactory {
         this.engine = new RenderingEngineImpl(this);
         this.store = new JvmEntityStore();
         
-        this.cacheTemplates = cacheTemplates;
-        
-        this.useXsltc = true;
         initializeXsltcTransformerFactory(transformerImplemention,
             debug, packageName, generateTranslet, autoTranslet, useClasspath);
         initializeSerializer();
@@ -169,30 +175,20 @@ public final class XmlWarlockFactory extends AbstractWarlockFactory {
         }
     }
     
-    private Templates getTemplates() {
-        if (templates != null) {
-            return templates;
-        }
-
+    private void cacheTemplates() {
         try {
-            if (useXsltc) {
-    	        // cache the precompiled templates object
-                transformerFactory.setAttribute("debug",
-                      Boolean.toString(xsltcDebug));
-                transformerFactory.setAttribute("package-name",
-                    xsltcPackageName);
-                transformerFactory.setAttribute("generate-translet",
-                    Boolean.toString(xsltcGenerateTranslet));
-                transformerFactory.setAttribute("auto-translet",
-                    Boolean.toString(xsltcAutoTranslet));
-                transformerFactory.setAttribute("use-classpath",
-                    Boolean.toString(xsltcUseClasspath));
-            }
-	        Templates tmpls = transformerFactory.newTemplates(transSource);
-            if (cacheTemplates) {
-                templates = tmpls;
-            }
-            return tmpls;
+	        // cache the precompiled templates object
+            transformerFactory.setAttribute("debug",
+          Boolean.toString(xsltcDebug));
+      transformerFactory.setAttribute("package-name",
+          xsltcPackageName);
+      transformerFactory.setAttribute("generate-translet",
+          Boolean.toString(xsltcGenerateTranslet));
+      transformerFactory.setAttribute("auto-translet",
+          Boolean.toString(xsltcAutoTranslet));
+      transformerFactory.setAttribute("use-classpath",
+          Boolean.toString(xsltcUseClasspath));
+	        templates = transformerFactory.newTemplates(transSource);
         } catch (TransformerConfigurationException tce) {
             throw new RuntimeException("Failed caching templates.", tce);
         }
@@ -205,6 +201,7 @@ public final class XmlWarlockFactory extends AbstractWarlockFactory {
 	        log.info("Warlock using transformer - "
 	            + transformerFactory.getClass().getName());
         }
+        cacheTemplates();
     }
     
     private void initializeXsltcTransformerFactory(String transformerImplemention,
@@ -239,6 +236,7 @@ public final class XmlWarlockFactory extends AbstractWarlockFactory {
             
             // cache the source as a precompile templates object 
         }
+        cacheTemplates();
     }
 
     public IRenderingEngine getRenderingEngine() {
@@ -338,19 +336,17 @@ public final class XmlWarlockFactory extends AbstractWarlockFactory {
         // Create a new one.
         synchronized(systemLock) {
             try {
-                if (useXsltc) {
-                    transformerFactory.setAttribute("debug",
-                        Boolean.toString(xsltcDebug));
-                    transformerFactory.setAttribute("package-name",
-                        xsltcPackageName);
-                    transformerFactory.setAttribute("generate-translet",
-                        Boolean.toString(xsltcGenerateTranslet));
-                    transformerFactory.setAttribute("auto-translet",
-                        Boolean.toString(xsltcAutoTranslet));
-                    transformerFactory.setAttribute("use-classpath",
-                        Boolean.toString(xsltcUseClasspath));
-                }
-                rslt = transformerFactory.newTransformerHandler(getTemplates());
+                transformerFactory.setAttribute("debug",
+                    Boolean.toString(xsltcDebug));
+                transformerFactory.setAttribute("package-name",
+                    xsltcPackageName);
+                transformerFactory.setAttribute("generate-translet",
+                    Boolean.toString(xsltcGenerateTranslet));
+                transformerFactory.setAttribute("auto-translet",
+                    Boolean.toString(xsltcAutoTranslet));
+                transformerFactory.setAttribute("use-classpath",
+                    Boolean.toString(xsltcUseClasspath));
+                rslt = transformerFactory.newTransformerHandler(templates);
             } catch (Throwable t) {
                 String msg = "Unable to create a new transformer instance.";
                 throw new WarlockException(msg, t);

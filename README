@@ -1,0 +1,8 @@
+Creating a release candidate
+
+From the root directory,
+* run release-management/create-release-candidate
+
+Cutting a release
+* Make sure the project has been promoted to a release candidate
+* run release-management/cut-release
