@@ -1,0 +1,73 @@
+#set($mediaPath = "media/org/jasig/portal/layout/tab-column/nested-tables")
+<html>
+<head>
+<title>Academus Portal - Hidden Data Frame</title>
+<link href="javascript/framework/dataResponseStyle.css" rel="stylesheet" type="text/css">
+<script src="javascript/framework/dataResponse.js" language="JavaScript"></script>
+</head>
+<body>
+<div id="focusWrapper">
+<table border="0" cellpadding="0" cellspacing="0" class="uportal-background-channelarea">
+    <tr>
+        <td colspan="3">
+            <img alt="" title="" src="${mediaPath}/${skin}/skin/transparent.gif" width="1" height="20" />
+        </td>
+    </tr>
+      <tr>
+         <td width="15">
+            <img alt="" title="" src="${mediaPath}/${skin}/skin/transparent.gif" width="15" height="1" />
+         </td>
+         <td width="100%">
+             <table width="100%" border="0" cellpadding="0" cellspacing="0" class="channel-border">
+               <tr class="channel-title">
+                 <td width="100%">
+                     <a class="A-channel-title" href="${baseActionURL}?uP_root=root" onmouseover="swapImage('ReturnControl${ID}','return-active.gif');" onmouseout="swapImage('ReturnControl${ID}','return-base.gif');" title="Return to multiple channel view"><img border="0" alt="" title="" src="${mediaPath}/${skin}/skin/transparent.gif" width="1" height="1"/><img border="0" src="${mediaPath}/${skin}/controls/return-base.gif" alt="Return to multiple channel view" title="Return to multiple channel view" align="absmiddle" name="ReturnControl${ID}" id="ReturnControl${ID}"/><img border="0" alt="" title="" src="${mediaPath}/${skin}/skin/transparent.gif" width="1" height="1"/>${title}</a>
+                 </td>
+                 <td nowrap="nowrap">
+#if ($hasHelp!="false")
+                    <a href="${baseActionURL}?uP_help_target=${ID}" onmouseover="swapImage('HelpControl${ID}','help-active.gif');" onmouseout="swapImage('HelpControl${ID}','help-base.gif');">
+                        <img border="0" src="${mediaPath}/${skin}/controls/help-base.gif" alt="Click this button for help with ${title}" title="Click this button for help with ${title}" align="absmiddle" name="HelpControl${ID}" id="HelpControl${ID}"/>
+                    </a>
+                    <img border="0" alt="" title="" src="${mediaPath}/${skin}/skin/transparent.gif" width="1" height="1"/>
+#end 
+
+#if ($hasAbout!="false")
+                    <a href="${baseActionURL}?uP_about_target=${ID}" onmouseover="swapImage('AboutControl${ID}','about-active.gif');" onmouseout="swapImage('AboutControl${ID}','about-base.gif');">
+                        <img border="0" alt="" title="" src="${mediaPath}/${skin}/skin/transparent.gif" width="1" height="1"/>
+                        <img border="0" src="${mediaPath}/${skin}/controls/about-base.gif" alt="Click this button to learn more about ${title}" title="Click this button to learn more about ${title}" align="absmiddle" name="AboutControl${ID}" id="AboutControl${ID}"/>
+                        <img border="0" alt="" src="${mediaPath}/${skin}/skin/transparent.gif" width="1" height="1"/>
+                    </a>
+                    <img border="0" alt="" title="" src="${mediaPath}/${skin}/skin/transparent.gif" width="1" height="1"/>
+#end 
+                  
+#if ($editable!="false")
+                    <a href="${baseActionURL}?uP_edit_target=${ID}" onmouseover="swapImage('EditControl${ID}','edit-active.gif');" onmouseout="swapImage('EditControl${ID}','edit-base.gif');">
+                        <img border="0" src="${mediaPath}/${skin}/controls/edit-base.gif" alt="Edit ${title} Channel" title="Edit ${title} Channel" align="absmiddle" name="EditControl${ID}" id="EditControl${ID}"/>
+                    </a>
+                    <img border="0" alt="" title="" src="${mediaPath}/${skin}/skin/transparent.gif" width="1" height="1"/>
+#end 
+
+                 </td>
+               </tr>
+               <tr>
+                 <td colspan="2">
+                    <channel_wrap>
+                    ${DATA}
+                    </channel_wrap>
+                 </td>
+               </tr>
+             </table>
+            </td>
+         <td width="15">
+            <img alt="" title="" src="${mediaPath}/${skin}/skin/transparent.gif" width="15" height="1" />
+         </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+            <img alt="" title="" src="${mediaPath}/${skin}/skin/transparent.gif" width="1" height="20" />
+        </td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

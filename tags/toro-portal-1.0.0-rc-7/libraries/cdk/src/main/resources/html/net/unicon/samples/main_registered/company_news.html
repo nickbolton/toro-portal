@@ -1,0 +1,29 @@
+<HTML>
+<HEAD>
+<TITLE>uPortal 2.0.1</TITLE>
+<script language="javascript">
+
+        function imagePath(imageName) {
+			var imagePath=parent.imagePathTop;
+            image = '../../../../../'+imagePath + imageName;
+			imageFull = '<IMG src="' + image + '"align="left" border="0">';
+            document.write(imageFull);
+			}
+
+		var skinPath='../../../../../'+parent.skinPathTop;
+		var skinFull= '<link type="text/css" rel="stylesheet" href="'+skinPath+'">';			
+		//alert(skinFull);
+		document.write(skinFull);
+			
+		 
+	</script>
+</HEAD>
+<BODY class="uportal-background-content">
+<span class="uportal-channel-text">
+<ul>
+	<li><a href="news.html">Lockheed Martin visit on Wednesday, May 22</a></li>
+	<li><a href="news.html">UNICON demos UniPortal to NAU</a></li>
+</ul>
+</span>
+</BODY>
+</HTML>

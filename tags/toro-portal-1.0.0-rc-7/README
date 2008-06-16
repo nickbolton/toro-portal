@@ -1,0 +1,15 @@
+Creating a release candidate
+
+From the root directory,
+* run release-management/create-release-candidate
+
+Cutting a release
+* Make sure the project has been promoted to a release candidate
+* run release-management/cut-release
+
+
+Sometimes the mvn release:perform step will fail due to the checkout failing.  If this happens, just run the following:
+* cd target
+* svn --non-interactive checkout https://toro-portal.googlecode.com/svn/tags/toro-portal-<version> checkout (replacing <version> with the proper version)
+* cd checkout
+* mvn deploy

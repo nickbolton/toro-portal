@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema>
+<tables>
+    <table>
+      <name>UPC_FORM_FORM</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>FORM_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>TITLE</name>
+          <type>VARCHAR</type>
+          <param>128</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>TYPE</name>
+          <type>VARCHAR</type>
+          <param>50</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>XML</name>
+          <type>VARCHAR</type>
+          <param>256</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>XSL</name>
+          <type>VARCHAR</type>
+          <param>256</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>CREATED</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>MODIFIED</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>USER_ID</name>
+          <type>VARCHAR</type>
+          <param>64</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>USER_NAME</name>
+          <type>VARCHAR</type>
+          <param>64</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+                          
+        <index>
+          <name>UPC_FORM_FORM_COMP_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>FORM_ID</column>
+            <column>TITLE</column>
+            <column>XML</column>
+            <column>XSL</column>
+          </columns>
+        </index>
+ 
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>UPC_FORM_FORM_FORM_ID_NN</name>
+          <columns>
+            <column>FORM_ID</column>
+          </columns>
+        </not-null>
+    
+      </constraints>
+    </table>
+
+    <table>
+      <name>UPC_FORM_DATA</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>DATA_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>FORM_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>TYPE</name>
+          <type>VARCHAR</type>
+          <param>50</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>CREATED</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>MODIFIED</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>USER_ID</name>
+          <type>VARCHAR</type>
+          <param>64</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>USER_NAME</name>
+          <type>VARCHAR</type>
+          <param>64</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+                     
+        <index>
+          <name>UPC_FORM_DATA_COMP_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>USER_ID</column>
+            <column>DATA_ID</column>
+            <column>CREATED</column>
+            <column>MODIFIED</column>
+          </columns>
+        </index>
+                     
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>UPC_FORM_DATA_DATA_ID_NN</name>
+          <columns>
+            <column>DATA_ID</column>
+          </columns>
+        </not-null>
+
+        <not-null>
+          <name>UPC_FORM_DATA_FORM_ID_NN</name>
+          <columns>
+            <column>FORM_ID</column>
+          </columns>
+        </not-null>
+           
+        <primary-key>
+          <name>UPC_FORM_DATA_PKEY</name>
+          <columns>
+            <column>DATA_ID</column>
+	    <column>FORM_ID</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+
+    <table>
+      <name>UPC_FORM_DATA_DETAIL</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>DATA_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>PAGE_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>QUESTION_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>INPUT_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DATA_TEXT</name>
+          <type>VARCHAR</type>
+          <param>4000</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DATA_DATE</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DATA_NUMBER</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DATA_CHOICES</name>
+          <type>VARCHAR</type>
+          <param>32</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+      <indexes>
+               
+      </indexes>
+      <constraints>
+        <not-null>
+          <name>DATA_ID_NN</name>
+          <columns>
+            <column>DATA_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>PAGE_ID_NN</name>
+          <columns>
+            <column>PAGE_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>QUESTION_ID_NN</name>
+          <columns>
+            <column>QUESTION_ID</column>
+          </columns>
+        </not-null>
+        
+        <not-null>
+          <name>INPUT_ID_NN</name>
+          <columns>
+            <column>INPUT_ID</column>
+          </columns>
+        </not-null>
+        
+        <primary-key>
+          <name>UPC_FORM_DATA_DETAIL_PKEY</name>
+          <columns>
+            <column>DATA_ID</column>
+			<column>PAGE_ID</column>
+	    	<column>QUESTION_ID</column>
+            <column>INPUT_ID</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+
+    <table>
+      <name>UPC_SURVEY_DATA</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>SURVEY_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DATA_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+      </columns>
+      <indexes>
+                 
+        <index>
+          <name>UPC_SURVEY_DATA_COMP_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>DATA_ID</column>
+            <column>SURVEY_ID</column>
+          </columns>
+        </index>
+
+      </indexes>
+      <constraints>
+        
+        <not-null>
+          <name>UPC_SURVEY_DATA_SID_NN</name>
+          <columns>
+            <column>SURVEY_ID</column>
+          </columns>
+        </not-null>
+            
+        <not-null>
+          <name>UPC_SURVEY_DATA_DID_NN</name>
+          <columns>
+            <column>DATA_ID</column>
+          </columns>
+        </not-null>
+            
+        <primary-key>
+          <name>UPC_SURVEY_DATA_PKEY</name>
+          <columns>
+            <column>SURVEY_ID</column>
+	    <column>DATA_ID</column>
+          </columns>
+        </primary-key>
+
+      </constraints>
+    </table>
+
+    <table>
+      <name>UPC_SURVEY_SURVEY</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>SURVEY_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>FORM_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>TYPE</name>
+          <type>VARCHAR</type>
+          <param>50</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>SENT</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>CLOSED</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>USER_ID</name>
+          <type>VARCHAR</type>
+          <param>64</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>USER_NAME</name>
+          <type>VARCHAR</type>
+          <param>64</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>DISTRIBUTION_TITLE</name>
+          <type>VARCHAR</type>
+          <param>80</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+                         
+        <index>
+          <name>UPC_SURVEY_SURVEY_COMP_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>SURVEY_ID</column>
+            <column>CLOSED</column>
+            <column>FORM_ID</column>
+            <column>SENT</column>
+            <column>DISTRIBUTION_TITLE</column>
+          </columns>
+        </index>
+                         
+        <index>
+          <name>UPC_SURVEY_SURVEY_COMP2_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>SURVEY_ID</column>
+            <column>FORM_ID</column>
+            <column>CLOSED</column>
+          </columns>
+        </index>
+      </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>UPC_SURVEY_SURVEY_SID_NN</name>
+          <columns>
+            <column>SURVEY_ID</column>
+          </columns>
+        </not-null>
+
+      </constraints>
+    </table>
+
+    <table>
+      <name>UPC_SURVEY_TARGET</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>SURVEY_ID</name>
+          <type>INTEGER</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>OBJECT</name>
+          <type>VARCHAR</type>
+          <param>256</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+      <indexes>
+
+        <index>
+          <name>UPC_SURVEY_TARGET_COMP_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>OBJECT</column>
+            <column>SURVEY_ID</column>
+          </columns>
+        </index>
+                         
+      </indexes>
+      <constraints>
+      </constraints>
+    </table>
+
+</tables>
+</schema>

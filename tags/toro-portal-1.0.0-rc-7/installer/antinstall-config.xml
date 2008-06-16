@@ -1,0 +1,960 @@
+<?xml version="1.0"?>
+<!DOCTYPE installer PUBLIC "-//tp23 //DTD Ant Installer Config//EN" "http://antinstaller.sf.net/dtd/antinstall-config-0.8.dtd">
+<installer
+    ui="swing,text,text-auto,swing-auto"
+			verbose="true"
+            debug="true"
+            validateConfig="true"
+			lookAndFeel="org.tp23.jgoodies.plaf.plastic.PlasticXPLookAndFeel"
+            name="Toro Portal Installer version (@project.version@)"
+			windowIcon="/resources/AntInstaller.png"
+			defaultImageResource="/resources/antbar.png"
+			minJavaVersion="1.5"
+			finishButtonText="Install"
+			loadDefaults="true"
+			version="1.0">
+	<page
+			type="splash"
+			name="splash"
+            displayText="Toro Portal Installer version (@project.version@)"
+			splashResource="/resources/antinstaller-splash.png"
+            altText="Welcome to the Toro Portal installer version (@project.version@)"/>
+	<page
+			type="license"
+			name="license"
+			displayText="Combined license conditions"
+            resource="/resources/LICENSE-toro.txt"
+			usePaging="true">
+	</page>
+	<page
+			type="input"
+			name="maven repository"
+			overflow="false"
+			displayText="Maven">
+		<text
+            property="uportal.remote.repo"
+            defaultValue="@uportal.remote.repo@"
+            displayText="uPortal Maven Repository"/>
+		<text
+            property="toro.remote.repo"
+            defaultValue="@toro.remote.repo@"
+            displayText="Toro Maven Repository"/>
+		<text
+            property="central.remote.repo"
+            defaultValue="@central.remote.repo@"
+            displayText="Central Maven Repository"/>
+	</page>
+    <page
+			type="input"
+            name="remote-config-page"
+			overflow="true"
+			displayText="Remote Configuration?">
+		<target
+            target="remote-config"
+            property="remote.configuration"
+            displayText="Is this a remote configuration?"
+            defaultValue="false"
+			force="false"/>
+    </page>
+    <page
+        ifProperty="(${remote-config}=true)"
+        type="input"
+        name="application-root-remote"
+        overflow="true"
+        displayText="Remote Application Root">
+		<directory
+				property="tomcat.home"
+                defaultValue="${env.TOMCAT_HOME}"
+                displayText="TOMCAT_HOME"
+				create="false"
+				checkExists="false"/>
+    </page>
+    <page
+        ifProperty="(${remote-config}!=true)"
+        type="input"
+        name="application-root"
+        overflow="true"
+        displayText="Application Root">
+        <app-root
+			property="tomcat.home"
+            defaultValue="${env.TOMCAT_HOME}"
+            displayText="TOMCAT_HOME"
+            checkFile1="conf/server.xml"
+            checkDir1="webapps"/>
+    </page>
+	<page
+			type="input"
+			name="deploy-all"
+			overflow="true"
+			displayText="Deploy All">
+        <hidden property="pluto.version" value="@pluto.version@"/>
+        <hidden property="commons-logging.version" value="@commons-logging.version@"/>
+        <hidden property="servlet-api.version" value="@servlet-api.version@"/>
+        <hidden property="portlet-api.version" value="@portlet-api.version@"/>
+        <hidden property="xercesImpl.version" value="@xercesImpl.version@"/>
+        <hidden property="xalan.version" value="@xalan.version@"/>
+        <hidden property="jaxen.version" value="@jaxen.version@"/>
+        <hidden property="dom4j.version" value="@dom4j.version@"/>
+        <hidden property="springframework.version" value="@springframework.version@"/>
+        <hidden property="backport-util-concurrent.version" value="@backport-util-concurrent.version@"/>
+        <hidden property="commons-jexl.version" value="@commons-jexl.version@"/>
+        <hidden property="commons-dbcp.version" value="@commons-dbcp.version@"/>
+        <hidden property="jtds.version" value="@jtds.version@"/>
+        <hidden property="mysql.version" value="@mysql.version@"/>
+        <hidden property="oracle.version" value="@oracle.version@"/>
+        <hidden property="postgresql.version" value="@postgresql.version@"/>
+        <hidden property="standard.version" value="@standard.version@"/>
+        <hidden property="jstl.version" value="@jstl.version@"/>
+        <hidden property="hibernate.version" value="@hibernate.version@"/>
+        <hidden property="whirlycache.version" value="@whirlycache.version@"/>
+        <hidden property="cernunnos.version" value="@cernunnos.version@"/>
+        <hidden property="ant-contrib.version" value="@ant-contrib.version@"/>
+
+        <comment displayText="    Deploy uPortal"/>
+        <comment displayText="    All Portlets"/>
+        <comment displayText="    All Channels"/>
+		<checkbox
+            property="deploy.all"
+            displayText="Deploy All"
+            defaultValue="@deploy.all@"
+			force="false"/>
+    </page>
+	<page
+			type="input"
+			name="deploy-all"
+			overflow="true"
+			displayText="Initialize All">
+        <comment displayText="    Init uPortal database"/>
+        <comment displayText="    Init uPortal i18n database"/>
+        <comment displayText="    Publish uPortal Channels"/>
+        <comment displayText="    Publish uPortal ALM Fragments"/>
+        <comment displayText="    All portlet related db objects"/>
+        <comment displayText="    All channel related db objects"/>
+		<checkbox
+            property="initialize.all"
+            displayText="Initialize All Database targets"
+            defaultValue="@initialize.all@"
+			force="false"/>
+    </page>
+	<page
+            ifProperty="(${deploy.all}!=true)"
+			type="input"
+			name="deploy.uportal"
+			overflow="true"
+			displayText="Deploy uPortal">
+		<checkbox
+            property="uportal.deploy"
+            displayText="Deploy uPortal"
+            defaultValue="@uportal.deploy@"
+			force="false"/>
+		<checkbox
+            property="uportal.deploy.proxyportlet.portlet"
+            displayText="Deploy Proxy Portlet"
+            defaultValue="@uportal.deploy.proxyportlet.portlet@"
+			force="false"/>
+		<checkbox
+            property="uportal.deploy.bookmarks.portlet"
+            displayText="Deploy Bookmarks Portlet"
+            defaultValue="@uportal.deploy.bookmarks.portlet@"
+			force="false"/>
+		<checkbox
+            property="uportal.deploy.rss.portlet"
+            displayText="Deploy Rss Portlet"
+            defaultValue="@uportal.deploy.rss.portlet@"
+			force="false"/>
+		<checkbox
+            property="uportal.deploy.google.portlet"
+            displayText="Deploy Google Portlet"
+            defaultValue="@uportal.deploy.google.portlet@"
+			force="false"/>
+		<checkbox
+            property="uportal.deploy.testsuite.portlet"
+            displayText="Deploy Test Suite Portlet"
+            defaultValue="@uportal.deploy.testsuite.portlet@"
+			force="false"/>
+    </page>
+	<page
+            ifProperty="(${initialize.all}!=true)"
+			type="input"
+			name="init.uportal"
+			overflow="true"
+            displayText="Initialize uPortal">
+		<checkbox
+            property="uportal.db"
+            displayText="Init database"
+            defaultValue="@uportal.db@"
+			force="false"/>
+		<checkbox
+            property="uportal.i18n.db"
+            displayText="Init i18n database"
+            defaultValue="@uportal.i18n.db@"
+			force="false"/>
+		<checkbox
+            property="uportal.pubchan"
+            displayText="Publish Channels"
+            defaultValue="@uportal.pubchan@"
+			force="false"/>
+		<checkbox
+            property="uportal.pubfragments"
+            displayText="Publish ALM Fragments"
+            defaultValue="@uportal.pubfragments@"
+			force="false"/>
+	</page>
+    <page
+            ifProperty="((${deploy.all}=true) OR (${uportal.deploy}=true))"
+			type="input"
+            name="uPortal version"
+                overflow="true"
+			displayText="Select which version to install">
+        <select
+            property="uportal.version"
+            displayText="uPortal version"
+            defaultValue="@uportal.version1@">
+            <option text="@uportal.version1@" value="@uportal.version1@"/>
+        </select>
+    </page>
+    <page
+            ifProperty="(${deploy.all}!=true) AND (${uportal.deploy}!=true)"
+			type="input"
+            name="uPortal version"
+                overflow="true"
+			displayText="Select which uPortal version is installed">
+        <select
+            property="uportal.version"
+            displayText="uPortal version"
+            defaultValue="@uportal.version1@">
+            <option text="@uportal.version1@" value="@uportal.version1@"/>
+        </select>
+    </page>
+	<page
+			type="input"
+            name="server.properties"
+			overflow="true"
+			displayText="Server Properties">
+		<checkbox
+			displayText="Multibox"
+			property="multibox.configuration"
+            defaultValue="false"
+			force="false"/>
+		<text
+			property="portal.webapp.name"
+            defaultValue="@portal.webapp.name@"
+            displayText="uPortal webapp name"/>
+		<select
+			property="portal.server.http.protocol"
+            defaultValue="@portal.server.http.protocol@"
+            displayText="Portal http protocol">
+            <option text="http" value="http"/>
+            <option text="https" value="https"/>
+        </select>
+		<text
+			property="portal.server.hostname"
+            defaultValue="@portal.server.hostname@"
+            displayText="Server hostname"/>
+		<validated
+			property="portal.server.port"
+            defaultValue="@portal.server.port@"
+            regex="^:[0-9]+$|^$"
+            displayText="Server port (including the colon)"/>
+    </page>
+    <page
+            ifProperty="(${multibox.configuration}=true)"
+			type="input"
+			name="jms.server"
+			overflow="true"
+			displayText="JMS Server">
+		<text
+			property="jms.server.hostname"
+            defaultValue="@jms.server.hostname@"
+            displayText="JMS Server hostname"/>
+		<validated
+			property="jms.server.port"
+            defaultValue="@jms.server.port@"
+            regex="^:[0-9]+$|^$"
+            displayText="JMS Server port (including the colon)"/>
+    </page>
+	<page
+            ifProperty="(${deploy.all}!=true)"
+			type="input"
+			name="toro.portlets"
+			overflow="true"
+			displayText="Toro Portlets">
+		<checkbox
+			displayText="Briefcase Portlet"
+			property="briefcase-portlet.active"
+            defaultValue="@briefcase-portlet.active@"
+			force="false"/>
+		<checkbox
+			displayText="Messaging Portlet"
+			property="messaging-portlet.active"
+            defaultValue="@messaging-portlet.active@"
+			force="false"/>
+		<checkbox
+			displayText="Gateway Portlet"
+			property="gateway-portlet.active"
+            defaultValue="@gateway-portlet.active@"
+			force="false"/>
+		<checkbox
+			displayText="Web Content Portlet (Reddot)"
+			property="web-content-portlet.active"
+            defaultValue="@web-content-portlet.active@"
+			force="false"/>
+		<checkbox
+			displayText="Permissions Portlet"
+			property="permissions-portlet.active"
+            defaultValue="@permissions-portlet.active@"
+			force="false"/>
+		<checkbox
+            displayText="Blojsom Blog Application"
+			property="blojsom.active"
+            defaultValue="@blojsom.active@"
+			force="false"/>
+    </page>
+	<page
+            ifProperty="(${deploy.all}!=true)"
+			type="input"
+            name="toro.channels"
+			overflow="true"
+			displayText="Toro Channels">
+		<checkbox
+			displayText="Addressbook Channel"
+			property="addressbook.active"
+            defaultValue="@addressbook.active@"
+			force="false"/>
+		<checkbox
+            displayText="Bookmarks Channel"
+			property="bookmarks.active"
+            defaultValue="@bookmarks.active@"
+			force="false"/>
+		<checkbox
+            displayText="Calendar Channel"
+			property="calendar.active"
+            defaultValue="@calendar.active@"
+			force="false"/>
+		<checkbox
+            displayText="Campus Announcements Channel"
+			property="campusannouncement.active"
+            defaultValue="@campusannouncement.active@"
+			force="false"/>
+		<checkbox
+            displayText="Classifieds Channel"
+			property="classifieds.active"
+            defaultValue="@classifieds.active@"
+			force="false"/>
+		<checkbox
+            displayText="LDAP Change Password Channel"
+			property="ldapchangepw.active"
+            defaultValue="@ldapchangepw.active@"
+			force="false"/>
+		<checkbox
+            displayText="Login Channel"
+			property="login.active"
+            defaultValue="@login.active@"
+			force="false"/>
+		<checkbox
+            displayText="News Channel"
+			property="news.active"
+            defaultValue="@news.active@"
+			force="false"/>
+		<checkbox
+            displayText="Notes Channel"
+			property="notes.active"
+            defaultValue="@notes.active@"
+			force="false"/>
+		<checkbox
+			displayText="Survey Channel"
+			property="survey.active"
+            defaultValue="@survey.active@"
+			force="false"/>
+		<checkbox
+			displayText="User Admin Channel"
+			property="useradmin.active"
+            defaultValue="@useradmin.active@"
+			force="false"/>
+		<checkbox
+            displayText="CMS Channel"
+			property="cms.active"
+            defaultValue="@cms.active@"
+			force="false"/>
+    </page>
+	<!--page
+			type="input"
+            name="toro version"
+			overflow="true"
+			displayText="Toro Version">
+        <select
+            property="project.version"
+            displayText="Select which version to install"
+            defaultValue="@project.version1@">
+            <option text="@project.version1@" value="@project.version1@"/>
+        </select>
+    </page-->
+    <page
+        type="input"
+        overflow="true"
+        name="Directory Server"
+        displayText="Directory Server">
+        <checkbox
+            property="ldap.checkbox"
+            defaultValue="false"
+            force="false"
+            displayText="Configure a Directory Source?"/>
+    </page>
+    <page
+        ifProperty="(${ldap.checkbox}=true)"
+        type="input"
+        overflow="true"
+        name="Directory Server"
+        displayText="Directory Server">
+        <checkbox
+            property="ldap.security.checkbox"
+            defaultValue="true"
+            force="false"
+            displayText="Configure as security context source?"/>
+		<text
+            property="ldap.name"
+            defaultValue=""
+            displayText="LDAP Source Name"/>
+		<text
+            property="ldap.server.hostname"
+            defaultValue=""
+            displayText="LDAP Servername"/>
+		<validated
+			property="ldap.server.port"
+            defaultValue=""
+            regex="^$|^[0-9]+$"
+            displayText="LDAP port"/>
+		<text
+            property="ldap.server.managerdn"
+            defaultValue=""
+            displayText="LDAP Admin DN"/>
+		<text
+            property="ldap.server.manager.password"
+            defaultValue=""
+            displayText="LDAP Admin Password"/>
+		<text
+            property="ldap.server.basedn"
+            defaultValue=""
+            displayText="LDAP BaseDN"/>
+		<text
+            property="ldap.server.uid"
+            defaultValue=""
+            displayText="LDAP uid Attribute"/>
+        <checkbox
+            property="ldap.protocol.checkbox"
+            defaultValue="false"
+            force="false"
+            displayText="LDAP SSL Protocol"/>
+    </page>
+    <page
+        ifProperty="(${ldap.checkbox}=true)"
+        type="input"
+        overflow="true"
+        name="Another Directory Server"
+        displayText="Another Directory Server">
+        <checkbox
+            property="ldap2.checkbox"
+            defaultValue="false"
+            force="false"
+            displayText="Configure another Directory Source?"/>
+    </page>
+    <page
+        ifProperty="(${ldap2.checkbox}=true)"
+        type="input"
+        overflow="true"
+        name="Directory Server"
+        displayText="Directory Server">
+        <checkbox
+            property="ldap2.security.checkbox"
+            defaultValue="true"
+            force="false"
+            displayText="Configure as security context source?"/>
+		<text
+            property="ldap2.name"
+            defaultValue=""
+            displayText="LDAP Source Name"/>
+		<text
+            property="ldap2.server.hostname"
+            defaultValue=""
+            displayText="LDAP Servername"/>
+		<validated
+			property="ldap2.server.port"
+            defaultValue=""
+            regex="^$|^[0-9]+$"
+            displayText="LDAP port"/>
+		<text
+            property="ldap2.server.managerdn"
+            defaultValue=""
+            displayText="LDAP Admin DN"/>
+		<text
+            property="ldap2.server.manager.password"
+            defaultValue=""
+            displayText="LDAP Admin Password"/>
+		<text
+            property="ldap2.server.basedn"
+            defaultValue=""
+            displayText="LDAP BaseDN"/>
+		<text
+            property="ldap2.server.uid"
+            defaultValue=""
+            displayText="LDAP uid Attribute"/>
+        <checkbox
+            property="ldap2.protocol.checkbox"
+            defaultValue="false"
+            force="false"
+            displayText="LDAP SSL Protocol"/>
+        <conditional ifProperty="(${ldap2.protocol.checkbox}=true)">
+            <hidden property="ldap2.protocol" value="ssl"/>
+        </conditional>
+    </page>
+    <page
+        ifProperty="(${ldap2.checkbox}=true)"
+        type="input"
+        overflow="true"
+        name="Another Directory Server"
+        displayText="Another Directory Server">
+        <checkbox
+            property="ldap3.checkbox"
+            defaultValue="false"
+            force="false"
+            displayText="Configure another Directory Source?"/>
+    </page>
+    <page
+        ifProperty="(${ldap3.checkbox}=true)"
+        type="input"
+        overflow="true"
+        name="Directory Server"
+        displayText="Directory Server">
+        <checkbox
+            property="ldap3.security.checkbox"
+            defaultValue="true"
+            force="false"
+            displayText="Configure as security context source?"/>
+		<text
+            property="ldap3.name"
+            defaultValue=""
+            displayText="LDAP Source Name"/>
+		<text
+            property="ldap3.server.hostname"
+            defaultValue=""
+            displayText="LDAP Servername"/>
+		<validated
+			property="ldap3.server.port"
+            defaultValue=""
+            regex="^$|^[0-9]+$"
+            displayText="LDAP port"/>
+		<text
+            property="ldap3.server.managerdn"
+            defaultValue=""
+            displayText="LDAP Admin DN"/>
+		<text
+            property="ldap3.server.manager.password"
+            defaultValue=""
+            displayText="LDAP Admin Password"/>
+		<text
+            property="ldap3.server.basedn"
+            defaultValue=""
+            displayText="LDAP BaseDN"/>
+		<text
+            property="ldap3.server.uid"
+            defaultValue=""
+            displayText="LDAP uid Attribute"/>
+        <checkbox
+            property="ldap3.protocol.checkbox"
+            defaultValue="false"
+            force="false"
+            displayText="LDAP SSL Protocol"/>
+        <conditional ifProperty="(${ldap3.protocol.checkbox}=true)">
+            <hidden property="ldap3.protocol" value="ssl"/>
+        </conditional>
+    </page>
+    <page
+        ifProperty="(${ldap3.checkbox}=true)"
+        type="input"
+        overflow="true"
+        name="Another Directory Server"
+        displayText="Another Directory Server">
+        <checkbox
+            property="ldap4.checkbox"
+            defaultValue="false"
+            force="false"
+            displayText="Configure another Directory Source?"/>
+    </page>
+    <page
+        ifProperty="(${ldap4.checkbox}=true)"
+        type="input"
+        overflow="true"
+        name="Directory Server"
+        displayText="Directory Server">
+        <checkbox
+            property="ldap4.security.checkbox"
+            defaultValue="true"
+            force="false"
+            displayText="Configure as security context source?"/>
+		<text
+            property="ldap4.name"
+            defaultValue=""
+            displayText="LDAP Source Name"/>
+		<text
+            property="ldap4.server.hostname"
+            defaultValue=""
+            displayText="LDAP Servername"/>
+		<validated
+			property="ldap4.server.port"
+            defaultValue=""
+            regex="^$|^[0-9]+$"
+            displayText="LDAP port"/>
+		<text
+            property="ldap4.server.managerdn"
+            defaultValue=""
+            displayText="LDAP Admin DN"/>
+		<text
+            property="ldap4.server.manager.password"
+            defaultValue=""
+            displayText="LDAP Admin Password"/>
+		<text
+            property="ldap4.server.basedn"
+            defaultValue=""
+            displayText="LDAP BaseDN"/>
+		<text
+            property="ldap4.server.uid"
+            defaultValue=""
+            displayText="LDAP uid Attribute"/>
+        <checkbox
+            property="ldap4.protocol.checkbox"
+            defaultValue="false"
+            force="false"
+            displayText="LDAP SSL Protocol"/>
+        <conditional ifProperty="(${ldap4.protocol.checkbox}=true)">
+            <hidden property="ldap4.protocol" value="ssl"/>
+        </conditional>
+    </page>
+    <page
+        ifProperty="(${deploy.all}=true) OR (${messaging-portlet.active}=true) OR (${blojsom.active}=true) OR (${cms.active}=true) OR (${survey.active}=true) OR (${news.active}=true) OR (${classifieds.active}=true) OR (${calendar.active}=true) OR (${notes.active}=true) OR (${bookmarks.active}=true) OR (${campusannouncement.active}=true) OR (${addressbook.active}=true) OR (${ldapchangepw.active}=true) OR (${useradmin.active}=true)"
+        type="input"
+        overflow="true"
+        name="smtp"
+        displayText="Messaging Mail Server">
+		<text
+			property="smtp.server.hostname"
+            defaultValue="@smtp.server.hostname@"
+            displayText="SMTP hostname"/>
+		<validated
+			property="smtp.server.port"
+            defaultValue="@smtp.server.port@"
+            regex="^$|^[0-9]+$"
+            displayText="SMTP port"/>
+		<text
+			property="smtp.server.username"
+            defaultValue="@smtp.server.username@"
+            displayText="SMTP username (if necessary)"/>
+		<validated
+			property="smtp.server.password"
+            defaultValue="@smtp.server.password@"
+            regex="^$|^[a-zA-Z_0-9]+$"
+            displayText="SMTP password (if necessary)"/>
+        <!--password-confirm
+			property="smtp.server.password.confirm"
+            origField="smtp.server.password"
+            displayText="Confirm Password"
+            defaultValue="smtppa55wd"
+            regex="^[a-zA-Z_0-9]+$"
+            textMask="true"/-->
+    </page>
+    <page
+        ifProperty="(${remote-config}=true) AND ((${deploy.all}=true) OR (${web-content-portlet.active}=true))"
+        type="input"
+        overflow="true"
+        name="reddot"
+        displayText="Reddot">
+		<directory
+				property="reddot.content.path"
+                defaultValue="@reddot.content.path@"
+                displayText="Remote Reddot home"
+				create="false"
+                checkExists="false"/>
+		<text
+			property="reddot.url"
+            defaultValue="@reddot.url@"
+            displayText="URL to Reddot"/>
+		<select
+			property="reddot.method"
+            defaultValue="@reddot.method@"
+            displayText="Reddot method">
+            <option text="get" value="get"/>
+            <option text="post" value="post"/>
+        </select>
+	</page>
+    <page
+        ifProperty="(${remote-config}!=true) AND ((${deploy.all}=true) OR (${web-content-portlet.active}=true))"
+        type="input"
+        overflow="true"
+        name="reddot"
+        displayText="Reddot">
+		<directory
+				property="reddot.content.path"
+                defaultValue="@reddot.content.path@"
+                displayText="Reddot home"
+				create="false"
+                checkExists="true"/>
+		<text
+			property="reddot.url"
+            defaultValue="@reddot.url@"
+            displayText="URL to Reddot"/>
+		<select
+			property="reddot.method"
+            defaultValue="@reddot.method@"
+            displayText="Reddot method">
+            <option text="get" value="get"/>
+            <option text="post" value="post"/>
+        </select>
+	</page>
+    <page
+        ifProperty="(${remote-config}=true)"
+        type="input"
+        name="directories"
+		overflow="true"
+        displayText="Remote File System Paths">
+		<directory
+				property="tomcat.host.conf"
+                defaultValue="${tomcat.home}/@tomcat.host.conf.relative@"
+                displayText="Tomcat host path"
+				create="false"
+                checkExists="false"/>
+		<directory
+				property="toro.data.home"
+                defaultValue="@toro.data.home@"
+                defaultValueWin="@toro.data.home.win@"
+                displayText="Toro Data Home"
+				create="false"
+                checkExists="false"/>
+		<file
+				property="aspell.executable.path"
+                defaultValue="@aspell.executable.path@"
+                displayText="Aspell executable"
+				checkExists="false"/>
+    </page>
+    <page
+        ifProperty="(${remote-config}!=true)"
+        type="input"
+        name="directories"
+		overflow="true"
+        displayText="File System Paths">
+		<directory
+				property="tomcat.host.conf"
+                defaultValue="${tomcat.home}/@tomcat.host.conf.relative@"
+                displayText="Tomcat host path"
+				create="false"
+                checkExists="true"/>
+		<directory
+				property="toro.data.home"
+                defaultValue="@toro.data.home@"
+                defaultValueWin="@toro.data.home.win@"
+                displayText="Toro Data Home"
+				create="true"
+                checkExists="true"/>
+		<file
+				property="aspell.executable.path"
+                defaultValue="@aspell.executable.path@"
+                displayText="Aspell executable"
+				checkExists="false"/>
+    </page>
+	<page
+			type="input"
+            overflow="true"
+			name="db"
+			displayText="JDBC options">
+		<text
+			property="datasource"
+            defaultValue="@datasource@"
+            displayText="Datasouce"/>
+        <select
+            property="jdbc.driver"
+            defaultValue="@jdbc.driver1@"
+            displayText="JDBC Driver">
+            <option text="@jdbc.driver1.text@" value="@jdbc.driver1@"/>
+            <option text="@jdbc.driver2.text@" value="@jdbc.driver2@"/>
+            <option text="@jdbc.driver3.text@" value="@jdbc.driver3@"/>
+        </select>
+        <text
+            property="jdbc.hostname"
+            defaultValue=""
+            displayText="DB Hostname"/>
+		<validated
+			property="jdbc.port"
+            defaultValue=""
+            regex="^[0-9]+$|^$"
+            displayText="DB port"/>
+        <text
+            property="jdbc.database.name"
+            defaultValue=""
+            displayText="DB Name/SID"/>
+        <text
+            property="jdbc.user"
+            defaultValue=""
+            displayText="DB User"/>
+        <validated
+            property="jdbc.password"
+            defaultValue=""
+            regex="^$|^[a-zA-Z_0-9]+$"
+            displayText="DB Password"/>
+        <!--password-confirm
+            property="jdbc.password.confirm"
+            origField="jdbc.password"
+            displayText="Confirm Password"
+            defaultValue="uni"
+            regex="^[a-zA-Z_0-9]+$"
+            textMask="true"/-->
+        <validated
+            property="jdbc.poolsize.uportal"
+            defaultValue="@jdbc.poolsize.uportal@"
+            displayText="uPortal jdbc poolsize"
+            regex="^[0-9]+$"/>
+        <validated
+            property="jdbc.poolsize.briefcase"
+            defaultValue="@jdbc.poolsize.briefcase@"
+            displayText="Briefcase jdbc poolsize"
+            regex="^[0-9]+$"/>
+        <validated
+            property="jdbc.poolsize.gateway"
+            defaultValue="@jdbc.poolsize.gateway@"
+            displayText="Gateway jdbc poolsize"
+            regex="^[0-9]+$"/>
+        <validated
+            property="jdbc.poolsize.messaging"
+            defaultValue="@jdbc.poolsize.messaging@"
+            displayText="Messaging jdbc poolsize"
+            regex="^[0-9]+$"/>
+        <validated
+            property="jdbc.poolsize.permissions"
+            defaultValue="@jdbc.poolsize.permissions@"
+            displayText="Permissions jdbc poolsize"
+            regex="^[0-9]+$"/>
+        <validated
+            property="jdbc.poolsize.web.content"
+            defaultValue="@jdbc.poolsize.web.content@"
+            displayText="Web Content jdbc poolsize"
+            regex="^[0-9]+$"/>
+        <validated
+            property="jdbc.poolsize.blojsom"
+            defaultValue="@jdbc.poolsize.blojsom@"
+            displayText="Blojsom jdbc poolsize"
+            regex="^[0-9]+$"/>
+
+        <!-- conditional here so they will be processed after the page is processed in runtime -->
+        <conditional ifProperty="(true=true)">
+            <hidden property="portal.webapp.home" value="${tomcat.home}/webapps/${portal.webapp.name}"/>
+            <hidden property="server.base.url" value="${portal.server.http.protocol}://${portal.server.hostname}${portal.server.port}"/>
+            <hidden property="portal.base.url" value="${portal.server.http.protocol}://${portal.server.hostname}${portal.server.port}/${portal.webapp.name}"/>
+        </conditional>
+        <conditional ifProperty="(${cms.active}!=true)">
+            <hidden property="cms.active" value="false"/>
+        </conditional>
+        <hidden property="bypass.db" value="false"/>
+    </page>
+	<page
+            ifProperty="(${initialize.all}!=true)"
+			type="input"
+            overflow="true"
+			name="properties"
+            displayText="Schema Creation">
+        <comment displayText="Portlets" title="true"/>
+		<checkbox
+            displayText="Alchemist (Sequencer, Access Controller)"
+			property="hibernate.alchemist"
+            defaultValue="@hibernate.alchemist@"
+			force="false"/>
+		<checkbox
+            displayText="Portlets Common"
+			property="hibernate.portlets-common"
+            defaultValue="@hibernate.portlets-common@"
+			force="false"/>
+		<checkbox
+            displayText="Demetrius (Briefcase)"
+			property="hibernate.demetrius"
+            defaultValue="@hibernate.demetrius@"
+			force="false"/>
+		<checkbox
+            displayText="Mercury (Messaging)"
+			property="hibernate.mercury"
+            defaultValue="@hibernate.mercury@"
+			force="false"/>
+        <comment displayText="Channels" title="true"/>
+        <checkbox
+            displayText="Toro Common"
+			property="dbloader.toro.common"
+            defaultValue="@dbloader.toro.common@"
+			force="false"/>
+        <checkbox
+            displayText="Channels Common"
+			property="dbloader.cdk"
+			defaultValue="@dbloader.cdk@"
+			force="false"/>
+		<checkbox
+            displayText="Addressbook"
+			property="dbloader.addressbook"
+            defaultValue="@dbloader.addressbook@"
+			force="false"/>
+		<checkbox
+            displayText="Bookmarks"
+            property="dbloader.bookmarks"
+            defaultValue="@dbloader.bookmarks@"
+			force="false"/>
+		<checkbox
+            displayText="Calendar"
+            property="dbloader.calendar"
+            defaultValue="@dbloader.calendar@"
+			force="false"/>
+		<checkbox
+            displayText="Campus Announcements"
+            property="dbloader.campusannouncement"
+            defaultValue="@dbloader.campusannouncement@"
+			force="false"/>
+		<checkbox
+            displayText="Classifieds"
+			property="dbloader.classifieds"
+            defaultValue="@dbloader.classifieds@"
+			force="false"/>
+		<checkbox
+            displayText="News"
+			property="dbloader.news"
+            defaultValue="@dbloader.news@"
+			force="false"/>
+		<checkbox
+            displayText="Notes"
+            property="dbloader.notes"
+            defaultValue="@dbloader.notes@"
+			force="false"/>
+		<checkbox
+            displayText="Survey"
+			property="dbloader.survey"
+            defaultValue="@dbloader.survey@"
+			force="false"/>
+		<checkbox
+            displayText="CMS"
+			property="dbloader.cms"
+            defaultValue="@dbloader.cms@"
+			force="false"/>
+    </page>
+	<page
+        ifProperty="(${initialize.all}=true) OR (${hibernate.alchemist}=true) OR (${hibernate.portlets-common}=true) OR (${hibernate.demetrius}=true) OR (${hibernate.mercury}=true) OR (${uportal.db}=true) OR (${uportal.i18n.db}=true) OR (${dbloader.cdk}=true) OR (${dbloader.survey}=true) OR (${dbloader.news}=true) OR (${dbloader.classifieds}=true) OR (${dbloader.calendar}=true) OR (${dbloader.notes}=true) OR (${dbloader.bookmarks}=true) OR (${dbloader.campusannouncement}=true) OR (${dbloader.addressbook}=true) OR (${dbloader.cms}=true) OR (${dbloader.toro.common}=true)"
+			type="input"
+            overflow="true"
+            name="schema creation mode"
+            displayText="Schema Creation Mode">
+		<checkbox
+            displayText="Create Tables Only"
+			property="hibernate.create.only.checkbox"
+            defaultValue="@hibernate.create.only.checkbox@"
+			force="false"/>
+    </page>
+	<page
+			type="progress"
+			name="progress"
+			showTargets="true"
+			displayText="Installation progress">
+
+    </page>
+</installer>
+
+
