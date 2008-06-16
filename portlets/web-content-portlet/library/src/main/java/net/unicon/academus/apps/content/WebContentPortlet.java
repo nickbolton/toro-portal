@@ -103,14 +103,6 @@ public final class WebContentPortlet extends AbstractWarlockPortlet {
             SAXReader reader = new SAXReader();
             URL configUrl = ctx.getResource(configPath);
             Element configElement = (Element) reader.read(configUrl.toString()).selectSingleNode("web-content");
-            
-            boolean useXsltc = Boolean.valueOf(configElement.attributeValue("useXsltc"));
-
-            boolean cacheTemplates = true;
-
-            if (configElement.attributeValue("cacheTemplates") != null) {
-                cacheTemplates = Boolean.valueOf(configElement.attributeValue("cacheTemplates"));
-            }
 
             // AJAX form population
             String ajaxCallbackUrl = null;
@@ -167,20 +159,13 @@ public final class WebContentPortlet extends AbstractWarlockPortlet {
             // Construct the rendering engine.
             URL xslUrl = ctx.getResource("/rendering/templates/layout.xsl");
             Source trans = new StreamSource(xslUrl.toString());
-            IWarlockFactory fac = null;
-            
-            if (useXsltc) {
-                fac = new XmlWarlockFactory(trans,
-                    TransletsConstants.xsltcTransformerFactoryImplementation,
-                    TransletsConstants.xsltcDebug,
-                    TransletsConstants.xsltcPackage,
-                    TransletsConstants.xsltcGenerateTranslet,
-                    TransletsConstants.xsltcAutoTranslet,
-                    TransletsConstants.xsltcUseClasspath,
-                    cacheTemplates);
-            } else {
-                fac = new XmlWarlockFactory(trans, cacheTemplates);
-            }
+            IWarlockFactory fac = new XmlWarlockFactory(trans,
+                TransletsConstants.xsltcTransformerFactoryImplementation,
+                TransletsConstants.xsltcDebug,
+                TransletsConstants.xsltcPackage,
+                TransletsConstants.xsltcGenerateTranslet,
+                TransletsConstants.xsltcAutoTranslet,
+                TransletsConstants.xsltcUseClasspath);
 
             // Choose a peephole.
             Attribute p = configElement.attribute("peephole");

@@ -104,14 +104,6 @@ public final class PermissionsPortlet extends AbstractWarlockPortlet {
                 (Element) reader.read(configUrl.toString())
                                 .selectSingleNode("permissions");
 
-            boolean useXsltc = Boolean.valueOf(configElement.attributeValue("useXsltc"));
-
-            boolean cacheTemplates = true;
-
-            if (configElement.attributeValue("cacheTemplates") != null) {
-                cacheTemplates = Boolean.valueOf(configElement.attributeValue("cacheTemplates"));
-            }
-
             configElement = ConfigHelper.handle(configElement);
 
             // read the portlet specified
@@ -190,20 +182,13 @@ public final class PermissionsPortlet extends AbstractWarlockPortlet {
             // Construct the rendering engine;
             URL xslUrl = ctx.getResource("/rendering/templates/layout.xsl");
             Source trans = new StreamSource(xslUrl.toString());
-            IWarlockFactory fac = null;
-            
-            if (useXsltc) {
-                fac = new XmlWarlockFactory(trans,
-                    TransletsConstants.xsltcTransformerFactoryImplementation,
-                    TransletsConstants.xsltcDebug,
-                    TransletsConstants.xsltcPackage,
-                    TransletsConstants.xsltcGenerateTranslet,
-                    TransletsConstants.xsltcAutoTranslet,
-                    TransletsConstants.xsltcUseClasspath,
-                    cacheTemplates);
-            } else {
-                fac = new XmlWarlockFactory(trans, cacheTemplates);
-            }
+            IWarlockFactory fac = new XmlWarlockFactory(trans,
+                TransletsConstants.xsltcTransformerFactoryImplementation,
+                TransletsConstants.xsltcDebug,
+                TransletsConstants.xsltcPackage,
+                TransletsConstants.xsltcGenerateTranslet,
+                TransletsConstants.xsltcAutoTranslet,
+                TransletsConstants.xsltcUseClasspath);
 
             // Construct the screens;
             List screenList = new ArrayList();

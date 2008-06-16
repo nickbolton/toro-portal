@@ -8,6 +8,7 @@
 			<!-- Header -->
 			#parse("asual-header.vm")
 			<!-- Content -->
+            #parse("asual-crumbtrail.vm")
 			<div id="contentHeadLeft"><div id="contentHeadRight"><div id="contentHeadCenter"></div></div></div>
 			<div id="contentBodyLeft">
 				<div id="contentBodyRight">
