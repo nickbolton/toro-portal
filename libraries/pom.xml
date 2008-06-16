@@ -3,7 +3,7 @@
   <parent>
     <groupId>net.unicon.toro</groupId>
     <artifactId>toro-portal</artifactId>
-    <version>2.0.0-rc-2-SNAPSHOT</version>
+    <version>1.0.0-rc-3</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
@@ -21,14 +21,13 @@
       <module>penelope</module>
       <module>warlock</module>
       <module>sso-authentication-cache</module>
-      <module>sso-callback-servlet</module>
       <module>portlets-common</module>
       <module>civis-selector</module>
-      <!--module>resource-pool</module>
+      <module>resource-pool</module>
       <module>sdk</module>
       <module>jgrapht</module>
       <module>cdk</module>
-      <module>toro-common</module-->
+      <module>toro-common</module>
   </modules>
 
 </project>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet title="main" href="main.xsl" type="text/xsl"?>
+<?xml-stylesheet title="offering" href="offering.xsl" type="text/xsl"?>
+<?xml-stylesheet title="user" href="user.xsl" type="text/xsl"?>
+<?xml-stylesheet title="unauthorized" href="unauthorized.xsl" type="text/xsl"?>
+
+<document>
+</document>

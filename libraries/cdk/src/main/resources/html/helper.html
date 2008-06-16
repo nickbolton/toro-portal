@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<script type="text/javascript">
+<!--
+var helpReference = 
+{
+"default":"uni-60f02afd323f43ed/uni/60f02afd323f43ed/courseframeset.html",
+"AB":'uni-9e8efac277de4498',
+"Announcements":'uni-39028ca17bc9489d',
+"AnnouncementProducer":'uni-c43d3097773649a9',
+"Bookmarks":'uni-131e4c5fd9d34410',
+"Briefcase Portlet":'uni-52a478c8c46a486c',
+"BlojsomGatewayPortlet":'uni-59ee8af2df494aa4',
+"Calendar":'uni-b41ff1eb1b654760',
+"CCalendarUnicon":'uni-2b11a10d28034216',
+"Calendar (IBS)":'uni-b41ff1eb1b654760',
+"Calendar Events":'uni-b41ff1eb1b654760',
+"Calendar Todo's":'uni-b41ff1eb1b654760',
+"Campus Announcements":'uni-39028ca17bc9489d',
+"Campus News":'uni-7960bccce002404c',
+"Chat":'uni-3287f0ce1dba4c5d',
+"IRCChannel":'uni-ce4ce15f0f134074',
+"Chat Admin":'uni-d404bae2592848c0',
+"Class Folders":'uni-a33e859111e14c63',
+"ClassFolderChannel":'uni-a33e859111e14c63',
+"Classifieds":'uni-e67213fb5418497a',
+"CMS Channel":'uni-9a8d8b8cc51c4889',
+"Curriculum Content":'uni-0b00c602930d4259',
+"CurriculumUsabilityChannel":'uni-0b00c602930d4259',
+"Discussion Forums":'uni-605489c9f86044d1',
+"Discussion Forums Admin":'uni-e0fe701438df4493',
+"Forums":'uni-7a1834a445744444',
+"CForumsUnicon":'uni-7a1834a445744444',
+"Gradebook":'uni-7a93c843b3f2405d',
+"GradebookChannel":'uni-7a93c843b3f2405d',
+"Group Chat":'uni-3287f0ce1dba4c5d',
+"Groupware":'uni-9a8d8b8cc51c4889',
+"Import Channel":'uni-caa5202bf4ab40a2',
+"ImportChannel":'uni-caa5202bf4ab40a2',
+"MessagingPortlet":'uni-dc9416c64ab34fe9',
+"My Notes":'uni-3bcacea65a934bdb',
+"Navigation":'uni-aa29ebd60b8d4eb4',
+"NavigationChannel":'uni-aa29ebd60b8d4eb4',
+"Notepad":'uni-aaa497170adb4483',
+"NotepadChannel":'uni-aaa497170adb4483',
+"Offering Administration":'uni-10c922c4564346e2',
+"OfferingAdminChannel":'uni-10c922c4564346e2',
+"Offering Subscription":'uni-dad82924e2e54117',
+"SubscriptionChannel":'uni-dad82924e2e54117',
+"Poll":'uni-a012512c482e4038',
+"Role Administration":'uni-fa729d4e35c74be7',
+"PermissionsChannel":'uni-fa729d4e35c74be7',
+"Roster":'uni-033f41ae46ce45f9',
+"RosterChannel":'uni-033f41ae46ce45f9',
+"Survey":'uni-a012512c482e4038',
+"Survey Author":'uni-a012512c482e4038',
+"Topic Administration":'uni-fcef807735b54a2d',
+"TopicAdminChannel":'uni-fcef807735b54a2d',
+"User Admin":'uni-352f754381844d28',
+"User Administration":'uni-352f754381844d28',
+"UserAdminProducer":'uni-d1e9e71cb3bf44a2',
+"Webmail":'uni-6a771c145d6d4bb6'
+};
+
+function init()
+{
+    var inputFields = new Object();
+    var searchString = window.location.search.substring(1);
+    var fields = searchString.split("&");
+    var fieldName;
+    var fieldValue;
+    var fieldParts;
+    for (var i=0; i < fields.length; i++)
+    {
+        fieldParts = fields[i].split("="); 
+        fieldName = fieldParts[0];
+        fieldValue = fieldParts[1];
+        inputFields[fieldName] = unescape(fieldValue);
+    }
+    var newURL = "net/unicon/help/" + helpReference["default"];
+    var newURLParameters = "";
+    if (inputFields["channel"] && helpReference[inputFields["channel"]])
+    {
+        newURLParameters = "?startpage=" + helpReference[inputFields["channel"]];
+    }
+    else if (inputFields["channel"] && inputFields["channel"].indexOf("Navigation") != -1)
+    {
+        newURLParameters = "?startpage=" + helpReference["Navigation"];
+    }
+    //alert(inputFields["channel"]);
+    location.href = newURL+newURLParameters;
+}
+
+window.onload = init;
+
+window.focus();
+// -->
+</script>
+</body>
+</html>

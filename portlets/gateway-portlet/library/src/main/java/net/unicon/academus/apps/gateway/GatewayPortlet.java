@@ -119,15 +119,6 @@ public final class GatewayPortlet extends AbstractWarlockPortlet {
             String configUrlStr = configUrl.toString();
             Document doc = reader.read(configUrlStr);
             Element configElement = (Element)doc.selectSingleNode("gateway");
-            
-            boolean useXsltc = Boolean.valueOf(configElement.attributeValue("useXsltc"));
-
-            boolean cacheTemplates = true;
-
-            if (configElement.attributeValue("cacheTemplates") != null) {
-                cacheTemplates = Boolean.valueOf(configElement.attributeValue("cacheTemplates"));
-            }
-
             //Element configElement = (Element) reader.read(
             //    configUrl.toString()).selectSingleNode("gateway");            // Resolve any copy-of and imports
             configElement = ConfigHelper.handle(configElement);
@@ -155,20 +146,13 @@ public final class GatewayPortlet extends AbstractWarlockPortlet {
             // Construct the rendering engine.
             URL xslUrl = ctx.getResource("/rendering/templates/layout.xsl");
             Source trans = new StreamSource(xslUrl.toString());
-            IWarlockFactory fac = null;
-            
-            if (useXsltc) {
-                fac = new XmlWarlockFactory(trans,
-                    TransletsConstants.xsltcTransformerFactoryImplementation,
-                    TransletsConstants.xsltcDebug,
-                    TransletsConstants.xsltcPackage,
-                    TransletsConstants.xsltcGenerateTranslet,
-                    TransletsConstants.xsltcAutoTranslet,
-                    TransletsConstants.xsltcUseClasspath,
-                    cacheTemplates);
-            } else {
-                fac = new XmlWarlockFactory(trans, cacheTemplates);
-            }
+            IWarlockFactory fac = new XmlWarlockFactory(trans,
+                TransletsConstants.xsltcTransformerFactoryImplementation,
+                TransletsConstants.xsltcDebug,
+                TransletsConstants.xsltcPackage,
+                TransletsConstants.xsltcGenerateTranslet,
+                TransletsConstants.xsltcAutoTranslet,
+                TransletsConstants.xsltcUseClasspath);
 
             // Construct the screens, and choose a peephole.
             List list = new ArrayList();
@@ -236,16 +220,20 @@ public final class GatewayPortlet extends AbstractWarlockPortlet {
 
         final String key = id + ":CONTEXT";
 
-        String username = (String)userInfo.get("user.login.id");
-        String cacheKey = constructUserContextCacheKey(s, username);
-        GatewayUserContext rslt = new GatewayUserContext(context, username, cacheKey, userInfo);
-        s.setAttribute(key, rslt);
+        // Look for existing, create if we don't find.
+        GatewayUserContext rslt = (GatewayUserContext) s.getAttribute(key);
+        if (rslt == null) {
+            String username = (String)userInfo.get("user.login.id");
+            String cacheKey = constructUserContextCacheKey(s, username);
+            rslt = new GatewayUserContext(context, username, cacheKey, userInfo);
+            s.setAttribute(key, rslt);
             
-	    if (log.isDebugEnabled()) {
-	        log.debug("GatewayPortlet::getUserContext adding user context: " +
-	            rslt.getCacheKey());
+	        if (log.isDebugEnabled()) {
+	            log.debug("GatewayPortlet::getUserContext adding user context: " +
+	                rslt.getCacheKey());
+	        }
+	        userContextMap.put(rslt.getCacheKey(), rslt);
         }
-        userContextMap.put(rslt.getCacheKey(), rslt);
         
         return rslt;
 

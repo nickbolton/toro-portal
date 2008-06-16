@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema>
+<sequences>
+    <sequence>
+        <name>ANNOUNCEMENT_SEQ</name>
+        <start-with>1</start-with>
+        <increment-by>1</increment-by>
+    </sequence>
+</sequences>
+<tables>
+    <table>
+      <name>ANNOUNCEMENT</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>ANNOUNCEMENT_ID</name>
+          <type>INTEGER</type>
+	  <default>
+		<sequence>ANNOUNCEMENT_SEQ</sequence>
+	  </default>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>SUBMIT_DATE</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>REVISE_DATE</name>
+          <type>TIMESTAMP</type>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>BODY</name>
+          <type>LONGVARCHAR</type>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>ANNOUNCEMENT_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ANNOUNCEMENT_ID</column>
+          </columns>
+        </index>
+                
+        <index>
+          <name>ANNOUNCEMENT_SD_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>SUBMIT_DATE</column>
+          </columns>
+        </index>
+     
+        <index>
+          <name>ANNOUNCEMENT_COMP_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ANNOUNCEMENT_ID</column>
+            <column>SUBMIT_DATE</column>
+          </columns>
+        </index>
+      </indexes>
+
+      <constraints>
+        <not-null>
+          <name>ANNOUNCEMENT_ANNOUNCEMENT_ID_NN</name>
+          <columns>
+            <column>ANNOUNCEMENT_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>ANNOUNCEMENT_SUBMIT_DATE_NN</name>
+          <columns>
+            <column>SUBMIT_DATE</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>ANNOUNCEMENT_PKEY</name>
+          <columns>
+            <column>ANNOUNCEMENT_ID</column>
+          </columns>
+        </primary-key>
+    
+      </constraints>
+    </table>
+    <table>
+      <name>ANNOUNCEMENT_ID_GROUPS</name>
+      <desc>NULL</desc>
+      <columns>
+        <column>
+          <name>ANNOUNCEMENT_ID</name>
+         <type>INTEGER</type>
+	  <desc></desc>
+        </column>
+    
+        <column>
+          <name>GROUP_ID</name>
+          <type>VARCHAR</type>
+          <param>50</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>GROUP_ENTITY_TYPE</name>
+          <type>VARCHAR</type>
+          <param>16</param>
+          <desc></desc>
+        </column>
+    
+        <column>
+          <name>OWNER_ID</name>
+          <type>VARCHAR</type>
+          <param>50</param>
+          <desc></desc>
+        </column>
+    
+      </columns>
+
+      <indexes>
+
+        <index>
+          <name>ANNOUNCEMENT_ID_GROUPS_PKEY</name>
+          <unique>TRUE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>ANNOUNCEMENT_ID</column>
+            <column>GROUP_ID</column>
+            <column>GROUP_ENTITY_TYPE</column>
+          </columns>
+        </index>
+
+        <index>
+          <name>AI_GROUPS_COMP_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>GROUP_ID</column>
+            <column>ANNOUNCEMENT_ID</column>
+            <column>GROUP_ENTITY_TYPE</column>
+          </columns>
+        </index>
+
+        <index>
+          <name>AI_GROUPS_GET_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>GROUP_ENTITY_TYPE</column>
+          </columns>
+        </index>
+
+        <index>
+          <name>AI_GROUPS_OID_IDX</name>
+          <unique>FALSE</unique>
+          <sort_order>ASC</sort_order>
+          <columns>
+            <column>OWNER_ID</column>
+          </columns>
+        </index>
+		
+     </indexes>
+
+      <constraints>
+
+        <not-null>
+          <name>AI_GROUPS_ANNOUNCEMENT_ID_NN</name>
+          <columns>
+            <column>ANNOUNCEMENT_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>AI_GROUPS_GROUP_ID_NN</name>
+          <columns>
+            <column>GROUP_ID</column>
+          </columns>
+        </not-null>
+    
+        <not-null>
+          <name>AI_GROUPS_GROUP_ENTITY_TYPE_NN</name>
+          <columns>
+            <column>GROUP_ENTITY_TYPE</column>
+          </columns>
+        </not-null>
+    
+        <primary-key>
+          <name>ANNOUNCEMENT_ID_GROUPS_PKEY</name>
+          <columns>
+            <column>ANNOUNCEMENT_ID</column>
+            <column>GROUP_ID</column>
+            <column>GROUP_ENTITY_TYPE</column>
+          </columns>
+        </primary-key>
+    
+        <foreign-key>
+          <name>ANNOUNCEMENT_ID_FK</name>
+          <parent-table>
+            <name>ANNOUNCEMENT</name>
+            <columns>
+              <key-column>ANNOUNCEMENT_ID</key-column>
+            </columns>
+          </parent-table>
+          <columns>
+            <column>ANNOUNCEMENT_ID</column>
+          </columns>
+        </foreign-key>
+    
+      </constraints>
+    </table>
+</tables>
+</schema>
