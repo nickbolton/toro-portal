@@ -1,0 +1,323 @@
+/* Any style declaration within an element that has an underscore "_" prefix (e.g. _width: 100%) is Microsoft IE specific. MSIE will process the underscore as valid CSS syntax even though it is not valid. All other browsers will ignore it. Thus, using the underscore can send MSIE specific style information that other browsers will ignore. */
+
+/* NAVIGATION */
+/*--------------------------------------------------------------------------------------*/
+
+/* ((((( Main Navigation ))))) */
+/* Main navigation component, either horizontal tabs, or vertical left-nav. */
+
+#navcontainer {
+z-index: 10;
+}
+
+#navigation {
+margin: 0px;
+padding: 0px;
+list-style: none;
+}
+
+.nav-li {
+height: 25px;
+width: 130px;
+background: #477BAD url("../images/navigation/tab_rounded_left.gif") top left no-repeat;
+}
+
+.nav-li-selected {
+height: 25px;
+width: 130px;
+background: #FFF url("../images/navigation/tab_rounded_selected_left.gif") top left no-repeat;
+}
+
+#navLi1, #navLi2, #navLi3, #navLi4, #navLi5, #navLi6, #navLi7, #navLi8, #navLi9, #navLi10, #navLi11, #navLi12, #navLi13, #navLi14, #navLi15 {
+position: absolute;
+top: 111px;
+z-index: 10;
+}
+
+#navLi1 {
+left: 10px;
+}
+
+#navLi2 {
+left: 142px;
+}
+
+#navLi3 {
+left: 274px;
+}
+
+#navLi4 {
+left: 406px;
+}
+
+#navLi5 {
+left: 538px;
+}
+
+#navLi6 {
+left: 670px;
+}
+
+#navLi7 {
+left: 802px;
+}
+
+#navLi8 {
+left: 934px;
+}
+
+#navLi9 {
+left: 1066px;
+}
+
+#navLi10 {
+left: 1198px;
+}
+
+#navLi11 {
+left: 1330px;
+}
+
+#navLi12 {
+left: 1462px;
+}
+
+#navLi13 {
+left: 1594px;
+}
+
+#navLi14 {
+left: 1726px;
+}
+
+#navLi15 {
+left: 1858px;
+}
+
+.nav-link:link, .nav-link:visited, .nav-link-selected:link, .nav-link-selected:visited {
+display: block;
+height: 100%;
+width: 100%;
+overflow: hidden;
+white-space: nowrap;
+font-size: 7pt;
+font-weight: bold;
+text-decoration: none;
+text-align: center;
+}
+
+.nav-link {
+background: url("../images/navigation/tab_rounded_right.gif") top right no-repeat;
+}
+
+.nav-link-selected {
+background: url("../images/navigation/tab_rounded_selected_right.gif") top right no-repeat;
+}
+
+.nav-link:hover .nav-link-label {
+text-decoration: underline;
+}
+
+.nav-link-selected:hover .nav-selected-label {
+text-decoration: underline;
+}
+
+.nav-link-label, .nav-selected-label {
+display: block;
+padding: 7px 12px 0px 12px;
+}
+
+.nav-link-label {
+color: #FFF;
+}
+
+.nav-selected-label {
+color: #336699;
+}
+
+#navigation span.hide {
+display: none;
+}
+
+/* ((((( Dynamic menus ))))) */
+/* Flyout menus display. */
+
+.hide-flyout-menu {
+display: none;
+}
+
+.show-flyout-menu {
+display: normal;
+}
+
+#navigation .show-flyout-menu { /* Turn off flyout menus for IE because of the css position:relative bug and because in IE, form fields are always on top (flyout menus appear underneath form fields and relatively positioned elements). */
+_display: none;
+}
+
+/* ((((( Subavigation ))))) */
+/* Subnavigation menus, used when flyout menus are active. */
+
+.subnav {
+width: 197px;
+margin: 0px;
+padding: 0px;
+list-style: none;
+background-color: #CCC;
+z-index: 10;
+}
+
+.subnav-li {
+width: 195px;
+margin: 1px;
+background-color: #EEE;
+}
+
+.subnav-link:link, .subnav-link:visited {
+display: block;
+width: 175px;
+_width: 195px;
+padding: 4px 10px;
+color: #888;
+font-size: 8pt;
+font-weight: bold;
+text-decoration: none;
+}
+
+.subnav-link:hover {
+background-color: #888;
+color: #FFF;
+text-decoration: underline;
+}
+
+#subnavcontainer1, #subnavcontainer2, #subnavcontainer3, #subnavcontainer4, #subnavcontainer5, #subnavcontainer6, #subnavcontainer7, #subnavcontainer8, #subnavcontainer9, #subnavcontainer10 {
+position: absolute;
+top: 25px;
+}
+/*
+#subnavcontainer1 {
+left: 200px;
+}
+
+#subnavcontainer2 {
+left: 332px;
+}
+
+#subnavcontainer3 {
+left: 464px;
+}
+
+#subnavcontainer4 {
+left: 596px;
+}
+
+#subnavcontainer5 {
+left: 200px;
+}
+
+#subnavcontainer6 {
+left: 200px;
+}
+*/
+
+/* ((((( Quicklinks ))))) */
+/* Highlighted navigation in the Quicklinks area. */
+
+#qlinkscontainer {
+background: #477BAD url("../images/navigation/qlinks_top.gif") no-repeat top left;
+}
+
+#quicklinks {
+margin: 0px;
+padding: 0px;
+padding-bottom: 4px;
+background: url("../images/navigation/qlinks_bottom.gif") no-repeat bottom left;
+list-style: none;
+}
+
+.qlink-li {
+margin: 0px 6px;
+}
+
+a.qlink-link:link, a.qlink-link:visited  {
+display: block;
+padding: 4px 10px;
+background: #477BAD;
+color: #FFF;
+font-size: 7pt;
+font-weight: bold;
+text-decoration: none;
+border-bottom: 1px solid #7BADDD;
+}
+
+a.qlink-link:hover {
+color: #FFF;
+text-decoration: underline;
+}
+
+#quicklinks a.last {
+border-bottom: none;
+}
+/*
+#qWebmail {
+background: url("../images/navigation/qlink_webmail.gif") no-repeat left top;
+}
+
+#qCalendar {
+background: url("../images/navigation/qlink_calendar.gif") no-repeat left top;
+}
+
+#qAddressbook {
+background: url("../images/navigation/qlink_addressbook.gif") no-repeat left top;
+}
+
+#qWebAdvisor {
+background: url("../images/navigation/qlink_webadvisor.gif") no-repeat left top;
+}
+
+#qBriefcase {
+background: url("../images/navigation/qlink_briefcase.gif") no-repeat left top;
+}
+*/
+.qlink-label {
+}
+
+.qlink-alert-link {
+color: #FFFF99;
+}
+
+/* ((((( Side Navigation ))))) */
+/* Side navigation component (channels on the current tab). */
+
+#sidenavcontainer {
+margin: 2px 0px 0px 0px;
+padding-top: 13px;
+background: #39628A url("../images/navigation/sidenav_top.gif") no-repeat top left;
+}
+
+#sidenav {
+margin: 0px;
+padding: 0px;
+padding-bottom: 13px;
+background: url("../images/navigation/sidenav_bottom.gif") no-repeat bottom left;
+list-style: none;
+}
+
+#sidenav li {
+}
+
+.sidenav-link:link, .sidenav-link:visited {
+display: block;
+margin-bottom: 1px;
+padding: 2px 10px 2px 16px;
+background: #39628A url("../images/navigation/sidenav_arrow.gif") no-repeat;
+background-position: 3px 2px;
+color: #FFF;
+font-size: 8pt;
+text-decoration: none;
+}
+
+.sidenav-link:hover {
+background-color: #315577;
+color: #FFF;
+}
+

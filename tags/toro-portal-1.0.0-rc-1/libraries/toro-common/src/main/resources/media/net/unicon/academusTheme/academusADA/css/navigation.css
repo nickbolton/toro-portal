@@ -1,0 +1,176 @@
+/* Any style declaration within an element that has an underscore "_" prefix (e.g. _width: 100%) is Microsoft IE specific. MSIE will process the underscore as valid CSS syntax even though it is not valid. All other browsers will ignore it. Thus, using the underscore can send MSIE specific style information that other browsers will ignore. */
+
+/* NAVIGATION */
+/*--------------------------------------------------------------------------------------*/
+
+/* ((((( Main Navigation ))))) */
+/* Main navigation component, either horizontal tabs, or vertical left-nav. */
+
+#navcontainer {
+padding: 0pt 30pt;
+background-color: #DAE3EC;
+color: #000;
+border-bottom: 4px solid #2E4378;
+}
+
+#navcontainer a:link, #navcontainer a:visited, #navcontainer a:hover {
+color: #993400;
+}
+
+/* ((((( Dynamic menus ))))) */
+/* Flyout menus display. */
+
+.hide-flyout-menu {
+display: none;
+}
+
+.show-flyout-menu {
+display: none;
+}
+
+/* ((((( Subavigation ))))) */
+/* Subnavigation menus, used when flyout menus are active. */
+
+.subnav {
+width: 197px;
+margin: 0px;
+padding: 0px;
+list-style: none;
+background-color: #CCC;
+z-index: 10;
+}
+
+.subnav-li {
+width: 195px;
+margin: 1px;
+background-color: #EEE;
+}
+
+.subnav-link:link, .subnav-link:visited {
+display: block;
+width: 175px;
+_width: 195px;
+padding: 4px 10px;
+color: #888;
+font-size: 8pt;
+font-weight: bold;
+text-decoration: none;
+}
+
+.subnav-link:hover {
+background-color: #888;
+color: #FFF;
+text-decoration: underline;
+}
+
+#subnavcontainer1, #subnavcontainer2, #subnavcontainer3, #subnavcontainer4, #subnavcontainer5, #subnavcontainer6, #subnavcontainer7, #subnavcontainer8, #subnavcontainer9, #subnavcontainer10 {
+position: absolute;
+top: 25px;
+}
+/*
+#subnavcontainer1 {
+left: 200px;
+}
+
+#subnavcontainer2 {
+left: 332px;
+}
+
+#subnavcontainer3 {
+left: 464px;
+}
+
+#subnavcontainer4 {
+left: 596px;
+}
+
+#subnavcontainer5 {
+left: 200px;
+}
+
+#subnavcontainer6 {
+left: 200px;
+}
+*/
+
+/* ((((( Quicklinks ))))) */
+/* Highlighted navigation in the Quicklinks area. */
+
+#qlinkscontainer {
+margin-bottom: 2px;
+padding-top: 4px;
+background: #477BAD;
+}
+
+#quicklinks {
+margin: 0px;
+padding: 0px;
+padding-bottom: 4px;
+list-style: none;
+}
+
+.qlink-li {
+margin: 0px 6px;
+}
+
+a.qlink-link:link, a.qlink-link:visited  {
+display: block;
+padding: 5px 10px;
+background: #477BAD;
+color: #FFF;
+font-weight: bold;
+text-decoration: none;
+border-bottom: 1px solid #7BADDD;
+}
+
+a.qlink-link:hover {
+color: #FFF;
+text-decoration: underline;
+}
+
+#quicklinks a.last {
+border-bottom: none;
+}
+
+.qlink-alert-link {
+color: #FFFF99;
+}
+
+/* ((((( Side Navigation ))))) */
+/* Side navigation component (channels on the current tab). */
+
+#sidenavcontainer {
+margin: 2px 0px 0px 0px;
+padding-top: 13px;
+background: #39628A url("../images/navigation/sidenav_top.gif") no-repeat top left;
+}
+
+#sidenav {
+margin: 0px;
+padding: 0px;
+padding-bottom: 13px;
+background: url("../images/navigation/sidenav_bottom.gif") no-repeat bottom left;
+list-style: none;
+}
+
+#sidenav li {
+}
+
+.sidenav-link:link, .sidenav-link:visited {
+display: block;
+margin-bottom: 1px;
+padding: 5px 10px;
+background: #39628A url("../images/navigation/sidenav_arrow.gif") no-repeat;
+background-position: 3px 2px;
+color: #FFF;
+font-weight: bold;
+text-decoration: none;
+border-bottom: 1px solid #7BADDD;
+}
+
+.sidenav-link:hover {
+background-color: #315577;
+color: #FFF;
+text-decoration: underline;
+}
+
