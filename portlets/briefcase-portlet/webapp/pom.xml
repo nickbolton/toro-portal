@@ -3,7 +3,7 @@
   <parent>
     <groupId>net.unicon.toro</groupId>
     <artifactId>briefcase</artifactId>
-    <version>2.0.0-rc-2-SNAPSHOT</version> 
+    <version>1.0.0-rc-6</version> 
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
@@ -74,12 +74,6 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>commons-dbcp</groupId>
-      <artifactId>commons-dbcp</artifactId>
-      <version>${commons-dbcp.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
       <version>${commons-fileupload.version}</version>
@@ -92,49 +86,11 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>xalan</groupId>
-      <artifactId>xalan</artifactId>
-      <version>${xalan.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
       <groupId>jaxen</groupId>
       <artifactId>jaxen</artifactId>
       <version>${jaxen.version}</version>
       <scope>runtime</scope>
-      <exclusions>
-          <exclusion>
-              <groupId>xalan</groupId>
-              <artifactId>xalan</artifactId>
-          </exclusion>
-      </exclusions>
     </dependency>
   </dependencies>
 
-  <build>
-    <finalName>${artifactId}</finalName>
-    <filters>
-      <filter>../../../build.properties</filter>
-    </filters>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>compile</phase>
-            <goals>
-              <goal>run</goal>
-            </goals>
-            <configuration>
-              <tasks>
-                <property name="toro.remote.repo" value="${toro.remote.repo}" />
-                <ant antfile="${basedir}/build.xml" dir="${basedir}" inheritRefs="true" />
-              </tasks>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 </project>

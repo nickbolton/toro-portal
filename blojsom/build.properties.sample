@@ -1,0 +1,25 @@
+# APP.NAME : Name of the application.  Used to create the deployment directory.
+app.name=blojsom
+
+# APP.VERSION : Version of the application.  Also used to create the deployment
+# directory.
+app.version=
+
+# TOMCAT.HOME :  Tomcat installation (root) directory.  Change to match your
+# environment.
+tomcat.home=/usr/local/jakarta-tomcat-5.0.27
+
+# DATA.HOME : Root directory for filesystem resources.
+data.home=${tomcat.home}/webapps/${app.name}${app.version}/data
+
+
+#==================== Host Specific Tokens ====================================
+ADMINEMAIL=hobbs@unicon.net
+HOSTNAME=augusta.unicon.net
+INSTALLDIR=
+SMTPSERVERHOSTNAME=smtp.unicon.net
+WEBAPP_NAME=blojsom
+WEBSERVER_IS_SSL=http
+WEBSERVER_PORT=8080
+WEBSERVER_FULLHTTPPORT=:8080
+

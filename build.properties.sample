@@ -1,22 +1,175 @@
-datasource=PortalDb
-#db.platform=oracle
-#db.platform=sqlserver
-db.platform=postgres
-portal.webappName=uPortal
-portal.server.hostname=localhost
-portal.server.http.protocol=http
-portal.server.port=:8080
-reddot.content.path=
-reddot.method=GET
-reddot.url=
-smtp.server.hostname=zimbra.unicon.net
-smtp.server.password=
-smtp.server.port=25
-smtp.server.username=
-admin.email=admin@unicon.net
-tomcat.home=/Users/deuce/dev/src/uportal/up3/tomcat
-toro.data.home=/Users/deuce/dev/src/uportal/up3/data
-aspell.executable.path=aspell
+uportal.remote.repo = http\://developer.ja-sig.org/maven2/
+toro.remote.repo = http\://developer.ja-sig.org/maven2/
+central.remote.repo = http\://repo1.maven.org/maven2/
+remote-config = false
+tomcat.home = /common/dev/src/unicon/toro/tomcat
+toro.data.home = /common/dev/src/unicon/toro/data
 
-## properties to get around maven not liking single @ instances
-handle=@handle
+# dependency versions
+pluto.version = 1.0.1
+commons-logging.version = 1.1
+servlet-api.version = 2.4
+portlet-api.version = 1.0
+xercesImpl.version = 2.7.1
+xalan.version = 2.7.0
+jaxen.version = 1.1
+dom4j.version = 1.6.1
+springframework.version = 2.0.5
+backport-util-concurrent.version = 3.0
+commons-jexl.version = 1.1
+commons-dbcp.version = 1.2.1
+jtds.version = 1.2
+mysql.version = 5.1.5
+oracle.version = 10.2.0.2.0
+postgresql.version = 8.2-504.jdbc3
+standard.version = 1.1.2
+jstl.version = 1.1.2
+hibernate.version = 3.2.4.ga
+whirlycache.version = 0.7.1
+cernunnos.version = 1.0-M1
+ant-contrib.version = 1.0b2
+
+# deployment options
+deploy.all = true
+uportal.version = 2.6.0-GA
+uportal.deploy = true
+uportal.deploy.proxyportlet.portlet = true
+uportal.deploy.bookmarks.portlet = true
+uportal.deploy.rss.portlet = true
+uportal.deploy.google.portlet = true
+uportal.deploy.testsuite.portlet = true
+
+multibox.configuration = false
+portal.webapp.name = portal
+portal.server.http.protocol = http
+portal.server.hostname = localhost
+portal.server.port = \:8080
+jms.server.hostname = 
+jms.server.port = \:3099
+
+# deploy.all = true overrides these settings
+briefcase-portlet.active = false
+messaging-portlet.active = false
+gateway-portlet.active = false
+web-content-portlet.active = false
+permissions-portlet.active = false
+blojsom.active = false
+addressbook.active = false
+bookmarks.active = false
+calendar.active = false
+campusannouncement.active = false
+classifieds.active = false
+ldapchangepw.active = false
+login.active = false
+news.active = false
+notes.active = false
+survey.active = false
+useradmin.active = false
+cms.active = false
+
+# ldap settings
+ldap.checkbox = false
+ldap.security.checkbox = 
+ldap.name = 
+ldap.server.hostname = 
+ldap.server.port = 
+ldap.server.managerdn = 
+ldap.server.manager.password = 
+ldap.server.basedn = 
+ldap.server.uid = 
+ldap.protocol.checkbox = 
+
+ldap2.checkbox = 
+ldap2.security.checkbox = 
+ldap2.name = 
+ldap2.server.hostname = 
+ldap2.server.port = 
+ldap2.server.managerdn = 
+ldap2.server.manager.password = 
+ldap2.server.basedn = 
+ldap2.server.uid = 
+ldap2.protocol.checkbox = 
+ldap2.protocol = ssl
+
+ldap3.checkbox = 
+ldap3.security.checkbox = 
+ldap3.name = 
+ldap3.server.hostname = 
+ldap3.server.port = 
+ldap3.server.managerdn = 
+ldap3.server.manager.password = 
+ldap3.server.basedn = 
+ldap3.server.uid = 
+ldap3.protocol.checkbox = 
+ldap3.protocol = ssl
+
+ldap4.checkbox = 
+ldap4.security.checkbox = 
+ldap4.name = 
+ldap4.server.hostname = 
+ldap4.server.port = 
+ldap4.server.managerdn = 
+ldap4.server.manager.password = 
+ldap4.server.basedn = 
+ldap4.server.uid = 
+ldap4.protocol.checkbox = 
+ldap4.protocol = ssl
+
+smtp.server.hostname = smtp.unicon.net
+smtp.server.port = 25
+smtp.server.username = smtpuser
+smtp.server.password = smtppa55wd
+
+reddot.content.path = /tmp
+reddot.url = 
+reddot.method = get
+
+tomcat.host.conf = ${tomcat.home}/conf/Catalina/localhost
+aspell.executable.path = /usr/bin/aspell
+
+# db init options
+# initialze.all = true overrides
+datasource = PortalDb
+initialize.all = true
+
+uportal.db = false
+uportal.i18n.db = false
+uportal.pubchan = false
+uportal.pubfragments = false
+
+jdbc.driver = org.postgresql.Driver
+jdbc.hostname = localhost
+jdbc.port = 5432
+jdbc.database.name = aos
+jdbc.user = uni
+jdbc.password = uni
+jdbc.poolsize.uportal = 10
+jdbc.poolsize.briefcase = 5
+jdbc.poolsize.gateway = 5
+jdbc.poolsize.messaging = 5
+jdbc.poolsize.permissions = 5
+jdbc.poolsize.web.content = 5
+jdbc.poolsize.blojsom = 5
+portal.webapp.home = ${tomcat.home}/webapps/${portal.webapp.name}
+server.base.url = http\://localhost\:8080
+portal.base.url = http\://localhost\:8080/${portal.webapp.name}
+
+
+cms.active = false
+hibernate.alchemist = false
+hibernate.portlets-common = false
+hibernate.demetrius = false
+hibernate.mercury = false
+dbloader.toro.common = false
+dbloader.cdk = false
+dbloader.addressbook = false
+dbloader.bookmarks = false
+dbloader.calendar = false
+dbloader.campusannouncement = false
+dbloader.classifieds = false
+dbloader.news = false
+dbloader.notes = false
+dbloader.survey = false
+dbloader.cms = false
+
+hibernate.create.only.checkbox = true

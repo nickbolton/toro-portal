@@ -1,0 +1,72 @@
+<!--  Note the handle of the application must correspond to the same
+      handle as in the Channels.xml manifest.
+-->
+<application handle="UserAdminProducer">
+  <label>User Administration</label>
+  <permissions>
+    <activity handle="addUser">
+        <label>Add Users</label>
+        <description>User may add new users</description>
+        <setting role="Administrator" value="True"/>
+
+        <!-- for non-lms channels -->
+        <setting role="Role:Administrator" value="True"/>
+    </activity>
+    <activity handle="editUser">
+        <label>Edit Users</label>
+        <description>User may edit existing users</description>
+        <setting role="Administrator" value="True"/>
+
+        <!-- for non-lms channels -->
+        <setting role="Role:Administrator" value="True"/>
+    </activity>
+    <activity handle="deleteUser">
+        <label>Delete Users</label>
+        <description>User may delete existing users</description>
+        <setting role="Administrator" value="True"/>
+
+        <!-- for non-lms channels -->
+        <setting role="Role:Administrator" value="True"/>
+    </activity>            
+    <activity handle="searchUser">
+        <label>Search Users</label>
+        <description>User may search for a particular user</description>
+        <setting role="Administrator" value="True"/>
+
+        <!-- for non-lms channels -->
+        <setting role="Role:Administrator" value="True"/>
+    </activity>
+    <activity handle="changePassword">
+        <label>Change Password</label>
+        <description>Whether or not a user may change their password.</description>
+        <setting role="Administrator" value="True"/>
+        <setting role="Facilitator" value="True"/>
+        <setting role="User" value="True"/>
+
+        <!-- for non-lms channels -->
+        <setting role="Role:Administrator" value="True"/>
+        <setting role="Role:Facilitator" value="True"/>
+        <setting role="Role:User" value="True"/>
+    </activity>
+    <activity handle="changeEmail">
+        <label>Change Email</label>
+        <description>Whether or not a user may change their Email address.</description>
+        <setting role="Administrator" value="True"/>
+        <setting role="Facilitator" value="True"/>
+        <setting role="User" value="True"/>
+
+        <!-- for non-lms channels -->
+        <setting role="Role:Administrator" value="True"/>
+        <setting role="Role:Facilitator" value="True"/>
+        <setting role="Role:User" value="True"/>
+    </activity>
+    <activity handle="editPermissions">
+        <label>Edit Channel Permissions</label>
+        <description>Whether or not a user may edit the permissions for this channel.</description>
+        <setting role="Administrator" value="True"/>
+
+        <!-- for non-lms channels -->
+        <setting role="Role:Administrator" value="True"/>
+    </activity>
+  </permissions>
+</application>
