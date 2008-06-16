@@ -1,0 +1,15 @@
+    -->
+    <!--
+    NOTE:  The following is an example of how the WebContent Portlet may be configured to use the
+    Permissions Portlet to mange which users get to launch AcademusWCM from the content (i.e. SSO).
+    See also content-portlet.xml.
+
+    <portlet handle="content">
+        <label>WebContent Portlet Administration</label>
+        <description>Identify the users who can manage content in the WebContent Portlet.</description>
+        <portlet-access handle="contentHelper">
+            <import src="file:@tomcat.home@/webapps/toro-web-content-portlet/WEB-INF/classes/config/content-portlet.xml" select="//access-broker[@handle='content-sso']"/>
+            <access impl="net.unicon.academus.apps.content.WebContentAccessType"/>
+        </portlet-access>
+    </portlet>
+    -->

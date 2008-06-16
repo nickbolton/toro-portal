@@ -1,0 +1,88 @@
+<xml-form>
+  <page page-id="1" title="Student Government Association (SGA)">
+    <question question-id="1">Student Body President:
+      <input input-id="1">
+        <data type="Choice" form="Column">
+          <entry data-id="1" shuffle="y" href="http://www.ilstu.edu/elections/index.htm#Rory_Swikle">Rory Swikle (Public Relations)</entry>
+          <entry data-id="2" shuffle="y" href="http://www.ilstu.edu/elections/index.htm#Ryan_Meister">Ryan Meister (Finance and Political Science)</entry>
+          <entry data-id="3">Other:</entry>
+        </data>
+      </input>
+      <input input-id="2">
+        <data type="Text" form="Single"/>
+      </input>
+    </question>
+    <question question-id="2">Student Body Vice President:
+      <input input-id="1">
+        <data type="Choice" form="Column">
+          <entry data-id="1" href="http://www.ilstu.edu/elections/index.htm#Jeffrey_Gaylor">Jeffrey Gaylor (Marketing)</entry>
+          <entry data-id="2" shuffle="y" href="http://www.ilstu.edu/elections/index.htm#Chad_Shaffer">James "Chad" Shaffer (Political Science and History)</entry>
+          <entry data-id="3">Other:</entry>
+        </data>
+      </input>
+      <input input-id="2">
+        <data type="Text" form="Single"/>
+      </input>
+    </question>
+    <question question-id="3">SGA Chief of Staff:
+      <input input-id="1">
+        <data type="Choice" form="Column">
+          <entry data-id="1" shuffle="y" href="http://www.ilstu.edu/elections/index.htm#Emily_A_Weiss">Emily Weiss (Psychology)</entry>
+          <entry data-id="2" href="http://www.ilstu.edu/elections/index.htm#Candice_Thomas">Candice Nicole Thomas (Marketing and Finance)</entry>
+          <entry data-id="3">Other:</entry>
+        </data>
+      </input>
+      <input input-id="2">
+        <data type="Text" form="Single"/>
+      </input>
+    </question>
+  </page>
+  <page page-id="2" title="Graduate Senators">
+    <question question-id="1">Please Vote for TWO or fewer candidates.
+      <input input-id="1">
+        <data type="Check" form="Column">
+          <entry data-id="1" href="http://www.ilstu.edu/elections/index.htm#Amy_Attivissimo">Amy Attivissimo (Psychology)</entry>
+          <entry data-id="2" href="http://www.ilstu.edu/elections/index.htm#David_R_Forest">David R. Forest (Technology)</entry>
+        </data>
+      </input>
+      <input input-id="2">Other:
+        <data type="Text" form="Single"/>
+      </input>
+      <input input-id="3">Other:
+        <data type="Text" form="Single"/>
+      </input>
+    </question>
+  </page>
+  <page page-id="3" title="Student Trustee">
+    <question question-id="1">Student Trustee
+      <input input-id="1">
+        <data type="Choice" form="Column">
+          <entry data-id="1" href="http://www.ilstu.edu/elections/index.htm#Adam_W_Christ">Adam W. Christ (Political Science) </entry>
+          <entry data-id="2">James Klepk (Political Science)</entry>
+          <entry data-id="3">Other:</entry>
+        </data>
+      </input>
+      <input input-id="2">
+        <data type="Text" form="Single"/>
+      </input>
+    </question>
+  </page>
+  <page page-id="4" title="Black Student Union">
+    <question question-id="1">Black Student Union: "President":
+      <input input-id="1">
+        <data type="Choice" form="Column">
+          <entry data-id="1">Edward Banks (History Education) </entry>
+          <entry data-id="3">Other:</entry>
+        </data>
+      </input>
+      <input input-id="2">
+        <data type="Text" form="Single"/>
+      </input>
+    </question>
+    <question question-id="2">Black Student Union: "Vice President":
+      <input input-id="1">Other:
+        <data type="Text" form="Single"/>
+      </input>
+    </question>
+  </page>
+</xml-form>

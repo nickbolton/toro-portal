@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<changes>
+  <file path="properties/db/dbloader.xml">
+    <add-or-replace where="end">
+      <xpath>/properties</xpath>
+      <value>
+  <db-type-mapping>
+@db.meta.data@
+    <type><generic>TIMESTAMP</generic><local>DATE</local></type>
+    <type><generic>BINARY</generic><local>RAW(2000)</local></type>
+    <type><generic>TIME</generic><local>TIMESTAMP</local></type>
+    <type><generic>DATE</generic><local>DATE</local></type>
+    <type><generic>BOOLEAN</generic><local>CHAR(1)</local></type>
+    <type><generic>BIGINTEGER</generic><local>NUMBER</local></type>
+    <type><generic>INTEGER</generic><local>NUMBER</local></type>
+    <type><generic>DECIMAL</generic><local>NUMBER</local></type>
+  </db-type-mapping>
+      </value>
+    </add-or-replace>
+  </file>
+</changes>
+
