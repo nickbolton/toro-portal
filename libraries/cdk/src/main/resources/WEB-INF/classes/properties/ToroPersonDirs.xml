@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+
+<!--
+     PersonDirs.xml makes possible a standard way for the uPortal
+     framework and its installed channels to refer to particular person
+     attributes.  For example, if a channel wants to display a user's
+     email address, it will look for an attribute called "mail", which
+     appears as an alias in this file.  This alias maps to the actual
+     name of the field containing an email address in your data repository.
+     If no data repository at your organization contains a user's email
+     address then simply don't fill in a <name> correcponding to the "mail"
+     alias.  The requesting channel will simply get a null when requesting
+     the attribute value of "mail" indicating that this attribute is not
+     available.  Providing this level of indirection for attribute references
+     makes it possible for organizations to share channels that refer to
+     user's attributes.
+
+     The <PersonDirs> element should contain one or more <PersonDirInfo>
+     elements.  Each <PersonDirInfo> element represents a source for
+     obtaining person attributes and should contain a set of attribute
+     alias/name pairs in addition to settings for obtaining the data
+     from either
+
+       1) LDAP
+       2) JDBC
+       3) Container-managed JDBC DataSource
+
+     This means that it is possible to obtain person attributes from more
+     than one source.
+
+     If a particular attribute alias is specified more than
+     once, the name value obtained from the last occurance of that attribute
+     will be used.
+
+     Author: Howard Gilbert, howard.gilbert@yale.edu
+     Version $LastChangedRevision$
+-->
+
+<PersonDirs>
+
+  <PersonDirInfo>
+
+    <!-- Within this <PersonDirInfo> element, set either the LDAP properties,
+         the JDBC properties, or a container-defined JDBC resource.
+         If you want to obtain person attributes from
+         more relational databases AND/OR LDAP directories, add additional
+         <PersonDirInfo> elements under <PersonDirs>.
+    -->
+
+    <!-- LDAP Properties -->
+    <!-- The searchWithUserFilterQuery will substitute <searchquery> for
+         ~SEARCH_QUERY~ and a sequence of <uidSelect> values for ~USER_FILTER~.
+         <searchquery> is a regular search firstname, lastname, email query
+         <searchquery2> applies an additional user filter to <searchquery>
+    -->
+    <!--
+    <url>ldap://localhost:8026</url>
+    <logonid></logonid>
+    <logonpassword></logonpassword>
+    <uidquery>(uid={0})</uidquery>
+    <searchquery>(~MATCH_ALL_OP~(uid=~WILDCARD_0~{0}~WILDCARD_0~)(givenName=~WILDCARD_1~{1}~WILDCARD_1~)(sn=~WILDCARD_2~{2}~WILDCARD_2~)(mail=~WILDCARD_3~{3}~WILDCARD_3~))</searchquery>
+    <searchquery2>(&amp;~SEARCH_QUERY~(|~USER_FILTER~))</searchquery2>
+    <unionOperator>|</unionOperator>
+    <intersectionOperator>&amp;</intersectionOperator>
+    <usercontext>o=Quality,dc=unicon,dc=net</usercontext>
+    <uidSelect>(uid={~ARG~})</uidSelect>
+    <wildcard>*</wildcard>
+    <trueClause></trueClause>
+    -->
+
+    <!-- JDBC Properties -->
+    <!-- The searchquery will substitute a sequence of
+         "<uidSelect>(<unionOperator><uidSelect>)*" values for ~USER_FILTER~.
+         <searchquery> is a matchALL search and
+         <searchquery2> us a matchANY search.
+    -->
+
+    <!-- uncomment and specify database specific configurations if not
+         retrieving from jndi
+    <driver>@JDBCDRIVER@</driver>
+    <url>@DBURL@</url>
+    <logonid>@DBUSER@</logonid>
+    <logonpassword>@DBPASSWORD@</logonpassword>
+    -->
+	
+	<!-- set the db.sqlconcat and db.length property in build.properties
+		Use db.sqlconcat=|| and db.length=length for postgres and oracle database
+		Use db.sqlconcat=+ and db.length=datalength for Sql server database
+	-->
+
+    <!-- DataSource from container -->
+    <res-ref-name>@datasource@</res-ref-name>
+    
+    <uidquery>SELECT UPD.FIRST_NAME @db.sqlconcat@ ' ' @db.sqlconcat@ UPD.LAST_NAME AS FIRST_LAST, UPD.FIRST_NAME, UPD.LAST_NAME, UPD.EMAIL, UPD.USER_NAME, PDA.prefix, PDA.suffix, PDA.address1, PDA.address2, PDA.city, PDA.zip, PDA.phone, PDA.state FROM UP_PERSON_DIR UPD LEFT JOIN PERSON_DIR_ATTR PDA on PDA.USER_NAME = UPD.USER_NAME WHERE UPD.USER_NAME =?</uidquery>
+    <searchquery>SELECT FIRST_NAME @db.sqlconcat@ ' ' @db.sqlconcat@ LAST_NAME AS FIRST_LAST, FIRST_NAME, LAST_NAME, EMAIL, USER_NAME FROM UP_PERSON_DIR WHERE (~USER_FILTER~) AND ((@db.length@(?) = 0 or lower(USER_NAME) like '%' @db.sqlconcat@ lower(?) @db.sqlconcat@ '%') AND (@db.length@(?) = 0 or lower(FIRST_NAME) like '%' @db.sqlconcat@ lower(?) @db.sqlconcat@ '%') AND (@db.length@(?) = 0 or lower(LAST_NAME) like '%' @db.sqlconcat@ lower(?) @db.sqlconcat@ '%') AND (@db.length@(?) = 0 or lower(EMAIL) like '%' @db.sqlconcat@ lower(?) @db.sqlconcat@ '%'))</searchquery>
+    <searchquery2>SELECT FIRST_NAME @db.sqlconcat@ ' ' @db.sqlconcat@ LAST_NAME AS FIRST_LAST, FIRST_NAME, LAST_NAME, EMAIL, USER_NAME FROM UP_PERSON_DIR WHERE (~USER_FILTER~) AND ((@db.length@(?) > 0 AND lower(USER_NAME) like '%' @db.sqlconcat@ lower(?) @db.sqlconcat@ '%') OR (@db.length@(?) > 0 AND lower(FIRST_NAME) like '%' @db.sqlconcat@ lower(?) @db.sqlconcat@ '%') OR (@db.length@(?) > 0 AND lower(LAST_NAME) like '%' @db.sqlconcat@ lower(?) @db.sqlconcat@ '%') OR (@db.length@(?) > 0 AND lower(EMAIL) like '%' @db.sqlconcat@ lower(?) @db.sqlconcat@ '%'))</searchquery2>
+
+    <!-- unionOperator and intersectionOperator values MUST contain whitespace around them
+         i.e. <unionOperator> OR </unionOperator>
+    -->
+    <unionOperator> OR </unionOperator>
+    <intersectionOperator> AND </intersectionOperator>
+
+    <uidSelect>USER_NAME=?</uidSelect>
+    <wildcard></wildcard>
+    <trueClause>1=1</trueClause>
+
+    <attributes>
+
+      <!-- uPortal channels refer to user attributes using standard
+           attribute names found in the eduPerson object class. If
+           a name is found for an eduPerson attribute name or "alias",
+           it will be stuffed into the org.jasig.portal.security.IPerson object.
+           See http://www.educause.edu/eduperson/ for an explanation of each
+           of these aliases.
+      -->
+
+                <attribute>
+                        <name>USER_NAME</name>
+                        <alias>username</alias>
+                </attribute>
+
+                <attribute>
+                        <name>USER_NAME</name>
+                        <alias>user.login.id</alias>
+                </attribute>
+
+                <attribute>
+                        <name>USER_NAME</name>
+                        <alias>user.login.password</alias>
+                </attribute>
+
+                <attribute>
+                        <name>LAST_NAME</name>
+                        <alias>lastName</alias>
+                </attribute>
+
+                <attribute>
+                        <name>FIRST_NAME</name>
+                        <alias>firstName</alias>
+                </attribute>
+
+                <attribute>
+                        <name>EMAIL</name>
+                        <alias>mail</alias>
+                </attribute>
+
+                <attribute>
+                        <name>FIRST_LAST</name>
+                        <alias>displayName</alias>
+                </attribute>
+
+      </attributes>
+
+  </PersonDirInfo>
+
+</PersonDirs>

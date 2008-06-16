@@ -25,13 +25,22 @@
 package net.unicon.academus.apps.blogger.access;
 
 import java.net.URL;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
 import javax.servlet.ServletConfig;
+
 import javax.sql.DataSource;
+
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
 
 import net.unicon.academus.api.AcademusFacadeContainer;
 import net.unicon.academus.api.IAcademusFacade;
@@ -42,16 +51,19 @@ import net.unicon.alchemist.access.AccessType;
 import net.unicon.alchemist.access.IAccessEntry;
 import net.unicon.alchemist.access.Identity;
 import net.unicon.alchemist.access.IdentityType;
+import net.unicon.alchemist.access.permissions.PermissionsAccessBroker;
 import net.unicon.alchemist.access.Principal;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.blojsom.BlojsomException;
+
 import org.blojsom.authorization.AuthorizationProvider;
 import org.blojsom.blog.BlogUser;
 import org.blojsom.blog.BlojsomConfiguration;
 import org.blojsom.blog.BlojsomConfigurationException;
+import org.blojsom.BlojsomException;
 import org.blojsom.util.BlojsomConstants;
+
 import org.dom4j.Attribute;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -120,7 +132,7 @@ public class AcademusAuthorizationProvider implements AuthorizationProvider,
             // Bootstrap all RDBMS Access Brokers.
             List bsList = configElement.selectNodes("//*[@needsDataSource='true']");
             if (!bsList.isEmpty()) {
-                DataSource ds = AcademusFacadeContainer.retrieveFacade().getAcademusDataSource();
+                DataSource ds = getDataSource();
 
                 for (Iterator it = bsList.iterator(); it.hasNext();) {
                     Element e = (Element) it.next();
@@ -351,5 +363,10 @@ public class AcademusAuthorizationProvider implements AuthorizationProvider,
 
         return result;
     } // end getPrincipal
+
+    protected DataSource getDataSource() throws NamingException {
+        DataSource ds = (DataSource)(new InitialContext()).lookup(_jndiName);
+        return ds;
+    }
 
 } // end AcademusAuthorizationProvider class

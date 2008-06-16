@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+
+<changes>
+  <file path="WEB-INF/web.xml">
+        <add-servlet>
+            <servlet>
+                <servlet-name>SsoCallback</servlet-name>
+                <servlet-class>net.unicon.academus.apps.sso.SsoCallbackServlet</servlet-class>
+                <load-on-startup>4</load-on-startup>
+                <init-param>
+                    <!-- This path should map back to the Login servlet -->
+                    <param-name>unauthenticatedRedirectUrl</param-name>
+                    <param-value>/Login</param-value>
+                </init-param>
+            </servlet>
+        </add-servlet>
+        <add-servlet>
+            <servlet>
+                <servlet-name>CalendarReply</servlet-name>
+                <servlet-class>net.unicon.academus.apps.calendar.CalendarReplyServlet</servlet-class>
+            </servlet>
+        </add-servlet>
+        <add-servlet-mapping>
+            <servlet-mapping>
+                <servlet-name>SsoCallback</servlet-name>
+                <url-pattern>/ssoCallback</url-pattern>
+            </servlet-mapping>
+        </add-servlet-mapping>
+        <add-servlet-mapping>
+            <servlet-mapping>
+                <servlet-name>CalendarReply</servlet-name>
+                <url-pattern>/CalendarReply</url-pattern>
+            </servlet-mapping>
+        </add-servlet-mapping>
+        <add-error-page>
+            <error-page>
+                <exception-type>java.lang.Exception</exception-type>
+                <location>/WEB-INF/view/jsp/errors.jsp</location>
+            </error-page>
+        </add-error-page>
+    </file>
+  <file path="WEB-INF/classes/properties/services.xml">
+    <add-or-replace where="end">
+      <xpath>/servicelist</xpath>
+      <value>
+        <service>
+          <name>RMIRegistryService</name>
+          <class>net.unicon.sdk.j2ee.rmi.RMIRegistryBootstrap</class>
+          <method type="static">bootstrapRMIRegistry</method>
+        </service>
+        <service>
+          <name>Waiting for RMI Registry</name>
+          <class>java.lang.Thread</class>
+          <method type="static">sleep</method>
+          <arguments>
+            <!-- Index interval: the indexing process will restart after this period (in seconds)-->
+            <argitem>
+              <datatype array="false">long.class</datatype>
+              <value>3000</value>
+            </argitem>
+          </arguments>
+        </service>
+        <!-- This must be started after the RMIRegistryService -->
+        <service>
+          <name>AcademusImportService</name>
+          <class>net.unicon.academus.service.RFAcademusImportService</class>
+          <method type="static">initRMIImportService</method>
+        </service>
+        <service>
+          <name>CSCR Browser Registry</name>
+          <class>net.unicon.portal.cscr.CscrBrowserRegistry</class>
+          <method type="static">instance</method>
+        </service>
+        <service>
+          <name>Academus Facade API</name>
+          <class>net.unicon.academus.api.impl.AcademusFacadeImpl</class>
+          <method type="static">register</method>
+        </service>
+        <service>
+          <name>Academus CMS Facade API</name>
+          <class>net.unicon.academus.cms.api.impl.AcademusCMSFacadeImpl</class>
+          <method type="static">register</method>
+        </service>
+        <service>
+          <name>Academus Mercury Cache Validator</name>
+          <class>net.unicon.mercury.cache.impl.MercuryCacheValidatorImpl</class>
+          <method type="static">register</method>
+        </service>
+        <!-- >
+          <name>JMSCacheMessageListener</name>
+          <class>net.unicon.sdk.cache.jms.JMSCacheMessageListener</class>
+          <method>getName</method>
+        </service-->
+      </value>
+    </add-or-replace>
+  </file>
+
+  <file path="WEB-INF/classes/properties/portal.properties">
+    <add-or-replace>
+      <name>net.unicon.portal.util.ChannelRendererWrapper.ChannelRendererFactory.className</name>
+      <value>org.jasig.portal.ChannelRendererFactoryImpl</value>
+    </add-or-replace>
+    <add-or-replace>
+      <name>org.jasig.portal.PortalSessionManager.allow_repeated_requests</name>
+      <value>yes</value>
+    </add-or-replace>
+    <add-or-replace>
+      <name>net.unicon.portal.util.ChannelRendererWrapper.threadPool_initialThreads</name>
+      <value>100</value>
+    </add-or-replace>
+    <add-or-replace>
+      <name>net.unicon.portal.util.ChannelRendererWrapper.threadPool_maxThreads</name>
+      <value>100</value>
+    </add-or-replace>
+    <add-or-replace>
+      <name>net.unicon.portal.util.ChannelRendererWrapper.threadPool_threadPriority</name>
+      <value>5</value>
+    </add-or-replace>
+    <add-or-replace>
+      <name>net.unicon.portal.util.ChannelRendererWrapper.threadPool_shared</name>
+      <value>true</value>
+    </add-or-replace>
+  </file>
+</changes>
+

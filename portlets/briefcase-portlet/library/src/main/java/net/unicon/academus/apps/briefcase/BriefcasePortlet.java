@@ -27,6 +27,7 @@ package net.unicon.academus.apps.briefcase;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -37,6 +38,7 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletSession;
 import javax.sql.DataSource;
 import javax.xml.transform.Source;
+import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamSource;
 
 import net.unicon.academus.api.AcademusFacadeContainer;
@@ -97,13 +99,6 @@ public final class BriefcasePortlet extends AbstractWarlockPortlet {
             URL configUrl = ctx.getResource(configPath);
             Element configElement = (Element) reader.read(configUrl.toString()).selectSingleNode("briefcase");
 
-            boolean useXsltc = Boolean.valueOf(configElement.attributeValue("useXsltc"));
-
-            boolean cacheTemplates = true;
-
-            if (configElement.attributeValue("cacheTemplates") != null) {
-                cacheTemplates = Boolean.valueOf(configElement.attributeValue("cacheTemplates"));
-            }
             
             // Prep the drive(s).
             List dList = configElement.selectNodes("drive");
@@ -160,22 +155,14 @@ public final class BriefcasePortlet extends AbstractWarlockPortlet {
 
             // Construct the rendering engine;
             URL xslUrl = ctx.getResource("/rendering/templates/layout.xsl");
-            
             Source trans = new StreamSource(xslUrl.toString());
-            IWarlockFactory fac = null;
-            
-            if (useXsltc) {
-                fac = new XmlWarlockFactory(trans,
-                    TransletsConstants.xsltcTransformerFactoryImplementation,
-                    TransletsConstants.xsltcDebug,
-                    TransletsConstants.xsltcPackage,
-                    TransletsConstants.xsltcGenerateTranslet,
-                    TransletsConstants.xsltcAutoTranslet,
-                    TransletsConstants.xsltcUseClasspath,
-                    cacheTemplates);
-            } else {
-                fac = new XmlWarlockFactory(trans, cacheTemplates);
-            }
+            IWarlockFactory fac = new XmlWarlockFactory(trans,
+                TransletsConstants.xsltcTransformerFactoryImplementation,
+                TransletsConstants.xsltcDebug,
+                TransletsConstants.xsltcPackage,
+                TransletsConstants.xsltcGenerateTranslet,
+                TransletsConstants.xsltcAutoTranslet,
+                TransletsConstants.xsltcUseClasspath);
 
             // Construct the screens;
             List list = new ArrayList();

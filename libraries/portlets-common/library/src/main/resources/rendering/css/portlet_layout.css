@@ -1,0 +1,568 @@
+
+/* GLOBALS */
+/*--------------------------------------------------------------------------------------*/
+
+html, body, form {
+margin: 0px;
+padding: 0px;
+}
+
+.portlet {
+margin: 0px;
+padding: 0px;
+width: 100%;
+/*height: 100%;*/
+position:relative;
+left:0px;
+top:0px;
+}
+
+.inline {
+display: inline;
+}
+
+.hide {
+display: none;
+}
+
+.implied {
+display:none;
+}
+
+.top {
+vertical-align: top;
+}
+
+.margin {
+margin: 10px;
+}
+
+.padding {
+padding: 10px;
+}
+
+.padding2 {
+padding: 0 10px 10px 10px;
+}
+
+.padding-large {
+padding: 25px;
+}
+
+.no-pad {
+margin: 0px;
+padding: 0px;
+}
+
+.center {
+text-align: center;
+}
+
+.right {
+text-align: right;
+}
+
+.left {
+text-align: left;
+}
+
+.float-right {
+float: right;
+}
+
+.float-left {
+float: left;
+}
+
+.extraPad {
+margin-left: 25px;
+}
+
+.no-bullet {
+list-style-type: none;
+}
+
+.li-image {
+display: block;
+min-height: 16px;
+_height: 16px;
+padding-left: 20px;
+padding-top: 2px;
+}
+
+.portlet-content {
+width: 100%;
+/*height: 100%;*/
+}
+
+.header {
+height: 10%;
+min-height: 64px;
+position: relative;
+}
+
+.title2 {
+height: 64px;
+text-align: left;
+}
+
+.title2 h2 {
+margin: 0px;
+padding: 25px 0px 0px 15px;
+font-weight: normal;
+}
+
+.portlet-content .title {
+text-align: left;
+padding-left: 10px;
+}
+
+.portlet-content .title h2 {
+margin: 0px;
+padding: 15px 0px 5px 15px;
+font-weight: normal;
+}
+
+.header-status-container {
+width: 250px;
+}
+
+.header-status {
+margin: 0px;
+padding: 0px;
+}
+
+.header-status th, .header-status td {
+margin: 0px;
+padding: 0px;
+padding-top: 8px;
+font-weight: normal;
+text-align: left;
+}
+
+.header-status th {
+width: 175px;
+}
+
+.header-status td {
+width: 75px;
+}
+
+.content2 {
+}
+
+.main-1col, .main-2col, .secondary {
+/*height: 90%;*/
+vertical-align: top;
+}
+
+.main-1col {
+width: 100%;
+}
+
+.main-2col {
+width: 75%;
+}
+
+.secondary {
+width: 25%;
+}
+
+.secondary3 {
+padding-top: 10px;
+padding-bottom: 10px;
+}
+
+.navbar {
+height: 38px;
+padding-top: 8px;
+padding-left: 10px;
+/*text-align: center; /* Removed to fix Mozilla Dropdown issue */
+}
+
+.navbar select {
+/*float: left;/* Removed to fix Mozilla Dropdown issue */
+}
+
+.back-button, .back-button-disabled {
+display: block;
+height: 16px;
+width: 16px;
+background: url("../images/icons/button_back.gif") no-repeat;
+float: right;
+margin: 2px 5px 2px 5px;
+}
+
+.back-button-disabled {
+background-position: 0px -16px;
+}
+
+.navtree {
+/*overflow: auto;*/
+/*height: 100%;*/
+}
+
+.navtree ul {
+margin: 0px;
+padding: 0px;
+}
+
+.navtree li {
+list-style-type: none;
+padding-left: 18px;
+_margin-left: 18px;
+_padding-left: 0px;
+}
+
+.navtree li a {
+display: block;
+min-height: 18px;
+_height: 18px;
+padding-top: 2px;
+}
+
+.nolink-node {
+/*border: 1px solid #000;*/
+/*height: 18px;*/
+padding-top: 2px;
+}
+
+.welcomelink {
+background: url("../images/icons/tree_folder_opened.gif") no-repeat;
+padding-left: 35px;
+}
+
+label.select-tree {
+line-height:20px;
+padding-top:4px;
+padding-bottom:4px;
+margin-left:5px;
+}
+
+.folderopen {
+background: url("../images/icons/tree_folder_opened.gif") top left no-repeat;
+padding-left: 35px;
+}
+
+.folderclosed {
+background: url("../images/icons/tree_folder_closed.gif") no-repeat;
+padding-left: 35px;
+}
+
+.sharedfolderopen {
+background: url("../images/icons/tree_shared_opened.gif") no-repeat;
+padding-left: 35px;
+}
+
+.sharedfolderclosed {
+background: url("../images/icons/tree_shared_closed.gif") no-repeat;
+padding-left: 35px;
+}
+
+.networkfolderopen {
+background: url("../images/icons/tree_network_opened.gif") no-repeat;
+padding-left: 35px;
+}
+
+.networkfolderclosed {
+background: url("../images/icons/tree_network_closed.gif") no-repeat;
+padding-left: 35px;
+}
+
+div.BriefcasePortlet_movecopy table.highlightAndSelectOnClick td a.folderopen, 
+div.BriefcasePortlet_movecopy table.highlightAndSelectOnClick td a.folderclosed, 
+div.BriefcasePortlet_movecopy table.highlightAndSelectOnClick td a.sharedfolderopen, 
+div.BriefcasePortlet_movecopy table.highlightAndSelectOnClick td a.sharedfolderclosed, 
+div.BriefcasePortlet_movecopy table.highlightAndSelectOnClick td a.networkfolderopen, 
+div.BriefcasePortlet_movecopy table.highlightAndSelectOnClick td a.networkfolderclosed
+{
+font-size:120%;
+}
+
+.sidebox, .searchbox {
+padding: 10px 10px 15px 10px;
+margin-bottom: 10px;
+}
+
+.sidebox h4, .sidebox p, .searchbox h4, .searchbox p {
+margin: 0px;
+padding: 0px;
+margin-bottom: 3px;
+}
+
+.searchbox label {
+display: block;
+font-weight:bold;
+color: #416498;
+margin-bottom: 5px;
+}
+
+.shared-items {
+background: url("../images/icons/file_folder.gif") no-repeat;
+}
+
+.selection-basket {
+width: 90%;
+}
+
+.selection-basket-label, .selection-basket-number {
+text-align: left;
+padding: 2px 10px 2px 10px;
+}
+
+.selected-items {
+background: url("../images/icons/file.gif") no-repeat;
+}
+
+.group {
+display: block;
+background: url("../images/icons/group.gif") left top no-repeat;
+min-height: 22px;
+_height: 22px;
+padding-left: 27px;
+padding-top: 2px;
+}
+
+.member {
+display: block;
+background: url("../images/icons/member.gif") left top no-repeat;
+min-height: 22px;
+_height: 22px;
+padding-left: 27px;
+padding-top: 2px;
+}
+
+.toolbar {
+height: 38px;
+padding-top: 8px;
+padding-left: 10px;
+}
+
+.toolbar-nostyle {
+height: 24px;
+_height: 30px;
+padding-top: 10px;
+}
+
+.button-group-left {
+float:left;
+}
+
+.view-filter {
+text-align:right;
+margin-right:10px;
+}
+
+.main-content {
+margin: 10px;
+margin-bottom: 25px;
+}
+
+.pagetexttitle h3 {
+margin-bottom: 5px;
+}
+
+.pagetexttitle p {
+margin-bottom: 25px;
+}
+
+.content-title {
+margin: 0px;
+padding: 8px 20px 8px 20px;
+}
+
+.error {
+margin: 10px 0px 10px 0px;
+}
+
+.error h4 {
+margin-right: 3px;
+}
+
+.error p {
+display: inline;
+}
+
+.problem {
+}
+
+.solution {
+}
+
+.tabs {
+list-style-type: none;
+margin: 0;
+padding: 20px 0 2px 6px;
+white-space: nowrap;
+}
+
+.tabs li {
+margin: 0 0 0 3px;
+padding: 0;
+display: inline;
+}
+
+.tab {
+padding: 2px 20px 2px 20px;
+}
+
+.removable, .removable-selected {
+padding-right: 20px;
+background-repeat: no-repeat;
+background-position: right;
+}
+
+.removable {
+background-image: url("../images/icons/action_close_blue.gif");
+}
+
+.removable-selected {
+background-image: url("../images/icons/action_close_blue.gif");
+}
+
+.paging {
+height: 30px;
+}
+
+.display-per-page {
+float: left;
+margin: 0px;
+padding: 0px;
+}
+
+.display-per-page select {
+margin: 0px 5px 0px 5px;
+}
+
+.paging-controls {
+text-align: right;
+_margin-right:15px; /* Hack to fix IE paging controls being truncated */
+}
+
+.paging-controls span {
+margin-right: 10px;
+}
+
+.main-content table {
+width: 100%;
+margin: 10px 0px 10px 0px;
+clear: both;
+}
+
+table.main-content-table {
+margin: 0px 0px 10px 0px; /* Remove top margin to keep caption from being spaced from the content */
+}
+
+.main-content table th, .main-content table td {
+padding: 5px 8px 5px 8px;
+}
+
+.main-content table th.th-button {
+padding: 0px;
+}
+
+.expanded-link {
+margin-bottom: 25px;
+}
+
+.expanded-link h4, .expanded-link p {
+margin: 0px;
+margin-bottom: 5px;
+padding: 0px;
+}
+
+.sharedfolder-icon {
+background: url("../images/icons/file_shared_folder.gif") no-repeat;
+}
+
+.folder-icon {
+background: url("../images/icons/file_folder.gif") no-repeat;
+}
+
+a.folder-icon, a.folder-icon:link, a.folder-icon:visited {
+/*text-decoration:underline;*/
+}
+
+.file-icon {
+background: url("../images/icons/file.gif") no-repeat;
+}
+
+a.file-icon, a.file-icon:link, a.file-icon:visited {
+/*text-decoration:underline;*/
+}
+
+.edit-icon {
+height: 16px;
+width: 16px;
+background: url("../images/icons/action_edit.gif") no-repeat;
+}
+
+.remove-icon {
+background: url("../images/icons/action_close_blue.gif") no-repeat;
+}
+
+.up-icon {
+background: url("../images/icons/action_up.gif") no-repeat;
+}
+
+span.refresh-icon, span.reddot-icon {
+display:none;
+}
+
+a.refresh-icon, a:link.refresh-icon, a:visited.refresh-icon {
+display: block;
+height: 9px;
+width: 8px;
+background: url("../images/icons/refresh.gif") no-repeat;
+}
+
+a.reddot-icon, a:link.reddot-icon, a:visited.reddot-icon {
+display: block;
+height: 12px;
+width: 11px;
+background: url("../images/icons/reddot.gif") no-repeat;
+}
+
+a.notSorted:link, a.notSorted:visited, a.sortedAscending:link, a.sortedAscending:visited, a.sortedDescending:link, a.sortedDescending:visited, a.select-toggle:link, a.select-toggle:visited {
+/* Requires th class plus link class to pass style through for font-color.  May not be needed for background-image */
+display: block;
+height: 100%;
+width: 100%;
+text-align: left;
+}
+
+.th-button-name a.notSorted:link,.th-button-name a.notSorted:visited,.th-button-name a.sortedAscending:link,.th-button-name a.sortedAscending:visited,.th-button-name a.sortedDescending:link,.th-button-name a.sortedDescending:visited,th.th-column-permission a.hint:link, th.th-column-permission a.hint:visited {
+/* Requires th class plus link class to pass style through for font-color.  May not be needed for background-image */
+display: block;
+height: 100%;
+width: 100%;
+text-align: center;
+}
+
+a.sortedAscending:link, a.sortedAscending:visited {
+/* Requires th class plus link class to pass style through for font-color.  May not be needed for background-image */
+background: url("../images/icons/sort_ascend.gif") no-repeat right top;
+}
+
+a.sortedDescending:link, a.sortedDescending:visited {
+/* Requires th class plus link class to pass style through for font-color.  May not be needed for background-image */
+background: url("../images/icons/sort_descend.gif") no-repeat right top;
+}
+
+a.notSorted span, a.sortedAscending span, a.sortedDescending span, a.select-toggle span {
+/* Requires th class plus link class to pass style through for font-color.  May not be needed for background-image */
+display: block;
+margin: 5px 20px 5px 8px;
+}
+
+a.hint:hover {
+cursor: help;
+}
+
+/* Messaging Portlet */
+div.MessagingPortlet .toolbar
+{
+margin-top: 10px;
+}
+
+

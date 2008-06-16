@@ -57,6 +57,7 @@ import net.unicon.civis.grouprestrictor.IGroupRestrictor;
 import net.unicon.civis.ICivisFactory;
 import net.unicon.mercury.IMessageFactory;
 import net.unicon.warlock.fac.xml.XmlWarlockFactory;
+import net.unicon.warlock.fac.xml.XmlWarlockFactory;
 import net.unicon.warlock.Handle;
 import net.unicon.warlock.IScreen;
 import net.unicon.warlock.IStateQuery;
@@ -113,14 +114,6 @@ public final class MessagingPortlet extends AbstractWarlockPortlet {
             Element configElement =
                 (Element) reader.read(configUrl.toString())
                                 .selectSingleNode("messaging");
-
-            boolean useXsltc = Boolean.valueOf(configElement.attributeValue("useXsltc"));
-
-            boolean cacheTemplates = true;
-
-            if (configElement.attributeValue("cacheTemplates") != null) {
-                cacheTemplates = Boolean.valueOf(configElement.attributeValue("cacheTemplates"));
-            }
 
             configElement = ConfigHelper.handle(configElement);
             
@@ -274,20 +267,13 @@ public final class MessagingPortlet extends AbstractWarlockPortlet {
             // Construct the rendering engine;
             URL xslUrl = ctx.getResource("/rendering/templates/layout.xsl");
             Source trans = new StreamSource(xslUrl.toString());
-            IWarlockFactory fac = null;
-            
-            if (useXsltc) {
-                fac = new XmlWarlockFactory(trans,
-                    TransletsConstants.xsltcTransformerFactoryImplementation,
-                    TransletsConstants.xsltcDebug,
-                    TransletsConstants.xsltcPackage,
-                    TransletsConstants.xsltcGenerateTranslet,
-                    TransletsConstants.xsltcAutoTranslet,
-                    TransletsConstants.xsltcUseClasspath,
-                    cacheTemplates);
-            } else {
-                fac = new XmlWarlockFactory(trans, cacheTemplates);
-            }
+            IWarlockFactory fac = new XmlWarlockFactory(trans,
+                TransletsConstants.xsltcTransformerFactoryImplementation,
+                TransletsConstants.xsltcDebug,
+                TransletsConstants.xsltcPackage,
+                TransletsConstants.xsltcGenerateTranslet,
+                TransletsConstants.xsltcAutoTranslet,
+                TransletsConstants.xsltcUseClasspath);
 
             // Construct the screens;
             List screenList = new ArrayList();

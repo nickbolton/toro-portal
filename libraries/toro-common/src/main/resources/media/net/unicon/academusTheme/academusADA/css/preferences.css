@@ -1,0 +1,339 @@
+/* Any style declaration within an element that has an underscore "_" prefix (e.g. _width: 100%) is Microsoft IE specific. MSIE will process the underscore as valid CSS syntax even though it is not valid. All other browsers will ignore it. Thus, using the underscore can send MSIE specific style information that other browsers will ignore. */
+
+
+/* PREFERENCES */
+/*--------------------------------------------------------------------------------------*/
+
+/* ((((( Preferences Hooks ))))) */
+/* Preferences hooks in the default view layout (Change Layout, Add Content, Change Skin) */
+
+#prefLinks {
+margin: 10pt;
+padding: 10pt;
+background: #FFF;
+border: 1px solid #000;
+}
+
+#prefLinks li {
+margin-left: 10pt;
+}
+
+/* ((((( Preferences Content Layout ))))) */
+/* Layout for preferences views */
+
+#contentTablePrefs {
+width: 100%;
+}
+
+#tabPrefsContainer {
+background: #98C0E4;
+border-left: 1px solid #7BADDD;
+border-right: 1px solid #7BADDD;
+border-bottom: 1px solid #7BADDD;
+}
+
+#tabPrefsNavContainer {
+border-left: 1px solid #FFF;
+border-right: 1px solid #FFF;
+border-bottom: 1px solid #7BADDD;
+}
+
+#tabPrefsContent {
+margin: 20px;
+clear: both;
+}
+
+#prefsLeftNav {
+height: 100%;
+background: #6699CC;
+}
+
+#prefsLeftNavCol {
+height: 100%;
+width: 165px;
+min-height: 330px;
+}
+
+
+/* ((((( Portal Preferences ))))) */
+/* Main user preferences title, navigation tabs (tabs, fragments, languages, skins), and preferences submit buttons */
+
+#portalPrefsContainer {
+padding: 10pt;
+background: #FFF;
+border: 1px solid #000;
+}
+
+#portalPrefsContainer h3 {
+margin: 8px 0px 0px 0px;
+padding: 0px;
+color: #000;
+}
+
+#portalPrefsNav {
+list-style: none;
+}
+
+#portalPrefsNav li {
+margin-right: 20pt;
+float: left;
+}
+
+a.portalPrefsNav-link, a.portalPrefsNav-link-selected {
+font-weight: bold;
+}
+
+a.portalPrefsNav-link-selected {
+color: #000;
+text-decoration: none;
+}
+
+a.portalPrefsNav-link:hover, a.portalPrefsNav-link-selected:hover {
+text-decoration: underline;
+}
+
+#portalPrefsExit {
+margin-top: 10pt;
+list-style: none;
+clear: both;
+}
+
+#portalPrefsExit li {
+margin-right: 20pt;
+float: left;
+}
+
+#prefModeFinished, #prefModeCancel {
+display: block;
+margin: 0px;
+padding: 3pt 15pt;
+background: #D7D7D7;
+color: #666;
+border-top: 2px solid #FFF;
+border-right: 2px solid #000;
+border-bottom: 2px solid #000;
+border-left: 2px solid #FFF;
+text-decoration: none;
+text-align: center;
+v-align: middle;
+}
+
+#prefModeFinished {
+background: #477BAD;
+color: #FFF;
+}
+
+/* ((((( Tab Preferences ))))) */
+/* Tab preferences title, tab preferences navigation, tab rename, tab positioning, and tab layout. */
+
+#addTab {
+margin: 10pt;
+}
+
+.add-tab {
+}
+
+#tab-prefs-container {
+padding: 20px;
+background-color: #F5F5F6;
+clear: both;
+}
+
+#tab-preferences {
+}
+
+#tab-preferences h3 {
+margin-bottom: 0px;
+padding: 0px;
+}
+
+#tabPrefsOptions {
+margin: 20px 0px 0px 28px;
+padding: 0px;
+list-style-type: none;
+}
+
+#tabPrefsOptions li {
+margin-left: 10pt;
+float: left;
+}
+
+#tabPrefsOptions a {
+}
+
+#tabPrefsSelector {
+}
+
+#tabPrefsRename {
+width: 250px;
+margin: 20pt 0pt 0pt 10pt;
+padding: 0px;
+border: 1px solid #666;
+background: #EEE;
+text-align: center;
+}
+
+#tabPrefsRenameForm {
+margin-top: 10pt;
+}
+
+#tabPrefsRenameInput {
+}
+
+#tabPrefsRenameSubmit {
+}
+
+.tab-rename-cancel {
+}
+
+input#tabPrefsRename:focus {
+}
+
+#tab-preferences ul {
+margin: 0px;
+padding: 0px;
+list-style-type: none;
+}
+
+#tabPrefsContainerToolbar {
+width: 100%;
+}
+
+#tabPrefsContainerToolbarDefault {
+vertical-align: top;
+}
+
+#tabPrefsContainerToolbarLayout {
+text-align: right;
+}
+
+#tabPrefsContainerToolbarLayoutContainer {
+margin: 10px 10px 0px 10px;
+}
+
+#tabPrefsContainerToolbarLayout form {
+display: inline;
+}
+
+/* ((((( Preferences Navigation ))))) */
+/* Tab preferences navigation. */
+
+#prefsNavcontainer {
+background: #CCC;
+}
+
+#prefsNavigation {
+list-style: none;
+}
+
+.prefsnav-li, .prefsnav-li-selected {
+margin: 0px;
+margin-right: 3px;
+float: left;
+}
+
+.prefsnav-link:link, .prefsnav-link:visited {
+display: block;
+padding: 10pt 20pt;
+white-space: nowrap;
+background: #FFF;
+border: 1px solid #000;
+text-decoration: none;
+}
+
+.prefsnav-li-selected {
+padding: 10pt 20pt;
+background: #FEFFC3;
+border: 1px solid #000;
+}
+
+.prefsnav-selected-label {
+padding: 0pt 10pt;
+}
+
+.prefsnav-link:hover {
+text-decoration: underline;
+}
+
+/* ((((( Column Preferences ))))) */
+/* Column title, column move, column delete. */
+
+.add-column-container {
+width: 175px;
+margin: 0px 10px;
+padding: 10px 0px;
+background-color: #EEF4FB; 
+text-align: center;
+}
+
+.removeColumn {
+margin: 0px 0px 20px 0px;
+text-align:right;
+}
+
+.column-preferences, .column-preferences-narrow, .column-preferences-wide {
+height: 100%;
+margin: 0px 20px;
+padding: 10px;
+background: #EEF4FB;
+}
+
+.column-preferences {
+width: 300px;
+}
+
+.column-preferences-narrow {
+width: 200px;
+}
+
+.column-preferences-wide {
+width: 400px;
+}
+
+.column-preferences form {
+margin: 0px;
+padding: 0px;
+}
+
+/* ((((( Portlet Preferences ))))) */
+/* Portlet or channel title, move, delete. */
+
+.portlet-prefs, .portlet-prefs-hidden {
+margin-bottom: 10pt;
+padding: 10pt;
+background-color: #FFF;
+border: 1px solid #7EB0DC;
+clear: both;
+}
+
+.portlet-prefs-hidden {
+background-color: #EFEFEF;
+border: 1px solid #CCC;
+}
+
+.portlet-prefs h3 {
+margin-bottom: 5pt;
+}
+
+.hidden-portlet-label {
+color: #000;
+font-weight: bold;
+}
+
+.portlet-move-table {
+margin-top: 20pt;
+}
+
+.portlet-move-table td {
+border: 1px solid #CCC;
+}
+
+.portlet-move-up-container, .portlet-move-down-container {
+margin:  5pt 25pt;
+text-align: center;
+}
+
+.portlet-move-right-container, .portlet-move-left-container {
+margin:  5pt 30pt;
+text-align: center;
+}

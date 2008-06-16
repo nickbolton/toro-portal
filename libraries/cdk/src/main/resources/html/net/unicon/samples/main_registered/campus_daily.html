@@ -1,0 +1,39 @@
+<HTML>
+<HEAD>
+<TITLE>uPortal 2.0.1</TITLE>
+<script language="javascript">
+
+        function imagePath(imageName) {
+			var imagePath=parent.imagePathTop;
+            image = '../../../../../'+imagePath + imageName;
+			imageFull = '<IMG src="' + image + '"align="left" border="0">';
+            document.write(imageFull);
+			}
+
+		var skinPath='../../../../../'+parent.skinPathTop;
+		var skinFull= '<link type="text/css" rel="stylesheet" href="'+skinPath+'">';			
+		//alert(skinFull);
+		document.write(skinFull);
+			
+		 
+	</script>
+</HEAD>
+<BODY class="uportal-background-content">
+   	<table cellpadding="3" cellspacing="0" width="100%" border="0">
+   		<tr valign="top">
+   			<td>
+				<span class="uportal-text">
+				<span class="uportal-channel-subtitle"><p><em>The Campus Daily-</em> The source for information</p></span>
+				<ul type="square">
+				<li><a href="http://www.unicon.net">Sports Teams Score Big over the Weekend</a></li>
+				<li><a href="http://www.unicon.net">Blood Drive Contest produces many winners</a></li>
+				<li><a href="http://www.unicon.net">Legislature halts talks on key issues</a></li>
+				<li><a href="http://www.unicon.net">City proposes new downtown plaza</a></li>
+				</ul>
+				<a href="http://www.unicon.net">more from <em>The Campus Daily...</em></a>
+				</span>
+			</td>
+   		</tr>
+   	</table>
+</BODY>
+</HTML>

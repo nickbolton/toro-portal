@@ -1,0 +1,283 @@
+
+/* GLOBALS */
+/*--------------------------------------------------------------------------------------*/
+
+@page { 
+margin: 2.54cm;
+page-break-after: always;
+}
+
+h1, h2, h3, h4, h5, h6 { page-break-after: avoid }
+
+ul, ol, dl { page-break-before: avoid }
+
+a, a:link, a:visited { color: #3366CC }
+
+
+/* ((((( Global Classes ))))) */
+
+.form-button, .uportal-button { /*includes uPortal class overwrite*/
+background: #DAE3EC;
+color: #2E4378;
+border-top: 1pt solid #FFF;
+border-right: 1pt solid #46494D;
+border-bottom: 1pt solid #46494D;
+border-left: 1pt solid #FFF;
+font-size: 7pt;
+}
+
+input.image {
+background: transparent;
+border: 0px;
+}
+
+.hide {
+display: none;
+}
+
+.float-left {
+float: left;
+}
+
+.margin-left {
+margin-left: 10px;
+}
+
+/* ((((( End Global Classes ))))) */
+
+
+/* LAYOUT */
+/*--------------------------------------------------------------------------------------*/
+
+#bodyContent {
+margin: 0; 
+padding: 0;
+}
+
+#header {
+margin: 0; 
+padding: 0;
+border-bottom: 2pt solid #CCC;
+}
+
+#content {
+}
+
+#footer {
+margin: 0;
+padding: 0;
+border-top: 1pt solid #CCC;
+font-size: 7pt;
+}
+
+
+/* ACCESSIBLITY */
+/*--------------------------------------------------------------------------------------*/
+
+#skipNav, .accessibility {
+display: none;
+}
+
+
+/* HEADER ELEMENTS */
+/*--------------------------------------------------------------------------------------*/
+
+#header h1 {
+margin: 0;
+margin-bottom: 12pt;
+padding: 0;
+}
+
+#related1, #related2 {
+display: none;
+}
+
+#persistent-navcontainer {
+display: none;
+}
+
+#userIdentification {
+display: none;
+}
+
+#datedisplay {
+display: none;
+}
+
+/* MAIN NAVIGATION */
+/*--------------------------------------------------------------------------------------*/
+
+#navcontainer ul {
+list-style: none;
+}
+
+#navigation a {
+display: none;
+}
+
+#navigation #selectedNav span {
+font-weight: bold;
+}
+
+#navigation span.hide {
+display: none;
+}
+
+
+/* LOGIN ELEMENTS */
+/*--------------------------------------------------------------------------------------*/
+
+#loginContainer {
+display: none;
+}
+
+
+/* MESSAGES AND ALERTS */
+/*--------------------------------------------------------------------------------------*/
+
+
+
+
+/* PREFERENCES */
+/*--------------------------------------------------------------------------------------*/
+
+#tab-prefs-container, .column-preferences, .portlet-prefs {
+display: none;
+}
+
+
+/* CONTENT ELEMENTS */
+/*--------------------------------------------------------------------------------------*/
+
+#content-table {
+margin: 0px;
+padding: 0px;
+}
+
+.left-col {
+vertical-align: top;
+}
+
+.column {
+vertical-align: top;
+}
+
+.right-col {
+vertical-align: top;
+}
+
+td.column div.column-content, td.right-col div.column-content {
+margin-left: 20px;
+}
+
+.portlet-container, .portlet-container-minimized {
+margin-bottom: 20;
+border: 1px solid #000;
+border-bottom: 2pt solid #000;
+}
+
+.portlet-container-minimized {
+border: 1pt dotted #999;
+}
+
+.portlet-container-superchannel { /* No visual rendering of the CMS superchannel container, i.e. make it appear to not exist  */
+border: none;
+padding: 0;
+}
+
+.portlet-container-header-superchannel, .portlet-container-footer-superchannel { /* No rendering of the CMS superchannel header or footer  */
+display: none;
+}
+
+.portlet-container-content-superchannel { /* No visual rendering of the CMS superchannel container, i.e. make it appear to not exist  */
+border: none;
+padding: 0;
+}
+
+.portlet-container-header {
+border-bottom: 1pt solid #000;
+font-size: 10pt;
+}
+
+.portlet-container-header a:link, .portlet-container-header a:visited {
+text-decoration: none;
+}
+
+.portlet-container-title {
+margin: 0;
+padding: 3pt 12pt;
+font-weight: bold;
+}
+
+.portlet-container-controls {
+display: none;
+}
+
+.portlet-container-content {
+padding: 12pt;
+}
+
+/* Fix? for Classifieds Channel where table align="left" was causing content to act like float was on. */
+div.portlet-container-content table {
+clear: both;
+float: none;
+}
+
+.portlet-container-minimized .portlet-container-content {
+display: none;
+}
+
+.portlet-container-footer {
+}
+
+.portlet-container-minimized .portlet-container-footer {
+}
+
+
+/* FOOTER ELEMENTS */
+/*--------------------------------------------------------------------------------------*/
+
+#footerlinks {
+display: none;
+}
+
+#institution {
+float: right;
+position: relative;
+right: 35px;
+padding-top: 10px;
+}
+
+#legal {
+width: 60%;
+position: relative;
+left: 20px;
+padding-top: 10px;
+padding-bottom: 40px;
+}
+
+#legal p {
+margin: 0;
+padding: 0;
+}
+
+p#copyright, p#legalStatement {
+display: inline;
+}
+
+p#legalStatement {
+padding-left: 5px;
+}
+
+#sponsor {
+bottom: 0px;
+margin: 0px;
+padding: 0px;
+position: relative;
+}
+
+#sponsor a {
+text-decoration: none;
+position: absolute;
+right: 20px;
+}

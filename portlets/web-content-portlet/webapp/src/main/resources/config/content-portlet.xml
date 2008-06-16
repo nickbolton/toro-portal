@@ -131,7 +131,7 @@ This value *must* end with a trailing '/' character.
     filter-config="/config/content-xhtmlfilter.properties">
     <wcms-sso>
 
-    <ajax-callback-url>/@portal.webappName@/ssoCallback</ajax-callback-url>
+    <ajax-callback-url>/portal/ssoCallback</ajax-callback-url>
 <!--
         NOTE:  The following is an example of how the WebContent Portlet may be configured to use the
         Permissions Portlet to mange which users get to launch AcademusWCM from the content (i.e. SSO).
