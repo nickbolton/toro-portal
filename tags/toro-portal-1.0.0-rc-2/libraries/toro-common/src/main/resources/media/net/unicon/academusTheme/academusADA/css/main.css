@@ -1,0 +1,165 @@
+
+/* GLOBALS */
+/*--------------------------------------------------------------------------------------*/
+
+body {
+font-family: verdana, arial, sans-serif; 
+background-color: #FFF;
+color: #000;
+font-size: 16pt;
+line-height: 20pt;
+min-width: 800px;
+width: auto;
+}
+
+/* LAYOUT */
+/*--------------------------------------------------------------------------------------*/
+
+#bodyContent {
+background-color: #EFEFEF;
+}
+
+#header, #headerFocused, #headerPrefs, #headerLogin, #headerDetached {
+padding: 10pt 30pt;
+background-color: #2E4378;
+color: #FFF;
+}
+
+#content {
+}
+
+#footer, #footerFocused, #footerPrefs, #footerLogin {
+padding: 10pt 30pt;
+font-size: 12pt;
+line-height: 16pt;
+}
+
+
+/* ACCESSIBLITY */
+/*--------------------------------------------------------------------------------------*/
+
+#skipNav, .accessibility {
+font-size: 12pt;
+line-height: 16pt;
+}
+
+.screen-reader-hide {
+display: none;
+}
+
+
+/* HEADER ELEMENTS */
+/*--------------------------------------------------------------------------------------*/
+
+#mainlogo a:link, #mainlogo a:visited, #mainlogo a:hover {
+color: #FEFFC3;
+}
+
+#related1 {
+display: none;
+}
+
+#related2 {
+display: none;
+}
+
+#persistent-nav a:link, #persistent-nav a:visited, #persistent-nav a:hover {
+color: #FEFFC3;
+}
+
+#logout {
+padding-left: 5px;
+}
+
+#logout a {
+color: #FEFFC3;
+text-decoration: underline;
+}
+
+.persistent-nav-pipe {
+display: none;
+}
+
+
+/* CONTENT ELEMENTS */
+/*--------------------------------------------------------------------------------------*/
+#contentTable {
+margin-right: 30px;
+}
+
+#leftNavCol {
+}
+
+#webSearchFormContainer{
+background: #7BADDD url("../images/navigation/login_top.gif") no-repeat top left;
+margin-bottom: 2px;
+padding: 10pt;
+line-height: 1.2em;
+}
+
+#webSearchForm input, #webSearchForm select {
+margin: 0px;
+margin-bottom: 8px;
+}
+
+.column-content {
+margin: 0px 0px 20px 0px;
+}
+
+.col1, .col2-left-narrow, .col2-left-wide, .col2-left-even, .col2-right-narrow, .col2-right-wide, .col2-right-even, .col3-left-narrow, .col3-left-wide, .col3-left-even, .col3-center-even, .col3-center-wide, .col3-right-narrow, .col3-right-wide, .col3-right-even {
+vertical-align: top;
+}
+
+td.col1 div.column-content, td.col2-left-narrow div.column-content, td.col2-left-wide div.column-content, td.col2-left-even div.column-content, td.col3-center-wide div.column-content, td.col3-center-even div.column-content {
+margin: 0px 30px;
+}
+
+.portlet-container, .portlet-container-minimized {
+margin: 25pt 0pt;
+background-color: #FFF;
+}
+
+.portlet-container-header-superchannel, .portlet-container-footer-superchannel { /* No rendering of the CMS superchannel header or footer  */
+display: none;
+}
+
+.portlet-container-header {
+border-top: 3px solid #000;
+border-left: 3px solid #000;
+border-right: 3px solid #000;
+border-bottom: 2px solid #CCC;
+}
+
+.portlet-container-header a {
+padding: 10pt;
+}
+
+.portlet-container-header-title {
+width: 100%;
+}
+
+.portlet-container-content {
+padding: 20pt;
+background-color: #FFF;
+border-left: 3px solid #000;
+border-right: 3px solid #000;
+_width: 100%;
+}
+
+.portlet-container-minimized .portlet-container-content {
+background-color: #FFF;
+}
+
+.portlet-container-footer {
+background-color: #FFF;
+border-bottom: 3px solid #000;
+}
+
+.portlet-container-minimized .portlet-container-footer {
+background-color: #FFF;
+}
+
+
+/* FOOTER ELEMENTS */
+/*--------------------------------------------------------------------------------------*/
+

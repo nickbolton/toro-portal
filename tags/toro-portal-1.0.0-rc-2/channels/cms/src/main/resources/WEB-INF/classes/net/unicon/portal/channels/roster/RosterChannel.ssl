@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet title="page" href="main.xsl" type="text/xsl"?>
+<?xml-stylesheet title="enroll" href="main.xsl" type="text/xsl"?>
+<?xml-stylesheet title="enrollView" href="main.xsl" type="text/xsl"?>
+<?xml-stylesheet title="import" href="import.xsl" type="text/xsl"?>
+<?xml-stylesheet title="executeImport" href="executeImport.xsl" type="text/xsl"?>
+<?xml-stylesheet title="viewMember" href="viewMember.xsl" type="text/xsl"?>
+<?xml-stylesheet title="unenroll" href="main.xsl" type="text/xsl"?>
+<?xml-stylesheet title="editUserPermissions" href="editUserPermissions.xsl" type="text/xsl"?>
+<?xml-stylesheet title="editOfferingPermissions" href="editOfferingPermissions.xsl" type="text/xsl"?>
+<?xml-stylesheet title="updateOfferingPermissions" href="main.xsl" type="text/xsl"?>
+<?xml-stylesheet title="updateUserPermissions" href="main.xsl" type="text/xsl"?>
+<?xml-stylesheet title="search" href="search.xsl" type="text/xsl"?>
+<?xml-stylesheet title="resolve" href="resolve.xsl" type="text/xsl"?>
+<?xml-stylesheet title="confirmUnenroll" href="confirmUnenroll.xsl" type="text/xsl"?>
+<?xml-stylesheet title="inactive" href="../global/inactive.xsl" type="text/xsl"?>
+<?xml-stylesheet title="approve" href="main.xsl" type="text/xsl"?>
+
+<document>
+</document>

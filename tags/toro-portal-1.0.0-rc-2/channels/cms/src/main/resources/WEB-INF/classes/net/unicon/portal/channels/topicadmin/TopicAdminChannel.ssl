@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet title="main" href="main.xsl" type="text/xsl"?>
+<?xml-stylesheet title="addSubmit" href="view.xsl" type="text/xsl"?>
+<?xml-stylesheet title="editSubmit" href="view.xsl" type="text/xsl"?>
+<?xml-stylesheet title="confirmDelete" href="search.xsl" type="text/xsl"?>
+<?xml-stylesheet title="view" href="view.xsl" type="text/xsl"?>
+<?xml-stylesheet title="add" href="add.xsl" type="text/xsl"?>
+<?xml-stylesheet title="subsequentAdd" href="add.xsl" type="text/xsl"?>
+<?xml-stylesheet title="edit" href="edit.xsl" type="text/xsl"?>
+<?xml-stylesheet title="subsequentEdit" href="edit.xsl" type="text/xsl"?>
+<?xml-stylesheet title="delete" href="delete.xsl" type="text/xsl"?>
+<?xml-stylesheet title="search" href="search.xsl" type="text/xsl"?>
+<?xml-stylesheet title="searchResults" href="search_results.xsl" type="text/xsl"?>
+
+<document>
+</document>
