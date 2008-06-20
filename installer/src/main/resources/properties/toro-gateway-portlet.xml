@@ -1,107 +1,15 @@
 <Context path="/@webappName@" docBase="@webappName@" crossContext="true">
 
-    <!--
-        Required parameters
-            driver   : the class name for the jdbc driver implementation
-            url      : the jdbc connection url
-            user     : the jdbc connection username
-            password : the jdbc connection password
-
-        Optional parameters - all time parameters are specified as milliseconds with
-                              default values in parenthesis.
-       
-            simpleSQL             : A simple sql statement used to verify
-                                  : and refresh the connection.
-
-            size (10)             : The maximum and initial size of the
-                                  : connection pool.
-
-            createLimit  (10000)  : Used during guarenteed actions, this specifies
-            destroyLimit (10000)  : the time the pool will wait for creating, destroying,
-            recycleLimit (5000)   : recycling and verifying a raw resource.
-            verifyLimit  (5000)   :
-
-            numberOfRecycleThreads (50) : The number of dedicated threads used in the recycle pool.
-
-            refreshPeriod (120000): The period of time after a resource is idle to invoke a
-                                  : refresh action, which moves the resource to the recycle pool
-                                  : and it is recycled.
-
-            timeoutPeriod (60000) : This time period specifies how long a resource should remain
-                                    in the allocated pool. If a resource remains longer than this
-                                    time, it is deamed at a timed-out resource and the resource
-                                    is cleaned up and moved to the recycle pool.
-
-            refreshSleep (30000)  : The time the refresh or timeout thread will sleep after finishing a
-            timeoutSleep (60000)  : set of activity.
-
-            useGuaranteedActions (true) : Specifies to use separate threads to perform allocation, creation,
-                                        : destroy, recycle actions. This will guarantee the action completes,
-                                        : successful or unsuccessful, without throwing an exception. This is
-                                        : preferred operating method.
-
-        Debugging parameters
-	    allocationWaitWarnTime (10000) : A threshold that indicates the time spent
-                                           : waiting for a resource. If the retrieval of
-                                           : a raw resource exceeds the time specified,
-                                           : a warning message will be displayed.
-
-            creationWarnTime (5000)    : A threshold for the time spent allocating, creating or
-            recycleWarnTime  (5000)    : recycling a resource. If a particular action
-            allocationWarnTime (10000) : on a connection exceeds the specified time,
-                                       : a warning message will be displayed.
-
-            logLevel (0)          : Logging is only performed when the logger is at a level
-                                  : of DEBUG, but this allows for a control of logging verbosity.
-                                  : The higher the number, the more verbose.
-
-            logMicroTimes (false) : This will log the time between each step within any action and
-                                  : will produce an extreme amount of logging statements. Used only
-                                  : when diagnosing resource bottlenecks. 
-
-            sizeSleep (15000)     : The time the pool size monitoring thread will sleep
-                                  : between invocations. The size thread will display
-                                  : information about the sizes of each pool: used, free,
-                                  : recycle, dead and the maximum ever allocated which
-                                  : is useful in tuning the resource pool. This thread
-                                  : is only invoked if the logger is configured at the
-                                  : DEBUG level.
-
-            traceCallers (0)      : This will cause a log message indicating a trace of
-                                  : an allocation caller. The value specified indicates the depth
-                                  : of the stack trace and will only be turned on if the logLevel
-                                  : setting is 2 or greater. Useful to diagnose what subsystems
-                                  : are causing timed out resources, for example.
-                                    
-    -->
     <Resource name="jdbc/@datasource@" auth="Container" type="javax.sql.DataSource"
-
-	factory="net.unicon.resource.ResourceDataSourceFactory"
-	driver="@jdbc.driver@"
-    url="@jdbc.url@"
-	user="@jdbc.user@"
-	password="@jdbc.password@"
-	simpleSQL="@jdbc.simplesql@"
-    size="@jdbc.poolsize.briefcase@"
-
-	allocationWaitWarnTime="10000"
-	allocationWarnTime="10000"
-	createLimit="10000"
-	creationWarnTime="5000"
-	destroyLimit="10000"
-	numberOfRecycleThreads="50"
-	recycleLimit="5000"
-	recycleWarnTime="5000"
-	refreshPeriod="120000"
-	refreshSleep="30000"
-	sizeSleep="15000"
-	timeoutPeriod="60000"
-	timeoutSleep="20000"
-	verifyLimit="5000"
-    useGuaranteedActions="true"
-
-	logLevel="5"
-	logMicroTimes="false"
-    traceCallers="0"
+        username="@jdbc.user@" password="@jdbc.password@"
+        driverClassName="@jdbc.driver@" url="@jdbc.url@"
+        maxActive="@jdbc.poolsize.gateway@" maxIdle="10" maxWait="10000"
+        poolPreparedStatements="true"
+        
+        removeAbandoned="true"
+        removeAbandonedTimeout="300"
+        logAbandoned="true"
+        testOnReturn="true"
+        validationQuery="@jdbc.simplesql@"
     />
 </Context>
