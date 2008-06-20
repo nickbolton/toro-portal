@@ -34,9 +34,13 @@
         </property>
         <property name="ldapAttributesToPortalAttributes">
             <map>
-                <entry key="@ldap.server.uid@"><value>username</value></entry>
-                <entry key="@ldap.server.uid@"><value>user.login.id</value></entry>
-                <entry key="@ldap.server.uid@"><value>password</value></entry>
+                <entry key="@ldap.server.uid@">
+                    <set>
+                        <value>username</value>
+                        <value>user.login.id</value>
+                        <value>password</value>
+                    </set>
+                </entry>
                 <entry key="givenName"><value>firstName</value></entry>
                 <entry key="sn"><value>lastname</value></entry>
                 <entry key="mail"><value>mail</value></entry>
@@ -70,9 +74,13 @@
         </property>
         <property name="ldapAttributesToPortalAttributes">
             <map>
-                <entry key="@ldap2.server.uid@"><value>username</value></entry>
-                <entry key="@ldap2.server.uid@"><value>user.login.id</value></entry>
-                <entry key="@ldap2.server.uid@"><value>password</value></entry>
+                <entry key="@ldap.server.uid@">
+                    <set>
+                        <value>username</value>
+                        <value>user.login.id</value>
+                        <value>password</value>
+                    </set>
+                </entry>
                 <entry key="givenName"><value>firstName</value></entry>
                 <entry key="sn"><value>lastname</value></entry>
                 <entry key="mail"><value>mail</value></entry>
@@ -106,9 +114,13 @@
         </property>
         <property name="ldapAttributesToPortalAttributes">
             <map>
-                <entry key="@ldap3.server.uid@"><value>username</value></entry>
-                <entry key="@ldap3.server.uid@"><value>user.login.id</value></entry>
-                <entry key="@ldap3.server.uid@"><value>password</value></entry>
+                <entry key="@ldap.server.uid@">
+                    <set>
+                        <value>username</value>
+                        <value>user.login.id</value>
+                        <value>password</value>
+                    </set>
+                </entry>
                 <entry key="givenName"><value>firstName</value></entry>
                 <entry key="sn"><value>lastname</value></entry>
                 <entry key="mail"><value>mail</value></entry>
@@ -142,9 +154,13 @@
         </property>
         <property name="ldapAttributesToPortalAttributes">
             <map>
-                <entry key="@ldap4.server.uid@"><value>username</value></entry>
-                <entry key="@ldap4.server.uid@"><value>user.login.id</value></entry>
-                <entry key="@ldap4.server.uid@"><value>password</value></entry>
+                <entry key="@ldap.server.uid@">
+                    <set>
+                        <value>username</value>
+                        <value>user.login.id</value>
+                        <value>password</value>
+                    </set>
+                </entry>
                 <entry key="givenName"><value>firstName</value></entry>
                 <entry key="sn"><value>lastname</value></entry>
                 <entry key="mail"><value>mail</value></entry>
