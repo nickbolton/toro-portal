@@ -9,7 +9,7 @@
         removeAbandoned="true"
         removeAbandonedTimeout="300"
         logAbandoned="true"
-        testOnReturn"true"
+        testOnReturn="true"
         validationQuery="@jdbc.simplesql@"
     />
 </Context>
