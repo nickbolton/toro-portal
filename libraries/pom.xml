@@ -27,8 +27,8 @@
       <!--module>resource-pool</module>
       <module>sdk</module>
       <module>jgrapht</module>
-      <module>cdk</module>
-      <module>toro-common</module-->
+      <module>cdk</module-->
+      <module>toro-common</module>
   </modules>
 
 </project>

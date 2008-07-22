@@ -38,6 +38,17 @@
         url="${toro.remote.repo}" />
 
     <target name="rendering">
+        <artifact:dependencies filesetId="portlets-common-rendering.filesetId">
+            <dependency groupId="net.unicon.toro" artifactId="portlets-common-lib"
+                version="${maven.project.version}" type="jar"/>
+            <remoteRepository refid="toro.repository" />
+        </artifact:dependencies>
+        <unjar dest="target/${maven.project.artifactId}">
+            <fileset refId="portlets-common-rendering.filesetId"/>
+            <patternset>
+                <include name="rendering/**"/>
+            </patternset>
+        </unjar>
         <artifact:dependencies filesetId="toro-common.filesetId">
             <dependency groupId="net.unicon.toro" artifactId="toro-common"
                 version="${maven.project.version}" type="jar"/>
