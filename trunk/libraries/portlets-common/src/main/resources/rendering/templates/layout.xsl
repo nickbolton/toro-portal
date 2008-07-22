@@ -48,19 +48,6 @@
 	
     <xsl:template match="/">
         <xsl:comment>Comment to Fix Serializer Bug?</xsl:comment>
-        <script language="JavaScript" type="text/javascript">
-	        if (!window.isAccessibleSkin)
-	        {
-                var lt = unescape('%3C'); // lt character as the symbol (not &lt;)
-                var gt = unescape('%3E'); // gt character as the symbol (not &gt;)
-                var outputMarkup = lt+'style type="text/css" media="all"'+gt;
-		        outputMarkup += '@import url(<xsl:value-of select="$appsRoot"/>/rendering/css/portlet_layout.css);';
-		        outputMarkup += '@import url(<xsl:value-of select="$appsRoot"/>/rendering/css/portlet_styling.css);';
-		        outputMarkup += '@import url(<xsl:value-of select="$appsRoot"/>/rendering/css/config_icons.css);';
-                outputMarkup += lt+'/'+'style'+gt;
-                document.write(outputMarkup);
-	        }
-        </script>
         <script src="{$appsRoot}/rendering/javascript/common.js" language="JavaScript" type="text/javascript"><xsl:comment>//comment to keep closing script tag for XHTML to HTML support</xsl:comment></script>
         <script src="{$appsRoot}/rendering/javascript/formValidation.js" language="JavaScript" type="text/javascript"><xsl:comment>//comment to keep closing script tag for XHTML to HTML support</xsl:comment></script>
         <xsl:if test = "//sequence">
