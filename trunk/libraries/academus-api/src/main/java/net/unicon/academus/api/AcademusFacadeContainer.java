@@ -25,6 +25,9 @@
 
 package net.unicon.academus.api;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
 	Serves only as a container for the Academus Facade API implementation.
 	The Academus codebase can register a facade implementation in this container
@@ -35,6 +38,8 @@ public class AcademusFacadeContainer {
 
 	// Placeholder for the Academus Facade implementation
     private static IAcademusFacade academusFacade = null;
+    private static Object lock = new Object();
+    private static Log log = LogFactory.getLog(AcademusFacadeContainer.class);
 
 	// Not used at the moment
     private AcademusFacadeContainer() {
@@ -61,8 +66,12 @@ public class AcademusFacadeContainer {
 			throw new IllegalArgumentException(error.toString());
 		}
 
+		if (log.isDebugEnabled()) {
+		    log.debug("registering facade: " + facade.getClass().getName());
+		}
 		// Set the facade in the container
 		academusFacade = facade;
+		lock.notifyAll();
 	}
 
 	/**
@@ -71,10 +80,14 @@ public class AcademusFacadeContainer {
 	 * @return The Academus facade implementation registered in this container.
 	 *
 	 */
-    public synchronized static IAcademusFacade retrieveFacade() {
+    public synchronized static IAcademusFacade retrieveFacade(boolean blocking) {
 
+		if (log.isDebugEnabled()) {
+		    log.debug("retrieving facade(blocking="+blocking+"): " + academusFacade);
+		}
+		
 		// Assertions
-		if (academusFacade == null) {
+		if (!blocking && academusFacade == null) {
 
 			StringBuffer error = new StringBuffer(128);
 
@@ -85,7 +98,23 @@ public class AcademusFacadeContainer {
 			throw new IllegalStateException(error.toString());
 		}
 
-		// Return the registered Academus facade
+		while (blocking && academusFacade == null) {
+		    try {
+        		if (log.isDebugEnabled()) {
+        		    log.debug("Waiting for facade...");
+        		}
+                lock.wait();
+        		if (log.isDebugEnabled()) {
+        		    log.debug("Woke up - facade: " + academusFacade);
+        		}
+            } catch (InterruptedException e) {
+                return retrieveFacade(false);
+            }
+		}
+		if (log.isDebugEnabled()) {
+		    log.debug("returning facade: " +
+		        (academusFacade != null ? academusFacade.getClass().getName() : "NULL"));
+		}
 		return academusFacade;
 	}
 }

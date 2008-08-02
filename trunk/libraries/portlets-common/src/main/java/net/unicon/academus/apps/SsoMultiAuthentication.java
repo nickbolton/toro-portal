@@ -296,7 +296,7 @@ public class SsoMultiAuthentication extends SsoAuthentication {
 
     private DataSource getDataSource() throws NamingException {
     	try {
-            return AcademusFacadeContainer.retrieveFacade().getAcademusDataSource();
+            return AcademusFacadeContainer.retrieveFacade(true).getAcademusDataSource();
     	} catch (Throwable t) {
     		throw new RuntimeException(t);
     	}

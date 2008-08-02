@@ -75,7 +75,13 @@
     <!-- =================================================================== -->
     <!-- Classpath                                                           -->
     <!-- =================================================================== -->
+    <artifact:pom id="maven.project" file="ant_pom.xml" />
+    <artifact:dependencies pathId="toro.classpath">
+        <dependency groupId="net.unicon.toro" artifactId="academus-api"
+            version="${maven.project.version}" type="jar"/>
+    </artifact:dependencies>
     <path id="build.classpath">
+        <path refid="toro.classpath"/>
         <fileset dir="${lib.dir}">
             <include name="**/*.jar"/>
         </fileset>

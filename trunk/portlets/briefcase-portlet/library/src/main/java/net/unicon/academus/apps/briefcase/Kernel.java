@@ -166,7 +166,7 @@ public class Kernel {
                 if (dataSource == null) {
                     try{
                         dataSource = AcademusFacadeContainer
-                                        .retrieveFacade()
+                                        .retrieveFacade(true)
                                         .getAcademusDataSource();
                     }catch(AcademusFacadeException afe){
                     	LogFactory.getLog(Kernel.class).error("Unable to access DataSource from the facade.", afe);

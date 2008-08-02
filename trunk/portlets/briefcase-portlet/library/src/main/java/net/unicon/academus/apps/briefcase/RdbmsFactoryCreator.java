@@ -264,7 +264,7 @@ public class RdbmsFactoryCreator implements ICreator {
 
     private static DataSource getDataSource(){
         try{
-            return AcademusFacadeContainer.retrieveFacade().getAcademusDataSource();
+            return AcademusFacadeContainer.retrieveFacade(true).getAcademusDataSource();
         }catch(AcademusFacadeException afe){
             afe.printStackTrace();
         }

@@ -376,7 +376,7 @@ public class AcademusCivisFactory extends AbstractCivisFactory {
     private AcademusCivisFactory(ExtendedAttribute[] personExtraAttrs) {
         this.personExtraAttrs = personExtraAttrs;
         this.personAttr = createPersonAttributes(personExtraAttrs);
-        this.facade = AcademusFacadeContainer.retrieveFacade();        
+        this.facade = AcademusFacadeContainer.retrieveFacade(true);        
     }
 
     private IPerson createPerson(IAcademusUser user) throws AcademusFacadeException {

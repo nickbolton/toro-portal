@@ -20,7 +20,7 @@
         <configuration>
           <componentProperties>
             <propertyfile>../../hibernate.properties</propertyfile>
-            <skip>${hibernate.skip.toro-common}</skip>
+            <skip>true</skip>
           </componentProperties>
         </configuration>
       </plugin> 
