@@ -37,7 +37,7 @@ public class AcademusGroupRestrictor implements IGroupRestrictor {
 
     public boolean checkUsersGroupPermission(IPerson user, IGroup group, String activity, boolean inherited) {
         try{
-            IAcademusFacade facade = AcademusFacadeContainer.retrieveFacade();
+            IAcademusFacade facade = AcademusFacadeContainer.retrieveFacade(true);
             return facade.checkUsersGroupPermission(facade.getUser(user.getName())
                     , facade.getGroup(group.getId()), activity, inherited);
         }catch(AcademusFacadeException e){

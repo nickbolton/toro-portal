@@ -1030,7 +1030,7 @@ public class RdbmsAccessBroker extends AccessBroker {
     private static DataSource getDataSource() {
         if (defaultDataSource == null) {
             try {
-                defaultDataSource = AcademusFacadeContainer.retrieveFacade().getAcademusDataSource();
+                defaultDataSource = AcademusFacadeContainer.retrieveFacade(true).getAcademusDataSource();
             } catch(AcademusFacadeException afe){
                 afe.printStackTrace();
             }

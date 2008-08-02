@@ -120,7 +120,7 @@ public class AcademusAuthorizationProvider implements AuthorizationProvider,
             // Bootstrap all RDBMS Access Brokers.
             List bsList = configElement.selectNodes("//*[@needsDataSource='true']");
             if (!bsList.isEmpty()) {
-                DataSource ds = AcademusFacadeContainer.retrieveFacade().getAcademusDataSource();
+                DataSource ds = AcademusFacadeContainer.retrieveFacade(true).getAcademusDataSource();
 
                 for (Iterator it = bsList.iterator(); it.hasNext();) {
                     Element e = (Element) it.next();
@@ -155,7 +155,7 @@ public class AcademusAuthorizationProvider implements AuthorizationProvider,
             }
 
             // Get Academus Facade.
-            _facade = AcademusFacadeContainer.retrieveFacade();
+            _facade = AcademusFacadeContainer.retrieveFacade(true);
 
         } catch (Throwable e) {
             _logger.debug("Error AcademusAuthorizationProvider::init");

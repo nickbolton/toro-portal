@@ -219,7 +219,7 @@ public class ConfigHelper {
             elist = configElement.selectNodes("//*[@needsDataSource='true']");
             if (jndiName != null && !elist.isEmpty()) {
                 try {
-                    DataSource ds = AcademusFacadeContainer.retrieveFacade().getAcademusDataSource();
+                    DataSource ds = AcademusFacadeContainer.retrieveFacade(true).getAcademusDataSource();
 
                     for (Iterator it = elist.iterator(); it.hasNext();) {
                         Element e = (Element) it.next();

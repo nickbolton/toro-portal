@@ -153,7 +153,7 @@ public class UserAttributeAccessBroker extends AccessBroker {
 
 		List entries = new ArrayList();
 		Identity[] identities = p.getIdentities();
-		IAcademusFacade facade = AcademusFacadeContainer.retrieveFacade();
+		IAcademusFacade facade = AcademusFacadeContainer.retrieveFacade(true);
 		String username = null;
 		String target  = null;
 		IAcademusUser user = null;

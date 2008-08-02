@@ -184,7 +184,7 @@ public class MessagingUserContext implements IUserContext, ISelectorUserContext,
     public Principal getPrincipal() {
         Principal rslt = null;
         try {
-            IAcademusFacade facade = AcademusFacadeContainer.retrieveFacade();
+            IAcademusFacade facade = AcademusFacadeContainer.retrieveFacade(true);
             IAcademusGroup[] groups = facade.getAllContainingGroups(username);
             
             // Create an Identity array that includes all containing groups,
