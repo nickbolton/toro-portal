@@ -33,6 +33,7 @@ import java.util.Map;
 import javax.servlet.ServletConfig;
 import javax.sql.DataSource;
 
+import net.unicon.academus.api.AcademusDataSource;
 import net.unicon.academus.api.AcademusFacadeContainer;
 import net.unicon.academus.api.IAcademusFacade;
 import net.unicon.academus.api.IAcademusGroup;
@@ -120,7 +121,7 @@ public class AcademusAuthorizationProvider implements AuthorizationProvider,
             // Bootstrap all RDBMS Access Brokers.
             List bsList = configElement.selectNodes("//*[@needsDataSource='true']");
             if (!bsList.isEmpty()) {
-                DataSource ds = AcademusFacadeContainer.retrieveFacade(true).getAcademusDataSource();
+                DataSource ds = new AcademusDataSource();
 
                 for (Iterator it = bsList.iterator(); it.hasNext();) {
                     Element e = (Element) it.next();
@@ -155,7 +156,7 @@ public class AcademusAuthorizationProvider implements AuthorizationProvider,
             }
 
             // Get Academus Facade.
-            _facade = AcademusFacadeContainer.retrieveFacade(true);
+            _facade = AcademusFacadeContainer.retrieveFacade();
 
         } catch (Throwable e) {
             _logger.debug("Error AcademusAuthorizationProvider::init");

@@ -34,14 +34,15 @@ import java.sql.Timestamp;
 
 import javax.sql.DataSource;
 
-import org.dom4j.Element;
-
-import net.unicon.alchemist.access.Identity;
-import net.unicon.alchemist.access.jit.ICreator;
+import net.unicon.academus.api.AcademusDataSource;
 import net.unicon.academus.api.AcademusFacadeContainer;
 import net.unicon.academus.api.AcademusFacadeException;
+import net.unicon.alchemist.access.Identity;
+import net.unicon.alchemist.access.jit.ICreator;
 import net.unicon.demetrius.IResourceFactory;
 import net.unicon.demetrius.fac.rdbms.RdbmsResourceFactory;
+
+import org.dom4j.Element;
 
 public class RdbmsFactoryCreator implements ICreator {
 
@@ -49,7 +50,7 @@ public class RdbmsFactoryCreator implements ICreator {
     // instance variable
     private String rootPath = null;
     private static Sequencer seq = null;
-    private static DataSource dataSource = getDataSource();
+    private static DataSource dataSource = new AcademusDataSource();
     private String rootName = null;
     private long maxLimit = 0;
     
@@ -260,16 +261,6 @@ public class RdbmsFactoryCreator implements ICreator {
         this.rootPath = path;
         this.rootName = rootName;
         this.maxLimit = size;
-    }
-
-    private static DataSource getDataSource(){
-        try{
-            return AcademusFacadeContainer.retrieveFacade(true).getAcademusDataSource();
-        }catch(AcademusFacadeException afe){
-            afe.printStackTrace();
-        }
-        return null;
-
     }
 
     private static void closeStatement(Statement stmt){

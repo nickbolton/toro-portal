@@ -26,13 +26,15 @@
 package net.unicon.academus.apps.briefcase;
 
 import java.io.File;
+
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.LogFactory;
-
+import net.unicon.academus.api.AcademusDataSource;
 import net.unicon.academus.api.AcademusFacadeContainer;
 import net.unicon.academus.api.AcademusFacadeException;
 import net.unicon.alchemist.rdbms.Sequencer;
+
+import org.apache.commons.logging.LogFactory;
 
 
 /**
@@ -79,7 +81,7 @@ public class Kernel {
 
         // initialize the sequencer
         if(seq == null){
-            seq = new Sequencer(getDataSource(), "FSA_Kernel_Sequencer", CACHE_SIZE);
+            seq = new Sequencer(new AcademusDataSource(), "FSA_Kernel_Sequencer", CACHE_SIZE);
         }
 
         // add the factory to the kernel database
@@ -158,23 +160,6 @@ public class Kernel {
                 dataSource = ds;
             }
         }
-    }
-
-    private static DataSource getDataSource(){
-        if (dataSource == null) {
-            synchronized(Kernel.class) {
-                if (dataSource == null) {
-                    try{
-                        dataSource = AcademusFacadeContainer
-                                        .retrieveFacade(true)
-                                        .getAcademusDataSource();
-                    }catch(AcademusFacadeException afe){
-                    	LogFactory.getLog(Kernel.class).error("Unable to access DataSource from the facade.", afe);
-                    }
-                }
-            }
-        }
-        return dataSource;
     }
 
     // function used to calculate the actual root path from the given root path where the

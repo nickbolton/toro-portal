@@ -34,7 +34,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import net.unicon.academus.api.AcademusFacadeContainer;
+import net.unicon.academus.api.AcademusDataSource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -219,7 +219,7 @@ public class ConfigHelper {
             elist = configElement.selectNodes("//*[@needsDataSource='true']");
             if (jndiName != null && !elist.isEmpty()) {
                 try {
-                    DataSource ds = AcademusFacadeContainer.retrieveFacade(true).getAcademusDataSource();
+                    DataSource ds = new AcademusDataSource();
 
                     for (Iterator it = elist.iterator(); it.hasNext();) {
                         Element e = (Element) it.next();

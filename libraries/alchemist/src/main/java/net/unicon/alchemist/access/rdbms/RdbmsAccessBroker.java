@@ -26,21 +26,18 @@
 package net.unicon.alchemist.access.rdbms;
 
 import java.lang.reflect.Method;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.sql.DataSource;
 
-import net.unicon.academus.api.AcademusFacadeContainer;
-import net.unicon.academus.api.AcademusFacadeException;
+import net.unicon.academus.api.AcademusDataSource;
 import net.unicon.alchemist.access.AccessBroker;
 import net.unicon.alchemist.access.AccessRule;
 import net.unicon.alchemist.access.AccessType;
@@ -55,22 +52,26 @@ import org.dom4j.Element;
 
 public class RdbmsAccessBroker extends AccessBroker {
 
-    private static DataSource defaultDataSource;
+    private static DataSource defaultDataSource = new AcademusDataSource();
 
     // Member Variables
     private DataSource dataSource = null;
     private int id;
+    private boolean initialized = false;
     private Sequencer seq = null;
     private AccessType[] atypes;
+    private String name;
+    private boolean create;
     
-    public RdbmsAccessBroker(DataSource dataSource, int id, AccessType[] atypes, Element e) {
+    public RdbmsAccessBroker(String name, boolean create, DataSource dataSource, AccessType[] atypes, Element e) {
         super(e);
         this.dataSource = dataSource;
-        this.id = id;
         this.seq = new Sequencer(dataSource, "RdbmsAccessBroker", 1);
         this.atypes = atypes;
+        this.name = name;
+        this.create = create;
     }
-
+    
     public static AccessBroker parse(Element e) {
 
         // Assertions.
@@ -117,9 +118,7 @@ public class RdbmsAccessBroker extends AccessBroker {
                     "No AccessTypes found from <access> element declaration.");
 
 
-        DataSource dataSource = getDataSource();
-
-        return getInstance(dataSource, name, accessTypes, true, e);
+        return getInstance(getDataSource(), name, accessTypes, true, e);
         
     }
     
@@ -134,12 +133,19 @@ public class RdbmsAccessBroker extends AccessBroker {
             throw new IllegalArgumentException("Argument 'name' cannot be null");
         }
 
+        return new RdbmsAccessBroker(name, create, dataSource, atypes, e);
+    }
+    
+    private void initialize() {
         RdbmsAccessBroker rslt = null;
         String getAccessControllerSql = "SELECT * FROM " +
                 "ACCESS_CONTROLLER WHERE UPPER(NAME) = UPPER(?)";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+        
+        boolean foundId = false;
+        int theId = -1;
 
         try{
             conn = dataSource.getConnection();
@@ -148,7 +154,7 @@ public class RdbmsAccessBroker extends AccessBroker {
             rs = pstmt.executeQuery();
 
             if(rs.next()){
-                rslt = new RdbmsAccessBroker(dataSource, rs.getInt("Access_Controller_ID"), atypes, e);
+                theId = rs.getInt("Access_Controller_ID");
             }
         }catch(SQLException sqle){
             StringBuffer msg = new StringBuffer("Rdbms Access Broker failed to find " +
@@ -159,25 +165,37 @@ public class RdbmsAccessBroker extends AccessBroker {
             if (pstmt != null) closeStatement(pstmt);
             if (conn != null) closeConnection(conn);
         }
-        if(create && rslt == null){
-            int id = getAccessBrokerUniqueId(dataSource);
-            try{
-                conn = dataSource.getConnection();
-                pstmt = conn.prepareStatement("INSERT INTO ACCESS_CONTROLLER" +
-                		"(ACCESS_CONTROLLER_ID, NAME)  VALUES( ?, ?)");
-                pstmt.setInt(1, id);
-                pstmt.setString(2, name);
-                pstmt.execute();
-                rslt = new RdbmsAccessBroker(dataSource, id, atypes, e);
-            }catch(SQLException sqle){
-                String msg = "Rdbms Access Broker failed to create a new AccessController instance.";
-                throw new RuntimeException(msg, sqle);
-            }finally{
-                if (pstmt != null) closeStatement(pstmt);
-                if (conn != null) closeConnection(conn);
+        if(!foundId){
+            if (create) {
+                theId = getAccessBrokerUniqueId(dataSource);
+                try{
+                    conn = dataSource.getConnection();
+                    pstmt = conn.prepareStatement("INSERT INTO ACCESS_CONTROLLER" +
+                            "(ACCESS_CONTROLLER_ID, NAME)  VALUES( ?, ?)");
+                    pstmt.setInt(1, theId);
+                    pstmt.setString(2, name);
+                    pstmt.execute();
+                }catch(SQLException sqle){
+                    String msg = "Rdbms Access Broker failed to create a new AccessController instance.";
+                    throw new RuntimeException(msg, sqle);
+                }finally{
+                    if (pstmt != null) closeStatement(pstmt);
+                    if (conn != null) closeConnection(conn);
+                }
+            } else {
+                throw new RuntimeException("No ID found for name="+name+" and did not specify to create.");
             }
         }
-        return rslt;
+
+        this.id = theId;
+        initialized = true;
+    }
+    
+    protected int getId() {
+        if (!initialized) {
+            initialize();
+        }
+        return id;
     }
 
     public IAccessEntry setAccess(Identity principal, AccessRule[] rules,
@@ -220,7 +238,7 @@ public class RdbmsAccessBroker extends AccessBroker {
             pstmt = conn.prepareStatement(sql.toString());
             pstmt.setString(1, principal.getId());
             pstmt.setString(2, tUrl);
-            pstmt.setInt(3, id);
+            pstmt.setInt(3, getId());
 
             rs = pstmt.executeQuery();
             if(rs.next()){
@@ -248,7 +266,7 @@ public class RdbmsAccessBroker extends AccessBroker {
                     pstmt.setInt(2, principal.getType().toInt());
                     pstmt.setString(3, principal.getId());
                     pstmt.setString(4, tUrl);
-                    pstmt.setInt(5, id);
+                    pstmt.setInt(5, getId());
                     pstmt.executeUpdate();
                 }
                 if(pstmt != null) closeStatement(pstmt);
@@ -488,7 +506,7 @@ public class RdbmsAccessBroker extends AccessBroker {
                 pstmt.setString(i+1, entries[i].getIdentity().getId().toUpperCase());
             }
             pstmt.setString(++i, tUrl);
-            pstmt.setInt(++i, id);
+            pstmt.setInt(++i, getId());
             rs = pstmt.executeQuery();
 
             List accessEntries = new LinkedList();
@@ -576,7 +594,7 @@ public class RdbmsAccessBroker extends AccessBroker {
             String tUrl = (String)mthd.invoke(r, null);
 
             pstmt = conn.prepareStatement(getAccessSql);
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, getId());
             pstmt.setString(2, principal.getId());
             pstmt.setString(3, tUrl);
             rs = pstmt.executeQuery();
@@ -657,7 +675,7 @@ public class RdbmsAccessBroker extends AccessBroker {
 
             getTargetSql.append(" ORDER BY AE.ACCESS_ENTRY_ID ");
             pstmt = conn.prepareStatement(getTargetSql.toString());
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, getId());
             for (int i = 0; i < principals.length; i++) {
                 pstmt.setString(i + 2, principals[i].getId().toUpperCase());
             }
@@ -791,7 +809,7 @@ public class RdbmsAccessBroker extends AccessBroker {
 
             getTargetSql.append(" ORDER BY IDENTITY_NAME, TARGET");
             pstmt = conn.prepareStatement(getTargetSql.toString());
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, getId());
             pstmt.setString(2, tUrl);
 
             int initialIndex = 3;
@@ -875,7 +893,7 @@ public class RdbmsAccessBroker extends AccessBroker {
             
             getTargetSql.append(" order by identity_name, target");
             pstmt = conn.prepareStatement(getTargetSql.toString());
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, getId());
             
             rs = pstmt.executeQuery();
 
@@ -1029,11 +1047,7 @@ public class RdbmsAccessBroker extends AccessBroker {
 
     private static DataSource getDataSource() {
         if (defaultDataSource == null) {
-            try {
-                defaultDataSource = AcademusFacadeContainer.retrieveFacade(true).getAcademusDataSource();
-            } catch(AcademusFacadeException afe){
-                afe.printStackTrace();
-            }
+            defaultDataSource = new AcademusDataSource();
         }
 
         return defaultDataSource;

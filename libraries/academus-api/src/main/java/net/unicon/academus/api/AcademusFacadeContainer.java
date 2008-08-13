@@ -38,7 +38,6 @@ public class AcademusFacadeContainer {
 
 	// Placeholder for the Academus Facade implementation
     private static IAcademusFacade academusFacade = null;
-    private static Object lock = new Object();
     private static Log log = LogFactory.getLog(AcademusFacadeContainer.class);
 
 	// Not used at the moment
@@ -71,7 +70,6 @@ public class AcademusFacadeContainer {
 		}
 		// Set the facade in the container
 		academusFacade = facade;
-		lock.notifyAll();
 	}
 
 	/**
@@ -80,14 +78,12 @@ public class AcademusFacadeContainer {
 	 * @return The Academus facade implementation registered in this container.
 	 *
 	 */
-    public synchronized static IAcademusFacade retrieveFacade(boolean blocking) {
+    public synchronized static IAcademusFacade retrieveFacade() {
 
-		if (log.isDebugEnabled()) {
-		    log.debug("retrieving facade(blocking="+blocking+"): " + academusFacade);
-		}
-		
 		// Assertions
-		if (!blocking && academusFacade == null) {
+		if (academusFacade == null) {
+		    
+		    try { throw new Exception(); } catch (Exception e) {e.printStackTrace();}
 
 			StringBuffer error = new StringBuffer(128);
 
@@ -98,23 +94,7 @@ public class AcademusFacadeContainer {
 			throw new IllegalStateException(error.toString());
 		}
 
-		while (blocking && academusFacade == null) {
-		    try {
-        		if (log.isDebugEnabled()) {
-        		    log.debug("Waiting for facade...");
-        		}
-                lock.wait();
-        		if (log.isDebugEnabled()) {
-        		    log.debug("Woke up - facade: " + academusFacade);
-        		}
-            } catch (InterruptedException e) {
-                return retrieveFacade(false);
-            }
-		}
-		if (log.isDebugEnabled()) {
-		    log.debug("returning facade: " +
-		        (academusFacade != null ? academusFacade.getClass().getName() : "NULL"));
-		}
 		return academusFacade;
 	}
+    
 }

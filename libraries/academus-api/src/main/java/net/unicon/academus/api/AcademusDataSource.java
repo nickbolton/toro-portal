@@ -46,7 +46,7 @@ public class AcademusDataSource implements DataSource {
 
 	private DataSource getDataSource () throws SQLException {
 
-		IAcademusFacade facade = AcademusFacadeContainer.retrieveFacade(true);
+		IAcademusFacade facade = AcademusFacadeContainer.retrieveFacade();
 		DataSource ds = null;
 
 		try {

@@ -158,7 +158,7 @@ public class WebContentUserContext implements IUserContext, SsoEvaluator {
         Principal rslt = null;
 
         try {
-            IAcademusFacade facade = AcademusFacadeContainer.retrieveFacade(true);
+            IAcademusFacade facade = AcademusFacadeContainer.retrieveFacade();
             IAcademusGroup[] groups = facade.getAllContainingGroups(username);
             
             // Create an Identity array that includes all containing groups,
