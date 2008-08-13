@@ -1,0 +1,75 @@
+<!-- This is an example file for QueryManager -->
+<queries>
+   <module name="BookStore">
+      <query name="SELECT_BOOK_AUTHORS">
+         SELECT
+            authors.id,
+            authors.name
+         FROM
+            book_authors JOIN authors 
+               ON book_authors.authorid = authors.id
+         WHERE
+            book_authors.bookid = ?
+      </query>
+      <query name="SELECT_BOOK_ALL">
+         SELECT
+            books.id,
+            books.isbn,
+            books.title,
+            publishers.name AS pubname,
+            publishers.id AS pubid,
+            pubdate,
+            edition,
+            keywords
+         FROM
+            books LEFT OUTER JOIN publishers
+               ON books.publisher_id = publishers.id
+      </query>
+      <query name="SELECT_BOOK_ID">
+         SELECT
+            books.id,
+            books.isbn,
+            books.title,
+            publishers.name AS pubname,
+            publishers.id AS pubid,
+            pubdate,
+            edition,
+            keywords
+         FROM
+            books LEFT OUTER JOIN publishers
+               ON books.publisher_id = publishers.id
+         WHERE
+            books.id = ?
+      </query>
+      <query name="INSERT_AUTHOR">
+         INSERT INTO authors(name) VALUES (?)
+      </query>
+      <query name="INSERT_PUBLISHER">
+         INSERT INTO publishers(name) VALUES (?)
+      </query>
+      <query name="INSERT_BOOK">
+         INSERT INTO
+            books(isbn, title, publisher_id, pubdate, edition, keywords)
+         VALUES
+            (?, ?, ?, ?, ?, ?)
+      </query>
+      <query name="INSERT_BOOK_AUTHORS">
+         INSERT INTO book_authors(bookid, authorid) VALUES (?, ?)
+      </query>
+      <query name="EXISTS_AUTHOR">
+         SELECT id FROM authors WHERE id = ?
+      </query>
+      <query name="EXISTS_PUBLISHER">
+         SELECT id FROM publishers WHERE id = ?
+      </query>
+      <query name="EXISTS_BOOK">
+         SELECT id FROM books WHERE id = ?
+      </query>
+      <query name="EXISTS_BOOK_AUTHORS">
+         SELECT
+            bookid, authorid
+         FROM book_authors
+         WHERE bookid = ? AND authorid = ?
+      </query>
+   </module>
+</queries>
