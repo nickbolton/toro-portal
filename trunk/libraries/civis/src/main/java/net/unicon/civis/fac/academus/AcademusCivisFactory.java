@@ -32,16 +32,14 @@ import java.util.List;
 
 import net.unicon.academus.api.AcademusFacadeContainer;
 import net.unicon.academus.api.AcademusFacadeException;
-import net.unicon.academus.api.IAcademusFacade;
 import net.unicon.academus.api.IAcademusGroup;
 import net.unicon.academus.api.IAcademusUser;
 import net.unicon.civis.CivisRuntimeException;
-import net.unicon.civis.fac.AbstractCivisFactory;
 import net.unicon.civis.ICivisFactory;
 import net.unicon.civis.IGroup;
 import net.unicon.civis.IPerson;
 import net.unicon.civis.ITransaction;
-import net.unicon.penelope.complement.TypeText64;
+import net.unicon.civis.fac.AbstractCivisFactory;
 import net.unicon.penelope.EntityCreateException;
 import net.unicon.penelope.Handle;
 import net.unicon.penelope.IChoice;
@@ -52,6 +50,7 @@ import net.unicon.penelope.IEntityStore;
 import net.unicon.penelope.IOption;
 import net.unicon.penelope.ISelection;
 import net.unicon.penelope.Label;
+import net.unicon.penelope.complement.TypeText64;
 import net.unicon.penelope.store.jvm.JvmEntityStore;
 
 import org.dom4j.Attribute;
@@ -65,7 +64,6 @@ public class AcademusCivisFactory extends AbstractCivisFactory {
     
     // Instance members.
 
-    private final IAcademusFacade facade;
     private ExtendedAttribute[] personExtraAttrs = null;
     private IChoiceCollection personAttr = null;
     private static final String url = "CIVIS://" +  AcademusCivisFactory.class.getName(); 
@@ -110,7 +108,7 @@ public class AcademusCivisFactory extends AbstractCivisFactory {
         IGroup rslt = null;
 
         try {
-            IAcademusGroup group = facade.getRootGroup();
+            IAcademusGroup group = AcademusFacadeContainer.retrieveFacade().getRootGroup();
             rslt = createGroup(group);
         } catch (AcademusFacadeException e) {
             throw new CivisRuntimeException("Error in AcademusCivisFactory : " +
@@ -124,7 +122,7 @@ public class AcademusCivisFactory extends AbstractCivisFactory {
         IPerson rslt = null;
 
         try {
-            rslt = createPerson(facade.getUser(name));
+            rslt = createPerson(AcademusFacadeContainer.retrieveFacade().getUser(name));
         } catch (AcademusFacadeException e) {
             throw new CivisRuntimeException("Error in AcademusCivisFactory : " +
             		"getPerson() ", e);
@@ -140,7 +138,7 @@ public class AcademusCivisFactory extends AbstractCivisFactory {
         IGroup rslt = null;
 
         try {
-            IAcademusGroup group = facade.getGroupByPath(groupPath);
+            IAcademusGroup group = AcademusFacadeContainer.retrieveFacade().getGroupByPath(groupPath);
             rslt = createGroup(group);            
         } catch (AcademusFacadeException e) {
             throw new CivisRuntimeException("Error in AcademusCivisFactory : " +
@@ -157,7 +155,7 @@ public class AcademusCivisFactory extends AbstractCivisFactory {
         IGroup rslt = null;
 
         try {
-            IAcademusGroup group = facade.getGroup(groupId);
+            IAcademusGroup group = AcademusFacadeContainer.retrieveFacade().getGroup(groupId);
             rslt = createGroup(group);            
         } catch (AcademusFacadeException e) {
             throw new CivisRuntimeException("Error in AcademusCivisFactory : " +
@@ -178,7 +176,7 @@ public class AcademusCivisFactory extends AbstractCivisFactory {
         
         IAcademusUser[] users;
         try {
-            users = facade.getAcademusUsers();
+            users = AcademusFacadeContainer.retrieveFacade().getAcademusUsers();
         
 	        IPerson[] rslt = new IPerson[users.length];
 	        
@@ -197,7 +195,7 @@ public class AcademusCivisFactory extends AbstractCivisFactory {
         IGroup[] rslt = null;
 
         try {
-            IAcademusGroup[] groups = facade.findAcademusGroups(searchString);
+            IAcademusGroup[] groups = AcademusFacadeContainer.retrieveFacade().findAcademusGroups(searchString);
             rslt = new IGroup[groups.length];
             for(int i = 0; i < groups.length; i++){
                 rslt[i] = createGroup(groups[i]);
@@ -215,7 +213,7 @@ public class AcademusCivisFactory extends AbstractCivisFactory {
         IPerson[] rslt = null;
 
         try {
-            IAcademusUser[] users = facade.findAcademusUsers(username, firstName
+            IAcademusUser[] users = AcademusFacadeContainer.retrieveFacade().findAcademusUsers(username, firstName
                     , lastName, email, matchAll);
 
             HashMap p = new HashMap();
@@ -237,7 +235,7 @@ public class AcademusCivisFactory extends AbstractCivisFactory {
         IGroup[] rslt = null;
 
         try {
-            IAcademusGroup[] groups = facade.getAllContainingGroups(p.getName());
+            IAcademusGroup[] groups = AcademusFacadeContainer.retrieveFacade().getAllContainingGroups(p.getName());
             rslt = new IGroup[groups.length];
             for(int i = 0; i < groups.length; i++){
                 rslt[i] = createGroup(groups[i]);
@@ -258,7 +256,7 @@ public class AcademusCivisFactory extends AbstractCivisFactory {
         IGroup[] rslt = null;
 
         try {
-            IAcademusGroup[] groups = facade.getGroup(g.getId()).getDescendantGroups();
+            IAcademusGroup[] groups = AcademusFacadeContainer.retrieveFacade().getGroup(g.getId()).getDescendantGroups();
             rslt = new IGroup[groups.length];
             for(int i = 0; i < groups.length; i++){
                 rslt[i] = createGroup(groups[i]);
@@ -276,7 +274,7 @@ public class AcademusCivisFactory extends AbstractCivisFactory {
         IGroup parent = null;
 
         try {
-            IAcademusGroup[] groups = facade.getGroup(g.getId()).getAllDescendantGroups();
+            IAcademusGroup[] groups = AcademusFacadeContainer.retrieveFacade().getGroup(g.getId()).getAllDescendantGroups();
             rslt = new IGroup[groups.length];
             for(int i = 0; i < groups.length; i++){
                 rslt[i] = createGroup(groups[i]);
@@ -338,9 +336,9 @@ public class AcademusCivisFactory extends AbstractCivisFactory {
             IAcademusUser[] users = null;
 
             if (deep == false) {
-                users = facade.getGroup(g.getId()).getContainedUsers();
+                users = AcademusFacadeContainer.retrieveFacade().getGroup(g.getId()).getContainedUsers();
             } else {
-	            users = facade.getGroup(g.getId()).getAllContainedUsers();
+	            users = AcademusFacadeContainer.retrieveFacade().getGroup(g.getId()).getAllContainedUsers();
             }
 
             HashMap p = new HashMap();
@@ -359,7 +357,7 @@ public class AcademusCivisFactory extends AbstractCivisFactory {
     protected String getPath(IGroup g) {
         try {
         
-            return facade.getGroup(g.getId())
+            return AcademusFacadeContainer.retrieveFacade().getGroup(g.getId())
             .getGroupPaths(IAcademusGroup.GROUP_NAME_BASE_PATH_SEPARATOR, false)[0];            
                 
         } catch (AcademusFacadeException e) {
@@ -376,7 +374,6 @@ public class AcademusCivisFactory extends AbstractCivisFactory {
     private AcademusCivisFactory(ExtendedAttribute[] personExtraAttrs) {
         this.personExtraAttrs = personExtraAttrs;
         this.personAttr = createPersonAttributes(personExtraAttrs);
-        this.facade = AcademusFacadeContainer.retrieveFacade(true);        
     }
 
     private IPerson createPerson(IAcademusUser user) throws AcademusFacadeException {

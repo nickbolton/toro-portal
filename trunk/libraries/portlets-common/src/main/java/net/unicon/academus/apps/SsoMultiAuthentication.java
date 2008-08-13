@@ -36,7 +36,7 @@ import java.util.Map;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import net.unicon.academus.api.AcademusFacadeContainer;
+import net.unicon.academus.api.AcademusDataSource;
 import net.unicon.alchemist.encrypt.EncryptionService;
 import net.unicon.alchemist.rdbms.Sequencer;
 
@@ -92,12 +92,12 @@ public class SsoMultiAuthentication extends SsoAuthentication {
 
         Connection conn = null;
         try {
-            conn = this.dataSource.getConnection();
+            conn = getDataSource().getConnection();
 
             String[] credentials = this.getCredentials(userKey, conn);
             username = credentials[0];
             password = credentials[1];
-        } catch (SQLException sqle) {
+        } catch (Exception sqle) {
             throw new RuntimeException(sqle);
         } finally {
             if (conn != null) {
@@ -123,7 +123,7 @@ public class SsoMultiAuthentication extends SsoAuthentication {
         PreparedStatement pstmt = null;
 
         try {
-            conn = this.dataSource.getConnection();
+            conn = getDataSource().getConnection();
 
             // Get logged in username.
             String userKey =
@@ -151,7 +151,7 @@ public class SsoMultiAuthentication extends SsoAuthentication {
                 pstmt.setString(++i, userKey);
                 pstmt.setString(++i, this.systemName);
             } else {
-                long credentId = seq.next();
+                long credentId = getSequencer().next();
 
                 String sql = "INSERT INTO SSO_CREDENTIALS (CREDENT_ID, USER_KEY, SYSTEM, USERNAME, PASSWORD) VALUES (?, ?, ?, ?, ?)";
 
@@ -168,7 +168,7 @@ public class SsoMultiAuthentication extends SsoAuthentication {
             // Now try to update credentials.
             pstmt.executeUpdate();
 
-        } catch (SQLException sqle) {
+        } catch (Exception sqle) {
             throw new RuntimeException(sqle);
         } finally {
             if (pstmt != null) {
@@ -193,9 +193,9 @@ public class SsoMultiAuthentication extends SsoAuthentication {
         Connection conn = null;
         
         try {
-            conn = dataSource.getConnection();
+            conn = getDataSource().getConnection();
             return getCredentials(userKey, conn);
-        } catch (SQLException sqle) {
+        } catch (Exception sqle) {
             throw new RuntimeException(sqle);
         } finally {
             if (conn != null) {
@@ -234,8 +234,14 @@ public class SsoMultiAuthentication extends SsoAuthentication {
             throw new RuntimeException(ne);
         }
 
-        this.seq = new Sequencer(this.dataSource, "SSO_CREDENTIALS", 1);
         this.systemName = (String)params.get(systemKey);
+    }
+
+    private Sequencer getSequencer() throws NamingException {
+        if (seq == null) {
+            seq = new Sequencer(getDataSource(), "SSO_CREDENTIALS", 1);
+        }
+        return seq;
     }
 
     private String[] getCredentials(String userKey, Connection conn)
@@ -296,7 +302,10 @@ public class SsoMultiAuthentication extends SsoAuthentication {
 
     private DataSource getDataSource() throws NamingException {
     	try {
-            return AcademusFacadeContainer.retrieveFacade(true).getAcademusDataSource();
+            if (dataSource == null) {
+                dataSource = new AcademusDataSource();
+            }
+            return dataSource;
     	} catch (Throwable t) {
     		throw new RuntimeException(t);
     	}

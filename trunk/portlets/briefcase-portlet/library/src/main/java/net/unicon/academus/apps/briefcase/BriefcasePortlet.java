@@ -88,9 +88,6 @@ public final class BriefcasePortlet extends AbstractWarlockPortlet {
 
             PortletContext ctx = config.getPortletContext();
 
-            // DataSource.
-            DataSource ds = AcademusFacadeContainer.retrieveFacade(true).getAcademusDataSource();
-
             // Parse the config file.
             String configPath = (String) config.getInitParameter("configPath");
             SAXReader reader = new SAXReader();

@@ -213,7 +213,7 @@ public class SendMercuryMessage {
     private Principal getPrincipal(String username) {
         Principal rslt = null;
         try {
-            IAcademusFacade facade = AcademusFacadeContainer.retrieveFacade(true);
+            IAcademusFacade facade = AcademusFacadeContainer.retrieveFacade();
             IAcademusGroup[] groups = facade.getAllContainingGroups(username);
             Identity[] ids = new Identity[groups.length + 1];
             for (int i=0; i < groups.length; i++) {
