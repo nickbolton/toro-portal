@@ -74,13 +74,9 @@ root.ldap_faculty=org.jasig.portal.security.provider.SimpleLdapSecurityContextFa
 # LDAP connections according to the configuration named "Faculty" in ldap.xml.
 securityContextProperty.root.ldap_faculty.connection=Faculty
 
-# Behind the complicated Faculty-connection-configured LDAP security context is a cache security
-# context configured to cache usernames and passwords.  This instance caches those successfully
-# validated with the LDAP security context factory; the other instance caches those 
-# successfully validated with the portal-local security context factory; and so one way or
-# another, all the successfully validated credentials are cached.
-# 
-root.ldap_faculty.cache=org.jasig.portal.security.provider.CacheSecurityContextFactory
+# This version of root.ldap_faculty will insure that all the successfully validated credentials are cached.
+# Use this instead of SimpleLdapSecurityContextFactory if cached LDAP credentials is desired
+root.ldap_faculty=org.jasig.portal.security.provider.CacheLdapSecurityContextFactory
 
 
 # Answers what tokens are examined in the request for each context during authentication.
