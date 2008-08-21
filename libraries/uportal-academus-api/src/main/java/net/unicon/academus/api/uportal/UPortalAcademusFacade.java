@@ -26,14 +26,24 @@
 package net.unicon.academus.api.uportal;
 
 import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.sql.DataSource;
 
+import net.unicon.academus.api.AcademusFacadeContainer;
+import net.unicon.academus.api.AcademusFacadeException;
+import net.unicon.academus.api.IAcademusFacade;
+import net.unicon.academus.api.IAcademusGroup;
+import net.unicon.academus.api.IAcademusUser;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jasig.portal.EntityIdentifier;
 import org.jasig.portal.RDBMServices;
 import org.jasig.portal.RDBMUserIdentityStore;
@@ -42,19 +52,14 @@ import org.jasig.portal.groups.IEntity;
 import org.jasig.portal.groups.IEntityGroup;
 import org.jasig.portal.groups.IGroupConstants;
 import org.jasig.portal.groups.IGroupMember;
-import org.jasig.portal.services.GroupService;
-import org.jasig.portal.services.PersonDirectory;
 import org.jasig.portal.security.IPerson;
 import org.jasig.portal.security.PersonFactory;
-
-import net.unicon.academus.api.AcademusFacadeContainer;
-import net.unicon.academus.api.AcademusFacadeException;
-import net.unicon.academus.api.IAcademusFacade;
-import net.unicon.academus.api.IAcademusGroup;
-import net.unicon.academus.api.IAcademusUser;
+import org.jasig.portal.services.GroupService;
+import org.jasig.portal.services.PersonDirectory;
 
 public class UPortalAcademusFacade implements IAcademusFacade {
 	
+    private Log log = LogFactory.getLog(getClass());
 	/*
 	 * Public API.
 	 */
@@ -306,15 +311,30 @@ public class UPortalAcademusFacade implements IAcademusFacade {
     		uis.getPortalUID(user, false);
     		
     		// Fill w/ attributes...
-    		user.setAttributes(PersonDirectory.getPersonAttributeDao().getUserAttributes(username));
+    		user.setAttributes(unflattenValues(PersonDirectory.getPersonAttributeDao().getUserAttributes(username)));
         	rslt.add(new AcademusUserImpl(user, this));
     	} catch (Throwable t) {
+    	    log.warn("Error retrieving users.", t);
     		// t.printStackTrace(System.out);
     		// RDBMUserIdentityStore probably threw it b/c the user doesn't exist.  We have no information to add...
     	}
 
     	return (IAcademusUser[]) rslt.toArray(new IAcademusUser[0]);
     	
+    }
+    
+    private Map<String, List<Object>> unflattenValues(Map<String, Object> m) {
+        Map<String, List<Object>> unflattenedMap = new HashMap<String, List<Object>>();
+        for (final Entry<String, Object> attrEntry : m.entrySet()) {
+            final String key = attrEntry.getKey();
+            final Object value = attrEntry.getValue();
+            if (value instanceof List) {
+                unflattenedMap.put(key, (List<Object>)value);
+            } else {
+                unflattenedMap.put(key, Collections.singletonList(value));
+            }
+        }
+        return unflattenedMap;
     }
     
     public IAcademusGroup[] findAcademusGroups(String keyword) throws AcademusFacadeException {
