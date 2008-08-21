@@ -97,6 +97,8 @@ public class SsoMultiAuthentication extends SsoAuthentication {
             String[] credentials = this.getCredentials(userKey, conn);
             username = credentials[0];
             password = credentials[1];
+        } catch (NeedsAuthException nae) {
+            throw nae;
         } catch (Exception sqle) {
             throw new RuntimeException(sqle);
         } finally {
