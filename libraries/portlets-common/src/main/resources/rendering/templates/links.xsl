@@ -874,6 +874,9 @@
 <!-- LABEL -->
 <xsl:template match="label">
     <xsl:choose>
+        <xsl:when test = "@handle='entryPointOther_label'">
+            <!--Do Nothing. This is a fix for Toro-80 - http://www.ja-sig.org/issues/browse/TORO-80 - To fix #2 duplicate SSO title. The handle attribute is added to the label node within the entryPointWithNavLink template of gateway_main.xml to provide an unique identifier. Also, this test checks for a match of the label to the link/action template match above in this file, which is the link output. -->
+        </xsl:when>
         <xsl:when test = "@for">
             <label for="{@for}"><xsl:apply-templates></xsl:apply-templates></label>
         </xsl:when>

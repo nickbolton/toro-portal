@@ -436,7 +436,7 @@
             <expanded-link class="{@class}">
                <h4>
                   <link target="{window/name}">
-                     <label>
+                     <label handle="entryPointOther_label">
                         <value-of select="label">
                         </value-of>
                      </label>
