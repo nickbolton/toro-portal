@@ -38,39 +38,39 @@
                 <name>BlogPopUpWindow</name>
                 <properties>width=300,height=300,location=no,toolbar=no,status=no</properties>
             </window>
-	         <sequence type="login" current="true">
-	            <sequence-start-trigger>
-	               <context type="popup">
-	                  <image src="images/icons/marker_error.gif" class="smallImage" height="16" width="16" border="0" align="middle">
-	                  </image>
-	                  <text class="sakaiSmall">
-	                     <label>Log in again</label>
-	                     <description>ReAuthenticate description</description>
-	                  </text>
-	               </context>
-	               <context type="iframe">
-	                  <image src="images/icons/sakai_icon_large.gif" class="regImage" border="0" align="middle" alt="Restart and reauthenticate Sakai">
-	                  </image>
-	               </context>
-	            </sequence-start-trigger>
-	
-	            <send action="http://shawn.unicon.net:8088/jsp-examples/result.jsp" method="GET" id="abc123">
-	            </send>
-	
-	            <send action="http://shawn.unicon.net:8088/jsp-examples/result.jsp" method="POST" id="abc124">
-	               <parameter name="eid">
-	                  <value>admin</value>
-	               </parameter>
-	
-	               <parameter name="pw">
-	                  <value>admin</value>
-	               </parameter>
-	            </send>
-	         </sequence>
-	
-	         <sequence type="refresh" handle="sakaiMainRefresh">
-	            <send action="http://shawn.unicon.net:8088/jsp-examples/result.jsp" method="GET" id="abc125"></send>
-	         </sequence>
+             <sequence type="login" current="true">
+                <sequence-start-trigger>
+                   <context type="popup">
+                      <image src="images/icons/marker_error.gif" class="smallImage" height="16" width="16" border="0" align="middle">
+                      </image>
+                      <text class="sakaiSmall">
+                         <label>Log in again</label>
+                         <description>ReAuthenticate description</description>
+                      </text>
+                   </context>
+                   <context type="iframe">
+                      <image src="images/icons/sakai_icon_large.gif" class="regImage" border="0" align="middle" alt="Restart and reauthenticate Sakai">
+                      </image>
+                   </context>
+                </sequence-start-trigger>
+    
+                <send action="http://shawn.unicon.net:8088/jsp-examples/result.jsp" method="GET" id="abc123">
+                </send>
+    
+                <send action="http://shawn.unicon.net:8088/jsp-examples/result.jsp" method="POST" id="abc124">
+                   <parameter name="eid">
+                      <value>admin</value>
+                   </parameter>
+    
+                   <parameter name="pw">
+                      <value>admin</value>
+                   </parameter>
+                </send>
+             </sequence>
+    
+             <sequence type="refresh" handle="sakaiMainRefresh">
+                <send action="http://shawn.unicon.net:8088/jsp-examples/result.jsp" method="GET" id="abc125"></send>
+             </sequence>
         </entry-point>
         <entry-point id="124" class="largePersonal" credentials="stored">
             <label>Author Blog Entry</label>
@@ -82,13 +82,13 @@
             </window>
             
             <sequence type="login">
-	            <send action="http://shawn.unicon.net:8088/jsp-examples/result.jsp" method="post" id="abc126">
-	                <parameter name="username"><value>johndoe</value></parameter>
-	                <parameter name="password"><value>crazy1</value></parameter>
-	                <parameter name="q">
-	                    <value>luke skywalker</value>
-	                </parameter>
-	            </send>
+                <send action="http://shawn.unicon.net:8088/jsp-examples/result.jsp" method="post" id="abc126">
+                    <parameter name="username"><value>johndoe</value></parameter>
+                    <parameter name="password"><value>crazy1</value></parameter>
+                    <parameter name="q">
+                        <value>luke skywalker</value>
+                    </parameter>
+                </send>
             </sequence>
         </entry-point>
         <entry-point id="125" class="largePersonal" credentials="stored">
@@ -100,14 +100,14 @@
                 <properties>width=600,height=600,location=no,toolbar=no,status=no</properties>
             </window>
             <sequence type="login">
-	            <send action="http://shawn.unicon.net:8088/jsp-examples/result.jsp" method="post" id="abc127">
-	                <parameter name="username"><value>johndoe</value></parameter>
-	                <parameter name="password"><value>crazy1</value></parameter>
-	                <parameter name="q">
-	                    <value>han solo</value>
-	                    <value>chewbacca</value>
-	                </parameter>
-	            </send>
+                <send action="http://shawn.unicon.net:8088/jsp-examples/result.jsp" method="post" id="abc127">
+                    <parameter name="username"><value>johndoe</value></parameter>
+                    <parameter name="password"><value>crazy1</value></parameter>
+                    <parameter name="q">
+                        <value>han solo</value>
+                        <value>chewbacca</value>
+                    </parameter>
+                </send>
             </sequence>
         </entry-point>
         <entry-point id="126" class="largePersonal">
@@ -120,14 +120,14 @@
             </window>
             
             <sequence type="login">
-	            <send action="http://shawn.unicon.net:8088/jsp-examples/result.jsp" method="post" id="abc128">
-	                <parameter name="username"><value>johndoe</value></parameter>
-	                <parameter name="password"><value>crazy1</value></parameter>
-	                <parameter name="q">
-	                    <value>anakin skywalker</value>
-	                    <value>darth vader</value>
-	                </parameter>
-	            </send>
+                <send action="http://shawn.unicon.net:8088/jsp-examples/result.jsp" method="post" id="abc128">
+                    <parameter name="username"><value>johndoe</value></parameter>
+                    <parameter name="password"><value>crazy1</value></parameter>
+                    <parameter name="q">
+                        <value>anakin skywalker</value>
+                        <value>darth vader</value>
+                    </parameter>
+                </send>
             </sequence>
         </entry-point>
     </navigation>
@@ -290,9 +290,9 @@
    </template>
    
    <template handle="otherSequencesIframe" >
-   	  <!-- context is iframe -->
+      <!-- context is iframe -->
       <link target="{../window/name}" class="{sequence-start-trigger/context[@type = 'iframe']/text/@class}">
-      	 <copy-of select="sequence-start-trigger/context[@type = 'iframe']/image" ></copy-of>
+         <copy-of select="sequence-start-trigger/context[@type = 'iframe']/image" ></copy-of>
       
          <label>
             <value-of select="sequence-start-trigger/context[@type = 'iframe']/text/label">
@@ -311,9 +311,9 @@
    </template>
 
    <template handle="otherSequencesPopup" >
-   	  <!-- context is popup -->
+      <!-- context is popup -->
       <link target="{../window/name}" class="{sequence-start-trigger/context[@type = 'popup']/text/@class}">
-      	 <copy-of select="sequence-start-trigger/context[@type = 'popup']/image" ></copy-of>
+         <copy-of select="sequence-start-trigger/context[@type = 'popup']/image" ></copy-of>
       
          <label>
             <value-of select="sequence-start-trigger/context[@type = 'popup']/text/label">
@@ -436,7 +436,7 @@
             <expanded-link class="{@class}">
                <h4>
                   <link target="{window/name}">
-                     <label>
+                     <label handle="entryPointOther_label">
                         <value-of select="label">
                         </value-of>
                      </label>
@@ -463,10 +463,10 @@
             
             <!-- INSERT functionality to determine if button needed to submit other sequence - aka re-authenticate button  -->
             <div style="text-align:right;">
-	            <call-template handle="otherSequencesPopup" select="sequence[not(@current = 'true') and boolean(sequence-start-trigger)]" ></call-template>
-	
-	            <call-template handle="changeCredentials" select="self::node()[@credentials = 'stored']">
-	            </call-template>
+                <call-template handle="otherSequencesPopup" select="sequence[not(@current = 'true') and boolean(sequence-start-trigger)]" ></call-template>
+    
+                <call-template handle="changeCredentials" select="self::node()[@credentials = 'stored']">
+                </call-template>
             </div>
          </hbox>
       </li>
@@ -484,8 +484,8 @@
 
    <template handle="errors">
       <section type="error">
-      	 <call-template handle="genericErrorMessage" select="self::node()[@type = 'other']" ></call-template>
-      	 <call-template handle="noEntryPointErrorMessage" select="self::node()[name() = 'state']" ></call-template>
+         <call-template handle="genericErrorMessage" select="self::node()[@type = 'other']" ></call-template>
+         <call-template handle="noEntryPointErrorMessage" select="self::node()[name() = 'state']" ></call-template>
       </section>
    </template>
 
