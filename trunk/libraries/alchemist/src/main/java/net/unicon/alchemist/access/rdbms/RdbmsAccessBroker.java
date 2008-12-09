@@ -137,14 +137,13 @@ public class RdbmsAccessBroker extends AccessBroker {
     }
     
     private void initialize() {
-        RdbmsAccessBroker rslt = null;
-        String getAccessControllerSql = "SELECT * FROM " +
-                "ACCESS_CONTROLLER WHERE UPPER(NAME) = UPPER(?)";
+
+        String getAccessControllerSql = "SELECT ACCESS_CONTROLLER_ID FROM " +
+                			"ACCESS_CONTROLLER WHERE UPPER(NAME) = UPPER(?)";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         
-        boolean foundId = false;
         int theId = -1;
 
         try{
@@ -154,7 +153,7 @@ public class RdbmsAccessBroker extends AccessBroker {
             rs = pstmt.executeQuery();
 
             if(rs.next()){
-                theId = rs.getInt("Access_Controller_ID");
+                theId = rs.getInt("ACCESS_CONTROLLER_ID");
             }
         }catch(SQLException sqle){
             StringBuffer msg = new StringBuffer("Rdbms Access Broker failed to find " +
@@ -165,8 +164,10 @@ public class RdbmsAccessBroker extends AccessBroker {
             if (pstmt != null) closeStatement(pstmt);
             if (conn != null) closeConnection(conn);
         }
-        if(!foundId){
+        if (theId == -1) {
+        	// The AccessController doesn't exist...
             if (create) {
+            	// We're meant to create one...
                 theId = getAccessBrokerUniqueId(dataSource);
                 try{
                     conn = dataSource.getConnection();
