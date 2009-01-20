@@ -22,7 +22,7 @@
      <repository> 
        <id>jasig</id> 
        <name>Jasig Repository</name> 
-       <url>scp://developer.ja-sig.org/jasig/htdocs/developer/projects/toro-portal</url>
+       <url>scp://developer.ja-sig.org/jasig/htdocs/developer/projects/toro-portal/2.0.0-rc-4</url>
      </repository>
    </distributionManagement> 
 
