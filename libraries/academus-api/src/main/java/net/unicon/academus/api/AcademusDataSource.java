@@ -116,5 +116,11 @@ public class AcademusDataSource implements DataSource {
 		// Nothing to do here. This class is just a facade to
 		// the real data source.
     }
+	public boolean isWrapperFor(Class<?> iface) throws SQLException {
+    throw new SQLException("Not implemented.");
+	}
+	public <T> T unwrap(Class<T> iface) throws SQLException {
+    throw new SQLException("Not implemented.");
+	}
 }
 
