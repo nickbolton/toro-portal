@@ -147,4 +147,10 @@ public class SimpleDataSource implements DataSource {
     public void setLogWriter(PrintWriter out) throws SQLException {
         this.logWriter = out;
     }
+    public boolean isWrapperFor(Class<?> iface) throws SQLException {
+      throw new SQLException("Not implemented.");
+    }
+    public <T> T unwrap(Class<T> iface) throws SQLException {
+      throw new SQLException("Not implemented.");
+    }
 }
